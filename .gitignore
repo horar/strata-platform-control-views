@@ -1,0 +1,5 @@
+*build*/
+*Build*/
+*BUILD*/
+*.DS_Store
+*.rcc
