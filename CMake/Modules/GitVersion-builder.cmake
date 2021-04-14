@@ -63,7 +63,7 @@ if(IS_DIRECTORY ${GIT_ROOT_DIR}/.git OR NOT USE_GITTAG_VERSION)
     string(APPEND PROJECT_VERSION "${VERSION_GIT_STATE}")
     message(STATUS "${PROJECT_NAME}: ${PROJECT_VERSION} (stage: ${STAGE_OF_DEVELOPMENT})")
 else()
-    # message(FATAL_ERROR "Not a git cloned project. Can't create version string from git tag!!")
+    message(FATAL_ERROR "Not a git cloned project. Can't create version string from git tag!!")
 endif()
 
 function(process_config_file PROJECT_NAME INPUT_DIR WORKING_DIR DEPLOYMENT_DIR CONFIG_FILENAMES)
