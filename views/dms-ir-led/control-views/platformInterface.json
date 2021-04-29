@@ -1,0 +1,25 @@
+{
+    "commands": [
+        {
+            "cmd": "set_pwm1",
+            "payload": {
+                "status": "bool",
+                "duty_cycle": "double"
+            }
+        },
+        {
+            "cmd": "set_pwm2",
+            "payload": {
+                "status": "bool",
+                "duty_cycle": "double"
+            }
+        },
+        {
+            "cmd": "set_pwm3",
+            "payload": {
+                "status": "bool",
+                "duty_cycle": "double"
+            }
+        },
+    ]
+}
