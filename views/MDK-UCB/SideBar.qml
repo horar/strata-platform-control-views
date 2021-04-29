@@ -16,37 +16,37 @@ Rectangle {
     //Layout.fillHeight: true
 
     property var error_status: platformInterface.error.value
-    property var dc_link_vin_calc: platformInterface.status_vi.l/1000
-    property var temp_calc: platformInterface.status_temperature_sensor.temperature
+
+    onError_statusChanged: {
+        if  (error_status === 0) {}
+            else {
+            speedPop.value = 0
+            accelPop.value = 0
+            settingsControl.target = 0
+            platformInterface.speed = 0
+            platformInterface.status_vi.a < 5 ? runningButton.running = false : runningButton.running = true
+            forwardReverseButton = false
+        }
+    }
 
     Component.onCompleted: {
         Help.registerTarget(runningButton, "Place holder for Basic control view help messages", 0, "BasicControlHelp")
     }
 
-
     ColumnLayout {
         id: sideBarColumn
         anchors {
             fill: parent
-            margins: 10
+            margins: 15
         }
-        spacing: 10
-
-        IconButton {
-            id: logoOnButton
-            toolTipText: "ON Semiconductor"
-            source: "qrc:/image/on-logo-green.svg"
-            iconOpacity: 1
-            onClicked:  {
-            }
-        }
+        spacing: 5
 
         SGText {
             text: "Quick Start Controls:"
             Layout.fillWidth: true
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignHCenter
-            fontSizeMultiplier: .8
+            fontSizeMultiplier: .7
             color: "white"
         }
 
@@ -60,6 +60,8 @@ Rectangle {
 
             onClicked:  {
                 speedPop.visible = !speedPop.visible
+                settingsControl.target = speedPop.value
+                platformInterface.speed = speedPop.value
             }
 
             SliderPopup {
@@ -83,6 +85,9 @@ Rectangle {
 
             onClicked:  {
                 accelPop.visible = !accelPop.visible
+                settingsControl.ratio = accelPop.value
+                settingsControl.acceleration = accelPop.value
+                platformInterface.acceleration = accelPop.value
             }
 
             SliderPopup {
@@ -91,11 +96,11 @@ Rectangle {
                 title: "Acceleration"
                 unit: "RPM/s"
                 from: 0
-                to: settingsControl.max_motor_speed
+                to: 1000
                 value: 0
             }
         }
-
+/*
         IconButton {
             id: brakeButton
             source: "qrc:/image/brake.svg"
@@ -116,7 +121,7 @@ Rectangle {
                 value: 0
             }
         }
-
+*/
         IconButton {
             id: forwardReverseButton
             enabled: runningButton.running === false //  direction control disabled when motor running
@@ -138,6 +143,8 @@ Rectangle {
 
         IconButton {
             id: runningButton
+            enabled: basicControl.motor_play === 1 //  direction control disabled when motor running
+            opacity: enabled ? 1 : .2
             source: running ? "qrc:/image/stop-solid.svg" : "qrc:/image/play-solid.svg"
             iconColor: running ? "#db0909" : "#45e03a"
             toolTipText: "Start/stop motor"
@@ -151,7 +158,9 @@ Rectangle {
                     if (running == true) {settingsControl.play()}
                     else{settingsControl.stop()}
                 }
-                else{settingsControl.stop()}
+                else{
+                    settingsControl.stop()
+                }
             }
         }
 
@@ -169,13 +178,13 @@ Rectangle {
                 toolTipText: "ERROR MESSAGES"
                 status: {
                     if(error_status === 0){SGStatusLight.Green}
-                    else {SGStatusLight.Off}
+                    else {SGStatusLight.Red}
                 }
             }
-/*
+
             FaultLight {
-                text: "ADC THR"
-                toolTipText: "ADC THRESHOLD OUTSIDERANGE"
+                text: "ADC"
+                toolTipText: "ADC THRESHOLD OUTSIDE RANGE"
                 status: {
                     if(error_status === 1){SGStatusLight.Red}
                     else {SGStatusLight.Off}
@@ -183,7 +192,7 @@ Rectangle {
             }
 
             FaultLight {
-                text: "SCI 1"
+                text: "SCI"
                 toolTipText: "STARTUP CURRENT INJECTION ERROR"
                 status: {
                     if(error_status === 2){SGStatusLight.Red}
@@ -192,7 +201,7 @@ Rectangle {
             }
 
             FaultLight {
-                text: "SCI 2"
+                text: "SCI2"
                 toolTipText: "STARTUP CURRENT INJECTION2 ERROR"
                 status: {
                     if(error_status === 3){SGStatusLight.Red}
@@ -201,17 +210,17 @@ Rectangle {
             }
 
             FaultLight {
-                text: "ADC INT"
-                toolTipText: "ADC INTERRUPT LOOP"
+                text: "UV"
+                toolTipText: "UNDERVOLTAGE"
                 status: {
                     if(error_status === 4){SGStatusLight.Red}
                     else {SGStatusLight.Off}
                 }
             }
-*/
+
             FaultLight {
-                text: "OCP"
-                toolTipText: "OVERCURRENT PROTECTION ACTIVE"
+                text: "OV"
+                toolTipText: "OVERVOLTAGE"
                 status: {
                     if(error_status === 5){SGStatusLight.Red}
                     else {SGStatusLight.Off}
@@ -219,28 +228,28 @@ Rectangle {
             }
 
             FaultLight {
-                text: "OVP"
-                toolTipText: "OVER VOLTAGE PROTECTION"
+                text: "OT"
+                toolTipText: "OVER TEMPERATURE"
                 status: {
-                    if(multiplePlatform.nominalVin < dc_link_vin_calc){SGStatusLight.Red}
+                    if(error_status === 6){SGStatusLight.Red}
                     else {SGStatusLight.Off}
                 }
             }
 
             FaultLight {
-                text: "UVP"
-                toolTipText: "UNDER VOLTAGE PROTECTION"
+                text: "OCP"
+                toolTipText: "OVERCURRENT PROTECTION ACTIVE"
                 status: {
-                    if(multiplePlatform.minVin > dc_link_vin_calc){SGStatusLight.Red}
+                    if(error_status === 7){SGStatusLight.Red}
                     else {SGStatusLight.Off}
                 }
             }
 
             FaultLight {
-                text: "OTP"
-                toolTipText: "OVER TEMPERATURE PROTECTION"
+                text: "WDR"
+                toolTipText: "WATCHDOG RESET"
                 status: {
-                    if(temp_calc > 100){SGStatusLight.Red}
+                    if(error_status === 8){SGStatusLight.Red}
                     else {SGStatusLight.Off}
                 }
             }

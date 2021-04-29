@@ -103,25 +103,17 @@ Item {
     }
 
     onError_statusChanged: {
-        if(error_status === 0){
-            error_code = "NO ERROR"
-        }
-        else if(error_status === 1){
-            error_code = "ADC THRESHOLD OUTSIDERANGE"
-        }
-        else if(error_status === 2){
-            error_code = "STARTUP CURRENT INJECTION ERROR"
-        }
-        else if(error_status === 3){
-            error_code = "STARTUP CURRENT INJECTION2 ERROR"
-        }
-        else if(error_status === 4){
-            error_code = "ADC INTERRUPT LOOP"
-        }
-        else if(error_status === 5){
-            error_code = "OVERCURRENT PROTECTION ACTIVE"
-        }
+        if(error_status === 0){error_code = "NO ERROR"}
+        else if(error_status === 1){error_code = "ADC THRESHOLD OUTSIDE RANGE"}
+        else if(error_status === 2){error_code = "STARTUP CURRENT INJECTION ERROR"}
+        else if(error_status === 3){error_code = "STARTUP CURRENT INJECTION2 ERROR"}
+        else if(error_status === 4){error_code = "UNDERVOLTAGE"}
+        else if(error_status === 5){error_code = "OVERVOLTAGE"}
+        else if(error_status === 6){error_code = "OVER TEMPERATURE"}
+        else if(error_status === 7){error_code = "OVERCURRENT PROTECTION ACTIVE"}
+        else if(error_status === 8){error_code = "WATCHDOG RESET"}
         else {error_code = ""}
+        if (error_status > 0) {status_code = "Reset error to continue"}
     }
 
     Component.onCompleted:  {

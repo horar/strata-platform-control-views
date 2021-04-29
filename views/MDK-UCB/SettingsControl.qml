@@ -57,10 +57,9 @@ Item {
     property var inductance
 
     Component.onCompleted: {        
-
-        laAccelerationSliderLabel.opacity = 0.7
+        laAccelerationSliderLabel.opacity = 0
         laAccelerationSlider.enabled  = false
-        laSpeedSliderLabel.opacity = 0.7
+        laSpeedSliderLabel.opacity = 0
         laSpeedSlider.enabled  = false
 
         Help.registerTarget(laMotorContainerRow1,"For all control technique: Pole pairs, Max. Motor voltage & Max Motor speed.", 0, "settingsHelp")
@@ -157,8 +156,6 @@ Item {
                             anchors.left: max_motor_voutSlider.right
                             }
                     }
-
-
 
                     SGAlignedLabel{
                         id: max_motor_speedLabel
@@ -742,7 +739,6 @@ Item {
                }
             }
         }
-
     }
 
     function play ()
