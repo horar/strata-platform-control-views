@@ -12,7 +12,8 @@ Rectangle {
     id: sideBar
     color: "#454545"
     implicitWidth: 70
-    Layout.fillHeight: true
+    implicitHeight: parent.height
+    //Layout.fillHeight: true
 
     property var error_status: platformInterface.error.value
     property var dc_link_vin_calc: platformInterface.status_vi.l/1000
@@ -94,7 +95,7 @@ Rectangle {
                 value: 0
             }
         }
-/*
+
         IconButton {
             id: brakeButton
             source: "qrc:/image/brake.svg"
@@ -115,7 +116,7 @@ Rectangle {
                 value: 0
             }
         }
-*/
+
         IconButton {
             id: forwardReverseButton
             enabled: runningButton.running === false //  direction control disabled when motor running
@@ -164,14 +165,14 @@ Rectangle {
             spacing: 8
 
             FaultLight {
-                text: "NO ERROR"
-                toolTipText: "NO ERROR"
+                text: "ERROR"
+                toolTipText: "ERROR MESSAGES"
                 status: {
                     if(error_status === 0){SGStatusLight.Green}
                     else {SGStatusLight.Off}
                 }
             }
-
+/*
             FaultLight {
                 text: "ADC THR"
                 toolTipText: "ADC THRESHOLD OUTSIDERANGE"
@@ -207,7 +208,7 @@ Rectangle {
                     else {SGStatusLight.Off}
                 }
             }
-
+*/
             FaultLight {
                 text: "OCP"
                 toolTipText: "OVERCURRENT PROTECTION ACTIVE"
@@ -216,7 +217,7 @@ Rectangle {
                     else {SGStatusLight.Off}
                 }
             }
-/*
+
             FaultLight {
                 text: "OVP"
                 toolTipText: "OVER VOLTAGE PROTECTION"
@@ -243,7 +244,7 @@ Rectangle {
                     else {SGStatusLight.Off}
                 }
             }
-*/
+
             // add or remove more as needed
         }
 
@@ -252,7 +253,7 @@ Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth: true
         }
-
+/*
         IconButton {
             id: helpIcon
             source: "qrc:/sgimages/question-circle.svg" // generic icon from SGWidgets
@@ -265,6 +266,7 @@ Rectangle {
                 else console.log("help not available")
                 }
             }
+*/
         }
     }
 
