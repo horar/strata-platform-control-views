@@ -14,6 +14,10 @@ Rectangle {
     implicitWidth: 70
     Layout.fillHeight: true
 
+    property var error_status: platformInterface.error.value
+    property var dc_link_vin_calc: platformInterface.status_vi.l/1000
+    property var temp_calc: platformInterface.status_temperature_sensor.temperature
+
     Component.onCompleted: {
         Help.registerTarget(runningButton, "Place holder for Basic control view help messages", 0, "BasicControlHelp")
     }
@@ -63,7 +67,8 @@ Rectangle {
                 title: "Target Speed"
                 unit: "RPM"
                 from: 0
-                to: 1000
+                to: settingsControl.max_motor_speed
+                value: 0
             }
         }
 
@@ -85,34 +90,32 @@ Rectangle {
                 title: "Acceleration"
                 unit: "RPM/s"
                 from: 0
-                to: 1000
+                to: settingsControl.max_motor_speed
+                value: 0
             }
         }
-
-        IconButton {
-            id: runningButton
-            source: running ? "qrc:/image/stop-solid.svg" : "qrc:/image/play-solid.svg"
-            iconColor: running ? "#db0909" : "#45e03a"
-            toolTipText: "Start/stop motor"
-
-            property bool running: false
-
-            onClicked:  {
-                running = !running
-                // start/stop logic here
-            }
-        }
-
+/*
         IconButton {
             id: brakeButton
             source: "qrc:/image/brake.svg"
-            toolTipText: "Set brake"
-
+            toolTipText: "Set motor brake de-acceleration"
+            value: brakePop.value
+            unit: "RPM/s"
             onClicked:  {
                 // braking logic here
+                brakePop.visible = !brakePop.visible
+            }
+            SliderPopup {
+                id: brakePop
+                x: parent.width + sideBarColumn.anchors.margins
+                title: "Brake"
+                unit: "RPM/s"
+                from: 0
+                to: settingsControl.max_motor_speed
+                value: 0
             }
         }
-
+*/
         IconButton {
             id: forwardReverseButton
             enabled: runningButton.running === false //  direction control disabled when motor running
@@ -127,6 +130,27 @@ Rectangle {
             onClicked:  {
                 forward = !forward
                 // directional logic here
+                if (forward == true) {platformInterface.set_direction.update("clockwise")}
+                else{platformInterface.set_direction.update("counterClockwise")}
+            }
+        }
+
+        IconButton {
+            id: runningButton
+            source: running ? "qrc:/image/stop-solid.svg" : "qrc:/image/play-solid.svg"
+            iconColor: running ? "#db0909" : "#45e03a"
+            toolTipText: "Start/stop motor"
+
+            property bool running: false
+
+            onClicked:  {
+                running = !running
+                // start/stop logic here
+                if (basicControl.motor_play === 1){
+                    if (running == true) {settingsControl.play()}
+                    else{settingsControl.stop()}
+                }
+                else{settingsControl.stop()}
             }
         }
 
@@ -140,23 +164,86 @@ Rectangle {
             spacing: 8
 
             FaultLight {
-                text: "OCP"
-                toolTipText: "Over Current Protection"
-                status: SGStatusLight.Off
+                text: "NO ERROR"
+                toolTipText: "NO ERROR"
+                status: {
+                    if(error_status === 0){SGStatusLight.Green}
+                    else {SGStatusLight.Off}
+                }
             }
 
             FaultLight {
+                text: "ADC THR"
+                toolTipText: "ADC THRESHOLD OUTSIDERANGE"
+                status: {
+                    if(error_status === 1){SGStatusLight.Red}
+                    else {SGStatusLight.Off}
+                }
+            }
+
+            FaultLight {
+                text: "SCI 1"
+                toolTipText: "STARTUP CURRENT INJECTION ERROR"
+                status: {
+                    if(error_status === 2){SGStatusLight.Red}
+                    else {SGStatusLight.Off}
+                }
+            }
+
+            FaultLight {
+                text: "SCI 2"
+                toolTipText: "STARTUP CURRENT INJECTION2 ERROR"
+                status: {
+                    if(error_status === 3){SGStatusLight.Red}
+                    else {SGStatusLight.Off}
+                }
+            }
+
+            FaultLight {
+                text: "ADC INT"
+                toolTipText: "ADC INTERRUPT LOOP"
+                status: {
+                    if(error_status === 4){SGStatusLight.Red}
+                    else {SGStatusLight.Off}
+                }
+            }
+
+            FaultLight {
+                text: "OCP"
+                toolTipText: "OVERCURRENT PROTECTION ACTIVE"
+                status: {
+                    if(error_status === 5){SGStatusLight.Red}
+                    else {SGStatusLight.Off}
+                }
+            }
+/*
+            FaultLight {
                 text: "OVP"
-                toolTipText: "Over Voltage Protection"
-                status: SGStatusLight.Yellow
+                toolTipText: "OVER VOLTAGE PROTECTION"
+                status: {
+                    if(multiplePlatform.nominalVin < dc_link_vin_calc){SGStatusLight.Red}
+                    else {SGStatusLight.Off}
+                }
+            }
+
+            FaultLight {
+                text: "UVP"
+                toolTipText: "UNDER VOLTAGE PROTECTION"
+                status: {
+                    if(multiplePlatform.minVin > dc_link_vin_calc){SGStatusLight.Red}
+                    else {SGStatusLight.Off}
+                }
             }
 
             FaultLight {
                 text: "OTP"
-                toolTipText: "Over Temp Protection"
-                status: SGStatusLight.Red
+                toolTipText: "OVER TEMPERATURE PROTECTION"
+                status: {
+                    if(temp_calc > 100){SGStatusLight.Red}
+                    else {SGStatusLight.Off}
+                }
             }
-
+*/
             // add or remove more as needed
         }
 

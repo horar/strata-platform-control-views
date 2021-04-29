@@ -40,7 +40,7 @@ Popup {
         SGText {
             id: title
             font.bold: true
-            color: "white"
+            color: "lightgrey"
             fontSizeMultiplier: 1.25
         }
 
@@ -51,7 +51,9 @@ Popup {
             inputBox.unit: sliderPopup.unit
             inputBox.boxColor: "#222"
             inputBoxWidth: 100
-            textColor: "white"
+            textColor: "grey"
+            stepSize: 1
+            live: false
         }
     }
 }
