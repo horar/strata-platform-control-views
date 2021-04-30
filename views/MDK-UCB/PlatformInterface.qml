@@ -60,7 +60,7 @@ Item {
                                   show: function () { CorePlatformInterface.show(this) }
                               })
 
-    property var set_direction: ({"cmd" : "set_direction","payload": {"direction": " ",},
+    property var set_direction: ({"cmd" : "set_direction","payload": {"direction": 0},
                                   update: function (direction) {this.set(direction)
                                       CorePlatformInterface.send(this)},
                                   set: function (direction) {this.payload.direction = direction;},

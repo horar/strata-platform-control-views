@@ -20,12 +20,9 @@ Rectangle {
     onError_statusChanged: {
         if  (error_status === 0) {}
             else {
-            speedPop.value = 0
-            accelPop.value = 0
-            settingsControl.target = 0
-            platformInterface.speed = 0
-            platformInterface.status_vi.a < 5 ? runningButton.running = false : runningButton.running = true
-            forwardReverseButton = false
+            runningButton.source = "qrc:/image/stop-solid.svg"
+            runningButton.iconColor = "#db0909"
+            runningButton.running = false
         }
     }
 
@@ -124,7 +121,7 @@ Rectangle {
 */
         IconButton {
             id: forwardReverseButton
-            enabled: runningButton.running === false //  direction control disabled when motor running
+            enabled: runningButton.running === false && platformInterface.status_vi.a < 5 //  direction control disabled when motor running
             opacity: enabled ? 1 : .5
             source: forward ? "qrc:/image/redo-alt-solid.svg" : "qrc:/image/undo.svg"
             toolTipText: "Set motor direction"
@@ -136,8 +133,8 @@ Rectangle {
             onClicked:  {
                 forward = !forward
                 // directional logic here
-                if (forward == true) {platformInterface.set_direction.update("clockwise")}
-                else{platformInterface.set_direction.update("counterClockwise")}
+                if (forward == true) {platformInterface.set_direction.update(1)}
+                else{platformInterface.set_direction.update(0)}
             }
         }
 
@@ -150,17 +147,28 @@ Rectangle {
             toolTipText: "Start/stop motor"
 
             property bool running: false
+            property var speed: platformInterface.status_vi.a
+            onSpeedChanged: {
+                if (speed < 5){
+                    runningButton.source = "qrc:/image/play-solid.svg"
+                    runningButton.iconColor = "#45e03a"
+                    forwardReverseButton.animationRunning = false
+                }
+                else {
+                    runningButton.source = "qrc:/image/stop-solid.svg"
+                    runningButton.iconColor = "#db0909"
+                    forwardReverseButton.animationRunning = true
+                }
+            }
 
             onClicked:  {
                 running = !running
                 // start/stop logic here
                 if (basicControl.motor_play === 1){
-                    if (running == true) {settingsControl.play()}
+                    if (running == true  && platformInterface.status_vi.a < 5) {settingsControl.play()}
                     else{settingsControl.stop()}
                 }
-                else{
-                    settingsControl.stop()
-                }
+                else{settingsControl.stop()}
             }
         }
 
