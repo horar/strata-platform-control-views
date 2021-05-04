@@ -110,7 +110,6 @@ ChartView {
         id: dataLine
         color: dataLineColor
         width: 2
-        useOpenGL: chartView.openGL
     }
 
     Button {

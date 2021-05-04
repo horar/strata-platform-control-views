@@ -12,6 +12,7 @@ Item{
     property real minVin: 200
     property real nominalVin: 410
     property real vinScale: 500
+    property real ioutScale: 12
 
     function check_class_id ()
     {
@@ -24,6 +25,7 @@ Item{
             minVin = 200 //290
             nominalVin = 410
             vinScale = 500
+            ioutScale = 12
         }
         else if(class_id === "d64c7dea-4509-45c6-8f99-02bf6e091366") {
             partNumber =  "<b> Part of the Motor Development Kit Family </b>"
@@ -34,6 +36,7 @@ Item{
             minVin = 195
             nominalVin = 265
             vinScale = 300
+            ioutScale = 12
         }
 
         else  {

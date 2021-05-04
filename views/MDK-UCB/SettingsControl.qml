@@ -35,6 +35,7 @@ Item {
     property var time:20
     property var pointsCount:50
     property var amperes:12
+    property var ioutScaleCalc:multiplePlatform.ioutScale
 
     property var speedLine: []
 
@@ -182,7 +183,7 @@ Item {
                             id:max_motor_speedSliderUnit
                             text:"RPM"
                             font.pixelSize: (parent.width + parent.height)/ 40
-                            color:lightgrey
+                            color: "lightgrey"
                             anchors.left: max_motor_speedSlider.right
                             }
                     }
@@ -279,7 +280,7 @@ Item {
                             width: laSettingsContainerRow2.width/1.2
                             from: 0
                             value: 12
-                            to: 12
+                            to: ioutScaleCalc
                             stepSize: 1
                             onValueChanged: amperes = value
                             onUserSet: amperes = value
@@ -304,9 +305,7 @@ Item {
                 Rectangle {
                     Layout.preferredHeight: parent.height
                     Layout.fillWidth: parent.width/1.1
-                    anchors {
-                        top: parent.top
-                    }
+                    Layout.alignment: Qt.AlignTop
                     color: "white"
 
                     SGGraph {
@@ -511,7 +510,7 @@ Item {
                         id: controlText
                         anchors {
                             top: leadAngleAdjustmentGraph.bottom
-                            topMargin: (parent.width + parent.height)/ 18
+                            topMargin: (parent.width + parent.height)/ 60
                             horizontalCenter: leadAngleAdjustmentGraph.horizontalCenter
                         }
                         text:  "<b> Closed Loop Parameters <b>"
@@ -536,8 +535,7 @@ Item {
                         text: "Select V/F control (default) or FOC control"
                         horizontalAlignment: Text.AlignHCenter
                         alignment: SGAlignedLabel.SideLeftCenter
-                        anchors.centerIn: controlText
-                        fontSizeMultiplier: ratioCalc * 1.2
+                        anchors.fill: parent
                         font.bold : false
 
                         SGComboBox {
@@ -559,7 +557,7 @@ Item {
                         id: current_piText
                         anchors {
                             top: laSpeedSliderLabel.top
-                            topMargin: parent.height/4
+                            topMargin: parent.height/5
                             horizontalCenter: laSpeedSliderLabel.horizontalCenter
                             horizontalCenterOffset: -(parent.width + parent.height)/ 40
                         }
@@ -575,7 +573,7 @@ Item {
                         font.pixelSize: (parent.width + parent.height)/ 120
                         anchors {
                             top: laSpeedSliderLabel.top
-                            topMargin: parent.height/3
+                            topMargin: parent.height/3.5
                             horizontalCenter: laSpeedSliderLabel.horizontalCenter
                             horizontalCenterOffset: -(parent.width + parent.height)/ 40
                             }
@@ -620,7 +618,7 @@ Item {
                         id: speed_piText
                         anchors {
                             top: laSpeedSliderLabel.top
-                            topMargin: parent.height/4
+                            topMargin: parent.height/5
                             horizontalCenter: controlText.horizontalCenter
                         }
                         text:  "<b> Speed PI (Ampere/Speed) <b>"
@@ -636,7 +634,7 @@ Item {
                         font.pixelSize: (parent.width + parent.height)/ 120
                         anchors {
                             top: laSpeedSliderLabel.top
-                            topMargin: parent.height/3
+                            topMargin: parent.height/3.5
                             horizontalCenter: controlText.horizontalCenter
                             }
                         SGSlider {
@@ -682,7 +680,7 @@ Item {
                         font.pixelSize: (parent.width + parent.height)/ 120
                         anchors {
                             top: laAccelerationSliderLabel.top
-                            topMargin: parent.height/3
+                            topMargin: parent.height/3.5
                             horizontalCenter: laAccelerationSliderLabel.horizontalCenter
                             horizontalCenterOffset: (parent.width + parent.height)/ 20
                             }
