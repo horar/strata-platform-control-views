@@ -32,15 +32,15 @@ PlatformInterfaceBase {
         property var set_pwm1: ({
             "cmd": "set_pwm1",
             "payload": {
-                "duty_cycle": 0.0,
+                "current": 0.0,
                 "status": false
             },
-            update: function (duty_cycle,status) {
-                this.set(duty_cycle,status)
+            update: function (current,status) {
+                this.set(current,status)
                 this.send(this)
             },
-            set: function (duty_cycle,status) {
-                this.payload.duty_cycle = duty_cycle
+            set: function (current,status) {
+                this.payload.current = current
                 this.payload.status = status
             },
             send: function () { platformInterface.send(this) }
@@ -52,15 +52,15 @@ PlatformInterfaceBase {
         property var set_pwm2: ({
             "cmd": "set_pwm2",
             "payload": {
-                "duty_cycle": 0.0,
+                "voltage": 0.0,
                 "status": false
             },
-            update: function (duty_cycle,status) {
-                this.set(duty_cycle,status)
+            update: function (voltage,status) {
+                this.set(voltage,status)
                 this.send(this)
             },
-            set: function (duty_cycle,status) {
-                this.payload.duty_cycle = duty_cycle
+            set: function (voltage,status) {
+                this.payload.voltage = voltage
                 this.payload.status = status
             },
             send: function () { platformInterface.send(this) }
@@ -72,15 +72,15 @@ PlatformInterfaceBase {
         property var set_pwm3: ({
             "cmd": "set_pwm3",
             "payload": {
-                "duty_cycle": 0.0,
+                "on_time": 0.0,
                 "status": false
             },
-            update: function (duty_cycle,status) {
-                this.set(duty_cycle,status)
+            update: function (on_time,status) {
+                this.set(on_time,status)
                 this.send(this)
             },
-            set: function (duty_cycle,status) {
-                this.payload.duty_cycle = duty_cycle
+            set: function (on_time,status) {
+                this.payload.on_time = on_time
                 this.payload.status = status
             },
             send: function () { platformInterface.send(this) }

@@ -4,21 +4,21 @@
             "cmd": "set_pwm1",
             "payload": {
                 "status": "bool",
-                "duty_cycle": "double"
+                "current": "double"
             }
         },
         {
             "cmd": "set_pwm2",
             "payload": {
                 "status": "bool",
-                "duty_cycle": "double"
+                "voltage": "double"
             }
         },
         {
             "cmd": "set_pwm3",
             "payload": {
                 "status": "bool",
-                "duty_cycle": "double"
+                "on_time": "double"
             }
         },
     ]

@@ -51,10 +51,11 @@ Item {
 //    }
 
     ColumnLayout {
-        width: parent.width
+        width: parent.width/2
         height: parent.height/1.1
-        anchors.centerIn: parent
+        //anchors.centerIn: parent
         anchors.top:parent.top
+        anchors.bottom:parent.bottom
         anchors.topMargin: 250
         anchors.left: parent.left
         anchors.leftMargin: 20
@@ -62,8 +63,40 @@ Item {
         anchors.rightMargin: 20
         spacing: 20
 
+        Rectangle{
+            width: parent.width
+            height: parent.height
+            //color: "red"
+        }
+
+    }
+
+    ColumnLayout {
+        width: parent.width/2
+        height: parent.height/1.1
+        //anchors.centerIn: parent
+        anchors.top:parent.top
+        anchors.bottom:parent.bottom
+        anchors.topMargin: 250
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+        spacing: 20
+
+        Rectangle{
+            width: parent.width
+            height: parent.height
+            //color: "blue"
+        }
+
         Item {
-            Layout.preferredHeight: parent.height/4
+            Layout.preferredHeight: parent.height/3
+            Layout.fillWidth: true
+        }
+
+        Item {
+            Layout.preferredHeight: parent.height/3
             Layout.fillWidth: true
 
             Rectangle{
@@ -133,7 +166,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm1SliderLabel
                                 target: pwm1Slider
-                                text: "Duty cycle"
+                                text: "Current (A)"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter
@@ -141,16 +174,16 @@ Item {
                                 SGSlider {
                                     id: pwm1Slider
                                     width: 250
-                                    from: 0.00
-                                    to: 255.00
-                                    stepSize: 1
-                                    value: 0
-                                    inputBox.validator: IntValidator { top: 255; bottom:0 }
-                                    inputBox.text: pwm1Slider.value
+                                    from: 0.6
+                                    to: 4.5
+                                    stepSize: 0.1
+                                    value: 0.6
+                                    inputBox.validator: DoubleValidator { top: 4.5; bottom: 0.6 }
+                                    inputBox.text:  parseFloat(pwm1Slider.value.toFixed(2))
                                     contextMenuEnabled: true
                                     onUserSet: {
-                                        inputBox.text = value
-                                        platformInterface.commands.set_pwm1.update(value,pwm1Switch.checked)
+                                        inputBox.text = parseFloat(value.toFixed(2))
+                                        platformInterface.commands.set_pwm1.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
 //                                        delegateText1.text = JSON.stringify(my_cmd_simple_obj,null,4)
                                     }
                                 }
@@ -197,7 +230,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm2SliderLabel
                                 target: pwm2Slider
-                                text: "Duty cycle"
+                                text: "Voltage (V)"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter
@@ -205,16 +238,16 @@ Item {
                                 SGSlider {
                                     id: pwm2Slider
                                     width: 250
-                                    from: 0.00
-                                    to: 255.00
-                                    stepSize: 1
-                                    value: 0
-                                    inputBox.validator: IntValidator { top: 255.00; bottom:0.00 }
-                                    inputBox.text: pwm2Slider.value
+                                    from: 4.5
+                                    to: 9.5
+                                    stepSize: 0.0196
+                                    value: 4.5
+                                    inputBox.validator: DoubleValidator { top: 9.50; bottom: 4.50 }
+                                    inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
                                     onUserSet: {
-                                        inputBox.text = value
-                                        platformInterface.commands.set_pwm2.update(value ,pwm2Switch.checked)
+                                        inputBox.text = parseFloat(value.toFixed(2))
+                                        platformInterface.commands.set_pwm2.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
 //                                        delegateText1.text = JSON.stringify(my_cmd_simple_obj,null,4)
                                     }
                                 }
@@ -261,7 +294,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm3SliderLabel
                                 target: pwm3Slider
-                                text: "Duty cycle"
+                                text: "Time (ms)"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter
@@ -269,11 +302,11 @@ Item {
                                 SGSlider {
                                     id: pwm3Slider
                                     width: 250
-                                    from: 0
-                                    to: 4000
-                                    stepSize: 1
-                                    value: 5
-                                    inputBox.validator: DoubleValidator { top: 4000.00; bottom: 0 }
+                                    from: 0.5
+                                    to: 5
+                                    stepSize: 0.1
+                                    value: 0.5
+                                    inputBox.validator: DoubleValidator { top: 5.00; bottom: 0.5 }
                                     inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
                                     onUserSet: {
@@ -290,5 +323,9 @@ Item {
         }
     }
 }
+
+
+
+
 
 
