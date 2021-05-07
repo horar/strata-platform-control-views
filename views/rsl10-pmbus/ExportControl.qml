@@ -31,12 +31,9 @@ ColumnLayout {
         if(basicGraph1.count > 0) {
             basicGraph1.removeCurve(0)
         }
-
-        Help.registerTarget(basicGraph,"Speed/DC link graph:\n\t-Actual Speed.\n\t-DC Link Voltage.", 0, "exportControlHelp")
-        Help.registerTarget(basicGraph1,"Current graph:\n\t-FOC Iout Id.\n\t-FOC Iout Iq.\n\t-Winding Iout Iu.\n\t-Winding Iout Iv.\n\t-Winding Iout Iw.", 1, "exportControlHelp")
-        Help.registerTarget(rect431,"Error message status are shown here.", 2, "exportControlHelp")
-        Help.registerTarget(rect432,"Reset charts and starts new measurement.", 3, "exportControlHelp")
-        Help.registerTarget(rect433,"Exports all data to Excel as a log file.", 4, "exportControlHelp")
+        Help.registerTarget(rect432,"Reset charts and starts new measurement.", 0, "exportControlHelp")
+        Help.registerTarget(rect433,"Exports all data to Excel as a log file.", 1, "exportControlHelp")
+        Help.registerTarget(graphSelector,"Graph selector.", 2, "exportControlHelp")
     }
     property var graph_selected1
     property var graph_selected2
@@ -644,6 +641,7 @@ ColumnLayout {
                                             }
                                         }
                                     }
+
                                     Rectangle {
                                         id: rect433
                                         color: "#00000000"
@@ -771,7 +769,6 @@ ColumnLayout {
                                                 }
                                             }
                                         }
-
                                     }
                                 }
                             }

@@ -76,26 +76,27 @@ Item {
     }
 
     Component.onCompleted:  {
-        Help.registerTarget(runningButton, "Place holder for Basic control view help messages", 0, "advanceHelp")
-
-        Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced, Real-time trend analysis, Load Transient and Core Control views.", 0, "advanceHelp")
-        Help.registerTarget(powerInputGauge, "This gauge shows the Input Power.", 1, "advanceHelp")
-        Help.registerTarget(powerDissipatedGauge, "This gauge shows the power dissipated by the DC-DC. This is calculated with Pout - Pin.", 2, "advanceHelp")
-
-        Help.registerTarget(powerOutputGauge, "This gauge shows the Output Power.", 4, "advanceHelp")
-        Help.registerTarget(efficiencyGraph, "Efficiency (η) is plotted in real time", 5, "advanceHelp")
-        Help.registerTarget(vinGraph, "Input Voltage is plotted in real time", 6, "advanceHelp")
-        Help.registerTarget(iinGraph, "Input Current is plotted in real time", 7, "advanceHelp")
-        Help.registerTarget(pdissGraph, "Power Dissipated is plotted in real time", 8, "advanceHelp")
-        Help.registerTarget(poutGraph, "Output Power is plotted in real time", 9, "advanceHelp")
-        Help.registerTarget(voutGraph, "Output Voltage is plotted in real time", 10, "advanceHelp")
-        Help.registerTarget(ioutGraph, "Output Current is plotted in real time", 11, "advanceHelp")
-
-        Help.registerTarget(inputVoltage, "Input voltage is shown here.", 13, "advanceHelp")
-        Help.registerTarget(inputCurrent, "Input current is shown here.", 14, "advanceHelp")
-        Help.registerTarget(outputVoltage, "Output voltage is shown here.", 15, "advanceHelp")
-        Help.registerTarget(outputCurrent, "Output current is shown here.", 16, "advanceHelp")
-        Help.registerTarget(capacityBar1, "A linear capacity graphing in real time", 17, "advanceHelp")
+        Help.registerTarget(efficiencyGraph, "Efficiency (η) is plotted in real time.", 0, "advanceHelp")
+        Help.registerTarget(specific1Text, "PMBus: STATUS_MFR_SPECIFIC1.", 1, "advanceHelp")
+        Help.registerTarget(resetErrorButton, "PMBus: CLEAR_FAULTS. Clears all fault status registers to 0x00 and releases SMBALERT#.", 2, "advanceHelp")
+        Help.registerTarget(specific2Text, "PMBus: STATUS_MFR_SPECIFIC2.", 3, "advanceHelp")
+        Help.registerTarget(voutOVFaultResponseCombo, "PMBus: VOUT_OV_FAULT_RESPONSE. Latch, retry, ignore.", 4, "advanceHelp")
+        Help.registerTarget(voutUVFaultResponseCombo, "PMBus: VOUT_UV_FAULT_RESPONSE. Latch, retry, ignore.", 5, "advanceHelp")
+        Help.registerTarget(ioutOCFaultResponseCombo, "PMBus: IOUT_OT_FAULT_RESPONSE. Latch, retry, ignore.", 6, "advanceHelp")
+        Help.registerTarget(overTemperatureFaultSlider, "PMBus: OT_FAULT_LIMIT. Sets the temperature of the unit, in degrees Celsius, at which it should indicate an Over temperature Fault.", 7, "advanceHelp")
+        Help.registerTarget(voutOVlimitFaultSlider, "PMBus: VOUT_OV_FAULT_LIMIT.", 8, "advanceHelp")
+        Help.registerTarget(voutUVlimitFaultSlider, "PMBus: VOUT_UV_FAULT_LIMIT.", 9, "advanceHelp")
+        Help.registerTarget(ioutOClimitFaultSlider, "PMBus: IOUT_OC_FAULT_LIMIT.", 10, "advanceHelp")
+        Help.registerTarget(overTemperatureWarningSlider, "PMBus: OT_WARN_LIMIT. Sets the temperature of the unit, in degrees Celsius, at which it should indicate an Over temperature Warning.", 11, "advanceHelp")
+        Help.registerTarget(voutOVlimitWarningSlider, "PMBus: VOUT_OV_WARN_LIMIT.", 12, "advanceHelp")
+        Help.registerTarget(voutUVlimitWarningSlider, "PMBus: VOUT_UV_WARN_LIMIT.", 13, "advanceHelp")
+        Help.registerTarget(ioutOClimitWarningSlider, "PMBus: IOUT_OC_WARN_LIMIT.", 14, "advanceHelp")
+        Help.registerTarget(vinGraph, "Input Voltage is plotted in real time", 15, "advanceHelp")
+        Help.registerTarget(iinGraph, "Input Current is plotted in real time", 16, "advanceHelp")
+        Help.registerTarget(pdissGraph, "Power Dissipated is plotted in real time", 17, "advanceHelp")
+        Help.registerTarget(poutGraph, "Output Power is plotted in real time", 18, "advanceHelp")
+        Help.registerTarget(voutGraph, "Output Voltage is plotted in real time", 19, "advanceHelp")
+        Help.registerTarget(ioutGraph, "Output Current is plotted in real time", 20, "advanceHelp")
     }
 
     Rectangle{

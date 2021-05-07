@@ -80,17 +80,18 @@ Item {
 
     Component.onCompleted:  {
         multiplePlatform.check_class_id()
-        Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced, Settings/Control and Data Logger/Export views.", 0, "basicHelp")
+        Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced and Data Logger/Export views.", 0, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
-        Help.registerTarget(inputVoltage,"Input voltage is shown here in Volts.", 2 , "basicHelp")
-        Help.registerTarget(inputCurrent,"Input current is shown here in milliamps.", 3 , "basicHelp")
-        Help.registerTarget(basicImage, "The center image shows the board configuration.", 4, "basicHelp")
-        Help.registerTarget(dimmensionalModeSpace, "Dimmensional space mode for the center image.", 5, "basicHelp")
-        Help.registerTarget(dio12Switch, "This switch enables or disables DIO12.", 6, "basicHelp")
-        Help.registerTarget(outputCurrent,"Output current is shown here in milliamps.", 7, "basicHelp")
-        Help.registerTarget(outputVoltage,"Output voltage is shown here in Volts.", 8, "basicHelp")
-        Help.registerTarget(operationModeControl, "These are two modes to control the system. In Load Transient mode, PWM signal will be set by the slider above. In Normal mode, the system will go through a particular PWM signal profile.", 9 , "basicHelp")
-
+        Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
+        Help.registerTarget(inputCurrent,"Input current is shown here.", 3 , "basicHelp")
+        Help.registerTarget(tempGauge, "This gauge shows the board temperature.", 4, "basicHelp")
+        Help.registerTarget(basicImage, "The center image shows the board configuration.", 5, "basicHelp")
+        Help.registerTarget(dimmensionalModeSpace, "Dimmensional space mode for the center image.", 6, "basicHelp")
+        Help.registerTarget(dio12Switch, "This switch enables or disables the DUT.", 7, "basicHelp")
+        Help.registerTarget(outputVoltage,"Output voltage is shown here.", 8, "basicHelp")
+        Help.registerTarget(outputCurrent,"Output current is shown here.", 9, "basicHelp")
+        Help.registerTarget(effiGauge, "This gauge shows the DUT's efficiency.", 10, "basicHelp")
+        Help.registerTarget(operationModeControl, "These are two modes to control the system. In Load Transient mode, PWM signal will be set by the sliders in the Quick View. In Normal mode, the system will go through a particular PWM signal profile.", 11 , "basicHelp")
     }
 
     FontLoader {
