@@ -375,109 +375,6 @@ ColumnLayout {
                                             }
                                         }
                                     }
-
-                                    Widget09.SGSegmentedButtonStrip {
-                                        id: graphSelector
-                                        label: "<b>Show Graphs:</b>"
-                                        labelLeft: true
-                                        anchors {
-                                            top: basicGraph.top
-                                            topMargin: parent.height*0.03
-                                            left: basicGraph.left
-                                            leftMargin: parent.width/15
-                                        }
-                                        textColor: "#666"
-                                        activeTextColor: "white"
-                                        activeColor: "green"
-                                        radius: parent.height*0.04
-                                        buttonHeight: parent.height*0.005
-                                        exclusive: false
-                                        buttonImplicitWidth: (parent.width + parent.height)/40
-                                        property int howManyChecked: 0
-
-                                        segmentedButtons: GridLayout {
-                                            columnSpacing: 2
-                                            rowSpacing: 2
-
-                                            Widget09.SGSegmentedButton{
-                                                text: qsTr("Input Voltage")
-                                                onCheckedChanged: {
-                                                    if (checked) {
-                                                        graph_selected1 = 1
-                                                        graphSelector.howManyChecked++
-                                                    } else {
-                                                        graph_selected1 = 0
-                                                        graphSelector.howManyChecked--
-                                                    }
-                                                }
-                                            }
-
-                                            Widget09.SGSegmentedButton{
-                                                text: qsTr("Input Current")
-                                                onCheckedChanged: {
-                                                    if (checked) {
-                                                        graph_selected2 = 1
-                                                        graphSelector.howManyChecked++
-                                                    } else {
-                                                        graph_selected2 = 0
-                                                        graphSelector.howManyChecked--
-                                                    }
-                                                }
-                                            }
-
-                                            Widget09.SGSegmentedButton{
-                                                text: qsTr("Output Voltage")
-                                                onCheckedChanged: {
-                                                    if (checked) {
-                                                        graph_selected3 = 1
-                                                        graphSelector.howManyChecked++
-                                                    } else {
-                                                        graph_selected3 = 0
-                                                        graphSelector.howManyChecked--
-                                                    }
-                                                }
-                                            }
-
-                                            Widget09.SGSegmentedButton{
-                                                text: qsTr("Output Current")
-                                                onCheckedChanged: {
-                                                    if (checked) {
-                                                        graph_selected4 = 1
-                                                        graphSelector.howManyChecked++
-                                                    } else {
-                                                        graph_selected4 = 0
-                                                        graphSelector.howManyChecked--
-                                                    }
-                                                }
-                                            }
-
-                                            Widget09.SGSegmentedButton{
-                                                text: qsTr("Efficiency")
-                                                onCheckedChanged: {
-                                                    if (checked) {
-                                                        graph_selected5 = 1
-                                                        graphSelector.howManyChecked++
-                                                    } else {
-                                                        graph_selected5 = 0
-                                                        graphSelector.howManyChecked--
-                                                    }
-                                                }
-                                            }
-
-                                            Widget09.SGSegmentedButton{
-                                                text: qsTr("Temperature")
-                                                onCheckedChanged: {
-                                                    if (checked) {
-                                                        graph_selected6 = 1
-                                                        graphSelector.howManyChecked++
-                                                    } else {
-                                                        graph_selected6 = 0
-                                                        graphSelector.howManyChecked--
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -689,7 +586,8 @@ ColumnLayout {
                                 id: rect43
                                 color: "transparent"; width: parent.width*0.99; height: parent.height*0.22
                                 border.width: 0
-                                border.color: "lightgray"
+                                border.color: "transparent"
+
                                 Grid {
                                     id: grid42
                                     anchors.fill: parent
@@ -698,7 +596,10 @@ ColumnLayout {
 
                                     Rectangle {
                                         id: rect432
-                                        color: "#00000000"; width: parent.width*0.25; height: parent.height
+                                        color: "#00000000"
+                                        width: parent.width*0.15
+                                        height: parent.height
+
                                         Text {
                                             id: name320
                                             text: "Measure (Start/Reset)"
@@ -746,7 +647,7 @@ ColumnLayout {
                                     Rectangle {
                                         id: rect433
                                         color: "#00000000"
-                                        width: parent.width*0.25
+                                        width: parent.width*0.2
                                         height: parent.height
                                         Text {
                                             id: name321
@@ -765,6 +666,112 @@ ColumnLayout {
                                             anchors.top: parent.top
                                             anchors.topMargin: parent.height*0.18
                                         }
+                                    }
+
+                                    Rectangle {
+                                        id: rect434
+                                        color: "#00000000"
+                                        width: parent.width
+                                        height: parent.height
+
+                                        Widget09.SGSegmentedButtonStrip {
+                                            id: graphSelector
+                                            label: "<b>Show Graphs:</b>"
+                                            labelLeft: true
+
+                                            textColor: "#666"
+                                            activeTextColor: "white"
+                                            activeColor: "green"
+                                            radius: parent.height*0.04
+                                            buttonHeight: parent.height*0.2
+                                            exclusive: false
+                                            buttonImplicitWidth: (parent.width + parent.height)/30
+                                            property int howManyChecked: 0
+
+                                            segmentedButtons: GridLayout {
+                                                columnSpacing: 2
+                                                rowSpacing: 2
+
+                                                Widget09.SGSegmentedButton{
+                                                    text: qsTr("Vin")
+                                                    onCheckedChanged: {
+                                                        if (checked) {
+                                                            graph_selected1 = 1
+                                                            graphSelector.howManyChecked++
+                                                        } else {
+                                                            graph_selected1 = 0
+                                                            graphSelector.howManyChecked--
+                                                        }
+                                                    }
+                                                }
+
+                                                Widget09.SGSegmentedButton{
+                                                    text: qsTr("Iin")
+                                                    onCheckedChanged: {
+                                                        if (checked) {
+                                                            graph_selected2 = 1
+                                                            graphSelector.howManyChecked++
+                                                        } else {
+                                                            graph_selected2 = 0
+                                                            graphSelector.howManyChecked--
+                                                        }
+                                                    }
+                                                }
+
+                                                Widget09.SGSegmentedButton{
+                                                    text: qsTr("Vout")
+                                                    onCheckedChanged: {
+                                                        if (checked) {
+                                                            graph_selected3 = 1
+                                                            graphSelector.howManyChecked++
+                                                        } else {
+                                                            graph_selected3 = 0
+                                                            graphSelector.howManyChecked--
+                                                        }
+                                                    }
+                                                }
+
+                                                Widget09.SGSegmentedButton{
+                                                    text: qsTr("Iout")
+                                                    onCheckedChanged: {
+                                                        if (checked) {
+                                                            graph_selected4 = 1
+                                                            graphSelector.howManyChecked++
+                                                        } else {
+                                                            graph_selected4 = 0
+                                                            graphSelector.howManyChecked--
+                                                        }
+                                                    }
+                                                }
+
+                                                Widget09.SGSegmentedButton{
+                                                    text: qsTr("Efficiency")
+                                                    onCheckedChanged: {
+                                                        if (checked) {
+                                                            graph_selected5 = 1
+                                                            graphSelector.howManyChecked++
+                                                        } else {
+                                                            graph_selected5 = 0
+                                                            graphSelector.howManyChecked--
+                                                        }
+                                                    }
+                                                }
+
+                                                Widget09.SGSegmentedButton{
+                                                    text: qsTr("Temperature")
+                                                    onCheckedChanged: {
+                                                        if (checked) {
+                                                            graph_selected6 = 1
+                                                            graphSelector.howManyChecked++
+                                                        } else {
+                                                            graph_selected6 = 0
+                                                            graphSelector.howManyChecked--
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
                                     }
                                 }
                             }
