@@ -18,10 +18,10 @@ Item {
     //
 
     property var status_voltage_current : {
-        "vin": 48324,		// in mVolts
-        "vout": 12459,      // in mVolts
-        "iin":	16157,    	// in mAmps
-        "iout": 60374,     	// in mAmps
+        "vin": 0,		// in mVolts
+        "vout": 0,      // in mVolts
+        "iin":	0,    	// in mAmps
+        "iout": 0,     	// in mAmps
     }
 
     property var status_word : {
@@ -85,7 +85,7 @@ Item {
     // @description: Read temperature
     //
     property var status_temperature_sensor : {
-        "temperature":	24
+        "temperature":	0
     }
 
     property var status_enable: {

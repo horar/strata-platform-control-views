@@ -4,27 +4,27 @@ import "qrc:/js/navigation_control.js" as NavigationControl
 Item{
 
     property string class_id
-    property string eeprom_ID
-    property string partNumber
-    property string title
-    property string warningHVVinLable
-    property string warningLVVinLable
-    property string opn
-    property real minVin
-    property real nominalVin
-    property real vinScale
-    property real iinScale
-    property real voutScale
-    property real ioutScale
-    property real poutScale
-    property real pdissScale
-    property bool showDecimal
-    property real poutStep
-    property real pdissStep
-    property bool dio12
-    property bool lowpowerDCDC
-    property string pdiss
-    property string current
+    property string eeprom_ID: "d4937f24-219a-4648-a711-2f6e902b6f1c"
+    property string partNumber:"<b> FD6000/A </b>"
+    property string title: "<b> DCX-LLC demoboard </b>"
+    property string warningHVVinLable: "70V"
+    property string warningLVVinLable: "30V"
+    property string opn: "STR-PWRFD6000-R0-GEVK"
+    property real minVin: 30
+    property real nominalVin: 60
+    property real vinScale: 100
+    property real iinScale: 20
+    property real voutScale: 20
+    property real ioutScale: 100
+    property real poutScale: 1000
+    property real pdissScale: 500
+    property bool showDecimal: true
+    property real poutStep: 100
+    property real pdissStep: 50
+    property bool dio12: true
+    property bool lowpowerDCDC: true
+    property string pdiss: "W"
+    property string current: "A"
 
     function check_class_id ()
     {
