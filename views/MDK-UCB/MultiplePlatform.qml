@@ -9,7 +9,7 @@ Item{
     property string warningHVVinLable: "400V"
     property string warningLVVinLable: "290V"
     property string opn: "SECO-MDK-4KW-65SPM31-GEVK"
-    property real minVin: 200
+    property real minVin: 290
     property real nominalVin: 410
     property real vinScale: 500
     property real ioutScale: 12
@@ -20,9 +20,9 @@ Item{
             title =  "<b> 4kW 650V Industrial Motor Control with IPM & UCB </b>"
             partNumber = " <b> Part of the Motor Development Kit Family </b>"
             warningHVVinLable = "400V"
-            warningLVVinLable = "200V" //290
-            opn = "SECO-MDK-4KW-65SPM31-GEVK"
-            minVin = 200 //290
+            warningLVVinLable = "290V"
+            opn = "STR-MDK-4KW-65SPM31-GEVK"
+            minVin = 290
             nominalVin = 410
             vinScale = 500
             ioutScale = 12
@@ -32,7 +32,7 @@ Item{
             title =  "<b> 1kW 650V Industrial Motor Control with IPM & UCB</b> "
             warningHVVinLable = "265V"
             warningLVVinLable = "195V"
-            opn = "SECO-1KW-MDK-GEVK"
+            opn = "STR-1KW-MDK-GEVK"
             minVin = 195
             nominalVin = 265
             vinScale = 300

@@ -397,7 +397,6 @@ Item {
                         else if(multiplePlatform.eeprom_ID === "3ea08e05-0bcd-4a4a-86ec-79a1ca9750cd" && platformInterface.dimmensionalMode === true) {"images/ncv91300_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "abd65a0b-3229-44a4-a97c-38ea3c24f990" && platformInterface.dimmensionalMode === true) {"images/ncv890430_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "266f22e5-dc05-4819-b565-e5fb8035984e" && platformInterface.dimmensionalMode === true) {"images/ncv48920_3D.gif"}
-                        else if(multiplePlatform.eeprom_ID === "d4937f24-219a-4648-a711-2f6e902b6f1c" && platformInterface.dimmensionalMode === true) {"images/quarter_brick_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "b519cdcb-5068-4483-b88e-155813fae915" && platformInterface.dimmensionalMode === true) {"images/ncv816x_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "26ebc2ba-9bab-4bdd-97b6-09b5b8cbdf9e" && platformInterface.dimmensionalMode === true) {"images/ncv6323_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "cce0f32e-ee1e-44aa-81a3-0801a71048ce" && platformInterface.dimmensionalMode === true) {"images/ncv6922_3D.gif"}
@@ -409,7 +408,6 @@ Item {
                         else if(multiplePlatform.eeprom_ID === "3ea08e05-0bcd-4a4a-86ec-79a1ca9750cd" && platformInterface.dimmensionalMode === false) {"images/ncv91300_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "abd65a0b-3229-44a4-a97c-38ea3c24f990" && platformInterface.dimmensionalMode === false) {"images/ncv890430_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "266f22e5-dc05-4819-b565-e5fb8035984e" && platformInterface.dimmensionalMode === false) {"images/ncv48920_2D.gif"}
-                        else if(multiplePlatform.eeprom_ID === "d4937f24-219a-4648-a711-2f6e902b6f1c" && platformInterface.dimmensionalMode === false) {"images/quarter_brick_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "b519cdcb-5068-4483-b88e-155813fae915" && platformInterface.dimmensionalMode === false) {"images/ncv816x_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "26ebc2ba-9bab-4bdd-97b6-09b5b8cbdf9e" && platformInterface.dimmensionalMode === false) {"images/ncv6323_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "cce0f32e-ee1e-44aa-81a3-0801a71048ce" && platformInterface.dimmensionalMode === false) {"images/ncv6922_2D.gif"}

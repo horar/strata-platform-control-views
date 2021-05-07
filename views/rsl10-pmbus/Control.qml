@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
 import "qrc:/js/navigation_control.js" as NavigationControl
 import "qrc:/sgwidgets"
-import "qrc:/image"
+import "qrc:/images"
 import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.fonts 1.0
 import tech.strata.sgwidgets 0.9
@@ -72,7 +72,6 @@ Rectangle {
             onClicked: {
                 basicControl.visible = true
                 advancedControl.visible = false
-                settingsControl.visible = false
                 exportControl.visible = false
             }
         }
@@ -83,18 +82,6 @@ Rectangle {
             onClicked: {
                 basicControl.visible = false
                 advancedControl.visible = true
-                settingsControl.visible = false
-                exportControl.visible = false
-            }
-        }
-
-        TabButton {
-            id: settingsButton
-            text: qsTr("Control / Settings")
-            onClicked: {
-                basicControl.visible = false
-                advancedControl.visible = false
-                settingsControl.visible = true
                 exportControl.visible = false
             }
         }
@@ -105,11 +92,9 @@ Rectangle {
             onClicked: {
                 basicControl.visible = false
                 advancedControl.visible = false
-                settingsControl.visible = false
                 exportControl.visible = true
             }
         }
-
     }
 
     StackLayout {
@@ -119,7 +104,6 @@ Rectangle {
             bottom: controlNavigation.bottom
             right: controlNavigation.right
             left: controlNavigation.left
-
         }
 
         currentIndex: navTabs.currentIndex
@@ -146,19 +130,7 @@ Rectangle {
                 visible: false
                 width: parent.width
                 height: parent.height
-            }
-        }
 
-        Rectangle {
-            width: parent.width
-            height: parent.height
-            color: "light gray"
-
-            SettingsControl {
-                id: settingsControl
-                visible: false
-                width: parent.width
-                height: parent.height
             }
         }
 
@@ -181,14 +153,14 @@ Rectangle {
         id: helpIcon
         anchors {
             right: parent.right
-            rightMargin: parent.width/300
+            rightMargin: 20
             top: parent.top
             topMargin: 50
         }
         source: "qrc:/sgimages/question-circle.svg"
         iconColor: helpMouse.containsMouse ? "lightgrey" : "grey"
-        height: parent.height/25
-        width: parent.width/25
+        height: 40
+        width: 40
         visible: true
 
         MouseArea {
@@ -199,7 +171,6 @@ Rectangle {
             onClicked: {
                 if(basicControl.visible === true) {Help.startHelpTour("basicHelp")}
                 else if(advancedControl.visible === true) {Help.startHelpTour("advanceHelp")}
-                else if(settingsControl.visible === true) {Help.startHelpTour("settingsHelp")}
                 else if(exportControl.visible === true) {Help.startHelpTour("exportControlHelp")}
                 else console.log("help not available")
             }
@@ -220,13 +191,12 @@ Rectangle {
     }
 
         SideBar {
-        id: sideBar
+        id: sideBarLeft
         anchors {
             left: parent.left
             leftMargin: -70
             top: parent.top
         }
     }
+
 }
-
-

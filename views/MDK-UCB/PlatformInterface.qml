@@ -20,8 +20,6 @@ Item {
 
     property var status_IO: {"motor_EN": ""}
 
-    property var status_direction : {"direction":""}
-
     property var status_temperature_sensor : {"temperature": 0}
 
     property var status_enable: {"enable": "","motor_EN_enable": ""}

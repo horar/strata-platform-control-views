@@ -153,7 +153,7 @@ Item {
                             id:max_motor_voutSliderUnit
                             text:"Volts"
                             font.pixelSize: (parent.width + parent.height)/ 40
-                            color:lightgrey
+                            color: "black"
                             anchors.left: max_motor_voutSlider.right
                             }
                     }
@@ -183,7 +183,7 @@ Item {
                             id:max_motor_speedSliderUnit
                             text:"RPM"
                             font.pixelSize: (parent.width + parent.height)/ 40
-                            color: "lightgrey"
+                            color: "black"
                             anchors.left: max_motor_speedSlider.right
                             }
                     }
@@ -231,7 +231,7 @@ Item {
                             id:timeSliderUnit
                             text:"s"
                             font.pixelSize: (parent.width + parent.height)/ 40
-                            color:lightgrey
+                            color: "black"
                             anchors.left: timeSlider.right
                             }
                     }
@@ -260,7 +260,7 @@ Item {
                             id:pointsCountSliderUnit
                             text:"Points"
                             font.pixelSize: (parent.width + parent.height)/ 40
-                            color:lightgrey
+                            color: "black"
                             anchors.left: pointsCountSlider.right
                             }
                     }
@@ -289,7 +289,7 @@ Item {
                             id:amperesSliderUnit
                             text:"Amps"
                             font.pixelSize: (parent.width + parent.height)/ 40
-                            color:lightgrey
+                            color: "black"
                             anchors.left: amperesSlider.right
                             }
                     }
@@ -699,7 +699,7 @@ Item {
                             id: resistanceSliderUnit
                             text:"Ohm"
                             font.pixelSize: (parent.width + parent.height)/ 25
-                            color:lightgrey
+                            color: "black"
                             anchors.left: resistanceSlider.right
                             }
                     }
@@ -730,7 +730,7 @@ Item {
                             id: inductanceSliderUnit
                             text:"Henry"
                             font.pixelSize: (parent.width + parent.height)/ 25
-                            color:lightgrey
+                            color: "black"
                             anchors.left: inductanceSlider.right
                             }
                     }

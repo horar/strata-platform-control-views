@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/">
+        <file>AdvancedControl.qml</file>
+        <file>BasicControl.qml</file>
+        <file>Control.qml</file>
+        <file>MultiplePlatform.qml</file>
+        <file>PlatformInterface.qml</file>
+        <file>sgwidgets/SGCircularGauge.qml</file>
+        <file>sgwidgets/SGComboBox.qml</file>
+        <file>sgwidgets/SGGraph.qml</file>
+        <file>sgwidgets/SGLabelledInfoBox.qml</file>
+        <file>sgwidgets/SGRadioButton.qml</file>
+        <file>sgwidgets/SGRadioButtonContainer.qml</file>
+        <file>sgwidgets/SGSlider.qml</file>
+        <file>sgwidgets/SGStatusLight.qml</file>
+        <file>sgwidgets/SGStatusListBox.qml</file>
+        <file>sgwidgets/SGSubmitInfoBox.qml</file>
+        <file>sgwidgets/SGSwitch.qml</file>
+        <file>sgwidgets/SGToolTipPopup.qml</file>
+        <file>sgwidgets/fonts/digitalseven.ttf</file>
+        <file>sgwidgets/fonts/sgicons.ttf</file>
+        <file>sgwidgets/images/greenStatusLight.svg</file>
+        <file>sgwidgets/images/offStatusLight.svg</file>
+        <file>sgwidgets/images/redStatusLight.svg</file>
+        <file>sgwidgets/images/sliderHandle.svg</file>
+        <file>sgwidgets/images/sliderHandleActive.svg</file>
+        <file>sgwidgets/images/sliderValue.svg</file>
+        <file>images/quarter_brick_3D.gif</file>
+        <file>images/quarter_brick_2D.gif</file>
+        <file>images/led_3d.gif</file>
+        <file>images/transient.gif</file>
+        <file>sgwidgets/GraphConverter.qml</file>
+        <file>images/stop-solid.svg</file>
+        <file>images/play-solid.svg</file>
+        <file>images/tach.svg</file>
+        <file>ExportControl.qml</file>
+        <file>SaveDialogMenu.qml</file>
+        <file>MultiButton.qml</file>
+        <file>sgwidgets/SliderPopup.qml</file>
+        <file>sgwidgets/IconButton.qml</file>
+        <file>sgwidgets/FaultLight.qml</file>
+        <file>sgwidgets/DigitalReadout.qml</file>
+        <file>sgwidgets/CircGauge.qml</file>
+        <file>SideBar.qml</file>
+        <file>sgwidgets/SGAlignedLabel.qml</file>
+    </qresource>
+</RCC>
