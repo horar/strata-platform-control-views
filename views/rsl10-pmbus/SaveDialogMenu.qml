@@ -37,7 +37,7 @@ Rectangle {
     //Error correction for Data_text_area  LOG DATA PRINT
     Timer{
         id:get_measurement_start
-        interval: +(virtualtextarea.realtimelog*1000) //1000
+        interval: +(virtualtextarea.realtimelog*1000)
         repeat: true
         running: true
         triggeredOnStart: true
@@ -48,32 +48,23 @@ Rectangle {
     property var my_last_time: 0
     property var one_time_top_row_excel: 0
 
-    property var temp_calc: +(platformInterface.status_temperature_sensor.temperature).toFixed(3)
-    property var dc_link_vin_calc: +(platformInterface.status_vi.l/1000).toFixed(3)
-    property var foc_iout_id_calc: +(platformInterface.status_vi.d/1000).toFixed(3)
-    property var foc_iout_iq_calc: +(platformInterface.status_vi.q/1000).toFixed(3)
-    property var winding_iout_iu_calc: +(platformInterface.status_vi.u/1000).toFixed(3)
-    property var winding_iout_iv_calc: +(platformInterface.status_vi.v/1000).toFixed(3)
-    property var winding_iout_iw_calc: +(platformInterface.status_vi.w/1000).toFixed(3)
-    property var pole_pairs: +settingsControl.pole_pairs
-    property var max_motor_vout: +settingsControl.max_motor_vout
-    property var max_motor_speed: +settingsControl.max_motor_speed
-    property var current_pi_p_gain: +(settingsControl.current_pi_p_gain).toFixed(0)
-    property var current_pi_i_gain: +(settingsControl.current_pi_i_gain).toFixed(0)
-    property var speed_pi_p_gain: +(settingsControl.speed_pi_p_gain/1000).toFixed(3)
-    property var speed_pi_i_gain: +(settingsControl.speed_pi_i_gain/1000).toFixed(3)
-    property var resistance: +(settingsControl.resistance/100).toFixed(3)
-    property var inductance: +(settingsControl.inductance/1000).toFixed(3)
-    property var target_speed: +platformInterface.status_vi.t
-    property var actual_speed: +platformInterface.status_vi.a
+    property var vin_calc: (platformInterface.status_voltage_current.vin/1000).toFixed(3)
+    property var iin_calc: (platformInterface.status_voltage_current.iin/1000).toFixed(3)
+    property var vout_calc: (platformInterface.status_voltage_current.vout/1000).toFixed(3)
+    property var iout_calc: (platformInterface.status_voltage_current.iout/1000).toFixed(3)
+    property var pin_calc: vin_calc * iin_calc
+    property var pout_calc: vout_calc * iout_calc
+    property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
+    property var temp_calc: (platformInterface.status_temperature_sensor.temperature).toFixed(0)
 
-    onWinding_iout_iu_calcChanged:
+
+    onEffi_calcChanged:
             {
             if(one_time_top_row_excel===0){
-                time_data="Time\tDC_Link(V)\t    Id(A)\t    Iq(A)\t    Iu(A)\t    Iv(A)\t    Iw(A)\tTemp.(C)\tPole Pairs\tMax vout\tMax speed\tC.prop gain\tC.int gain\tS.prop gain\tS.int gain\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
+                time_data="Time\tVin(V)\t    Iin(A)\t    Vout(V)\t    Iout(A)\t    Effi(%)\t    Temp.(°C)"+"\n"
                 one_time_top_row_excel=1
                 }
-            else(time_data=""+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ foc_iout_id_calc +"\t"+ foc_iout_iq_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ current_pi_p_gain +"\t"+ current_pi_i_gain +"\t"+ speed_pi_p_gain +"\t"+ speed_pi_i_gain +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
+            else(time_data=""+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ vin_calc +"\t"+ iin_calc +"\t"+ vout_calc +"\t"+ iout_calc +"\t"+ effi_calc +"\t"+ temp_calc +"\n")
 
             my_last_time=(new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss:zzz"))
             save_file_dialogbox.collect_collect.push(time_data)
@@ -112,7 +103,7 @@ Rectangle {
                 id: frame
                 clip: true
                 width: parent.width
-                height: parent.height*0.436// 288
+                height: parent.height*0.436
                 anchors.bottom: parent.bottom
                 ScrollBar.vertical.policy: ScrollBar.AlwaysOn
                 Flickable {
@@ -160,11 +151,12 @@ Rectangle {
                     opensavedaialoguemenu.visible=false
                 }
             }
+
             menuBar: MenuBar {}
 
             Rectangle{
                 id:logs_datas
-                height: parent.height*0.57
+                height: parent.height*0.57// 358
                 color: "transparent"
                 width: parent.width
                 border.width: 14
@@ -174,7 +166,7 @@ Rectangle {
                 TextArea {
                     id:log_info_box
                     anchors.top: parent.top
-                    font.pixelSize: parent.height*0.03
+                    font.pixelSize: parent.height*0.03// 11
                     persistentSelection: true
                     text: virtualtextarea.text
                 }
@@ -197,7 +189,8 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     text: "Save"
-                    onClicked: { saveFileDialog.open()}
+                    onClicked: { saveFileDialog.open()
+                    }
                 }
 
                 Button{
