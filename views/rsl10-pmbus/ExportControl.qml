@@ -48,10 +48,6 @@ ColumnLayout {
     property var x_Axis_Timer_:0
     property var x_Axis_Timer_1:0
     property  int clear:0
-    property var one_time_clear_all_data: 0
-    property var pointsCount: settingsControl.pointsCount
-
-    property string error_code: basicControl.error_code
 
     property var vin_calc: platformInterface.status_voltage_current.vin/1000
     property var dataArray_vin_calc_graph: []
@@ -126,7 +122,7 @@ ColumnLayout {
         }
     }
 
-    property var temp_calc: (platformInterface.status_temperature_sensor.temperature).toFixed(0)
+    property var temp_calc: (platformInterface.status_temperature_pmbus.temperature_pmbus).toFixed(0)
     property var dataArray_temp_calc_graph: []
     property var temp_calc_validator:0
     onTemp_calcChanged:{
@@ -256,7 +252,6 @@ ColumnLayout {
                             anchors.bottom: parent.bottom
                             Rectangle {
                                 anchors.fill: parent
-                                anchors.top: rect2.bottom
                                 Rectangle {
                                     width: parent.width
                                     height: parent.height*0.7
@@ -417,7 +412,7 @@ ColumnLayout {
                                             backgroundColor: "white"
                                             foregroundColor: "black"
                                             xTitle: "Realtime Log Samples"
-                                            yTitle: "Vin (V) / Iout (A) / Effi. (%) / Temp. (°C)"
+                                            yTitle: "Vin (V) / Iout (A) / Effi. (%) / Chip Temp. (°C)"
 
                                             Button {
                                                 id:resetChartButton1
@@ -480,7 +475,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_temperature_sensor.temperature).toFixed(0) +" °C"
+                                                text: ""+ (platformInterface.status_temperature_pmbus.temperature_pmbus).toFixed(0) +" °C"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "red"
                                             }
@@ -527,7 +522,7 @@ ColumnLayout {
 
                                             Text {
                                                 id: tempText
-                                                text: "<b>Temperature<b>"
+                                                text: "<b>Chip Temperature<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: effiText.left

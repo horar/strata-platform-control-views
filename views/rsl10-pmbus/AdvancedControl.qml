@@ -79,24 +79,26 @@ Item {
         Help.registerTarget(efficiencyGraph, "Efficiency (η) is plotted in real time.", 0, "advanceHelp")
         Help.registerTarget(specific1Text, "PMBus: STATUS_MFR_SPECIFIC1.", 1, "advanceHelp")
         Help.registerTarget(resetErrorButton, "PMBus: CLEAR_FAULTS. Clears all fault status registers to 0x00 and releases SMBALERT#.", 2, "advanceHelp")
-        Help.registerTarget(specific2Text, "PMBus: STATUS_MFR_SPECIFIC2.", 3, "advanceHelp")
-        Help.registerTarget(voutOVFaultResponseCombo, "PMBus: VOUT_OV_FAULT_RESPONSE. Latch, retry, ignore.", 4, "advanceHelp")
-        Help.registerTarget(voutUVFaultResponseCombo, "PMBus: VOUT_UV_FAULT_RESPONSE. Latch, retry, ignore.", 5, "advanceHelp")
-        Help.registerTarget(ioutOCFaultResponseCombo, "PMBus: IOUT_OT_FAULT_RESPONSE. Latch, retry, ignore.", 6, "advanceHelp")
-        Help.registerTarget(overTemperatureFaultSlider, "PMBus: OT_FAULT_LIMIT. Sets the temperature of the unit, in degrees Celsius, at which it should indicate an Over temperature Fault.", 7, "advanceHelp")
-        Help.registerTarget(voutOVlimitFaultSlider, "PMBus: VOUT_OV_FAULT_LIMIT.", 8, "advanceHelp")
-        Help.registerTarget(voutUVlimitFaultSlider, "PMBus: VOUT_UV_FAULT_LIMIT.", 9, "advanceHelp")
-        Help.registerTarget(ioutOClimitFaultSlider, "PMBus: IOUT_OC_FAULT_LIMIT.", 10, "advanceHelp")
-        Help.registerTarget(overTemperatureWarningSlider, "PMBus: OT_WARN_LIMIT. Sets the temperature of the unit, in degrees Celsius, at which it should indicate an Over temperature Warning.", 11, "advanceHelp")
-        Help.registerTarget(voutOVlimitWarningSlider, "PMBus: VOUT_OV_WARN_LIMIT.", 12, "advanceHelp")
-        Help.registerTarget(voutUVlimitWarningSlider, "PMBus: VOUT_UV_WARN_LIMIT.", 13, "advanceHelp")
-        Help.registerTarget(ioutOClimitWarningSlider, "PMBus: IOUT_OC_WARN_LIMIT.", 14, "advanceHelp")
-        Help.registerTarget(vinGraph, "Input Voltage is plotted in real time", 15, "advanceHelp")
-        Help.registerTarget(iinGraph, "Input Current is plotted in real time", 16, "advanceHelp")
-        Help.registerTarget(pdissGraph, "Power Dissipated is plotted in real time", 17, "advanceHelp")
-        Help.registerTarget(poutGraph, "Output Power is plotted in real time", 18, "advanceHelp")
-        Help.registerTarget(voutGraph, "Output Voltage is plotted in real time", 19, "advanceHelp")
-        Help.registerTarget(ioutGraph, "Output Current is plotted in real time", 20, "advanceHelp")
+        Help.registerTarget(setParametersButton, "Save all user parameters to volatile memory.", 3, "advanceHelp")
+        Help.registerTarget(writeParametersButton, "PMBus: WRITE_PROTECT. Allow writes to all registers. Is used to control writing to the PMBus device. Provide protection against accidental changes. Bits <7:0> 0010 0000 − Disable all writes except to the WRITE_PROTECT, OPERATION, ON_OFF_CONFIG and VOUT_COMMAND commands", 4, "advanceHelp")
+        Help.registerTarget(specific2Text, "PMBus: STATUS_MFR_SPECIFIC2.", 5, "advanceHelp")
+        Help.registerTarget(voutOVFaultResponseCombo, "PMBus: VOUT_OV_FAULT_RESPONSE. Latch, retry, ignore.", 6, "advanceHelp")
+        Help.registerTarget(voutUVFaultResponseCombo, "PMBus: VOUT_UV_FAULT_RESPONSE. Latch, retry, ignore.", 7, "advanceHelp")
+        Help.registerTarget(ioutOCFaultResponseCombo, "PMBus: IOUT_OT_FAULT_RESPONSE. Latch, retry, ignore.", 8, "advanceHelp")
+        Help.registerTarget(overTemperatureFaultSlider, "PMBus: OT_FAULT_LIMIT. Sets the temperature of the unit, in degrees Celsius, at which it should indicate an Over temperature Fault.", 9, "advanceHelp")
+        Help.registerTarget(voutOVlimitFaultSlider, "PMBus: VOUT_OV_FAULT_LIMIT.", 10, "advanceHelp")
+        Help.registerTarget(voutUVlimitFaultSlider, "PMBus: VOUT_UV_FAULT_LIMIT.", 11, "advanceHelp")
+        Help.registerTarget(ioutOClimitFaultSlider, "PMBus: IOUT_OC_FAULT_LIMIT.", 12, "advanceHelp")
+        Help.registerTarget(overTemperatureWarningSlider, "PMBus: OT_WARN_LIMIT. Sets the temperature of the unit, in degrees Celsius, at which it should indicate an Over temperature Warning.", 13, "advanceHelp")
+        Help.registerTarget(voutOVlimitWarningSlider, "PMBus: VOUT_OV_WARN_LIMIT.", 14, "advanceHelp")
+        Help.registerTarget(voutUVlimitWarningSlider, "PMBus: VOUT_UV_WARN_LIMIT.", 15, "advanceHelp")
+        Help.registerTarget(ioutOClimitWarningSlider, "PMBus: IOUT_OC_WARN_LIMIT.", 16, "advanceHelp")
+        Help.registerTarget(vinGraph, "Input Voltage is plotted in real time", 17, "advanceHelp")
+        Help.registerTarget(iinGraph, "Input Current is plotted in real time", 18, "advanceHelp")
+        Help.registerTarget(pdissGraph, "Power Dissipated is plotted in real time", 19, "advanceHelp")
+        Help.registerTarget(poutGraph, "Output Power is plotted in real time", 20, "advanceHelp")
+        Help.registerTarget(voutGraph, "Output Voltage is plotted in real time", 21, "advanceHelp")
+        Help.registerTarget(ioutGraph, "Output Current is plotted in real time", 22, "advanceHelp")
     }
 
     Rectangle{
@@ -195,7 +197,7 @@ Item {
                         width: parent.width
                         from: 115
                         to: 135
-                        value: 125
+                        value: platformInterface.status_predefined_values.OT_fault
                         stepSize: 1
                         onValueChanged: overTemperatureFault = value
                         onUserSet: platformInterface.overTemperatureFault = overTemperatureFaultSlider.value
@@ -228,7 +230,7 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: multiplePlatform.voutScale*0.75
+                        value: platformInterface.status_predefined_values.OV_fault
                         stepSize: 1
                         onValueChanged: voutOVlimitFault = value
                         onUserSet: platformInterface.voutOVlimitFault = voutOVlimitFaultSlider.value
@@ -261,7 +263,7 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: multiplePlatform.voutScale*0.5
+                        value: platformInterface.status_predefined_values.UV_fault
                         stepSize: 1
                         onValueChanged: voutUVlimitFault = value
                         onUserSet: platformInterface.voutUVlimitFault = voutUVlimitFaultSlider.value
@@ -294,7 +296,7 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.ioutScale
-                        value: multiplePlatform.ioutScale*0.9
+                        value: platformInterface.status_predefined_values.OC_fault
                         stepSize: 1
                         onValueChanged: ioutOClimitFault = value
                         onUserSet: platformInterface.ioutOClimitFault = ioutOClimitFaultSlider.value
@@ -327,7 +329,7 @@ Item {
                         width: parent.width
                         from: 85
                         to: 105
-                        value: 100
+                        value: platformInterface.status_predefined_values.OT_warning
                         stepSize: 1
                         onValueChanged: overTemperatureWarning = value
                         onUserSet: platformInterface.overTemperatureWarning = overTemperatureWarningSlider.value
@@ -360,7 +362,7 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: multiplePlatform.voutScale*0.7
+                        value: platformInterface.status_predefined_values.OV_warning
                         stepSize: 1
                         onValueChanged: voutOVlimitWarning = value
                         onUserSet: platformInterface.voutOVlimitWarning = voutOVlimitWarningSlider.value
@@ -393,7 +395,7 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: multiplePlatform.voutScale*0.55
+                        value: platformInterface.status_predefined_values.UV_warning
                         stepSize: 1
                         onValueChanged: voutUVlimitWarning = value
                         onUserSet: platformInterface.voutUVlimitWarning = voutUVlimitWarningSlider.value
@@ -426,7 +428,7 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.ioutScale
-                        value: multiplePlatform.ioutScale*0.8
+                        value: platformInterface.status_predefined_values.OC_warning
                         stepSize: 1
                         onValueChanged: ioutOClimitWarning = value
                         onUserSet: platformInterface.ioutOClimitWarning = ioutOClimitWarningSlider.value
@@ -592,13 +594,49 @@ Item {
                         left: efficiencyGraph.right
                         leftMargin: parent.width/20
                         }
-                    font.pixelSize: (parent.width + parent.height)/120
+                    font.pixelSize: (parent.width + parent.height)/150
                     text: "<b>CLEAR FAULTS<b>"
                     visible: true
-                    width: parent.width/10
-                    height: parent.height/8
+                    width: parent.width/8
+                    height: parent.height/12
                     onClicked: {
                         platformInterface.set_reset_error.update(1)
+                    }
+                }
+
+                Button {
+                    id:setParametersButton
+                    anchors {
+                        top : resetErrorButton.top
+                        topMargin : parent.height/10
+                        left: efficiencyGraph.right
+                        leftMargin: parent.width/20
+                        }
+                    font.pixelSize: (parent.width + parent.height)/150
+                    text: "<b>SET PARAMETERS<b>"
+                    visible: true
+                    width: parent.width/8
+                    height: parent.height/12
+                    onClicked: {
+                        platformInterface.set_parameters.update(1)
+                    }
+                }
+
+                Button {
+                    id:writeParametersButton
+                    anchors {
+                        top : setParametersButton.top
+                        topMargin : parent.height/10
+                        left: efficiencyGraph.right
+                        leftMargin: parent.width/20
+                        }
+                    font.pixelSize: (parent.width + parent.height)/150
+                    text: "<b>WRITE PARAMETERS<b>"
+                    visible: true
+                    width: parent.width/8
+                    height: parent.height/12
+                    onClicked: {
+                        platformInterface.set_write.update(1)
                     }
                 }
 
@@ -694,7 +732,7 @@ Item {
 
                 SGComboBox {
                     id: voutOVFaultResponseCombo
-                    currentIndex: platformInterface.voutOVFaultResponse
+                    currentIndex: platformInterface.voutOVFaultResponse.voutOVFaultResponse
                     model: [ "Latch","Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"
@@ -728,7 +766,7 @@ Item {
 
                 SGComboBox {
                     id: voutUVFaultResponseCombo
-                    currentIndex: platformInterface.voutUVFaultResponse
+                    currentIndex: platformInterface.voutUVFaultResponse.voutUVFaultResponse
                     model: [ "Latch","Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"
@@ -762,7 +800,7 @@ Item {
 
                 SGComboBox {
                     id: ioutOCFaultResponseCombo
-                    currentIndex: platformInterface.ioutOCFaultResponse
+                    currentIndex: platformInterface.ioutOCFaultResponse.ioutOCFaultResponse
                     model: [ "Latch","Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"

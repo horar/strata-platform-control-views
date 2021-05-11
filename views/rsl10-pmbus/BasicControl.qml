@@ -22,6 +22,7 @@ Item {
 
     // property that reads the initial notification
     property var temp_calc: platformInterface.status_temperature_sensor.temperature
+    property var temp_pmbus_calc: platformInterface.status_temperature_pmbus.temperature_pmbus
     property var vin_calc: platformInterface.status_voltage_current.vin/1000
     property var iin_calc: platformInterface.status_voltage_current.iin
     property var vout_calc: platformInterface.status_voltage_current.vout/1000
@@ -84,14 +85,15 @@ Item {
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
         Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
         Help.registerTarget(inputCurrent,"Input current is shown here.", 3 , "basicHelp")
-        Help.registerTarget(tempGauge, "This gauge shows the board temperature.", 4, "basicHelp")
+        Help.registerTarget(tempGauge, "This gauge shows the board temperature in degrees Celsius.", 4, "basicHelp")
         Help.registerTarget(basicImage, "The center image shows the board configuration.", 5, "basicHelp")
         Help.registerTarget(dimmensionalModeSpace, "Dimmensional space mode for the center image.", 6, "basicHelp")
         Help.registerTarget(dio12Switch, "This switch enables or disables the DUT.", 7, "basicHelp")
         Help.registerTarget(outputVoltage,"Output voltage is shown here.", 8, "basicHelp")
         Help.registerTarget(outputCurrent,"Output current is shown here.", 9, "basicHelp")
-        Help.registerTarget(effiGauge, "This gauge shows the DUT's efficiency.", 10, "basicHelp")
-        Help.registerTarget(operationModeControl, "These are two modes to control the system. In Load Transient mode, PWM signal will be set by the sliders in the Quick View. In Normal mode, the system will go through a particular PWM signal profile.", 11 , "basicHelp")
+        Help.registerTarget(temperature_pmbusGauge, "This gauge shows the chip sensed temperature in degrees Celsius.", 10, "basicHelp")
+        Help.registerTarget(effiPower,"Efficiency (η) is shown here in real time.", 11, "basicHelp")
+        Help.registerTarget(operationModeControl, "These are two modes to control the system. In Load Transient mode, PWM signal will be set by the sliders in the Quick View. In Normal mode, the system will go through a particular PWM signal profile.", 12, "basicHelp")
     }
 
     FontLoader {
@@ -305,7 +307,7 @@ Item {
                     tickmarkStepSize: 20
                     outerColor: "#999"
                     unitLabel: "°C"
-                    gaugeTitle: "Temperature"
+                    gaugeTitle: "Board\nTemperature"
                     value: temp_calc
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
@@ -570,7 +572,7 @@ Item {
                 }
 
                 SGCircularGauge {
-                    id: effiGauge
+                    id: temperature_pmbusGauge
                     anchors {
                         top: outputCurrent.bottom
                         topMargin: parent.height/50
@@ -581,20 +583,41 @@ Item {
                     height: (parent.width + parent.height)/3
                     gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
                     gaugeFrontColor2: Qt.rgba(1,0,0,1)
-                    minimumValue: 0
-                    maximumValue: 100
-                    tickmarkStepSize: 10
+                    minimumValue: -55
+                    maximumValue: 150
+                    tickmarkStepSize: 20
                     outerColor: "#999"
-                    unitLabel: "%"
-                    gaugeTitle: "Efficiency"
-                    value: effi_calc
+                    unitLabel: "°C"
+                    gaugeTitle: "Chip\nTemperature"
+                    value: temp_pmbus_calc
                     Behavior on value { NumberAnimation { duration: 300 } }
+                }
+
+                SGLabelledInfoBox {
+                    id: effiPower
+                    label: "η"
+                    info: effi_calc
+
+                    infoBoxColor: "lightgrey"
+                    infoBoxBorderColor: "grey"
+                    infoBoxBorderWidth: 3
+
+                    unit: "%"
+                    infoBoxWidth: parent.width/1.5
+                    infoBoxHeight :  parent.height/12
+                    fontSize :   (parent.width + parent.height)/37
+                    unitSize: (parent.width + parent.height)/35
+                    anchors {
+                        top : temperature_pmbusGauge.bottom
+                        topMargin : parent.height/50
+                        horizontalCenter: parent.horizontalCenter
+                    }
                 }
 
                 SGRadioButtonContainer {
                     id: operationModeControl
                     anchors {
-                        top: effiGauge.bottom
+                        top: effiPower.bottom
                         topMargin: parent.height/50
                         left: parent.left
                         leftMargin: parent.height/100
@@ -608,8 +631,6 @@ Item {
                         columnSpacing: 5
                         rowSpacing: 5
                         // Optional properties to access specific buttons cleanly from outside
-                        property alias manual : manual
-                        property alias automatic: automatic
 
                         SGRadioButton {
                             id: manual

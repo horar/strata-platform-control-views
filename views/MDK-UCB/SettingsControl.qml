@@ -411,7 +411,7 @@ Item {
                             id:laSpeedSliderUnit
                             text:"RPM"
                             font.pixelSize: (parent.width + parent.height)/ 40
-                            color:lightgrey
+                            color: "lightgrey"
                             anchors.left: laSpeedSlider.right
                         }
                     }
@@ -500,7 +500,7 @@ Item {
                             id:laAccelerationSliderUnit
                             text:"RPM/s"
                             font.pixelSize: (parent.width + parent.height)/ 40
-                            color:lightgrey
+                            color: "lightgrey"
                             anchors.left: laAccelerationSlider.right
                         }
 

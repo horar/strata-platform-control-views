@@ -51,7 +51,6 @@ ColumnLayout {
     property var x_Axis_Timer_:0
     property var x_Axis_Timer_1:0
     property  int clear:0
-    property var one_time_clear_all_data: 0
     property var pointsCount: settingsControl.pointsCount
 
     // property that reads the initial notification
@@ -287,7 +286,6 @@ ColumnLayout {
                             anchors.bottom: parent.bottom
                             Rectangle {
                                 anchors.fill: parent
-                                anchors.top: rect2.bottom
                                 Rectangle {
                                     width: parent.width
                                     height: parent.height*0.7

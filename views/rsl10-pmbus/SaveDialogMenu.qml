@@ -55,7 +55,7 @@ Rectangle {
     property var pin_calc: vin_calc * iin_calc
     property var pout_calc: vout_calc * iout_calc
     property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
-    property var temp_calc: (platformInterface.status_temperature_sensor.temperature).toFixed(0)
+    property var temp_calc: (platformInterface.status_temperature_pmbus.temperature_pmbus).toFixed(0)
 
 
     onEffi_calcChanged:

@@ -50,6 +50,15 @@ Rectangle {
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignHCenter
             fontSizeMultiplier: 1
+            color: "lightgreen"
+        }
+
+        SGText {
+            text: "LOAD"
+            Layout.fillWidth: true
+            wrapMode: Text.Wrap
+            horizontalAlignment: Text.AlignHCenter
+            fontSizeMultiplier: 1
             color: "white"
         }
 
@@ -75,7 +84,7 @@ Rectangle {
                 id: frequencyPop
                 x: parent.width + sideBarColumn.anchors.margins
                 title: "PWM Frequency"
-                unit: "Function"
+                unit: "Value"
                 from: 0
                 to: 5
                 value: 0

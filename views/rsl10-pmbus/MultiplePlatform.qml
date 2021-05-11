@@ -42,7 +42,7 @@ Item{
             iinScale = 20
             voutScale = 20
             ioutScale = 100
-            poutScale = 1000
+            poutScale = 1500
             pdissScale = 500
             showDecimal = true
             poutStep = 100
@@ -66,7 +66,7 @@ Item{
             iinScale = 20
             voutScale = 20
             ioutScale = 100
-            poutScale = 1000
+            poutScale = 1500
             pdissScale = 500
             showDecimal = true
             poutStep = 100

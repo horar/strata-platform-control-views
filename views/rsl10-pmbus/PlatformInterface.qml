@@ -24,6 +24,17 @@ Item {
         "iout": 0,     	// in mAmps
     }
 
+    property var status_predefined_values : {
+        "OT_fault": 0,		// in degrees Celsius
+        "OT_warning": 0,     // in degrees Celsius
+        "OV_fault": 0,		// in Volts
+        "OV_warning": 0,     // in Volts
+        "UV_fault": 0,		// in Volts
+        "UV_warning": 0,     // in Volts
+        "OC_fault": 0,		// in Amps
+        "OC_warning": 0,     // in Amps
+    }
+
     property var status_word : {
         "b3": 0,		// 0 -> NO Alarm, 1 -> Alarm
         "b5": 0,        // 0 -> NO Alarm, 1 -> Alarm
@@ -85,7 +96,11 @@ Item {
     // @description: Read temperature
     //
     property var status_temperature_sensor : {
-        "temperature":	0
+        "temperature": 0 // I2C temperature from NCT375 sensor in Motherboard. Room Temperature.
+    }
+
+    property var status_temperature_pmbus : {
+        "temperature_pmbus": 0 // PMBus: 0x8D READ_TEMPERATURE_1 Returns the chip sensed temperature in degrees Celsius.
     }
 
     property var status_enable: {
@@ -414,13 +429,35 @@ Item {
                                     show: function () { CorePlatformInterface.show(this) }
                                 })
 
-    property var reset_error: {"reset_error" : ""} // Not Reset: 0, Reset Error: 1
+    property var reset_error: {"reset_error" : ""} // Reset Error: 1
 
     // reset_error_selection Command
     property var set_reset_error: ({"cmd" : "set_reset_error","payload": {"reset_error": 0 ,},
                                      update: function (reset_error) {this.set(reset_error)
                                          CorePlatformInterface.send(this)},
                                      set: function (reset_error) {this.payload.reset_error = reset_error;},
+                                     send: function () { CorePlatformInterface.send(this) },
+                                     show: function () { CorePlatformInterface.show(this) }
+                                 })
+
+    property var parameters: {"parameters" : ""} // Set: 1
+
+    // set_parameters Command
+    property var set_parameters: ({"cmd" : "set_parameters","payload": {"parameters": 0 ,},
+                                     update: function (parameters) {this.set(parameters)
+                                         CorePlatformInterface.send(this)},
+                                     set: function (parameters) {this.payload.parameters = parameters;},
+                                     send: function () { CorePlatformInterface.send(this) },
+                                     show: function () { CorePlatformInterface.show(this) }
+                                 })
+
+    property var write: {"write" : ""} // Write: 1
+
+    // set_write Command
+    property var set_write: ({"cmd" : "set_write","payload": {"write": 0 ,},
+                                     update: function (write) {this.set(write)
+                                         CorePlatformInterface.send(this)},
+                                     set: function (write) {this.payload.write = write  ;},
                                      send: function () { CorePlatformInterface.send(this) },
                                      show: function () { CorePlatformInterface.show(this) }
                                  })
