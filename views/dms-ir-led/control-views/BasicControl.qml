@@ -51,12 +51,12 @@ Item {
 //    }
 
     ColumnLayout {
-        width: parent.width/2
-        height: parent.height/1.1
+        width: parent.width
+        height: parent.height/1.5
         //anchors.centerIn: parent
         anchors.top:parent.top
-        anchors.bottom:parent.bottom
-        anchors.topMargin: 250
+        anchors.bottom:headingCommandHandler.top
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 20
         anchors.right: parent.right
@@ -67,13 +67,20 @@ Item {
             width: parent.width
             height: parent.height
             //color: "red"
+            Image {
+                id: backgroung
+                source: "images/background.png"
+                width: parent.width
+                height: parent.height
+                fillMode: Image.PreserveAspectFit
+            }
         }
 
     }
 
     ColumnLayout {
         width: parent.width/2
-        height: parent.height/1.1
+        height: parent.height/2
         //anchors.centerIn: parent
         anchors.top:parent.top
         anchors.bottom:parent.bottom
@@ -83,12 +90,13 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 20
         spacing: 20
+        id:controls
 
-        Rectangle{
-            width: parent.width
-            height: parent.height
-            //color: "blue"
-        }
+//        Rectangle{
+//            width: parent.width
+//            height: parent.height
+//            color: "blue"
+//        }
 
         Item {
             Layout.preferredHeight: parent.height/3
@@ -174,17 +182,25 @@ Item {
                                 SGSlider {
                                     id: pwm1Slider
                                     width: 250
-                                    from: 0.6
-                                    to: 4.5
+                                    from: 0.7
+                                    to: 5.0
                                     stepSize: 0.1
-                                    value: 0.6
-                                    inputBox.validator: DoubleValidator { top: 4.5; bottom: 0.6 }
+                                    value: 0.7
+                                    inputBox.validator: DoubleValidator { top: 5.0; bottom: 0.7 }
                                     inputBox.text:  parseFloat(pwm1Slider.value.toFixed(2))
                                     contextMenuEnabled: true
                                     onUserSet: {
                                         inputBox.text = parseFloat(value.toFixed(2))
                                         platformInterface.commands.set_pwm1.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
 //                                        delegateText1.text = JSON.stringify(my_cmd_simple_obj,null,4)
+
+                                        var maxONTime = 40/(10*pwm1Slider.value)
+                                        if (pwm3Slider.value > maxONTime)
+                                        {
+                                            pwm3Slider.value = maxONTime
+                                            pwm3Slider.inputBox.text = parseFloat(pwm3Slider.value.toFixed(1))
+                                            platformInterface.commands.set_pwm3.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
+                                        }
                                     }
                                 }
                             }
@@ -238,11 +254,11 @@ Item {
                                 SGSlider {
                                     id: pwm2Slider
                                     width: 250
-                                    from: 4.5
-                                    to: 9.5
-                                    stepSize: 0.0196
-                                    value: 4.5
-                                    inputBox.validator: DoubleValidator { top: 9.50; bottom: 4.50 }
+                                    from: 4.8
+                                    to: 10
+                                    stepSize: 0.1
+                                    value: 4.8
+                                    inputBox.validator: DoubleValidator { top: 10; bottom: 4.80 }
                                     inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
                                     onUserSet: {
@@ -294,7 +310,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm3SliderLabel
                                 target: pwm3Slider
-                                text: "Time (ms)"
+                                text: "T_ON time (ms)"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter
@@ -302,16 +318,24 @@ Item {
                                 SGSlider {
                                     id: pwm3Slider
                                     width: 250
-                                    from: 0.5
+                                    from: 0.0
                                     to: 5
                                     stepSize: 0.1
-                                    value: 0.5
-                                    inputBox.validator: DoubleValidator { top: 5.00; bottom: 0.5 }
-                                    inputBox.text: parseFloat(value.toFixed(2))
+                                    value: 0.0
+                                    inputBox.validator: DoubleValidator { top: 5.00; bottom: 0.0 }
+                                    inputBox.text: parseFloat(value.toFixed(1))
                                     contextMenuEnabled: true
                                     onUserSet: {
-                                        inputBox.text = parseFloat(value.toFixed(2))
-                                        platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(2)), pwm3Switch.checked)
+                                        inputBox.text = parseFloat(value.toFixed(1))
+                                        platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
+
+                                        var maxCurrent = 40/(10*pwm3Slider.value)
+                                        if (pwm1Slider.value > maxCurrent)
+                                        {
+                                            pwm1Slider.value = maxCurrent
+                                            pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
+                                            platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+                                        }
 //                                        delegateText1.text = JSON.stringify(my_cmd_simple_obj,null,4)
                                     }
                                 }
