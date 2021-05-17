@@ -29,7 +29,7 @@ Item{
 
         else if(class_id === "d64c7dea-4509-45c6-8f99-02bf6e091366") {
             partNumber =  "<b> Part of the Motor Development Kit Family </b>"
-            title =  "<b> 1kW 650V Industrial Motor Control with IPM & UCB</b> "
+            title =  "<b> 1kW 650V Industrial Motor Control with IPM & UCB</b>"
             warningHVVinLable = "265V"
             warningLVVinLable = "195V"
             opn = "STR-1KW-MDK-GEVK"
@@ -41,7 +41,7 @@ Item{
 
         else if(class_id === "334aeac5-129f-4f31-83f1-461a5cfd7377") {
             partNumber =  "<b> Part of the Motor Development Kit Family </b>"
-            title =  "<b> 8kW 650V Industrial Motor Control with IPM & UCB</b> "
+            title =  "<b> 8kW 650V Industrial Motor Control with TMPIM & UCB</b>"
             warningHVVinLable = "390V"
             warningLVVinLable = "200V"
             opn = "STR-TMPIM-MDK-GEVK"
