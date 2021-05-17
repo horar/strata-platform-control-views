@@ -34,7 +34,7 @@ Item {
 
     property var time:20
     property var pointsCount:50
-    property var amperes:12
+    property var amperes: multiplePlatform.ioutScale
     property var ioutScaleCalc:multiplePlatform.ioutScale
 
     property var speedLine: []
@@ -279,7 +279,7 @@ Item {
                             id: amperesSlider
                             width: laSettingsContainerRow2.width/1.2
                             from: 0
-                            value: 12
+                            value: multiplePlatform.ioutScale
                             to: ioutScaleCalc
                             stepSize: 1
                             onValueChanged: amperes = value
