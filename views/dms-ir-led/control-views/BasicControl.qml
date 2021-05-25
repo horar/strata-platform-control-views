@@ -18,16 +18,6 @@ Item {
     id: root
     property real ratioCalc: root.width / 1200
 
-    Component.onCompleted: {
-        Help.registerTarget(navTabs, "These tabs contain different user interface functionality of the Strata evaluation board. Take the idea of walking the user into evaluating the board by ensuring the board is instantly functional when powered on and then dive into more complex tabs and features. These tabs are not required but contains in the template for illustration.", 0, "BasicControlHelp")
-//        Help.registerTarget(pwm1SwitchLabel, "pwm1")
-//        Help.registerTarget(pwm1SliderLabel, "pwm1sl")
-//        Help.registerTarget(pwm2SwitchLabel, "pwm2")
-//        Help.registerTarget(pwm2SliderLabel, "pwm2sl")
-//        Help.registerTarget(pwm3SwitchLabel, "pwm3")
-//        Help.registerTarget(pwm3SliderLabel, "pwm3sl")
-    }
-
     MouseArea {
         id: containMouseArea
         anchors.fill: root
