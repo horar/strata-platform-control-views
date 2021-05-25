@@ -13,14 +13,20 @@ import "qrc:/js/help_layout_manager.js" as Help
                 https://code.onsemi.com/projects/SECSWST/repos/embedded-strata-core/browse/template
 *********************************************************************************************************/
 Item {
+
+
     id: root
     property real ratioCalc: root.width / 1200
 
     Component.onCompleted: {
         Help.registerTarget(navTabs, "These tabs contain different user interface functionality of the Strata evaluation board. Take the idea of walking the user into evaluating the board by ensuring the board is instantly functional when powered on and then dive into more complex tabs and features. These tabs are not required but contains in the template for illustration.", 0, "BasicControlHelp")
-        Help.registerTarget(pwm1SwitchLabel, "Toggle the state of a single IO output pin on the microcontroller. The IO Input control will reflect the state of the IO Output when the next Periodic Notification" + " \"" + "my_cmd_simple_periodic" + "\" "  + "is sent from the firmware to Strata.", 1, "BasicControlHelp")
-        Help.registerTarget(pwm1SliderLabel, "Sets the Digital to Analog Converter (DAC) pin of the microcontroller between 0 and full scale.", 2, "BasicControlHelp")
-   }
+//        Help.registerTarget(pwm1SwitchLabel, "pwm1")
+//        Help.registerTarget(pwm1SliderLabel, "pwm1sl")
+//        Help.registerTarget(pwm2SwitchLabel, "pwm2")
+//        Help.registerTarget(pwm2SliderLabel, "pwm2sl")
+//        Help.registerTarget(pwm3SwitchLabel, "pwm3")
+//        Help.registerTarget(pwm3SliderLabel, "pwm3sl")
+    }
 
     MouseArea {
         id: containMouseArea
@@ -32,6 +38,25 @@ Item {
         }
     }
 
+
+    Timer {
+        id: pwm1delayTimer
+
+        repeat: false
+        interval: 10
+        onTriggered: platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+
+    }
+
+    Timer {
+        id: pwm3delayTimer
+
+        repeat: false
+        interval: 10
+        onTriggered: platformInterface.commands.set_pwm3.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
+
+    }
+
     function formating_random_increment(max,value){
         let dataArray = []
         for(let y = 0; y < max; y++) {
@@ -41,14 +66,6 @@ Item {
         }
         return dataArray
     }
-
-//    property var my_cmd_simple_obj: {
-//        "cmd": "my_cmd_simple",
-//        "payload": {
-//            "io": io.checked,
-//            "dac": parseFloat(dac.value.toFixed(2))
-//        }
-//    }
 
     ColumnLayout {
         width: parent.width
@@ -84,7 +101,7 @@ Item {
         //anchors.centerIn: parent
         anchors.top:parent.top
         anchors.bottom:parent.bottom
-        anchors.topMargin: 250
+        anchors.topMargin: 200
         anchors.left: parent.left
         anchors.leftMargin: 20
         anchors.right: parent.right
@@ -199,7 +216,8 @@ Item {
                                         {
                                             pwm3Slider.value = maxONTime
                                             pwm3Slider.inputBox.text = parseFloat(pwm3Slider.value.toFixed(1))
-                                            platformInterface.commands.set_pwm3.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
+                                            pwm3delayTimer.start()
+                                            //platformInterface.commands.set_pwm3.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
                                         }
                                     }
                                 }
@@ -334,9 +352,28 @@ Item {
                                         {
                                             pwm1Slider.value = maxCurrent
                                             pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
+                                            //pwm1delayTimer.start()
                                             platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
                                         }
 //                                        delegateText1.text = JSON.stringify(my_cmd_simple_obj,null,4)
+                                    }
+                                }
+                            }
+
+                            Item {
+                                Layout.fillHeight: true
+                                Layout.fillWidth: true
+
+                                SGAlignedLabel {
+                                    id: pwm3SliderLabel3
+                                    target: labelDuty
+                                    text: "T_ON duty cycle: " + (((pwm3Slider.value/(1/62))/10).toFixed(0)) + "%"
+                                    font.bold: true
+                                    anchors.centerIn: parent
+                                    alignment: SGAlignedLabel.SideTopCenter
+
+                                    SGAlignedLabel{
+                                        id:labelDuty
                                     }
                                 }
                             }

@@ -34,15 +34,15 @@ Item {
             }
         }
 
-        TabButton {
-            id: advancedButton
-            KeyNavigation.right: this
-            KeyNavigation.left: this
-            text: qsTr("Advanced")
-            onClicked: {
-                controlContainer.currentIndex = 1
-            }
-        }
+//        TabButton {
+//            id: advancedButton
+//            KeyNavigation.right: this
+//            KeyNavigation.left: this
+//            text: qsTr("Advanced")
+//            onClicked: {
+//                controlContainer.currentIndex = 1
+//            }
+//        }
     }
 
     StackLayout {
@@ -58,9 +58,9 @@ Item {
             id: basic
         }
 
-        AdvancedControl {
-            id: advanced
-        }
+//        AdvancedControl {
+//            id: advanced
+//        }
     }
 
     SGIcon {
@@ -86,9 +86,9 @@ Item {
                 if(controlContainer.currentIndex === 0) {
                     Help.startHelpTour("BasicControlHelp")
                 }
-                if(controlContainer.currentIndex === 1) {
-                    Help.startHelpTour("AdvanceControlHelp")
-                }
+//                if(controlContainer.currentIndex === 1) {
+//                    Help.startHelpTour("AdvanceControlHelp")
+//                }
             }
             hoverEnabled: true
         }
