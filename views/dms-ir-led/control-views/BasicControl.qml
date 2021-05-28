@@ -59,10 +59,12 @@ Item {
 
     ColumnLayout {
         width: parent.width
-        height: parent.height/1.5
+        height: parent.height/2
         //anchors.centerIn: parent
         anchors.top:parent.top
-        anchors.bottom:headingCommandHandler.top
+        //anchors.bottom:headingCommandHandler.top
+        anchors.bottom: controls.bottom
+        anchors.bottomMargin: 300
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 20
@@ -91,7 +93,7 @@ Item {
         //anchors.centerIn: parent
         anchors.top:parent.top
         anchors.bottom:parent.bottom
-        anchors.topMargin: 200
+        anchors.topMargin: 300
         anchors.left: parent.left
         anchors.leftMargin: 20
         anchors.right: parent.right
@@ -335,17 +337,17 @@ Item {
                                     contextMenuEnabled: true
                                     onUserSet: {
                                         inputBox.text = parseFloat(value.toFixed(1))
-                                        platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
 
                                         var maxCurrent = 40/(10*pwm3Slider.value)
                                         if (pwm1Slider.value > maxCurrent)
                                         {
                                             pwm1Slider.value = maxCurrent
                                             pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
-                                            //pwm1delayTimer.start()
                                             platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+                                            pwm3delayTimer.start()
+                                        }else{
+                                            platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
                                         }
-//                                        delegateText1.text = JSON.stringify(my_cmd_simple_obj,null,4)
                                     }
                                 }
                             }
