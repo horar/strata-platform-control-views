@@ -8,9 +8,7 @@ import tech.strata.sgwidgets 1.0
 import "qrc:/js/help_layout_manager.js" as Help
 
 /********************************************************************************************************
-    This is a Template UI that works directly with the Template FW found
-    Under Embedded Strata Core (Refer: README):
-                https://code.onsemi.com/projects/SECSWST/repos/embedded-strata-core/browse/template
+This is UI for STR-DMS-CONTROL-GEV
 *********************************************************************************************************/
 Item {
 
@@ -88,7 +86,7 @@ Item {
     }
 
     ColumnLayout {
-        width: parent.width/2
+        width: parent.width
         height: parent.height/2
         //anchors.centerIn: parent
         anchors.top:parent.top
@@ -100,12 +98,6 @@ Item {
         anchors.rightMargin: 20
         spacing: 20
         id:controls
-
-//        Rectangle{
-//            width: parent.width
-//            height: parent.height
-//            color: "blue"
-//        }
 
         Item {
             Layout.preferredHeight: parent.height/3
@@ -170,7 +162,6 @@ Item {
                                     checked: false
                                     onToggled:  {
                                         platformInterface.commands.set_pwm1.update(pwm1Slider.value,pwm1Switch.checked)
-//                                        delegateText1.text =  JSON.stringify(my_cmd_simple_obj,null,4)
                                     }
                                 }
                             }
@@ -201,7 +192,6 @@ Item {
                                     onUserSet: {
                                         inputBox.text = parseFloat(value.toFixed(2))
                                         platformInterface.commands.set_pwm1.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
-//                                        delegateText1.text = JSON.stringify(my_cmd_simple_obj,null,4)
 
                                         var maxONTime = 40/(10*pwm1Slider.value)
                                         if (pwm3Slider.value > maxONTime)
@@ -209,7 +199,6 @@ Item {
                                             pwm3Slider.value = maxONTime
                                             pwm3Slider.inputBox.text = parseFloat(pwm3Slider.value.toFixed(1))
                                             pwm3delayTimer.start()
-                                            //platformInterface.commands.set_pwm3.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
                                         }
                                     }
                                 }
@@ -243,7 +232,6 @@ Item {
                                     checked: false
                                     onToggled:  {
                                         platformInterface.commands.set_pwm2.update(pwm2Slider.value,pwm2Switch.checked)
-//                                        delegateText1.text =  JSON.stringify(my_cmd_simple_obj,null,4)
                                     }
                                 }
                             }
@@ -274,7 +262,6 @@ Item {
                                     onUserSet: {
                                         inputBox.text = parseFloat(value.toFixed(2))
                                         platformInterface.commands.set_pwm2.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
-//                                        delegateText1.text = JSON.stringify(my_cmd_simple_obj,null,4)
                                     }
                                 }
                             }
@@ -307,7 +294,6 @@ Item {
                                     checked: false
                                     onToggled:  {
                                         platformInterface.commands.set_pwm3.update(pwm3Slider.value,pwm3Switch.checked)
-//                                        delegateText1.text =  JSON.stringify(my_cmd_simple_obj,null,4)
                                     }
                                 }
                             }
@@ -372,7 +358,7 @@ Item {
                         }
                     }
                 }
-            } //end of row
+            }
         }
     }
 }
