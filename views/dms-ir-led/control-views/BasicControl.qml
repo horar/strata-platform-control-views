@@ -189,16 +189,19 @@ Item {
                                     inputBox.validator: DoubleValidator { top: 5.0; bottom: 0.7 }
                                     inputBox.text:  parseFloat(pwm1Slider.value.toFixed(2))
                                     contextMenuEnabled: true
-                                    onUserSet: {
-                                        inputBox.text = parseFloat(value.toFixed(2))
-                                        platformInterface.commands.set_pwm1.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
 
-                                        var maxONTime = 40/(10*pwm1Slider.value)
-                                        if (pwm3Slider.value > maxONTime)
-                                        {
-                                            pwm3Slider.value = maxONTime
-                                            pwm3Slider.inputBox.text = parseFloat(pwm3Slider.value.toFixed(1))
-                                            pwm3delayTimer.start()
+                                    onPressedChanged: {
+                                        inputBox.text = parseFloat(value.toFixed(2))
+
+                                        if(pressed == false){
+                                            platformInterface.commands.set_pwm1.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
+
+                                            var maxONTime = 40/(10*pwm1Slider.value)
+                                            if (pwm3Slider.value > maxONTime) {
+                                                pwm3Slider.value = maxONTime
+                                                pwm3Slider.inputBox.text = parseFloat(pwm3Slider.value.toFixed(1))
+                                                pwm3delayTimer.start()
+                                            }
                                         }
                                     }
                                 }
@@ -230,6 +233,7 @@ Item {
                                     id: pwm2Switch
                                     width: 50
                                     checked: false
+                                    enabled: false
                                     onToggled:  {
                                         platformInterface.commands.set_pwm2.update(pwm2Slider.value,pwm2Switch.checked)
                                     }
@@ -247,7 +251,7 @@ Item {
                                 text: "Voltage (V)"
                                 font.bold: true
                                 anchors.centerIn: parent
-                                alignment: SGAlignedLabel.SideTopCenter
+                                alignment: SGAlignedLabel.SideTopCenter                               
 
                                 SGSlider {
                                     id: pwm2Slider
@@ -255,13 +259,17 @@ Item {
                                     from: 4.8
                                     to: 10
                                     stepSize: 0.1
-                                    value: 4.8
+                                    value: 10
                                     inputBox.validator: DoubleValidator { top: 10; bottom: 4.80 }
                                     inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
-                                    onUserSet: {
+                                    enabled: false
+
+                                    onPressedChanged: {
                                         inputBox.text = parseFloat(value.toFixed(2))
-                                        platformInterface.commands.set_pwm2.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
+                                        if(pressed == false){
+                                            platformInterface.commands.set_pwm2.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
+                                        }
                                     }
                                 }
                             }
@@ -292,9 +300,13 @@ Item {
                                     id: pwm3Switch
                                     width: 50
                                     checked: false
+
                                     onToggled:  {
                                         platformInterface.commands.set_pwm3.update(pwm3Slider.value,pwm3Switch.checked)
+                                        pwm2Switch.enabled = (pwm3Switch.checked)
+                                        pwm2Slider.enabled = (pwm3Switch.checked)
                                     }
+
                                 }
                             }
                         }
@@ -321,18 +333,21 @@ Item {
                                     inputBox.validator: DoubleValidator { top: 5.00; bottom: 0.0 }
                                     inputBox.text: parseFloat(value.toFixed(1))
                                     contextMenuEnabled: true
-                                    onUserSet: {
+
+                                    onPressedChanged: {
                                         inputBox.text = parseFloat(value.toFixed(1))
 
-                                        var maxCurrent = 40/(10*pwm3Slider.value)
-                                        if (pwm1Slider.value > maxCurrent)
-                                        {
-                                            pwm1Slider.value = maxCurrent
-                                            pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
-                                            platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
-                                            pwm3delayTimer.start()
-                                        }else{
-                                            platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
+                                        if(pressed == false){
+                                            var maxCurrent = 40/(10*pwm3Slider.value)
+                                            if (pwm1Slider.value > maxCurrent)
+                                            {
+                                                pwm1Slider.value = maxCurrent
+                                                pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
+                                                platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+                                                pwm3delayTimer.start()
+                                            }else{
+                                                platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
+                                            }
                                         }
                                     }
                                 }
