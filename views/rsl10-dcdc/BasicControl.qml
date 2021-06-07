@@ -50,7 +50,7 @@ Item {
         if(multiplePlatform.minVin > ((platformInterface.status_voltage_current.vin)/1000)) {
             ledLight.status = "red"
             vinlable = "under"
-            ledLight.label = "VIN NOT Ready < "+ multiplePlatform.minVin +"V"
+            ledLight.label = "Vin < "+ multiplePlatform.minVin +"V"
 
             dio12Switch.enabled  = true
             dio12Switch.opacity = 1.0
@@ -68,7 +68,7 @@ Item {
             dio04Switch.checked = false
             ledLight.status = "red"
             vinlable = "under"
-            ledLight.label = "VIN NOT Ready > "+ multiplePlatform.nominalVin +"V"
+            ledLight.label = "Vin > "+ multiplePlatform.nominalVin +"V"
             dio12Switch.enabled  = false
             dio12Switch.opacity = 0.2
             dio13Switch.enabled  = false
@@ -242,7 +242,7 @@ Item {
                 SGStatusLight {
                     id: ledLight
                     // Optional Configuration:
-                    label: "VIN Ready < "+ multiplePlatform.nominalVin +"V"
+                    label: "Vin OK < "+ multiplePlatform.nominalVin +"V"
                     anchors {
                         top : line.bottom
                         topMargin : 40
@@ -258,17 +258,17 @@ Item {
                         if(multiplePlatform.minVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                             ledLight.status = "red"
                             vinlable = "under"
-                            ledLight.label = "VIN NOT Ready < "+ multiplePlatform.minVin +"V"
+                            ledLight.label = "Vin Low < "+ multiplePlatform.minVin +"V"
                         }
                         else if(multiplePlatform.nominalVin < ((platformInterface.status_voltage_current.vin)/1000)) {
                             ledLight.status = "red"
                             vinlable = "under"
-                            ledLight.label = "VIN NOT Ready > "+ multiplePlatform.nominalVin +"V"
+                            ledLight.label = "Vin High > "+ multiplePlatform.nominalVin +"V"
                         }
                         else {
                             ledLight.status = "green"
                             vinlable = "over"
-                            ledLight.label = "VIN Ready"
+                            ledLight.label = "Vin OK"
                         }
                     }
                 }
