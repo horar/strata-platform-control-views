@@ -71,9 +71,9 @@ UIBase { // start_uibase
     LayoutRectangle { // start_bead4
         id: layoutRectangle_bead4
         layoutInfo.uuid: "bead4"
-        layoutInfo.columnsWide: 19
+        layoutInfo.columnsWide: 20
         layoutInfo.rowsTall: 15
-        layoutInfo.xColumns: 10
+        layoutInfo.xColumns: 9
         layoutInfo.yRows: 3
 
         color: "#ffffff"
@@ -107,7 +107,7 @@ UIBase { // start_uibase
         layoutInfo.uuid: "aad3b"
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 17
+        layoutInfo.xColumns: 16
         layoutInfo.yRows: 3
 
         text: "Output"
@@ -121,9 +121,9 @@ UIBase { // start_uibase
     LayoutDivider { // start_ef0b6
         id: layoutDivider_ef0b6
         layoutInfo.uuid: "ef0b6"
-        layoutInfo.columnsWide: 19
+        layoutInfo.columnsWide: 20
         layoutInfo.rowsTall: 2
-        layoutInfo.xColumns: 10
+        layoutInfo.xColumns: 9
         layoutInfo.yRows: 3
     } // end_ef0b6
 
@@ -135,11 +135,11 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 10
         layoutInfo.yRows: 3
 
-        unitText: "%"
+        unitText: "RPM"
         minimumValue: 0
-        maximumValue: 10
-        tickmarkStepSize: 1
-        value: 10
+        maximumValue: 10000
+        tickmarkStepSize: 1000
+        value: 3000
     } // end_7b02e
 
     LayoutSGCircularGauge { // start_116ab
@@ -150,11 +150,11 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 23
         layoutInfo.yRows: 7
 
-        unitText: "%"
+        unitText: "C"
         minimumValue: 0
-        maximumValue: 10
-        tickmarkStepSize: 1
-        value: 10
+        maximumValue: 140
+        tickmarkStepSize: 20
+        value: 23.0
     } // end_116ab
 
     LayoutSGCircularGauge { // start_b06c4
@@ -165,11 +165,11 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 2
         layoutInfo.yRows: 7
 
-        unitText: "%"
+        unitText: "V"
         minimumValue: 0
-        maximumValue: 10
-        tickmarkStepSize: 1
-        value: 10
+        maximumValue: 100
+        tickmarkStepSize: 10
+        value: 48
     } // end_b06c4
 
 
@@ -192,4 +192,52 @@ UIBase { // start_uibase
         }
     } // end_abcde
 
+
+    LayoutText { // start_f52c7
+        id: text_f52c7
+        layoutInfo.uuid: "f52c7"
+        layoutInfo.columnsWide: 5
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 2
+        layoutInfo.yRows: 15
+
+        text: "Input Voltage (V)"
+        fontSizeMode: Text.Fit
+        font.pixelSize: 20
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_f52c7
+
+    LayoutText { // start_18cff
+        id: layoutText_18cff
+        layoutInfo.uuid: "18cff"
+        layoutInfo.columnsWide: 4
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 13
+        layoutInfo.yRows: 16
+
+        text: "Actual Speed (RPM)"
+        fontSizeMode: Text.Fit
+        font.pixelSize: 20
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_18cff
+
+    LayoutText { // start_d490f
+        id: layoutText_d490f
+        layoutInfo.uuid: "d490f"
+        layoutInfo.columnsWide: 5
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 23
+        layoutInfo.yRows: 15
+
+        text: "MOSFET Temp (C)"
+        fontSizeMode: Text.Fit
+        font.pixelSize: 20
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_d490f
 } // end_uibase
