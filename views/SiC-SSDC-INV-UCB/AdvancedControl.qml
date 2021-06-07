@@ -399,7 +399,7 @@ Item {
                         xAxisTitle: ""
                         yAxisTitle: "DC link voltage (V)"
                         inputData: dc_link_vin_calc
-                        maxYValue: 500
+                        maxYValue: multiplePlatform.vinScale
                         showYGrids: true
                         showXGrids: true
                         minXValue: 0

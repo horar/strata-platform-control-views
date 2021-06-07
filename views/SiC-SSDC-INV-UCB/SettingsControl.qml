@@ -112,7 +112,7 @@ Item {
                         font.pixelSize: (parent.width + parent.height)/ 60
                         anchors {
                             top: laMotorContainerRow1.top
-                            topMargin: parent.height/4
+                            topMargin: parent.height/6
                             horizontalCenter: parent.horizontalCenter
                             }
                         SGSlider {
@@ -135,7 +135,7 @@ Item {
                         font.pixelSize: (parent.width + parent.height)/ 60
                         anchors {
                             top: laMotorContainerRow1.top
-                            topMargin: (parent.height/4)*2
+                            topMargin: (parent.height/6)*2
                             horizontalCenter: parent.horizontalCenter
                             }
                         SGSlider {
@@ -165,7 +165,7 @@ Item {
                         font.pixelSize: (parent.width + parent.height)/ 60
                         anchors {
                             top: laMotorContainerRow1.top
-                            topMargin: (parent.height/4)*3
+                            topMargin: (parent.height/6)*3
                             horizontalCenter: parent.horizontalCenter
                             }
                         SGSlider {
@@ -187,6 +187,67 @@ Item {
                             anchors.left: max_motor_speedSlider.right
                             }
                     }
+
+                    SGAlignedLabel{
+                        id: resistanceLabel
+                        target: resistanceSlider
+                        text:"Resistance (Ohms):"
+                        font.pixelSize: (parent.width + parent.height)/ 60
+                        anchors {
+                            top: laMotorContainerRow1.top
+                            topMargin: (parent.height/6)*4
+                            horizontalCenter: parent.horizontalCenter
+                            }
+                        SGSlider {
+                            id: resistanceSlider
+                            width: laMotorContainerRow1.width/1.2
+                            from: 0
+                            to: 10
+                            value: 2.5
+                            stepSize: 0.01
+                            onValueChanged: resistance = value*100
+                            onUserSet: platformInterface.resistance = resistanceSlider.value*100
+                            live: false
+                        }
+                        Text{
+                            id: resistanceSliderUnit
+                            text:"Ohm"
+                            font.pixelSize: (parent.width + parent.height)/ 40
+                            color: "black"
+                            anchors.left: resistanceSlider.right
+                            }
+                    }
+
+                    SGAlignedLabel{
+                        id: inductanceLabel
+                        target: inductanceSlider
+                        text:"Inductance (H):"
+                        font.pixelSize: (parent.width + parent.height)/ 60
+                        anchors {
+                            top: laMotorContainerRow1.top
+                            topMargin: (parent.height/6)*5
+                            horizontalCenter: parent.horizontalCenter
+                            }
+                        SGSlider {
+                            id: inductanceSlider
+                            width: laMotorContainerRow1.width/1.2
+                            from: 0
+                            to: 1
+                            value: 0.016
+                            stepSize: 0.001
+                            onValueChanged: inductance = value*1000
+                            onUserSet: platformInterface.inductance = inductanceSlider.value*1000
+                            live: false
+                        }
+                        Text{
+                            id: inductanceSliderUnit
+                            text:"Henry"
+                            font.pixelSize: (parent.width + parent.height)/ 40
+                            color: "black"
+                            anchors.left: inductanceSlider.right
+                            }
+                    }
+
                 }
 
                 Rectangle {
@@ -506,234 +567,7 @@ Item {
 
                     }
 
-                    Text {
-                        id: controlText
-                        anchors {
-                            top: leadAngleAdjustmentGraph.bottom
-                            topMargin: (parent.width + parent.height)/ 60
-                            horizontalCenter: leadAngleAdjustmentGraph.horizontalCenter
-                        }
-                        text:  "<b> Closed Loop Parameters <b>"
-                        font.pixelSize: (parent.width + parent.height)/ 70
-                        color: "black"
-                    }
 
-                    Rectangle{
-                        id: systemModeMainsContainer
-                        color: "transparent"
-                        anchors {
-                            top : controlText.top
-                            topMargin: (parent.width + parent.height)/ 40
-                            left: controlText.left
-                        }
-                        width : parent.width/20
-                        height:  parent.height/30
-
-                    SGAlignedLabel {
-                        id: systemModeMainsLabel
-                        target: systemModeMainsCombo
-                        text: "Select V/F control (default) or FOC control"
-                        horizontalAlignment: Text.AlignHCenter
-                        alignment: SGAlignedLabel.SideLeftCenter
-                        anchors.fill: parent
-                        font.bold : false
-
-                        SGComboBox {
-                            id: systemModeMainsCombo
-                            currentIndex: platformInterface.system_mode_state
-                            model: [ "V/F","FOC"]
-                            borderColor: "green"
-                            textColor: "black"          // Default: "black"
-                            indicatorColor: "green"
-                            onActivated: {
-                                platformInterface.set_system_mode.update(currentIndex)
-                                platformInterface.system_mode_state = currentIndex
-                                }
-                            }
-                        }
-                    }
-
-                    Text {
-                        id: current_piText
-                        anchors {
-                            top: laSpeedSliderLabel.top
-                            topMargin: parent.height/5
-                            horizontalCenter: laSpeedSliderLabel.horizontalCenter
-                            horizontalCenterOffset: -(parent.width + parent.height)/ 40
-                        }
-                        text:  "<b> Current PI (Volts/Ampere) <b>"
-                        font.pixelSize: (parent.width + parent.height)/100
-                        color: "grey"
-                    }
-
-                    SGAlignedLabel{
-                        id: current_pi_p_gainLabel
-                        target: current_pi_p_gainSlider
-                        text:"Proportional Gain, P:"
-                        font.pixelSize: (parent.width + parent.height)/ 120
-                        anchors {
-                            top: laSpeedSliderLabel.top
-                            topMargin: parent.height/3.5
-                            horizontalCenter: laSpeedSliderLabel.horizontalCenter
-                            horizontalCenterOffset: -(parent.width + parent.height)/ 40
-                            }
-                        SGSlider {
-                            id: current_pi_p_gainSlider
-                            width: laMotorContainerRow1.width/2
-                            from: 0
-                            to: 1000
-                            value: 30
-                            stepSize: 1
-                            onValueChanged: current_pi_p_gain = value
-                            onUserSet: platformInterface.current_pi_p_gain = current_pi_p_gainSlider.value
-                            live: false
-                        }
-                    }
-
-                    SGAlignedLabel{
-                        id: current_pi_i_gainLabel
-                        target: current_pi_i_gainSlider
-                        text:"Integral Gain, I:"
-                        font.pixelSize: (parent.width + parent.height)/ 120
-                        anchors {
-                            top: current_pi_p_gainLabel.top
-                            topMargin: parent.height/10
-                            horizontalCenter: laSpeedSliderLabel.horizontalCenter
-                            horizontalCenterOffset: -(parent.width + parent.height)/ 40
-                            }
-                        SGSlider {
-                            id: current_pi_i_gainSlider
-                            width: laMotorContainerRow1.width/2
-                            from: 0
-                            to: 10000
-                            value: 2500
-                            stepSize: 1
-                            onValueChanged: current_pi_i_gain = value
-                            onUserSet: platformInterface.current_pi_i_gain = current_pi_i_gainSlider.value
-                            live: false
-                        }
-                    }
-
-                    Text {
-                        id: speed_piText
-                        anchors {
-                            top: laSpeedSliderLabel.top
-                            topMargin: parent.height/5
-                            horizontalCenter: controlText.horizontalCenter
-                        }
-                        text:  "<b> Speed PI (Ampere/Speed) <b>"
-                        font.pixelSize: (parent.width + parent.height)/100
-                        color: "grey"
-                    }
-
-
-                    SGAlignedLabel{
-                        id: speed_pi_p_gainLabel
-                        target: speed_pi_p_gainSlider
-                        text:"Proportional Gain, P:"
-                        font.pixelSize: (parent.width + parent.height)/ 120
-                        anchors {
-                            top: laSpeedSliderLabel.top
-                            topMargin: parent.height/3.5
-                            horizontalCenter: controlText.horizontalCenter
-                            }
-                        SGSlider {
-                            id: speed_pi_p_gainSlider
-                            width: laMotorContainerRow1.width/2
-                            from: 0
-                            to: 1
-                            value: 0.08
-                            stepSize: 0.001
-                            onValueChanged: speed_pi_p_gain = value*1000
-                            onUserSet: platformInterface.speed_pi_p_gain = speed_pi_p_gainSlider.value*1000
-                            live: false
-                        }
-                    }
-
-                    SGAlignedLabel{
-                        id: speed_pi_i_gainLabel
-                        target: speed_pi_i_gainSlider
-                        text:"Integral Gain, I:"
-                        font.pixelSize: (parent.width + parent.height)/ 120
-                        anchors {
-                            top: speed_pi_p_gainLabel.top
-                            topMargin: parent.height/10
-                            horizontalCenter: controlText.horizontalCenter
-                            }
-                        SGSlider {
-                            id: speed_pi_i_gainSlider
-                            width: laMotorContainerRow1.width/2
-                            from: 0
-                            to: 1
-                            value: 0.05
-                            stepSize: 0.001
-                            onValueChanged: speed_pi_i_gain = value*1000
-                            onUserSet: platformInterface.speed_pi_i_gain = speed_pi_i_gainSlider.value*1000
-                            live: false
-                        }
-                    }
-
-                    SGAlignedLabel{
-                        id: resistanceLabel
-                        target: resistanceSlider
-                        text:"Resistance (Ohms):"
-                        font.pixelSize: (parent.width + parent.height)/ 120
-                        anchors {
-                            top: laAccelerationSliderLabel.top
-                            topMargin: parent.height/3.5
-                            horizontalCenter: laAccelerationSliderLabel.horizontalCenter
-                            horizontalCenterOffset: (parent.width + parent.height)/ 20
-                            }
-                        SGSlider {
-                            id: resistanceSlider
-                            width: laMotorContainerRow1.width/2
-                            from: 0
-                            to: 10
-                            value: 2.5
-                            stepSize: 0.01
-                            onValueChanged: resistance = value*100
-                            onUserSet: platformInterface.resistance = resistanceSlider.value*100
-                            live: false
-                        }
-                        Text{
-                            id: resistanceSliderUnit
-                            text:"Ohm"
-                            font.pixelSize: (parent.width + parent.height)/ 25
-                            color: "black"
-                            anchors.left: resistanceSlider.right
-                            }
-                    }
-
-                    SGAlignedLabel{
-                        id: inductanceLabel
-                        target: inductanceSlider
-                        text:"Inductance (H):"
-                        font.pixelSize: (parent.width + parent.height)/ 120
-                        anchors {
-                            top: resistanceLabel.top
-                            topMargin: parent.height/10
-                            horizontalCenter: laAccelerationSliderLabel.horizontalCenter
-                            horizontalCenterOffset: (parent.width + parent.height)/ 20
-                            }
-                        SGSlider {
-                            id: inductanceSlider
-                            width: laMotorContainerRow1.width/2
-                            from: 0
-                            to: 1
-                            value: 0.016
-                            stepSize: 0.001
-                            onValueChanged: inductance = value*1000
-                            onUserSet: platformInterface.inductance = inductanceSlider.value*1000
-                            live: false
-                        }
-                        Text{
-                            id: inductanceSliderUnit
-                            text:"Henry"
-                            font.pixelSize: (parent.width + parent.height)/ 25
-                            color: "black"
-                            anchors.left: inductanceSlider.right
-                            }
-                    }
                }
             }
         }

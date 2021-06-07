@@ -17,7 +17,7 @@ Item{
     {
         if(class_id === "a715b4d6-b9a3-4fdf-a1da-bcf629146232") {
             title =  "<b> SiC SSDC inverter gate driver for SSDC SiC module </b>"
-            partNumber = " <b> Part of the Motor Development Kit Family </b>"
+            partNumber = " <b> Part of the Double Pulse Tester & Traction Inverter Family </b>"
             warningHVVinLable = "600V"
             warningLVVinLable = "0V"
             opn = "STR-SiC-SSDC-INV-UCB-GEVK"

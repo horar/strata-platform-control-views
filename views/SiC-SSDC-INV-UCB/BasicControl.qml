@@ -314,7 +314,7 @@ Item {
                     gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
                     gaugeFrontColor2: Qt.rgba(1,0,0,1)
                     minimumValue: 0
-                    maximumValue: 500
+                    maximumValue: multiplePlatform.vinScale
                     tickmarkStepSize: 50
                     outerColor: "#999"
                     unitLabel: "V"
