@@ -56,5 +56,10 @@
         <file>image/play-solid.svg</file>
         <file>image/brake.svg</file>
         <file>image/on-logo-green.svg</file>
+        <file>GeneralInputs.qml</file>
+        <file>SinglePulseTesting.qml</file>
+        <file>DoublePulseTesting.qml</file>
+        <file>BurstTesting.qml</file>
+        <file>ShortCircuitMode.qml</file>
     </qresource>
 </RCC>

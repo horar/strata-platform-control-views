@@ -19,13 +19,14 @@ Item {
     property string warningVin: multiplePlatform.warningHVVinLable
 
     // property that reads the initial notification
-    property var temp_calc: platformInterface.status_temperature_sensor.temperature
     property var dc_link_vin_calc: platformInterface.status_vi.l/1000
-    property var foc_iout_id_calc: platformInterface.status_vi.d/1000
-    property var foc_iout_iq_calc: platformInterface.status_vi.q/1000
     property var winding_iout_iu_calc: platformInterface.status_vi.u/1000
     property var winding_iout_iv_calc: platformInterface.status_vi.v/1000
     property var winding_iout_iw_calc: platformInterface.status_vi.w/1000
+    property var temp_U_calc: (platformInterface.status_vi.U).toFixed(3)
+    property var temp_V_calc: (platformInterface.status_vi.V).toFixed(3)
+    property var temp_W_calc: (platformInterface.status_vi.W).toFixed(3)
+
     property var time: settingsControl.time
     property var pointsCount: settingsControl.pointsCount
     property var amperes: settingsControl.amperes
@@ -63,9 +64,9 @@ Item {
         Help.registerTarget(actualSpeedGauge, "This gauge shows the actual speed.", 2, "advanceHelp")
         Help.registerTarget(hzGauge, "This gauge shows the output frequency.", 3, "advanceHelp")
         Help.registerTarget(actualSpeedGraph, "The actual speed is plotted in real time.", 4, "advanceHelp")
-        Help.registerTarget(dc_link_vinVoltageGraph, "DC link voltage is plotted in real time", 5, "advanceHelp")
-        Help.registerTarget(foc_iout_IdGraph, "FOC current, Id is plotted in real time", 6, "advanceHelp")
-        Help.registerTarget(foc_iout_IqGraph, "FOC current, Iq is plotted in real time", 7, "advanceHelp")
+        Help.registerTarget(temp_U_graph, "Temperature U is plotted in real time", 5, "advanceHelp")
+        Help.registerTarget(temp_V_graph, "Temperature V is plotted in real time", 6, "advanceHelp")
+        Help.registerTarget(temp_W_graph, "Temperature W is plotted in real time", 7, "advanceHelp")
         Help.registerTarget(winding_iout_IuGraph, "Motor winding current, Iu is plotted in real time", 8, "advanceHelp")
         Help.registerTarget(winding_iout_IvGraph, "Motor winding current, Iv is plotted in real time", 9, "advanceHelp")
         Help.registerTarget(winding_iout_IwGraph, "Motor winding current, Iw is plotted in real time", 10, "advanceHelp")
@@ -323,7 +324,7 @@ Item {
                     }
                     autoAdjustMaxMin: false
                     repeatOldData: visible
-                    dataLineColor: "blue"
+                    dataLineColor: "orange"
                     textColor: "black"
                     axesColor: "black"
                     gridLineColor: "lightgrey"
@@ -374,7 +375,7 @@ Item {
                     }
 
                     GraphConverter{
-                        id: dc_link_vinVoltageGraph
+                        id: temp_U_graph
                         width: parent.width/6
                         height: parent.height/1.05
                         anchors {
@@ -386,7 +387,7 @@ Item {
                         showOptions: false
                         autoAdjustMaxMin: false
                         repeatOldData: visible
-                        dataLineColor: "blue"
+                        dataLineColor: "brown"
                         textColor: "black"
                         axesColor: "black"
                         gridLineColor: "lightgrey"
@@ -397,9 +398,9 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "DC link voltage (V)"
-                        inputData: dc_link_vin_calc
-                        maxYValue: multiplePlatform.vinScale
+                        yAxisTitle: "Temperature U (°C)"
+                        inputData: temp_U_calc
+                        maxYValue: 200
                         showYGrids: true
                         showXGrids: true
                         minXValue: 0
@@ -408,32 +409,31 @@ Item {
                     }
 
                     SGLabelledInfoBox {
-                        id: dc_link_vinVoltage
+                        id: temp_U_box
                         label: ""
-                        info: {(platformInterface.status_vi.l/1000).toFixed(3)}
-                        infoBoxColor: if (multiplePlatform.nominalVin < dc_link_vin_calc) {"red"}
-                                      else{"lightgrey"}
+                        info: temp_U_calc
+                        infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3
-                        unit: "V"
-                        infoBoxWidth: dc_link_vinVoltageGraph.width/1.5
-                        infoBoxHeight : dc_link_vinVoltageGraph.height/10
-                        fontSize :  (dc_link_vinVoltageGraph.width + dc_link_vinVoltageGraph.height)/37
-                        unitSize: (dc_link_vinVoltageGraph.width + dc_link_vinVoltageGraph.height)/35
+                        unit: "°C"
+                        infoBoxWidth: temp_U_graph.width/1.5
+                        infoBoxHeight : temp_U_graph.height/10
+                        fontSize :  (temp_U_graph.width + temp_U_graph.height)/37
+                        unitSize: (temp_U_graph.width + temp_U_graph.height)/35
                         anchors {
-                            top : dc_link_vinVoltageGraph.bottom
+                            top : temp_U_graph.bottom
                             topMargin : parent.height/100
-                            horizontalCenter: dc_link_vinVoltageGraph.horizontalCenter
+                            horizontalCenter: temp_U_graph.horizontalCenter
                             horizontalCenterOffset:  parent.height/15
                         }
                     }
 
                     GraphConverter{
-                        id: foc_iout_IdGraph
+                        id: temp_V_graph
                         width: parent.width/6
                         height: parent.height/1.05
                         anchors {
-                            left: dc_link_vinVoltageGraph.right
+                            left: temp_U_graph.right
                             leftMargin: 0
                             top: parent.top
                             topMargin: -parent.height/20
@@ -441,7 +441,7 @@ Item {
                         showOptions: false
                         autoAdjustMaxMin: false
                         repeatOldData: visible
-                        dataLineColor: "blue"
+                        dataLineColor: "black"
                         textColor: "black"
                         axesColor: "black"
                         gridLineColor: "lightgrey"
@@ -452,10 +452,9 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "Id (A)"
-                        inputData: foc_iout_id_calc
-                        maxYValue: amperes
-                        minYValue: amperes*-1
+                        yAxisTitle: "Temperature V (°C)"
+                        inputData: temp_V_calc
+                        maxYValue: 200
                         showYGrids: true
                         showXGrids: true
                         minXValue: 0
@@ -463,33 +462,32 @@ Item {
                         reverseDirection: true
                     }
 
-
                     SGLabelledInfoBox {
-                        id: foc_iout_IdCurrent
+                        id: temp_V_box
                         label: ""
-                        info:  {(platformInterface.status_vi.d/1000).toFixed(3)}
+                        info: temp_V_calc
                         infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3
-                        unit: "A"
-                        infoBoxWidth: foc_iout_IdGraph.width/1.5
-                        infoBoxHeight : foc_iout_IdGraph.height/10
-                        fontSize :  (foc_iout_IdGraph.width + foc_iout_IdGraph.height)/37
-                        unitSize: (foc_iout_IdGraph.width + foc_iout_IdGraph.height)/35
+                        unit: "°C"
+                        infoBoxWidth: temp_V_graph.width/1.5
+                        infoBoxHeight : temp_V_graph.height/10
+                        fontSize :  (temp_V_graph.width + temp_V_graph.height)/37
+                        unitSize: (temp_V_graph.width + temp_V_graph.height)/35
                         anchors {
-                            top : foc_iout_IdGraph.bottom
+                            top : temp_U_graph.bottom
                             topMargin : parent.height/100
-                            horizontalCenter: foc_iout_IdGraph.horizontalCenter
+                            horizontalCenter: temp_V_graph.horizontalCenter
                             horizontalCenterOffset:  parent.height/15
                         }
                     }
 
                     GraphConverter{
-                        id: foc_iout_IqGraph
+                        id: temp_W_graph
                         width: parent.width/6
                         height: parent.height/1.05
                         anchors {
-                            left: foc_iout_IdGraph.right
+                            left: temp_V_graph.right
                             leftMargin: 0
                             top: parent.top
                             topMargin: -parent.height/20
@@ -497,7 +495,7 @@ Item {
                         showOptions: false
                         autoAdjustMaxMin: false
                         repeatOldData: visible
-                        dataLineColor: "blue"
+                        dataLineColor: "darkgrey"
                         textColor: "black"
                         axesColor: "black"
                         gridLineColor: "lightgrey"
@@ -508,10 +506,9 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "Iq (A)"
-                        inputData: foc_iout_iq_calc
-                        maxYValue: amperes
-                        minYValue: amperes*-1
+                        yAxisTitle: "Temperature W (°C)"
+                        inputData: temp_W_calc
+                        maxYValue: 200
                         showYGrids: true
                         showXGrids: true
                         minXValue: 0
@@ -520,21 +517,21 @@ Item {
                     }
 
                     SGLabelledInfoBox {
-                        id: foc_iout_IqCurrent
+                        id: temp_W_box
                         label: ""
-                        info:  {(platformInterface.status_vi.q/1000).toFixed(3)}
+                        info: temp_W_calc
                         infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3
-                        unit: "A"
-                        infoBoxWidth: foc_iout_IqGraph.width/1.5
-                        infoBoxHeight : foc_iout_IqGraph.height/10
-                        fontSize :  (foc_iout_IqGraph.width + foc_iout_IqGraph.height)/37
-                        unitSize: (foc_iout_IqGraph.width + foc_iout_IqGraph.height)/35
+                        unit: "°C"
+                        infoBoxWidth: temp_W_graph.width/1.5
+                        infoBoxHeight : temp_W_graph.height/10
+                        fontSize :  (temp_W_graph.width + temp_W_graph.height)/37
+                        unitSize: (temp_W_graph.width + temp_W_graph.height)/35
                         anchors {
-                            top : foc_iout_IqGraph.bottom
+                            top : temp_W_graph.bottom
                             topMargin : parent.height/100
-                            horizontalCenter: foc_iout_IqGraph.horizontalCenter
+                            horizontalCenter: temp_W_graph.horizontalCenter
                             horizontalCenterOffset:  parent.height/15
                         }
                     }
@@ -544,7 +541,7 @@ Item {
                         width: parent.width/6
                         height: parent.height/1.05
                         anchors {
-                            left: foc_iout_IqGraph.right
+                            left: temp_W_graph.right
                             leftMargin: 0
                             top: parent.top
                             topMargin: -parent.height/20
@@ -552,7 +549,7 @@ Item {
                         showOptions: false
                         autoAdjustMaxMin: false
                         repeatOldData: visible
-                        dataLineColor: "blue"
+                        dataLineColor: "brown"
                         textColor: "black"
                         axesColor: "black"
                         gridLineColor: "lightgrey"
@@ -607,7 +604,7 @@ Item {
                         showOptions: false
                         autoAdjustMaxMin: false
                         repeatOldData: visible
-                        dataLineColor: "blue"
+                        dataLineColor: "black"
                         textColor: "black"
                         axesColor: "black"
                         gridLineColor: "lightgrey"
@@ -662,7 +659,7 @@ Item {
                         showOptions: false
                         autoAdjustMaxMin: false
                         repeatOldData: visible
-                        dataLineColor: "blue"
+                        dataLineColor: "darkgrey"
                         textColor: "black"
                         axesColor: "black"
                         gridLineColor: "lightgrey"

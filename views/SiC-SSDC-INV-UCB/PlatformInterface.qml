@@ -11,16 +11,15 @@ Item {
         "t": 0,       // Target speed in RPM
         "a": 0,       // Actual speed in RPM
         "l": 0,       // Dc link Vin in mVolts
-        "d": 0,       // FOC Iout Id in mAmps
-        "q": 0,       // FOC Iout Iq in mAmps
         "u": 0,       // Winding Iout Iu in mAmps
         "v": 0,       // Winding Iout Iv in mAmps
         "w": 0,       // Winding Iout Iw in mAmps
+        "U": 0,       // Winding temperature U in °C
+        "V": 0,       // Winding temperature V in °C
+        "W": 0,       // Winding temperature W in °C
     }
 
     property var status_IO: {"motor_EN": ""}
-
-    property var status_temperature_sensor : {"temperature": 0}
 
     property var status_enable: {"enable": "","motor_EN_enable": ""}
 
@@ -76,7 +75,7 @@ Item {
 
     property var error:{"value":0} //Error Status
 
-    property var system_mode: {"system_mode" : ""} // V/F: 0, FOC:1, Stop: 2, Start: 3, Reset Error: 4
+    property var system_mode: {"system_mode" : ""} // Stop: 2, Start: 3, Reset Error: 4
 
     property var  check_vin_good: ({"cmd":"check_vin_good",
                                        update: function () {CorePlatformInterface.send(this)},
@@ -126,38 +125,6 @@ Item {
                                     update: function (max_motor_speed) {this.set(max_motor_speed)
                                         CorePlatformInterface.send(this)},
                                     set: function (max_motor_speed) {this.payload.max_motor_speed_target = max_motor_speed;},
-                                    send: function () { CorePlatformInterface.send(this) },
-                                    show: function () { CorePlatformInterface.show(this) }
-                                })
-
-    property var setCurrent_pi_p_gain: ({"cmd" : "set_current_pi_p_gain","payload": {"current_pi_p_gain_target": 0},
-                                    update: function (current_pi_p_gain) {this.set(current_pi_p_gain)
-                                        CorePlatformInterface.send(this)},
-                                    set: function (current_pi_p_gain) {this.payload.current_pi_p_gain_target = current_pi_p_gain;},
-                                    send: function () { CorePlatformInterface.send(this) },
-                                    show: function () { CorePlatformInterface.show(this) }
-                                })
-
-    property var setCurrent_pi_i_gain: ({"cmd" : "set_current_pi_i_gain","payload": {"current_pi_i_gain_target": 0},
-                                    update: function (current_pi_i_gain) {this.set(current_pi_i_gain)
-                                        CorePlatformInterface.send(this)},
-                                    set: function (current_pi_i_gain) {this.payload.current_pi_i_gain_target = current_pi_i_gain;},
-                                    send: function () { CorePlatformInterface.send(this) },
-                                    show: function () { CorePlatformInterface.show(this) }
-                                })
-
-    property var setSpeed_pi_p_gain: ({"cmd" : "set_speed_pi_p_gain","payload": {"speed_pi_p_gain_target": 0},
-                                    update: function (speed_pi_p_gain) {this.set(speed_pi_p_gain)
-                                        CorePlatformInterface.send(this)},
-                                    set: function (speed_pi_p_gain) {this.payload.speed_pi_p_gain_target = speed_pi_p_gain;},
-                                    send: function () { CorePlatformInterface.send(this) },
-                                    show: function () { CorePlatformInterface.show(this) }
-                                })
-
-    property var setSpeed_pi_i_gain: ({"cmd" : "set_speed_pi_i_gain","payload": {"speed_pi_i_gain_target": 0},
-                                    update: function (speed_pi_i_gain) {this.set(speed_pi_i_gain)
-                                        CorePlatformInterface.send(this)},
-                                    set: function (speed_pi_i_gain) {this.payload.speed_pi_i_gain_target = speed_pi_i_gain;},
                                     send: function () { CorePlatformInterface.send(this) },
                                     show: function () { CorePlatformInterface.show(this) }
                                 })
@@ -224,18 +191,6 @@ Item {
 
     property int max_motor_speed: 0
     onMax_motor_speedChanged: {setMax_motor_speed.update(max_motor_speed)}
-
-    property int current_pi_p_gain: 0
-    onCurrent_pi_p_gainChanged: {setCurrent_pi_p_gain.update(current_pi_p_gain)}
-
-    property int current_pi_i_gain: 0
-    onCurrent_pi_i_gainChanged: {setCurrent_pi_i_gain.update(current_pi_i_gain)}
-
-    property int speed_pi_p_gain: 0
-    onSpeed_pi_p_gainChanged: {setSpeed_pi_p_gain.update(speed_pi_p_gain)}
-
-    property int speed_pi_i_gain: 0
-    onSpeed_pi_i_gainChanged: {setSpeed_pi_i_gain.update(speed_pi_i_gain)}
 
     property int resistance: 0
     onResistanceChanged: {setResistance.update(resistance)}

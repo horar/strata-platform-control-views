@@ -17,13 +17,15 @@ ColumnLayout {
     Component.onCompleted: {
         graphTimerPoints.start()
         graphTimerPoints1.start()
-        dataArray_foc_iout_id_calc_graph = []
-        dataArray_foc_iout_iq_calc_graph = []
+        dataArray_actual_speed_calc_graph = []
+        dataArray_dc_link_vin_calc_graph = []
         dataArray_winding_iout_iu_calc_graph = []
         dataArray_winding_iout_iv_calc_graph = []
         dataArray_winding_iout_iw_calc_graph = []
-        dataArray_dc_link_vin_calc_graph = []
-        dataArray_actual_speed_calc_graph = []
+        dataArray_temp_U_calc_graph = []
+        dataArray_temp_V_calc_graph = []
+        dataArray_temp_W_calc_graph = []
+
         if(basicGraph.count > 0) {
             basicGraph.removeCurve(0)
         }
@@ -32,7 +34,7 @@ ColumnLayout {
         }
 
         Help.registerTarget(basicGraph,"Speed/DC link graph:\n\t-Actual Speed.\n\t-DC Link Voltage.", 0, "exportControlHelp")
-        Help.registerTarget(basicGraph1,"Current graph:\n\t-FOC Iout Id.\n\t-FOC Iout Iq.\n\t-Winding Iout Iu.\n\t-Winding Iout Iv.\n\t-Winding Iout Iw.", 1, "exportControlHelp")
+        Help.registerTarget(basicGraph1,"Current graph:\n\t-Winding Iout Iu.\n\t-Winding Iout Iv.\n\t-Winding Iout Iw.\n\t-Temperature U.\n\t-Temperature V.\n\t-Temperature W.", 1, "exportControlHelp")
         Help.registerTarget(rect431,"Error message status are shown here.", 2, "exportControlHelp")
         Help.registerTarget(rect432,"Reset charts and starts new measurement.", 3, "exportControlHelp")
         Help.registerTarget(rect433,"Exports all data to Excel as a log file.", 4, "exportControlHelp")
@@ -44,6 +46,7 @@ ColumnLayout {
     property var graph_selected5
     property var graph_selected6
     property var graph_selected7
+    property var graph_selected8
     property real ratioCalc: root.width / 1200
     property real initialAspectRatio: 1200/820
     property alias virtualtextarea: virtualtextarea
@@ -54,13 +57,9 @@ ColumnLayout {
     property var pointsCount: settingsControl.pointsCount
 
     // property that reads the initial notification
-    property var temp_calc: (platformInterface.status_temperature_sensor.temperature).toFixed(3)
     property var pole_pairs: settingsControl.pole_pairs
     property var max_motor_speed: settingsControl.max_motor_speed
-    property var current_pi_p_gain: (settingsControl.current_pi_p_gain).toFixed(0)
-    property var current_pi_i_gain: (settingsControl.current_pi_i_gain).toFixed(0)
-    property var speed_pi_p_gain: (settingsControl.speed_pi_p_gain/1000).toFixed(3)
-    property var speed_pi_i_gain: (settingsControl.speed_pi_i_gain/1000).toFixed(3)
+
     property var resistance: (settingsControl.resistance/100).toFixed(3)
     property var inductance: (settingsControl.inductance/1000).toFixed(3)
     property var target_speed: platformInterface.status_vi.t
@@ -70,72 +69,16 @@ ColumnLayout {
 
     property string error_code: basicControl.error_code
 
-    property var foc_iout_id_calc: (platformInterface.status_vi.d/1000).toFixed(3)
-    property var dataArray_foc_iout_id_calc_graph: []
-    property var foc_iout_id_calc_validator:0
-    onFoc_iout_id_calcChanged:{
-        foc_iout_id_calc_validator++
-        if(graph_selected3 === 1){
-            if(foc_iout_id_calc_validator>0){
-                dataArray_foc_iout_id_calc_graph.push({"x":x_Axis_Timer_1,"y":foc_iout_id_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-            }
-        }
-    }
-
-    property var foc_iout_iq_calc: (platformInterface.status_vi.q/1000).toFixed(3)
-    property var dataArray_foc_iout_iq_calc_graph: []
-    property var foc_iout_iq_calc_validator:0
-    onFoc_iout_iq_calcChanged:{
-        foc_iout_iq_calc_validator++
-        if(graph_selected4 === 1){
-            if(foc_iout_iq_calc_validator>0){
-                dataArray_foc_iout_iq_calc_graph.push({"x":x_Axis_Timer_1,"y":foc_iout_id_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-            }
-        }
-    }
-
-    property var winding_iout_iu_calc: (platformInterface.status_vi.u/1000).toFixed(3)
-    property var dataArray_winding_iout_iu_calc_graph: []
-    property var winding_iout_iu_calc_validator:0
-    onWinding_iout_iu_calcChanged:{
-        winding_iout_iu_calc_validator++
-        if(graph_selected5 === 1){
-            if(winding_iout_iu_calc_validator>0){
-                dataArray_winding_iout_iu_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iu_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-            }
-        }
-    }
-
-    property var winding_iout_iv_calc: (platformInterface.status_vi.v/1000).toFixed(3)
-    property var dataArray_winding_iout_iv_calc_graph: []
-    property var winding_iout_iv_calc_validator:0
-    onWinding_iout_iv_calcChanged:{
-        winding_iout_iv_calc_validator++
-        if(graph_selected6 === 1){
-            if(winding_iout_iv_calc_validator>0){
-                dataArray_winding_iout_iv_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iv_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-            }
-        }
-    }
-
-    property var winding_iout_iw_calc: (platformInterface.status_vi.w/1000).toFixed(3)
-    property var dataArray_winding_iout_iw_calc_graph: []
-    property var winding_iout_iw_calc_validator:0
-    onWinding_iout_iw_calcChanged:{
-        winding_iout_iw_calc_validator++
-        if(graph_selected7 === 1){
-            if(winding_iout_iw_calc_validator>0){
-                dataArray_winding_iout_iw_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iw_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
+    property var actual_speed_calc: platformInterface.status_vi.a
+    property var dataArray_actual_speed_calc_graph: []
+    property var actual_speed_calc_validator:0
+    onActual_speed_calcChanged:{
+        actual_speed_calc_validator++
+        if(graph_selected1 === 1){
+            if(actual_speed_calc_validator>0){
+                dataArray_actual_speed_calc_graph.push({"x":x_Axis_Timer_,"y":actual_speed_calc})
+                x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
+                basicGraph.xMax = x_Axis_Timer_
             }
         }
     }
@@ -154,29 +97,100 @@ ColumnLayout {
         }
     }
 
-    property var actual_speed_calc: platformInterface.status_vi.a
-    property var dataArray_actual_speed_calc_graph: []
-    property var actual_speed_calc_validator:0
-    onActual_speed_calcChanged:{
-        actual_speed_calc_validator++
-        if(graph_selected1 === 1){
-            if(actual_speed_calc_validator>0){
-                dataArray_actual_speed_calc_graph.push({"x":x_Axis_Timer_,"y":actual_speed_calc})
-                x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
-                basicGraph.xMax = x_Axis_Timer_
+    property var winding_iout_iu_calc: (platformInterface.status_vi.u/1000).toFixed(3)
+    property var dataArray_winding_iout_iu_calc_graph: []
+    property var winding_iout_iu_calc_validator:0
+    onWinding_iout_iu_calcChanged:{
+        winding_iout_iu_calc_validator++
+        if(graph_selected3 === 1){
+            if(winding_iout_iu_calc_validator>0){
+                dataArray_winding_iout_iu_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iu_calc})
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                basicGraph1.xMax = x_Axis_Timer_1
+            }
+        }
+    }
+
+    property var winding_iout_iv_calc: (platformInterface.status_vi.v/1000).toFixed(3)
+    property var dataArray_winding_iout_iv_calc_graph: []
+    property var winding_iout_iv_calc_validator:0
+    onWinding_iout_iv_calcChanged:{
+        winding_iout_iv_calc_validator++
+        if(graph_selected4 === 1){
+            if(winding_iout_iv_calc_validator>0){
+                dataArray_winding_iout_iv_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iv_calc})
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                basicGraph1.xMax = x_Axis_Timer_1
+            }
+        }
+    }
+
+    property var winding_iout_iw_calc: (platformInterface.status_vi.w/1000).toFixed(3)
+    property var dataArray_winding_iout_iw_calc_graph: []
+    property var winding_iout_iw_calc_validator:0
+    onWinding_iout_iw_calcChanged:{
+        winding_iout_iw_calc_validator++
+        if(graph_selected5 === 1){
+            if(winding_iout_iw_calc_validator>0){
+                dataArray_winding_iout_iw_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iw_calc})
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                basicGraph1.xMax = x_Axis_Timer_1
+            }
+        }
+    }
+
+    property var temp_U_calc: platformInterface.status_vi.U
+    property var dataArray_temp_U_calc_graph: []
+    property var temp_U_calc_validator:0
+    onTemp_U_calcChanged:{
+        temp_U_calc_validator++
+        if(graph_selected6 === 1){
+            if(temp_U_calc_validator>0){
+                dataArray_temp_U_calc_graph.push({"x":x_Axis_Timer_1,"y":temp_U_calc})
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                basicGraph1.xMax = x_Axis_Timer_1
+            }
+        }
+    }
+
+    property var temp_V_calc: platformInterface.status_vi.V
+    property var dataArray_temp_V_calc_graph: []
+    property var temp_V_calc_validator:0
+    onTemp_V_calcChanged:{
+        temp_V_calc_validator++
+        if(graph_selected7 === 1){
+            if(temp_V_calc_validator>0){
+                dataArray_temp_V_calc_graph.push({"x":x_Axis_Timer_1,"y":temp_V_calc})
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                basicGraph1.xMax = x_Axis_Timer_1
+            }
+        }
+    }
+
+    property var temp_W_calc: platformInterface.status_vi.W
+    property var dataArray_temp_W_calc_graph: []
+    property var temp_W_calc_validator:0
+    onTemp_W_calcChanged:{
+        temp_W_calc_validator++
+        if(graph_selected8 === 1){
+            if(temp_W_calc_validator>0){
+                dataArray_temp_W_calc_graph.push({"x":x_Axis_Timer_1,"y":temp_W_calc})
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                basicGraph1.xMax = x_Axis_Timer_1
             }
         }
     }
 
     function clearGraphsData() {
-        if (clear==1){
-            dataArray_foc_iout_id_calc_graph = []
-            dataArray_foc_iout_iq_calc_graph = []
+        if (clear==1){          
+            dataArray_actual_speed_calc_graph = []
+            dataArray_dc_link_vin_calc_graph = []
             dataArray_winding_iout_iu_calc_graph = []
             dataArray_winding_iout_iv_calc_graph = []
             dataArray_winding_iout_iw_calc_graph = []
-            dataArray_dc_link_vin_calc_graph = []
-            dataArray_actual_speed_calc_graph = []
+            dataArray_temp_U_calc_graph = []
+            dataArray_temp_V_calc_graph = []
+            dataArray_temp_W_calc_graph = []
 
             if(basicGraph.count > 0) {
                 basicGraph.removeCurve(0)
@@ -184,13 +198,14 @@ ColumnLayout {
             if(basicGraph1.count > 0) {
                 basicGraph1.removeCurve(0)
             }
-            foc_iout_id_calc_validator=0
-            foc_iout_iq_calc_validator=0
+            actual_speed_calc_validator=0
+            dc_link_vin_calc_validator=0
             winding_iout_iu_calc_validator=0
             winding_iout_iv_calc_validator=0
             winding_iout_iw_calc_validator=0
-            dc_link_vin_calc_validator=0
-            actual_speed_calc_validator=0
+            temp_U_calc_validator=0
+            temp_V_calc_validator=0
+            temp_W_calc_validator=0
 
             x_Axis_Timer_=0
             x_Axis_Timer_1=0
@@ -271,10 +286,10 @@ ColumnLayout {
 
                             text:  {
                                 if(one_time_top_row_excel===0){
-                                    "Time\tDC_Link(V)\t    Id(A)\t    Iq(A)\t    Iu(A)\t    Iv(A)\t    Iw(A)\tTemp.(C)\tPole Pairs\tMax vout\tMax speed\tC.prop gain\tC.int gain\tS.prop gain\tS.int gain\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
+                                    "Time\tDC_Link(V)\tIu(A)\tIv(A)\tIw(A)\tU(°C)\tV(°C)\tW(°C)\tPole Pairs\tMax vout\tMax speed\tC.prop gain\tC.int gain\tS.prop gain\tS.int gain\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
                                     one_time_top_row_excel=1
                                     }
-                                else("‚"+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ foc_iout_id_calc +"\t"+ foc_iout_iq_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ current_pi_p_gain +"\t"+ current_pi_i_gain +"\t"+ speed_pi_p_gain +"\t"+ speed_pi_i_gain +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
+                                else("‚"+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_U_calc +"\t"+ temp_V_calc +"\t"+ temp_W_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ current_pi_p_gain +"\t"+ current_pi_i_gain +"\t"+ speed_pi_p_gain +"\t"+ speed_pi_i_gain +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
                                     }
                                 }
 
@@ -452,7 +467,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("FOC Id")
+                                                text: qsTr("Winding Iu")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected3 = 1
@@ -465,7 +480,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("FOC Iq")
+                                                text: qsTr("Winding Iv")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected4 = 1
@@ -478,7 +493,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Winding Iu")
+                                                text: qsTr("Winding Iw")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected5 = 1
@@ -491,7 +506,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Winding Iv")
+                                                text: qsTr("Temp. U")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected6 = 1
@@ -504,13 +519,25 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Winding Iw")
+                                                text: qsTr("Temp. V")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected7 = 1
                                                         graphSelector.howManyChecked++
                                                     } else {
                                                         graph_selected7 = 0
+                                                        graphSelector.howManyChecked--
+                                                    }
+                                                }
+                                            }
+                                            Widget09.SGSegmentedButton{
+                                                text: qsTr("Temp. W")
+                                                onCheckedChanged: {
+                                                    if (checked) {
+                                                        graph_selected8 = 1
+                                                        graphSelector.howManyChecked++
+                                                    } else {
+                                                        graph_selected8 = 0
                                                         graphSelector.howManyChecked--
                                                     }
                                                 }
@@ -562,7 +589,7 @@ ColumnLayout {
                                             backgroundColor: "white"
                                             foregroundColor: "black"
                                             xTitle: "Realtime Log Samples"
-                                            yTitle: "Amperes"
+                                            yTitle: "Amperes / °C"
 
                                             Button {
                                                 id:resetChartButton1
@@ -581,39 +608,14 @@ ColumnLayout {
                                             }
 
                                             Text {
-                                                id: idText
+                                                id: iuText
                                                 anchors {
                                                     top: resetChartButton1.bottom
                                                     topMargin:(parent.width + parent.height)/ 150
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.d/1000).toFixed(3) +" A"
-                                                font.pixelSize: (parent.width + parent.height)/ 150
-                                                color: "red"
-                                            }
-
-                                            Text {
-                                                id: iqText
-                                                anchors {
-                                                    top: idText.bottom
-                                                    right: resetChartButton1.right
-                                                    rightMargin: (parent.width + parent.height)/ 150
-                                                }
-                                                text: ""+ (platformInterface.status_vi.q/1000).toFixed(3) +" A"
-                                                font.pixelSize: (parent.width + parent.height)/ 150
-                                                color: "green"
-                                            }
-
-                                            Text {
-                                                id: iuText
-                                                anchors {
-                                                    top: iqText.bottom
-                                                    topMargin:(parent.width + parent.height)/ 150
-                                                    right: resetChartButton1.right
-                                                    rightMargin: (parent.width + parent.height)/ 150
-                                                }
-                                                text: ""+ (platformInterface.status_vi.u/1000).toFixed(3) +" A"
+                                                text: ""+ (platformInterface.status_vi.u/1000).toFixed(3) +"  A"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "brown"
                                             }
@@ -625,7 +627,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.v/1000).toFixed(3) +" A"
+                                                text: ""+ (platformInterface.status_vi.v/1000).toFixed(3) +"  A"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "black"
                                             }
@@ -637,15 +639,53 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.w/1000).toFixed(3) +" A"
+                                                text: ""+ (platformInterface.status_vi.w/1000).toFixed(3) +"  A"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "grey"
                                             }
 
                                             Text {
-                                                id: hzText
+                                                id: tuText
                                                 anchors {
                                                     top: iwText.bottom
+                                                    topMargin:(parent.width + parent.height)/ 150
+                                                    right: resetChartButton1.right
+                                                    rightMargin: (parent.width + parent.height)/ 150
+                                                }
+                                                text: ""+ (platformInterface.status_vi.U).toFixed(3) +" °C"
+                                                font.pixelSize: (parent.width + parent.height)/ 150
+                                                color: "brown"
+                                            }
+
+                                            Text {
+                                                id: tvText
+                                                anchors {
+                                                    top: tuText.bottom
+                                                    right: resetChartButton1.right
+                                                    rightMargin: (parent.width + parent.height)/ 150
+                                                }
+                                                text: ""+ (platformInterface.status_vi.V).toFixed(3) +" °C"
+                                                font.pixelSize: (parent.width + parent.height)/ 150
+                                                color: "black"
+                                            }
+
+                                            Text {
+                                                id: twText
+                                                anchors {
+                                                    top: tvText.bottom
+                                                    right: resetChartButton1.right
+                                                    rightMargin: (parent.width + parent.height)/ 150
+                                                }
+                                                text: ""+ (platformInterface.status_vi.W).toFixed(3) +" °C"
+                                                font.pixelSize: (parent.width + parent.height)/ 150
+                                                color: "grey"
+                                            }
+
+
+                                            Text {
+                                                id: hzText
+                                                anchors {
+                                                    top: twText.bottom
                                                     topMargin:(parent.width + parent.height)/ 150
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
@@ -663,8 +703,8 @@ ColumnLayout {
                                             }
 
                                             Text {
-                                                id: winding_iout_iwText
-                                                text: "<b>Winding Iout Iw<b>"
+                                                id: iWText
+                                                text: "<b>Temp.W<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: parent.right
@@ -674,8 +714,41 @@ ColumnLayout {
                                             }
 
                                             Text {
+                                                id: iVText
+                                                text: "<b>Temp.V<b>"
+                                                anchors.top: basicGraph1.bottom
+                                                anchors.topMargin: -parent.height*0.03
+                                                anchors.right: iWText.left
+                                                anchors.rightMargin: parent.width*0.01
+                                                font.pixelSize: parent.height*0.03
+                                                color: "black"
+                                            }
+
+                                            Text {
+                                                id: iUText
+                                                text: "<b>Temp.U<b>"
+                                                anchors.top: basicGraph1.bottom
+                                                anchors.topMargin: -parent.height*0.03
+                                                anchors.right: iVText.left
+                                                anchors.rightMargin: parent.width*0.01
+                                                font.pixelSize: parent.height*0.03
+                                                color: "brown"
+                                            }
+
+                                            Text {
+                                                id: winding_iout_iwText
+                                                text: "<b>Winding Iw<b>"
+                                                anchors.top: basicGraph1.bottom
+                                                anchors.topMargin: -parent.height*0.03
+                                                anchors.right: iUText.left
+                                                anchors.rightMargin: parent.width*0.01
+                                                font.pixelSize: parent.height*0.03
+                                                color: "grey"
+                                            }
+
+                                            Text {
                                                 id: winding_iout_ivText
-                                                text: "<b>Winding Iout Iv<b>"
+                                                text: "<b>Winding Iv<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: winding_iout_iwText.left
@@ -686,35 +759,13 @@ ColumnLayout {
 
                                             Text {
                                                 id: winding_iout_iuText
-                                                text: "<b>Winding Iout Iu<b>"
+                                                text: "<b>Winding Iu<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: winding_iout_ivText.left
                                                 anchors.rightMargin: parent.width*0.01
                                                 font.pixelSize: parent.height*0.03
                                                 color: "brown"
-                                            }
-
-                                            Text {
-                                                id: foc_iout_iqText
-                                                text: "<b>FOC Iout Iq<b>"
-                                                anchors.top: basicGraph1.bottom
-                                                anchors.topMargin: -parent.height*0.03
-                                                anchors.right: winding_iout_iuText.left
-                                                anchors.rightMargin: parent.width*0.01
-                                                font.pixelSize: parent.height*0.03
-                                                color: "green"
-                                            }
-
-                                            Text {
-                                                id: foc_iout_idText
-                                                text: "<b>FOC Iout Id<b>"
-                                                anchors.top: basicGraph1.bottom
-                                                anchors.topMargin: -parent.height*0.03
-                                                anchors.right: foc_iout_iqText.left
-                                                anchors.rightMargin: parent.width*0.01
-                                                font.pixelSize: parent.height*0.03
-                                                color: "red"
                                             }
 
                                         }
@@ -732,32 +783,38 @@ ColumnLayout {
 
                                                 if(graph_selected3 === 1){
                                                     var curve3 = basicGraph1.createCurve("graphCurve")
-                                                    curve3.color = "red"
-                                                    curve3.appendList(dataArray_foc_iout_id_calc_graph)
+                                                    curve3.color = "brown"
+                                                    curve3.appendList(dataArray_winding_iout_iu_calc_graph)
                                                 }
 
                                                 if(graph_selected4 === 1){
                                                     var curve4 = basicGraph1.createCurve("graphCurve")
-                                                    curve4.color = "green"
-                                                    curve4.appendList(dataArray_foc_iout_iq_calc_graph)
+                                                    curve4.color = "black"
+                                                    curve4.appendList(dataArray_winding_iout_iv_calc_graph)
                                                 }
 
                                                 if(graph_selected5 === 1){
                                                     var curve5 = basicGraph1.createCurve("graphCurve")
-                                                    curve5.color = "brown"
-                                                    curve5.appendList(dataArray_winding_iout_iu_calc_graph)
+                                                    curve5.color = "grey"
+                                                    curve5.appendList(dataArray_winding_iout_iw_calc_graph)
                                                 }
 
                                                 if(graph_selected6 === 1){
                                                     var curve6 = basicGraph1.createCurve("graphCurve")
-                                                    curve6.color = "black"
-                                                    curve6.appendList(dataArray_winding_iout_iv_calc_graph)
+                                                    curve6.color = "brown"
+                                                    curve6.appendList(dataArray_temp_U_calc_graph)
                                                 }
 
                                                 if(graph_selected7 === 1){
                                                     var curve7 = basicGraph1.createCurve("graphCurve")
-                                                    curve7.color = "grey"
-                                                    curve7.appendList(dataArray_winding_iout_iw_calc_graph)
+                                                    curve7.color = "black"
+                                                    curve7.appendList(dataArray_temp_V_calc_graph)
+                                                }
+
+                                                if(graph_selected8 === 1){
+                                                    var curve8 = basicGraph1.createCurve("graphCurve")
+                                                    curve8.color = "grey"
+                                                    curve8.appendList(dataArray_temp_W_calc_graph)
                                                 }
                                             }
                                         }

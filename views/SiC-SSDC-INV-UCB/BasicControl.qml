@@ -22,18 +22,19 @@ Item {
     property real ratioCalc: root.width / 1200
 
     // property that reads the initial notification
-    property var temp_calc: platformInterface.status_temperature_sensor.temperature
+    property var target_speed: platformInterface.status_vi.t
+    property var actual_speed: platformInterface.status_vi.a
     property var dc_link_vin_calc: platformInterface.status_vi.l/1000
-    property var foc_iout_id_calc: platformInterface.status_vi.d/1000
-    property var foc_iout_iq_calc: platformInterface.status_vi.q/1000
-    property var winding_iout_iu_calc: platformInterface.status_vi.u/1000
-    property var winding_iout_iv_calc: platformInterface.status_vi.v/1000
-    property var winding_iout_iw_calc: platformInterface.status_vi.w/1000
+    property var winding_iout_iu_calc: (platformInterface.status_vi.u/1000).toFixed(3)
+    property var winding_iout_iv_calc: (platformInterface.status_vi.v/1000).toFixed(3)
+    property var winding_iout_iw_calc: (platformInterface.status_vi.w/1000).toFixed(3)
+    property var temp_U_calc: platformInterface.status_vi.U
+    property var temp_V_calc: platformInterface.status_vi.V
+    property var temp_W_calc: platformInterface.status_vi.W
+
     property var time: settingsControl.time
     property var pointsCount: settingsControl.pointsCount
     property var amperes: settingsControl.amperes
-    property var target_speed: platformInterface.status_vi.t
-    property var actual_speed: platformInterface.status_vi.a
     property var acceleration: settingsControl.acceleration
     property var pole_pairs: settingsControl.pole_pairs
     property var max_motor_vout: settingsControl.max_motor_vout
@@ -124,15 +125,17 @@ Item {
         Help.registerTarget(motor_ENSwitch, "This switch enables or disables motor. The switch will be enabled when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V. It will be dissabled when input voltage is lower than "+ " "+ multiplePlatform.minVin + "V to warn the user that input voltage is too low.", 1, "basicHelp")
         Help.registerTarget(dc_link_vinVoltage,"DC link voltage is shown here", 2, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 3, "basicHelp")
-        Help.registerTarget(boardTemperature, "Temperature of the board is shown here", 4, "basicHelp")
+        Help.registerTarget(boardTemperature, "Average Temperature of the board is shown here", 4, "basicHelp")
 
         Help.registerTarget(gauge,"Settings parameters are shown here.", 5, "basicHelp")
         Help.registerTarget(labelledInfoBox,"Error messages are shown here.", 6, "basicHelp")
 
         Help.registerTarget(actualSpeed,"Actual speed is shown here.", 7, "basicHelp")
-        Help.registerTarget(foc_iout_Id,"FOC current, Id is shown here.", 8, "basicHelp")
-        Help.registerTarget(foc_iout_Iq,"FOC current, Iq is shown here.", 9, "basicHelp")
-        Help.registerTarget(statusInfoBoxWidget,"Status messages are shown here.", 10, "basicHelp")
+        Help.registerTarget(iout_u, "Motor winding current, Iu is plotted in real time", 8, "basicHelp")
+        Help.registerTarget(iout_v, "Motor winding current, Iv is plotted in real time", 9, "basicHelp")
+        Help.registerTarget(iout_w, "Motor winding current, Iw is plotted in real time", 10, "basicHelp")
+
+        Help.registerTarget(statusInfoBoxWidget,"Status messages are shown here.", 11, "basicHelp")
     }
 
     FontLoader {
@@ -384,13 +387,13 @@ Item {
                     height: parent.height/2.8
                     gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
                     gaugeFrontColor2: Qt.rgba(1,0,0,1)
-                    minimumValue: -50
-                    maximumValue: 150
+                    minimumValue: 0
+                    maximumValue: 200
                     tickmarkStepSize: 10
                     outerColor: "#999"
                     unitLabel: "°C"
-                    gaugeTitle: "Temperature"
-                    value: temp_calc
+                    gaugeTitle: "Average Temperature"
+                    value: (temp_U_calc + temp_V_calc + temp_W_calc)/3
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
@@ -823,9 +826,9 @@ Item {
                 }
 
                 SGLabelledInfoBox {
-                    id: foc_iout_Id
-                    label: "FOC Id (A)"
-                    info: {(platformInterface.status_vi.d/1000).toFixed(3)}
+                    id: iout_u
+                    label: "Iu (A)"
+                    info: winding_iout_iu_calc
 
                     infoBoxColor: "lightgrey"
                     infoBoxBorderColor: "grey"
@@ -838,16 +841,16 @@ Item {
                     unitSize: (parent.width + parent.height)/50
                     anchors {
                         top : actualSpeed.bottom
-                        topMargin : parent.height/20
+                        topMargin : -parent.height/30
                         right: parent.right
                         rightMargin: (parent.width/25)
                     }
                 }
 
                 SGLabelledInfoBox {
-                    id: foc_iout_Iq
-                    label: "FOC Iq (A)"
-                    info: {(platformInterface.status_vi.q/1000).toFixed(3)}
+                    id: iout_v
+                    label: "Iv (A)"
+                    info: winding_iout_iv_calc
 
                     infoBoxColor: "lightgrey"
                     infoBoxBorderColor: "grey"
@@ -859,8 +862,30 @@ Item {
                     fontSize :  (parent.width + parent.height)/50
                     unitSize: (parent.width + parent.height)/50
                     anchors {
-                        top : foc_iout_Id.bottom
-                        topMargin : parent.height/20
+                        top : iout_u.bottom
+                        topMargin : parent.height/30
+                        right: parent.right
+                        rightMargin: (parent.width/25)
+                    }
+                }
+
+                SGLabelledInfoBox {
+                    id: iout_w
+                    label: "Iw (A)"
+                    info: winding_iout_iw_calc
+
+                    infoBoxColor: "lightgrey"
+                    infoBoxBorderColor: "grey"
+                    infoBoxBorderWidth: 3
+
+                    unit: ""
+                    infoBoxWidth: parent.width/1.8
+                    infoBoxHeight : parent.height/14
+                    fontSize :  (parent.width + parent.height)/50
+                    unitSize: (parent.width + parent.height)/50
+                    anchors {
+                        top : iout_v.bottom
+                        topMargin : parent.height/30
                         right: parent.right
                         rightMargin: (parent.width/25)
                     }

@@ -16,7 +16,7 @@ import QtQuick.Dialogs 1.3
 
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
-import tech.strata.sgwidgets 0.9 as Widget09
+import tech.strata.sgwidgets 0.9
 
 Item {
     id: root
@@ -63,11 +63,9 @@ Item {
         laSpeedSliderLabel.opacity = 0
         laSpeedSlider.enabled  = false
 
-        Help.registerTarget(laMotorContainerRow1,"For all control technique: Pole pairs, Max. Motor voltage & Max Motor speed.", 0, "settingsHelp")
+        Help.registerTarget(laMotorContainerRow1,"For all control technique: Pole pairs, Max. Motor voltage, Max Motor speed, Resistance & Inductance.", 0, "settingsHelp")
         Help.registerTarget(laSettingsContainerRow2,"Shows the axis in time, plots and amperes units.", 1, "settingsHelp")
         Help.registerTarget(leadAngleAdjustmentGraph,"Target Speed & Acceleration can be simulated with this signal graph generator and can be sent to the motor.", 2, "settingsHelp")
-        Help.registerTarget(systemModeMainsLabel,"Drop-down menu to select V/F control (default) or FOC control.", 3, "settingsHelp")
-        Help.registerTarget(current_pi_p_gainLabel,"For FOC control: Speed & current PI control parameters + R & L for the motor properties.", 4, "settingsHelp")
     }
 
 
@@ -388,6 +386,52 @@ Item {
                         xGrid: true
                         yGrid: true
                         gridColor: "grey"
+                    }
+
+                    SGAccordion {
+                        id: settingsAccordion
+                        anchors {
+                            top: leadAngleAdjustmentGraph.bottom
+                            bottom: root.bottom
+                        }
+                        width: root.width
+                        //scrollBarPolicy: ScrollBar.AlwaysOn
+                        accordionItems: Column {
+                            SGAccordionItem {
+                                id: generalInputs
+                                title: "<b>General Inputs</b>"
+                                open: true
+                                contents: GeneralInputs { }
+                            }
+
+                            SGAccordionItem {
+                                id: singlePulseTesting
+                                title: "<b>Single Pulse Testing</b>"
+                                open: false
+                                contents: SinglePulseTesting { }
+                            }
+
+                            SGAccordionItem {
+                                id: doublePulseTesting
+                                title: "<b>Double Pulse Testing</b>"
+                                open: false
+                                contents: DoublePulseTesting { }
+                            }
+
+                            SGAccordionItem {
+                                id: burstTesting
+                                title: "<b>Burst Testing</b>"
+                                open: false
+                                contents: BurstTesting { }
+                            }
+
+                            SGAccordionItem {
+                                id: shortCircuitMode
+                                title: "<b>Short Circuit Mode</b>"
+                                open: false
+                                contents: ShortCircuitMode { }
+                            }
+                        }
                     }
 
                     SGAlignedLabel{
