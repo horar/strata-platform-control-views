@@ -139,10 +139,19 @@ UIBase { // start_uibase
         minimumValue: 0
         maximumValue: 10000
         tickmarkStepSize: 1000
-        value: 10000
+        value: 7000
 
-        gaugeFillColor1: Qt.rgba(0,0.5,1,1)
-        gaugeFillColor2: Qt.rgba(1,0,0,1)
+        function lerpColor (color1, color2, x){
+            if (Qt.colorEqual(color1, color2)){
+                return color1;
+            } else {
+                return Qt.hsva(
+                    color1.hsvHue * (1 +  x) + color2.hsvHue * x,
+                    color1.hsvSaturation * (1 + x) + color2.hsvSaturation * x,
+                    color1.hsvValue * (1 + x) + color2.hsvValue * x, 1
+                    );
+            }
+        }
     } // end_7b02e
 
     LayoutSGCircularGauge { // start_116ab
@@ -159,8 +168,17 @@ UIBase { // start_uibase
         tickmarkStepSize: 20
         value: 23.0
 
-        gaugeFillColor1: Qt.rgba(0,0.75,1,1)
-        gaugeFillColor2: Qt.rgba(1,0,0,1)
+        function lerpColor (color1, color2, x){
+            if (Qt.colorEqual(color1, color2)){
+                return color1;
+            } else {
+                return Qt.hsva(
+                    color1.hsvHue * (1 +  x) + color2.hsvHue * x,
+                    color1.hsvSaturation * (1 + x) + color2.hsvSaturation * x,
+                    color1.hsvValue * (1 + x) + color2.hsvValue * x, 1
+                    );
+            }
+        }
     } // end_116ab
 
     LayoutSGCircularGauge { // start_b06c4
@@ -177,8 +195,17 @@ UIBase { // start_uibase
         tickmarkStepSize: 10
         value: 48
 
-        gaugeFillColor1: Qt.rgba(0,0.5,1,1)
-        gaugeFillColor2: Qt.rgba(1,0,0,1)
+        function lerpColor (color1, color2, x){
+            if (Qt.colorEqual(color1, color2)){
+                return color1;
+            } else {
+                return Qt.hsva(
+                    color1.hsvHue * (1 +  x) + color2.hsvHue * x,
+                    color1.hsvSaturation * (1 + x) + color2.hsvSaturation * x,
+                    color1.hsvValue * (1 + x) + color2.hsvValue * x, 1
+                    );
+            }
+        }
     } // end_b06c4
 
 
