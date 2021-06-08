@@ -12,12 +12,12 @@ UIBase { // start_uibase
     LayoutText { // start_8695e
         id: text_8695e
         layoutInfo.uuid: "8695e"
-        layoutInfo.columnsWide: 5
+        layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 12
+        layoutInfo.xColumns: 1
         layoutInfo.yRows: 0
 
-        text: "Title"
+        text: "BLDC Motor Drive EVB for 30-60V 1200W Applications"
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
@@ -28,12 +28,12 @@ UIBase { // start_uibase
     LayoutText { // start_bb4f0
         id: text_bb4f0
         layoutInfo.uuid: "bb4f0"
-        layoutInfo.columnsWide: 5
+        layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 12
+        layoutInfo.xColumns: 1
         layoutInfo.yRows: 1
 
-        text: "Subtitle"
+        text: "Part of the Motor Development Kit (MDK) Family"
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
@@ -152,6 +152,7 @@ UIBase { // start_uibase
                     );
             }
         }
+        value: 10000
     } // end_7b02e
 
     LayoutSGCircularGauge { // start_116ab
@@ -219,11 +220,23 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 19
         contentItem: SGStatusLogBox {
-            title: "Default Status Logs"
+            title: "Status Log"
             Component.onCompleted: {
-                for (let i = 0; i < 10; i++){
-                    append("Message " + i)
-                }
+                // for (let i = 0; i < 10; i++){
+                //     append("Message " + i)
+                // }
+                append("Thu, 03 Jun 2021 01:04:05: Motor was started with target speed of 1234 RPM")
+                append("Thu, 03 Jun 2021 01:04:05: Motor brake was engaged")
+                append("Thu, 03 Jun 2021 01:04:05: Detected short on motor output windings")
+                append("Thu, 03 Jun 2021 01:04:05: Over current event occurred")
+                append("Thu, 03 Jun 2021 01:04:05: Motor was started with target speed of 1234 RPM")
+                append("Thu, 03 Jun 2021 01:04:05: Motor brake was engaged")
+                append("Thu, 03 Jun 2021 01:04:05: Detected short on motor output windings")
+                append("Thu, 03 Jun 2021 01:04:05: Over current event occurred")
+                append("Thu, 03 Jun 2021 01:04:05: Motor was started with target speed of 1234 RPM")
+                append("Thu, 03 Jun 2021 01:04:05: Motor brake was engaged")
+                append("Thu, 03 Jun 2021 01:04:05: Detected short on motor output windings")
+                append("Thu, 03 Jun 2021 01:04:05: Over current event occurred")
             }
         }
     } // end_abcde
