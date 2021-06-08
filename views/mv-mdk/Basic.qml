@@ -140,6 +140,18 @@ UIBase { // start_uibase
         maximumValue: 10000
         tickmarkStepSize: 1000
         value: 3000
+
+        function lerpColor (color1, color2, x){
+            if (Qt.colorEqual(color1, color2)){
+                return color1;
+            } else {
+                return Qt.hsva(
+                    color1.hsvHue * (1 +  x) + color2.hsvHue * x,
+                    color1.hsvSaturation * (1 + x) + color2.hsvSaturation * x,
+                    color1.hsvValue * (1 + x) + color2.hsvValue * x, 1
+                    );
+            }
+        }
     } // end_7b02e
 
     LayoutSGCircularGauge { // start_116ab
@@ -155,6 +167,18 @@ UIBase { // start_uibase
         maximumValue: 140
         tickmarkStepSize: 20
         value: 23.0
+
+        function lerpColor (color1, color2, x){
+            if (Qt.colorEqual(color1, color2)){
+                return color1;
+            } else {
+                return Qt.hsva(
+                    color1.hsvHue * (1 +  x) + color2.hsvHue * x,
+                    color1.hsvSaturation * (1 + x) + color2.hsvSaturation * x,
+                    color1.hsvValue * (1 + x) + color2.hsvValue * x, 1
+                    );
+            }
+        }
     } // end_116ab
 
     LayoutSGCircularGauge { // start_b06c4
@@ -170,6 +194,18 @@ UIBase { // start_uibase
         maximumValue: 100
         tickmarkStepSize: 10
         value: 48
+
+        function lerpColor (color1, color2, x){
+            if (Qt.colorEqual(color1, color2)){
+                return color1;
+            } else {
+                return Qt.hsva(
+                    color1.hsvHue * (1 +  x) + color2.hsvHue * x,
+                    color1.hsvSaturation * (1 + x) + color2.hsvSaturation * x,
+                    color1.hsvValue * (1 + x) + color2.hsvValue * x, 1
+                    );
+            }
+        }
     } // end_b06c4
 
 
