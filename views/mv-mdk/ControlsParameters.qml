@@ -212,9 +212,6 @@ UIBase { // start_uibase
         to: 1000
         stepSize: 10
         showLabels: true
-        // fromText: "10ns"
-        // toText: "1000ns"
-
         live: false
 
         onUserSet: {
