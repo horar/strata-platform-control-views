@@ -139,7 +139,7 @@ UIBase { // start_uibase
         minimumValue: 0
         maximumValue: 10000
         tickmarkStepSize: 1000
-        value: 10000
+        value: 7000
 
         function lerpColor (color1, color2, x){
             if (Qt.colorEqual(color1, color2)){
