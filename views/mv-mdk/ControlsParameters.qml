@@ -1,205 +1,257 @@
-
 import QtQuick 2.12
-import QtQml 2.12
 
 import tech.strata.sgwidgets 1.0
 
 UIBase { // start_uibase
     columnCount: 30
-    rowCount: 15
+    rowCount: 25
 
-    LayoutContainer { // start_adsfasdf
-        id: warningContainer
-        layoutInfo.uuid: "adsfasdf"
-        layoutInfo.columnsWide: 13
-        layoutInfo.rowsTall: 3
-        layoutInfo.xColumns: 16
-        layoutInfo.yRows: 11
-        contentItem: Warning {
-            id: warning
-        }
-    } // end_adsfasdf
-
-    LayoutButton { // start_affdd
-        id: button_affdd
-        layoutInfo.uuid: "affdd"
-        layoutInfo.columnsWide: 6
-        layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 16
-        layoutInfo.yRows: 3
-
-        onClicked: {
-            console.log("Clicked")
-        }
-    } // end_affdd
-
-    LayoutSGComboBox { // start_844a3
-        id: sgComboBox_844a3
-        layoutInfo.uuid: "844a3"
-        layoutInfo.columnsWide: 6
-        layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 23
-        layoutInfo.yRows: 3
-
-        model: ["Amps", "Volts", "Watts"]
-
-        onActivated: {
-            console.log("onActivated:", currentIndex, currentText)
-        }
-    } // end_844a3
-
-    LayoutDivider { // start_92c80
-        id: divider_92c80
-        layoutInfo.uuid: "92c80"
+    LayoutText { // start_8695e
+        id: text_8695e
+        layoutInfo.uuid: "8695e"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 1
         layoutInfo.xColumns: 1
-        layoutInfo.yRows: 2
-    } // end_92c80
+        layoutInfo.yRows: 0
 
-    LayoutSGGraph { // start_9bf31
-        id: sgGraph_9bf31
-        layoutInfo.uuid: "9bf31"
-        layoutInfo.columnsWide: 14
-        layoutInfo.rowsTall: 8
-        layoutInfo.xColumns: 1
-        layoutInfo.yRows: 6
+        text: "BLDC Motor Drive EVB for 30-60V 1200W Applications"
+        fontSizeMode: Text.Fit
+        font.pixelSize: 40
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_8695e
 
-        title: "Example Graph"
-        xMin: 0
-        xMax: 1
-        yMin: 0
-        yMax: 1
-        xTitle: "X Axis"
-        yTitle: "Y Axis"
-        xGrid : true
-        yGrid : true
-        gridColor: "black"
-    } // end_9bf31
-
-    LayoutSGInfoBox { // start_9cb37
-        id: sgInfoBox_9cb37
-        layoutInfo.uuid: "9cb37"
-        layoutInfo.columnsWide: 5
-        layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 20
-        layoutInfo.yRows: 7
-
-        text: "100"
-        readOnly : true
-    } // end_9cb37
-
-    LayoutSGSlider { // start_8eeff
-        id: sgSlider_8eeff
-        layoutInfo.uuid: "8eeff"
-        layoutInfo.columnsWide: 13
-        layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 16
-        layoutInfo.yRows: 5
-
-        from : 0
-        to : 100
-        live : false
-
-        onUserSet : {
-            console.log("onUserSet:", value)
-        }
-    } // end_8eeff
-
-    LayoutText { // start_93473
-        id: text_93473
-        layoutInfo.uuid: "93473"
-        layoutInfo.columnsWide: 14
-        layoutInfo.rowsTall: 2
-        layoutInfo.xColumns: 1
-        layoutInfo.yRows: 3
-        text: "Some example description text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget consectetur ipsum. Mauris quam purus, volutpat at dictum sed, porta maximus enim. In dapibus vestibulum aliquet. Morbi fermentum arcu eget ligula laoreet, a tempor sem ullamcorper. Cras iaculis massa in mollis accumsan. In arcu ligula, volutpat id lacus vel, tempor fringilla enim. Cras maximus aliquet mauris, sed fermentum ligula condimentum ut. Nunc sed malesuada dui."
-    } // end_93473
-
-    LayoutText { // start_f40df
-        id: text_f40df
-        layoutInfo.uuid: "f40df"
+    LayoutText { // start_bb4f0
+        id: text_bb4f0
+        layoutInfo.uuid: "bb4f0"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 1
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 1
 
-        text: "Example View Title"
+        text: "Part of the Motor Development Kit (MDK) Family"
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-    } // end_f40df
+        color: "#7f7f7f"
+    } // end_bb4f0
 
-    LayoutText { // start_c5c74
-        id: layoutText_c5c74
-        layoutInfo.uuid: "c5c74"
-        layoutInfo.columnsWide: 4
+
+    LayoutDivider { // start_578da
+        id: divider_578da
+        layoutInfo.uuid: "578da"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 3
+    } // end_578da
+
+    LayoutDivider { // start_a9879
+        id: layoutDivider_a9879
+        layoutInfo.uuid: "a9879"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 3
+    } // end_a9879
+
+    LayoutDivider { // start_af218
+        id: layoutDivider_af218
+        layoutInfo.uuid: "af218"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 3
+    } // end_af218
+
+    LayoutText { // start_99acd
+        id: layoutText_99acd
+        layoutInfo.uuid: "99acd"
+        layoutInfo.columnsWide: 8
         layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 16
-        layoutInfo.yRows: 7
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 3
 
-        text: "Input: "
+        text: "PWM Settings"
         fontSizeMode: Text.Fit
-        font.pixelSize: 20
-        horizontalAlignment: Text.AlignRight
+        font.pixelSize: 15
+        horizontalAlignment: Text.AlignHLeft
         verticalAlignment: Text.AlignVCenter
-    } // end_c5c74
+        color: "#000000"
+    } // end_99acd
 
-    LayoutText { // start_e4a66
-        id: layoutText_e4a66
-        layoutInfo.uuid: "e4a66"
-        layoutInfo.columnsWide: 4
+    LayoutText { // start_0f99c
+        id: layoutText_0f99c
+        layoutInfo.uuid: "0f99c"
+        layoutInfo.columnsWide: 8
         layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 25
-        layoutInfo.yRows: 7
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 13
 
-        text: " Volts"
+        text: "Protection Parameters"
         fontSizeMode: Text.Fit
-        font.pixelSize: 20
-        horizontalAlignment: Text.AlignLeft
+        font.pixelSize: 15
+        horizontalAlignment: Text.AlignHLeft
         verticalAlignment: Text.AlignVCenter
-    } // end_e4a66
+        color: "#000000"
+    } // end_0f99c
 
-    LayoutText { // start_cb756
-        id: layoutText_cb756
-        layoutInfo.uuid: "cb756"
-        layoutInfo.columnsWide: 4
+    LayoutText { // start_57735
+        id: layoutText_57735
+        layoutInfo.uuid: "57735"
+        layoutInfo.columnsWide: 8
         layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 16
-        layoutInfo.yRows: 9
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 13
 
-        text: "Output: "
+        text: "PID Control Parameters"
         fontSizeMode: Text.Fit
-        font.pixelSize: 20
-        horizontalAlignment: Text.AlignRight
+        font.pixelSize: 15
+        horizontalAlignment: Text.AlignHLeft
         verticalAlignment: Text.AlignVCenter
-    } // end_cb756
+        color: "#000000"
+    } // end_57735
 
-    LayoutSGInfoBox { // start_122e0
-        id: layoutSGInfoBox_122e0
-        layoutInfo.uuid: "122e0"
+    LayoutText { // start_e09f2
+        id: layoutText_e09f2
+        layoutInfo.uuid: "e09f2"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 3
+
+        text: "Speed Loop Parameters"
+        fontSizeMode: Text.Fit
+        font.pixelSize: 15
+        horizontalAlignment: Text.AlignHLeft
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_e09f2
+
+    LayoutText { // start_1f951
+        id: layoutText_1f951
+        layoutInfo.uuid: "1f951"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 3
+
+        text: "Motor and Load Parameters"
+        fontSizeMode: Text.Fit
+        font.pixelSize: 15
+        horizontalAlignment: Text.AlignHLeft
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_1f951
+
+
+
+
+    LayoutDivider { // start_ac34b
+        id: layoutDivider_ac34b
+        layoutInfo.uuid: "ac34b"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 13
+    } // end_ac34b
+
+    LayoutDivider { // start_8edf6
+        id: layoutDivider_8edf6
+        layoutInfo.uuid: "8edf6"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 13
+    } // end_8edf6
+
+    LayoutSGSwitch { // start_d68f2
+        id: switch_d68f2
+        layoutInfo.uuid: "d68f2"
+        layoutInfo.columnsWide: 2
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 7
+        layoutInfo.yRows: 5
+
+        checked: true
+        checkedLabel: "Bipolar"
+        uncheckedLabel: "Unipolar"
+        labelsInside: true
+
+        onToggled: {
+            console.log("onToggled:", checked)
+        }
+    } // end_d68f2
+
+    LayoutText { // start_65728
+        id: text_65728
+        layoutInfo.uuid: "65728"
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 20
-        layoutInfo.yRows: 9
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 5
 
-        text: "100"
-        readOnly : true
-    } // end_122e0
-
-    LayoutText { // start_cbef6
-        id: layoutText_cbef6
-        layoutInfo.uuid: "cbef6"
-        layoutInfo.columnsWide: 4
-        layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 25
-        layoutInfo.yRows: 9
-
-        text: " Volts"
+        text: "Output Type"
         fontSizeMode: Text.Fit
-        font.pixelSize: 20
-        horizontalAlignment: Text.AlignLeft
+        font.pixelSize: 15
+        horizontalAlignment: Text.AlignHLeft
         verticalAlignment: Text.AlignVCenter
-    } // end_cbef6
+    } // end_65728
+
+    LayoutSGSlider { // start_b8761
+        id: sgSlider_b8761
+        layoutInfo.uuid: "b8761"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 7
+
+        from: 10
+        to: 1000
+        stepSize: 10
+        showLabels: true
+        // fromText: "10ns"
+        // toText: "1000ns"
+
+        live: false
+
+        onUserSet: {
+            console.log("onUserSet:", value)
+        }
+
+    } // end_b8761
+
+    LayoutText { // start_855ec
+        id: layoutText_855ec
+        layoutInfo.uuid: "855ec"
+        layoutInfo.columnsWide: 5
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 6
+
+        text: "Deadtime"
+        fontSizeMode: Text.Fit
+        font.pixelSize: 15
+        horizontalAlignment: Text.AlignHLeft
+        verticalAlignment: Text.AlignVCenter
+    } // end_855ec
+
+    LayoutSGSlider { // start_547f7
+        id: sgSlider_547f7
+        layoutInfo.uuid: "547f7"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 9
+
+        from: 0
+        to: 10
+        live: false
+
+        onUserSet: {
+            console.log("onUserSet:", value)
+        }
+    } // end_547f7
 } // end_uibase
