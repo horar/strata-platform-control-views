@@ -16,7 +16,7 @@ import QtQuick.Dialogs 1.3
 
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
-import tech.strata.sgwidgets 0.9
+import tech.strata.sgwidgets 0.9 as Widget09
 
 Item {
     id: root
@@ -370,7 +370,7 @@ Item {
                     SGGraph {
                         id: leadAngleAdjustmentGraph
                         width: parent.width/1.05
-                        height: parent.height/2.7
+                        height: parent.height/1.15
                         anchors {
                             top: parent.top
                             topMargin: (parent.width + parent.height)/ 25
@@ -386,52 +386,6 @@ Item {
                         xGrid: true
                         yGrid: true
                         gridColor: "grey"
-                    }
-
-                    SGAccordion {
-                        id: settingsAccordion
-                        anchors {
-                            top: leadAngleAdjustmentGraph.bottom
-                            bottom: root.bottom
-                        }
-                        width: root.width
-                        //scrollBarPolicy: ScrollBar.AlwaysOn
-                        accordionItems: Column {
-                            SGAccordionItem {
-                                id: generalInputs
-                                title: "<b>General Inputs</b>"
-                                open: true
-                                contents: GeneralInputs { }
-                            }
-
-                            SGAccordionItem {
-                                id: singlePulseTesting
-                                title: "<b>Single Pulse Testing</b>"
-                                open: false
-                                contents: SinglePulseTesting { }
-                            }
-
-                            SGAccordionItem {
-                                id: doublePulseTesting
-                                title: "<b>Double Pulse Testing</b>"
-                                open: false
-                                contents: DoublePulseTesting { }
-                            }
-
-                            SGAccordionItem {
-                                id: burstTesting
-                                title: "<b>Burst Testing</b>"
-                                open: false
-                                contents: BurstTesting { }
-                            }
-
-                            SGAccordionItem {
-                                id: shortCircuitMode
-                                title: "<b>Short Circuit Mode</b>"
-                                open: false
-                                contents: ShortCircuitMode { }
-                            }
-                        }
                     }
 
                     SGAlignedLabel{

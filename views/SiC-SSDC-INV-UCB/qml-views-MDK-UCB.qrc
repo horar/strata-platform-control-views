@@ -61,5 +61,12 @@
         <file>DoublePulseTesting.qml</file>
         <file>BurstTesting.qml</file>
         <file>ShortCircuitMode.qml</file>
+        <file>PulseControl.qml</file>
+        <file>image/BurstTesting.png</file>
+        <file>image/DoublePulseTesting.png</file>
+        <file>image/Module.png</file>
+        <file>image/ShortCircuitMode.png</file>
+        <file>image/SinglePulseTesting.png</file>
+        <file>image/SwitchDistribution.png</file>
     </qresource>
 </RCC>

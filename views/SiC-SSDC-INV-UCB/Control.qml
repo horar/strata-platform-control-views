@@ -74,6 +74,7 @@ Rectangle {
                 advancedControl.visible = false
                 settingsControl.visible = false
                 exportControl.visible = false
+                pulseControl.visible = false
             }
         }
 
@@ -85,17 +86,19 @@ Rectangle {
                 advancedControl.visible = true
                 settingsControl.visible = false
                 exportControl.visible = false
+                pulseControl.visible = false
             }
         }
 
         TabButton {
             id: settingsButton
-            text: qsTr("Control / Settings")
+            text: qsTr("Motor Settings")
             onClicked: {
                 basicControl.visible = false
                 advancedControl.visible = false
                 settingsControl.visible = true
                 exportControl.visible = false
+                pulseControl.visible = false
             }
         }
 
@@ -107,6 +110,19 @@ Rectangle {
                 advancedControl.visible = false
                 settingsControl.visible = false
                 exportControl.visible = true
+                pulseControl.visible = false
+            }
+        }
+
+        TabButton {
+            id: pulseButton
+            text: qsTr("Pulse Testing")
+            onClicked: {
+                basicControl.visible = false
+                advancedControl.visible = false
+                settingsControl.visible = false
+                exportControl.visible = false
+                pulseControl.visible = true
             }
         }
 
@@ -175,6 +191,19 @@ Rectangle {
             }
         }
 
+        Rectangle {
+            width: parent.width
+            height: parent.height
+            color: "light gray"
+
+            PulseControl {
+                id: pulseControl
+                visible: false
+                width: parent.width
+                height: parent.height
+            }
+        }
+
     }
 
     Widget10.SGIcon {
@@ -201,6 +230,7 @@ Rectangle {
                 else if(advancedControl.visible === true) {Help.startHelpTour("advanceHelp")}
                 else if(settingsControl.visible === true) {Help.startHelpTour("settingsHelp")}
                 else if(exportControl.visible === true) {Help.startHelpTour("exportControlHelp")}
+                else if(pulseControl.visible === true) {Help.startHelpTour("pulseControlHelp")}
                 else console.log("help not available")
             }
             hoverEnabled: true

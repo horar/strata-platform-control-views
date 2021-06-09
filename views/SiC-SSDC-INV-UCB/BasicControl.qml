@@ -461,6 +461,7 @@ Item {
                         color: "white"
                     }
                 }
+
             }
 
             Rectangle {

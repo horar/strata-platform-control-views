@@ -14,9 +14,5 @@ Item {
     id: root
     height: 350
     width: parent.width
-    property real ratioCalc: root.width / 1200
-    property real initialAspectRatio: 1200/820
-    anchors {
-        left: parent.left
-    }
 }
+
