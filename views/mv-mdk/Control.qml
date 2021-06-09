@@ -35,31 +35,16 @@ RowLayout {
 
         }
 
-        Loader {
-            id: loader
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+        StackLayout {
+            currentIndex: tabBar.currentIndex
 
-            sourceComponent: {
-                switch (tabBar.currentIndex) {
-                case 0:
-                    return basicView
-                case 1:
-                    return controlsParametersView
-                }
+            Basic {
+                id: basicView
             }
-        }
 
-        Component {
-            id: basicView
-
-            Basic {}
-        }
-
-        Component {
-            id: controlsParametersView
-
-            ControlsParameters {}
+            ControlsParameters {
+                id: controlsParametersView
+            }
         }
     }
 }
