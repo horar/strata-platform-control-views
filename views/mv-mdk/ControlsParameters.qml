@@ -3,9 +3,16 @@ import QtQuick 2.12
 import tech.strata.sgwidgets 1.0
 
 UIBase { // start_uibase
+    
+    // General settings    
     columnCount: 30
     rowCount: 50
+    
+    // Objects shared between QML files
+    property alias cp_title: cp_title
+    property alias cp_subtitle: cp_subtitle
 
+    // UI objects
     LayoutText { // start_8695e
         id: cp_title
         layoutInfo.uuid: "8695e"
