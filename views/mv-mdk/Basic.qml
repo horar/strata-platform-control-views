@@ -10,7 +10,7 @@ UIBase { // start_uibase
 
 
     LayoutText { // start_8695e
-        id: text_8695e
+        id: title_1
         layoutInfo.uuid: "8695e"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 1
@@ -26,7 +26,7 @@ UIBase { // start_uibase
     } // end_8695e
 
     LayoutText { // start_bb4f0
-        id: text_bb4f0
+        id: subtitle_1
         layoutInfo.uuid: "bb4f0"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 1

@@ -7,7 +7,7 @@ UIBase { // start_uibase
     rowCount: 50
 
     LayoutText { // start_8695e
-        id: text_8695e
+        id: title_2
         layoutInfo.uuid: "8695e"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 2
@@ -23,7 +23,7 @@ UIBase { // start_uibase
     } // end_8695e
 
     LayoutText { // start_bb4f0
-        id: text_bb4f0
+        id: subtitle_2
         layoutInfo.uuid: "bb4f0"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 2
@@ -307,7 +307,13 @@ UIBase { // start_uibase
 
         onUserSet: {
             console.log("onUserSet:", value)
+            platformInterface.commands.pwm_params.update(1,1,1,1,1);
+            // platformInterface.commands.pwm_params.send(;)
         }
+
+        value: platformInterface.notifications.actual_speed_value.value
+        // value: 20
+
     } // end_b15e0
 
     LayoutSGComboBox { // start_f5402

@@ -6,8 +6,13 @@ import tech.strata.sgwidgets 1.0
 import "control-views"
 
 RowLayout {
+    
     id: controlViewRoot
     spacing: 0
+
+    PlatformInterface {
+        id: platformInterface
+    }
 
     SideBar {
         id: sideBar

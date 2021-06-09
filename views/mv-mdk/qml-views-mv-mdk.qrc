@@ -16,5 +16,6 @@
         <file>widgets/FaultLight.qml</file>
         <file>widgets/IconButton.qml</file>
         <file>widgets/SliderPopup.qml</file>
+        <file>PlatformInterface.qml</file>
     </qresource>
 </RCC>

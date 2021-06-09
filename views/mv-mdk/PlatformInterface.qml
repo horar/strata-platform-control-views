@@ -598,6 +598,9 @@ PlatformInterfaceBase {
                 this.payload.o_mode = o_mode
                 this.payload.tr_delay = tr_delay
             },
+            set_freq: function (freq) {
+                this.payload.freq = freq
+            },
             send: function () { platformInterface.send(this) }
         })
 
