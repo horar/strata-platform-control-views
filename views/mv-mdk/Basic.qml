@@ -6,11 +6,8 @@ UIBase { // start_uibase
     columnCount: 30
     rowCount: 25
 
-
-
-
     LayoutText { // start_8695e
-        id: title_1
+        id: b_title
         layoutInfo.uuid: "8695e"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 1
@@ -26,7 +23,7 @@ UIBase { // start_uibase
     } // end_8695e
 
     LayoutText { // start_bb4f0
-        id: subtitle_1
+        id: b_subtitle
         layoutInfo.uuid: "bb4f0"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 1
@@ -53,9 +50,6 @@ UIBase { // start_uibase
         border.width: 3
     } // end_6a35c
 
-
-
-
     LayoutDivider { // start_c0d6c
         id: divider_c0d6c
         layoutInfo.uuid: "c0d6c"
@@ -64,9 +58,6 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 3
     } // end_c0d6c
-
-
-
 
     LayoutRectangle { // start_bead4
         id: layoutRectangle_bead4
@@ -79,9 +70,6 @@ UIBase { // start_uibase
         color: "#ffffff"
         border.width: 3
     } // end_bead4
-
-
-
 
     LayoutText { // start_6d841
         id: layoutText_6d841
@@ -98,9 +86,6 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
         color: "#000000"
     } // end_6d841
-
-
-
 
     LayoutText { // start_aad3b
         id: layoutText_aad3b
@@ -128,7 +113,7 @@ UIBase { // start_uibase
     } // end_ef0b6
 
     LayoutSGCircularGauge { // start_7b02e
-        id: layoutSGCircularGauge_7b02e
+        id: b_actual_speed
         layoutInfo.uuid: "7b02e"
         layoutInfo.columnsWide: 10
         layoutInfo.rowsTall: 15
@@ -152,10 +137,13 @@ UIBase { // start_uibase
                     );
             }
         }
+
+        // TODO: actual_speed_caption
+
     } // end_7b02e
 
     LayoutSGCircularGauge { // start_116ab
-        id: layoutSGCircularGauge_116ab
+        id: b_board_temp
         layoutInfo.uuid: "116ab"
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 9
@@ -179,10 +167,13 @@ UIBase { // start_uibase
                     );
             }
         }
+
+        // TODO: board_temp_caption
+
     } // end_116ab
 
     LayoutSGCircularGauge { // start_b06c4
-        id: layoutSGCircularGauge_b06c4
+        id: b_input_voltage
         layoutInfo.uuid: "b06c4"
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 9
@@ -206,13 +197,13 @@ UIBase { // start_uibase
                     );
             }
         }
+
+        // TODO: input_voltage_caption
+
     } // end_b06c4
 
-
-
-
     LayoutContainer { // start_abcde
-        id: statusLogBox
+        id: b_status_log
         layoutInfo.uuid: "abcde"
         layoutInfo.columnsWide: 28
         layoutInfo.rowsTall: 5
@@ -242,7 +233,7 @@ UIBase { // start_uibase
 
 
     LayoutText { // start_f52c7
-        id: text_f52c7
+        id: b_input_voltage_caption
         layoutInfo.uuid: "f52c7"
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 1
@@ -258,7 +249,7 @@ UIBase { // start_uibase
     } // end_f52c7
 
     LayoutText { // start_18cff
-        id: layoutText_18cff
+        id: b_actual_speed_caption
         layoutInfo.uuid: "18cff"
         layoutInfo.columnsWide: 4
         layoutInfo.rowsTall: 1
@@ -274,7 +265,7 @@ UIBase { // start_uibase
     } // end_18cff
 
     LayoutText { // start_d490f
-        id: layoutText_d490f
+        id: b_board_temp_caption
         layoutInfo.uuid: "d490f"
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 1
