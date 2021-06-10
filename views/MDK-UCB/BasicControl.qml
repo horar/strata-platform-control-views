@@ -262,6 +262,7 @@ Item {
                     grooveColor: "#ccc"             // Default: "#ccc"
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
+
                     checked: if (multiplePlatform.vinScale > dc_link_vin_calc) {motor_ENSwitch.checked}
                              else{
                                  platformInterface.set_motor_EN.update("off")

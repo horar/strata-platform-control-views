@@ -370,7 +370,7 @@ Item {
                     SGGraph {
                         id: leadAngleAdjustmentGraph
                         width: parent.width/1.05
-                        height: parent.height/1.15
+                        height: parent.height/2.5
                         anchors {
                             top: parent.top
                             topMargin: (parent.width + parent.height)/ 25

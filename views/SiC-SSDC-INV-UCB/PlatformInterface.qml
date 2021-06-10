@@ -10,10 +10,10 @@ Item {
     property var status_vi: {
         "t": 0,       // Target speed in RPM
         "a": 0,       // Actual speed in RPM
-        "l": 0,       // Dc link Vin in mVolts
-        "u": 0,       // Winding Iout Iu in mAmps
-        "v": 0,       // Winding Iout Iv in mAmps
-        "w": 0,       // Winding Iout Iw in mAmps
+        "l": 0,       // Dc link Vin in Volts
+        "u": 0,       // Winding Iout Iu in Amps
+        "v": 0,       // Winding Iout Iv in Amps
+        "w": 0,       // Winding Iout Iw in Amps
         "U": 0,       // Winding temperature U in °C
         "V": 0,       // Winding temperature V in °C
         "W": 0,       // Winding temperature W in °C

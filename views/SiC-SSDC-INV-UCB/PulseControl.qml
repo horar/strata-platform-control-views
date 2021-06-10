@@ -5,25 +5,124 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
 import tech.strata.sgwidgets 0.9
+import "qrc:/sgwidgets"
 import "qrc:/js/navigation_control.js" as NavigationControl
 import "qrc:/js/help_layout_manager.js" as Help
-
+import "qrc:/image"
 
 Rectangle {
     id: root
 
     property bool debugLayout: false
+
+    property var dcLink: 0
+    property var inductor: 0
+
     anchors.fill: parent
 
     Component.onCompleted: {
         platformInterface.read_initial_status.update()
     }
 
+    Image {
+        id:moduleImage
+        anchors {
+            top: parent.top
+            topMargin: parent.height/50
+        }
+        Layout.preferredHeight: parent.height
+        Layout.preferredWidth: parent.width
+        source: "image/Module.png"
+        width: parent.width/2.5
+        height: parent.height/2.5
+        fillMode: Image.PreserveAspectFit
+        mipmap:true
+        visible: true
+    }
+
+    Image {
+        id:switchDistributionImage
+        anchors {
+            top: parent.top
+            topMargin: parent.height/20
+            left: moduleImage.right
+        }
+        Layout.preferredHeight: parent.height
+        Layout.preferredWidth: parent.width
+        source: "image/SwitchDistribution.png"
+        width: parent.width/3
+        height: parent.height/3
+        fillMode: Image.PreserveAspectFit
+        mipmap:true
+        visible: true
+    }
+
+        SGSlider {
+            id: dcLinkSlider
+            anchors {
+                top: parent.top
+                topMargin: parent.height/10
+                right: parent.right
+                rightMargin: (parent.width + parent.height)/100
+                }
+            width: parent.width/10
+            from: 0
+            to: 1000
+            value: platformInterface.status_vi.l
+            stepSize: 1
+            onValueChanged: dcLink = value
+            live: true
+        }
+
+        Text{
+            id: dcLinkSliderValue
+            text:"<b>DC Link: <b>"+ dcLink +" V"
+            font.pixelSize: (parent.width + parent.height)/150
+            color: "black"
+            anchors {
+                top: parent.top
+                topMargin: parent.height/10
+                left: switchDistributionImage.right
+                leftMargin: (parent.width + parent.height)/50
+                }
+            }
+
+        SGSlider {
+            id: inductorSlider
+            anchors {
+                top: dcLinkSliderValue.top
+                topMargin: parent.height/15
+                right: parent.right
+                rightMargin: (parent.width + parent.height)/100
+                }
+            width: parent.width/10
+            from: 0
+            to: 1000
+            value: platformInterface.status_vi.l
+            stepSize: 1
+            onValueChanged: inductor = value
+            live: true
+        }
+
+        Text{
+            id: inductorSliderValue
+            text:"<b>Inductor: <b>"+ inductor +" µH"
+            font.pixelSize: (parent.width + parent.height)/150
+            color: "black"
+            anchors {
+                top: dcLinkSliderValue.top
+                topMargin: parent.height/15
+                left: switchDistributionImage.right
+                leftMargin: (parent.width + parent.height)/50
+                }
+            }
+
+
     SGAccordion {
         id: settingsAccordion
         anchors {
             top: parent.top
-            topMargin: parent.height/10
+            topMargin: parent.height/2.3
             bottom: root.bottom
         }
         width: root.width
@@ -32,7 +131,7 @@ Rectangle {
             SGAccordionItem {
                 id: generalInputs
                 title: "<b>General Inputs</b>"
-                open: true
+                open: false
                 contents: GeneralInputs { }
             }
 

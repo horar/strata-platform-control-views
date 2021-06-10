@@ -19,13 +19,13 @@ Item {
     property string warningVin: multiplePlatform.warningHVVinLable
 
     // property that reads the initial notification
-    property var dc_link_vin_calc: platformInterface.status_vi.l/1000
-    property var winding_iout_iu_calc: platformInterface.status_vi.u/1000
-    property var winding_iout_iv_calc: platformInterface.status_vi.v/1000
-    property var winding_iout_iw_calc: platformInterface.status_vi.w/1000
-    property var temp_U_calc: (platformInterface.status_vi.U).toFixed(3)
-    property var temp_V_calc: (platformInterface.status_vi.V).toFixed(3)
-    property var temp_W_calc: (platformInterface.status_vi.W).toFixed(3)
+    property var dc_link_vin_calc: platformInterface.status_vi.l
+    property var winding_iout_iu_calc: platformInterface.status_vi.u
+    property var winding_iout_iv_calc: platformInterface.status_vi.v
+    property var winding_iout_iw_calc: platformInterface.status_vi.w
+    property var temp_U_calc: platformInterface.status_vi.U
+    property var temp_V_calc: platformInterface.status_vi.V
+    property var temp_W_calc: platformInterface.status_vi.W
 
     property var time: settingsControl.time
     property var pointsCount: settingsControl.pointsCount
@@ -202,7 +202,7 @@ Item {
                     outerColor: "#999"
                     unitLabel: "RPM"
                     gaugeTitle: "Target Speed"
-                    value: platformInterface.status_vi.t
+                    value: target_speed
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
@@ -246,7 +246,7 @@ Item {
                     outerColor: "#999"
                     unitLabel: "RPM"
                     gaugeTitle: "Actual Speed"
-                    value: platformInterface.status_vi.a
+                    value: actual_speed
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
@@ -337,7 +337,7 @@ Item {
                     title: "<b>Actual Speed</b>"
                     yAxisTitle: "<b>RPM</b>"
                     xAxisTitle: "<b>Time / div<b>"
-                    inputData: platformInterface.status_vi.a
+                    inputData: actual_speed
                     maxYValue: 10000
                     minYValue: 0
                     showYGrids: true
@@ -574,7 +574,7 @@ Item {
                     SGLabelledInfoBox {
                         id: winding_iout_IuCurrent
                         label: ""
-                        info:  {(platformInterface.status_vi.u/1000).toFixed(3)}
+                        info: winding_iout_iu_calc
                         infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3
@@ -629,7 +629,7 @@ Item {
                     SGLabelledInfoBox {
                         id: winding_iout_IvCurrent
                         label: ""
-                        info:  {(platformInterface.status_vi.v/1000).toFixed(3)}
+                        info: winding_iout_iv_calc
                         infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3
@@ -684,7 +684,7 @@ Item {
                     SGLabelledInfoBox {
                         id: winding_iout_IwCurrent
                         label: ""
-                        info:  {(platformInterface.status_vi.w/1000).toFixed(3)}
+                        info: winding_iout_iw_calc
                         infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3

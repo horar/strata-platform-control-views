@@ -83,7 +83,7 @@ ColumnLayout {
         }
     }
 
-    property var dc_link_vin_calc: (platformInterface.status_vi.l/1000).toFixed(3)
+    property var dc_link_vin_calc: platformInterface.status_vi.l
     property var dataArray_dc_link_vin_calc_graph: []
     property var dc_link_vin_calc_validator:0
     onDc_link_vin_calcChanged:{
@@ -97,7 +97,7 @@ ColumnLayout {
         }
     }
 
-    property var winding_iout_iu_calc: (platformInterface.status_vi.u/1000).toFixed(3)
+    property var winding_iout_iu_calc: platformInterface.status_vi.u
     property var dataArray_winding_iout_iu_calc_graph: []
     property var winding_iout_iu_calc_validator:0
     onWinding_iout_iu_calcChanged:{
@@ -111,7 +111,7 @@ ColumnLayout {
         }
     }
 
-    property var winding_iout_iv_calc: (platformInterface.status_vi.v/1000).toFixed(3)
+    property var winding_iout_iv_calc: platformInterface.status_vi.v
     property var dataArray_winding_iout_iv_calc_graph: []
     property var winding_iout_iv_calc_validator:0
     onWinding_iout_iv_calcChanged:{
@@ -125,7 +125,7 @@ ColumnLayout {
         }
     }
 
-    property var winding_iout_iw_calc: (platformInterface.status_vi.w/1000).toFixed(3)
+    property var winding_iout_iw_calc: platformInterface.status_vi.w
     property var dataArray_winding_iout_iw_calc_graph: []
     property var winding_iout_iw_calc_validator:0
     onWinding_iout_iw_calcChanged:{
@@ -356,7 +356,7 @@ ColumnLayout {
                                                 right: resetChartButton.right
                                                 rightMargin: (parent.width + parent.height)/ 150
                                             }
-                                            text: ""+ (platformInterface.status_vi.l/1000).toFixed(3) +" V"
+                                            text: ""+ dc_link_vin_calc +" V"
                                             font.pixelSize: (parent.width + parent.height)/ 150
                                             color: "blue"
                                         }
@@ -615,7 +615,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.u/1000).toFixed(3) +"  A"
+                                                text: ""+ winding_iout_iu_calc +"  A"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "brown"
                                             }
@@ -627,7 +627,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.v/1000).toFixed(3) +"  A"
+                                                text: ""+ winding_iout_iv_calc +"  A"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "black"
                                             }
@@ -639,7 +639,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.w/1000).toFixed(3) +"  A"
+                                                text: ""+ winding_iout_iw_calc +"  A"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "grey"
                                             }
@@ -652,7 +652,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.U).toFixed(3) +" °C"
+                                                text: ""+ temp_U_calc +" °C"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "brown"
                                             }
@@ -664,7 +664,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.V).toFixed(3) +" °C"
+                                                text: ""+ temp_V_calc +" °C"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "black"
                                             }
@@ -676,7 +676,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_vi.W).toFixed(3) +" °C"
+                                                text: ""+ temp_W_calc +" °C"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "grey"
                                             }
@@ -690,7 +690,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (((platformInterface.status_vi.a)/60)*pole_pairs).toFixed(0) +" Hz"
+                                                text: ""+ (actual_speed/60)*pole_pairs +" Hz"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "blue"
                                             }

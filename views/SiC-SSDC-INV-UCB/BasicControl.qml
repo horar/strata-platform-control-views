@@ -24,10 +24,10 @@ Item {
     // property that reads the initial notification
     property var target_speed: platformInterface.status_vi.t
     property var actual_speed: platformInterface.status_vi.a
-    property var dc_link_vin_calc: platformInterface.status_vi.l/1000
-    property var winding_iout_iu_calc: (platformInterface.status_vi.u/1000).toFixed(3)
-    property var winding_iout_iv_calc: (platformInterface.status_vi.v/1000).toFixed(3)
-    property var winding_iout_iw_calc: (platformInterface.status_vi.w/1000).toFixed(3)
+    property var dc_link_vin_calc: platformInterface.status_vi.l
+    property var winding_iout_iu_calc: platformInterface.status_vi.u
+    property var winding_iout_iv_calc: platformInterface.status_vi.v
+    property var winding_iout_iw_calc: platformInterface.status_vi.w
     property var temp_U_calc: platformInterface.status_vi.U
     property var temp_V_calc: platformInterface.status_vi.V
     property var temp_W_calc: platformInterface.status_vi.W
@@ -39,10 +39,6 @@ Item {
     property var pole_pairs: settingsControl.pole_pairs
     property var max_motor_vout: settingsControl.max_motor_vout
     property var max_motor_speed: settingsControl.max_motor_speed
-    property var current_pi_p_gain: (settingsControl.current_pi_p_gain).toFixed(0)
-    property var current_pi_i_gain: (settingsControl.current_pi_i_gain).toFixed(0)
-    property var speed_pi_p_gain: (settingsControl.speed_pi_p_gain/1000).toFixed(3)
-    property var speed_pi_i_gain: (settingsControl.speed_pi_i_gain/1000).toFixed(3)
     property var resistance: (settingsControl.resistance/100).toFixed(2)
     property var inductance: (settingsControl.inductance/1000).toFixed(3)
     property var target: settingsControl.target.toFixed(0)
