@@ -13,6 +13,9 @@ UIBase { // start_uibase
     // property alias cp_subtitle: cp_subtitle
 
     // UI objects
+
+    // ======================== General UI Setup and Titles ======================== //
+
     LayoutText { // start_8695e
         id: cp_title
         layoutInfo.uuid: "8695e"
@@ -175,6 +178,8 @@ UIBase { // start_uibase
         layoutInfo.yRows: 23
         thickness: 2
     } // end_8edf6
+
+    // ======================== pwm_params ======================== //
 
     LayoutSGSwitch { // start_d68f2
         id: cp_pwm_params_o_mode
@@ -392,6 +397,8 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
 
     } // end_bf582
+
+    // ======================== pid_params ======================== //
 
     LayoutSGInfoBox { // start_4517c
         id: cp_pid_params_kp
@@ -613,7 +620,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 42
 
         text: "10.0"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 1
@@ -721,6 +728,8 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
     } // end_6893f
 
+    // ======================== motor_params ======================== //
+
     LayoutSGInfoBox { // start_7b111
         id: cp_motor_params_rs
         layoutInfo.uuid: "7b111"
@@ -730,7 +739,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 9
         
         text: "0.5"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 1
@@ -767,7 +776,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 12
 
         text: "0.001"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 3
@@ -803,7 +812,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 15
 
         text: "0.000001"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 6
@@ -839,7 +848,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 18
 
         text: "0.000001"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 6
@@ -875,7 +884,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 21
 
         text: "0.000001"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 6
@@ -911,7 +920,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 24
 
         text: "0.000001"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 6
@@ -947,7 +956,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 27
 
         text: "4"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: IntValidator {
             top: 24
@@ -983,7 +992,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 30
 
         text: "4200.0"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 1
@@ -1019,7 +1028,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 33
 
         text: "3000.0"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 1
@@ -1055,7 +1064,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 36
 
         text: "60.0"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 1
@@ -1091,7 +1100,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 39
 
         text: "0.01"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 2
@@ -1127,7 +1136,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 42
 
         text: "24.0"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
 
         validator: DoubleValidator {
             decimals: 1
@@ -1382,6 +1391,8 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
     } // end_ee7f4
 
+    // ======================== spd_loop_params ======================== //
+
     LayoutSGComboBox { // start_f5402
         id: cp_spd_loop_params_mode
         layoutInfo.uuid: "f5402"
@@ -1395,10 +1406,13 @@ UIBase { // start_uibase
         
         onActivated: {
             console.log("onActivated:", currentIndex, currentText)
-        }
-
-        // TODO: mode_caption
-        
+            platformInterface.commands.spd_loop_params.update(
+                Number(cp_spd_loop_params_accel.text),
+                Number(cp_spd_loop_params_fs.text),
+                Number(cp_spd_loop_params_fspd_filt.text),
+                currentIndex
+            )
+        }        
     } // end_f5402
 
     LayoutText { // start_b10f9
@@ -1424,11 +1438,22 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 13
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "100.0"
+        readOnly: false
+
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
 
         onAccepted: {
            console.log("Accepted:", text)
+           platformInterface.commands.spd_loop_params.update(
+                Number(text),
+                Number(cp_spd_loop_params_fs.text),
+                Number(cp_spd_loop_params_fspd_filt.text),
+                cp_spd_loop_params_mode.currentIndex
+            )
         }
     } // end_33053
 
@@ -1455,11 +1480,22 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 16
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "1000.0"
+        readOnly: false
+
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
 
         onAccepted: {
            console.log("Accepted:", text)
+           platformInterface.commands.spd_loop_params.update(
+                Number(cp_spd_loop_params_accel.text),
+                Number(text),
+                Number(cp_spd_loop_params_fspd_filt.text),
+                cp_spd_loop_params_mode.currentIndex
+            )
         }
     } // end_d3ebf
 
@@ -1471,16 +1507,24 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 19
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "100.0"
+        readOnly: false
+
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
 
         onAccepted: {
            console.log("Accepted:", text)
+           platformInterface.commands.spd_loop_params.update(
+                Number(cp_spd_loop_params_accel.text),
+                Number(cp_spd_loop_params_fs.text),
+                Number(text),
+                cp_spd_loop_params_mode.currentIndex
+            )
         }
     } // end_c31f8
-
-
-
 
     LayoutText { // start_b87f9
         id: cp_spd_loop_params_fs_caption
@@ -1512,20 +1556,35 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
     } // end_db3ed
 
+    // ======================== protection ======================== //
+
     LayoutSGInfoBox { // start_4c1a9
         id: cp_protection_ocp
         layoutInfo.uuid: "4c1a9"
         layoutInfo.columnsWide: 2
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 27
-        layoutInfo.yRows: 26
+        layoutInfo.yRows: 25
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "80.0"
+        readOnly: false
+
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
 
         onAccepted: {
            console.log("Accepted:", text)
+           platformInterface.commands.protection.update(
+                Number(cp_protection_fet_otp.text),
+                Number(text),
+                Number(cp_protection_ocp_en.checked),
+                Number(cp_protection_ovp.text),
+                Number(cp_protection_ovp_en.checked)
+            )
         }
+
     } // end_4c1a9
 
     LayoutSGSwitch { // start_5ce22
@@ -1534,7 +1593,7 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 2
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 27
-        layoutInfo.yRows: 29
+        layoutInfo.yRows: 28
 
         checked: true
         checkedLabel: "On"
@@ -1543,6 +1602,13 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
+            platformInterface.commands.protection.update(
+                Number(cp_protection_fet_otp.text),
+                Number(cp_protection_ocp.text),
+                Number(checked),
+                Number(cp_protection_ovp.text),
+                Number(cp_protection_ovp_en.checked)
+            )
         }
     } // end_5ce22
 
@@ -1552,13 +1618,25 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 2
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 27
-        layoutInfo.yRows: 32
+        layoutInfo.yRows: 31
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "32.0"
+        readOnly: false
+
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
 
         onAccepted: {
            console.log("Accepted:", text)
+           platformInterface.commands.protection.update(
+                Number(cp_protection_fet_otp.text),
+                Number(cp_protection_ocp.text),
+                Number(cp_protection_ocp_en.checked),
+                Number(text),
+                Number(cp_protection_ovp_en.checked)
+            )
         }
     } // end_90ed2
 
@@ -1568,7 +1646,7 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 2
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 27
-        layoutInfo.yRows: 35
+        layoutInfo.yRows: 34
 
         checked: true
         checkedLabel: "On"
@@ -1577,6 +1655,13 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
+            platformInterface.commands.protection.update(
+                Number(cp_protection_fet_otp.text),
+                Number(cp_protection_ocp.text),
+                Number(cp_protection_ocp_en.checked),
+                Number(cp_protection_ovp.text),
+                Number(checked)
+            )
         }
     } // end_830dc
 
@@ -1586,13 +1671,25 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 2
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 27
-        layoutInfo.yRows: 38
+        layoutInfo.yRows: 37
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "100.0"
+        readOnly: false
+
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
 
         onAccepted: {
            console.log("Accepted:", text)
+           platformInterface.commands.protection.update(
+                Number(text),
+                Number(cp_protection_ocp.text),
+                Number(cp_protection_ocp_en.checked),
+                Number(cp_protection_ovp.text),
+                Number(cp_protection_ovp_en.checked)
+            )
         }
     } // end_9599e
 
@@ -1602,7 +1699,7 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 21
-        layoutInfo.yRows: 26
+        layoutInfo.yRows: 25
 
         text: "Software OCP (A)"
         fontSizeMode: Text.Fit
@@ -1617,7 +1714,7 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 21
-        layoutInfo.yRows: 29
+        layoutInfo.yRows: 28
 
         text: "Software OCP Enable"
         fontSizeMode: Text.Fit
@@ -1632,7 +1729,7 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 21
-        layoutInfo.yRows: 32
+        layoutInfo.yRows: 31
 
         text: "Vin OVP Limit (V)"
         fontSizeMode: Text.Fit
@@ -1647,7 +1744,7 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 21
-        layoutInfo.yRows: 35
+        layoutInfo.yRows: 34
 
         text: "Software OVP Enable"
         fontSizeMode: Text.Fit
@@ -1662,7 +1759,7 @@ UIBase { // start_uibase
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 21
-        layoutInfo.yRows: 38
+        layoutInfo.yRows: 37
 
         text: "MOSFET OTP Limit (C)"
         fontSizeMode: Text.Fit
