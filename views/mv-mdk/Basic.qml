@@ -9,8 +9,12 @@ UIBase { // start_uibase
     rowCount: 25
 
     // Objects shared between QML files
-    property alias b_title: b_title
-    property alias b_subtitle: b_subtitle
+    // property alias b_title: b_title
+    // property alias b_subtitle: b_subtitle
+
+    // Setup default variables
+    // actual_speed
+    // platformInterface.notifications.actual_speed.caption : "Actual Speed (RPM)"
 
     // UI objects
     LayoutText { // start_8695e

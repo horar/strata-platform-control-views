@@ -1,0 +1,24 @@
+ onUserSet: {
+            console.log("onUserSet:", value)
+            platformInterface.commands.pwm_params.update(
+                platformInterface.commands.pwm_params.payload.dt,
+                value * 1000,
+                platformInterface.commands.pwm_params.payload.min_ls,
+                platformInterface.commands.pwm_params.payload.o_mode,
+                platformInterface.commands.pwm_params.payload.tr_delay
+            )
+        }
+
+
+        onUserSet: {
+            console.log("onUserSet:", value)
+            platformInterface.commands.pwm_params.update(
+                cp_pwm_params_dt.value / 10,
+                cp_pwm_params_freq.value * 1000,
+                cp_pwm_params_min_ls.value / 10,
+                Number(cp_pwm_params_o_mode.checked),
+                parseInt(cp_pwm_params_tr_delay.text)
+            )
+        }
+
+

@@ -9,8 +9,34 @@ UIBase { // start_uibase
     rowCount: 50
     
     // Objects shared between QML files
-    property alias cp_title: cp_title
-    property alias cp_subtitle: cp_subtitle
+    // property alias cp_title: cp_title
+    // property alias cp_subtitle: cp_subtitle
+    
+    // Setup default variables in platformInterface
+    // Component.onCompleted: {
+    // Component.onCompleted: {
+
+    //     // various ways to do this:
+    //     // platformInterface.commands.pwm_params.payload.dt = 1
+    //     // platformInterface.commands.pwm_params.set(99,99,99,99,99)
+    //     // platformInterface.notifications.actual_speed.caption = "asdf"
+
+    //     // Notifications
+    //     // actual_speed
+    //     platformInterface.notifications.actual_speed.caption = "Actual Speed (RPM)"
+
+    //     // Commands
+    //     // pwm_params
+    //     // platformInterface.commands.pwm_params.set(10,20000,10,1,0) // alternative
+    //     platformInterface.commands.pwm_params.payload.dt = 10
+    //     platformInterface.commands.pwm_params.payload.freq = 20000
+    //     platformInterface.commands.pwm_params.payload.min_ls = 10
+    //     platformInterface.commands.pwm_params.payload.o_mode = 1
+    //     platformInterface.commands.pwm_params.payload.tr_delay = 0
+        
+    // }
+
+    // UIBase.default_values()
 
     // UI objects
     LayoutText { // start_8695e
@@ -183,17 +209,23 @@ UIBase { // start_uibase
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 9
-
-        checked: true
+ 
         checkedLabel: "Bipolar"
         uncheckedLabel: "Unipolar"
         labelsInside: true
 
+        checked: true
+
         onToggled: {
             console.log("onToggled:", checked)
+            platformInterface.commands.pwm_params.update(
+                cp_pwm_params_dt.value / 10,
+                cp_pwm_params_freq.value * 1000,
+                cp_pwm_params_min_ls.value / 10,
+                Number(checked),
+                parseInt(cp_pwm_params_tr_delay.text)
+            )
         }
-
-        // TODO: o_mode_caption
         
     } // end_d68f2
 
@@ -220,20 +252,24 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 13
 
-        from: 10
-        to: 1000
+        from: 60
+        to: 10000
         stepSize: 10
-        // showLabels: true
         live: false
+        inputBox.readOnly: true
+
+        value: 100
 
         onUserSet: {
             console.log("onUserSet:", value)
+            platformInterface.commands.pwm_params.update(
+                value / 10,
+                cp_pwm_params_freq.value * 1000,
+                cp_pwm_params_min_ls.value / 10,
+                Number(cp_pwm_params_o_mode.checked),
+                parseInt(cp_pwm_params_tr_delay.text)
+            )
         }
-
-        // onValueChanged: console.info("Slider value is now:", value)  // Signals on any value change (both user and programmatic changes)
-        // onUserSet: console.info("Slider set by user to:", value)     // Signals when user sets value (affected by live)
-        
-        // TODO: dt_caption
 
     } // end_b8761
 
@@ -260,16 +296,24 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 18
 
-        from: 10
-        to: 1000
+        from: 100
+        to: 10000
         stepSize: 10
         live: false
+        inputBox.readOnly: true
+        
+        value: 100
 
         onUserSet: {
             console.log("onUserSet:", value)
+            platformInterface.commands.pwm_params.update(
+                cp_pwm_params_dt.value / 10,
+                cp_pwm_params_freq.value * 1000,
+                value / 10,
+                Number(cp_pwm_params_o_mode.checked),
+                parseInt(cp_pwm_params_tr_delay.text)
+            )
         }
-
-        // TODO: min_ls_caption
 
     } // end_547f7
 
@@ -315,17 +359,20 @@ UIBase { // start_uibase
         to: 50
         stepSize: 1
         live: false
+        inputBox.readOnly: true
+
+        value: 20
 
         onUserSet: {
             console.log("onUserSet:", value)
-            platformInterface.commands.pwm_params.update(1,1,1,1,1);
-            // platformInterface.commands.pwm_params.send(;)
+            platformInterface.commands.pwm_params.update(
+                cp_pwm_params_dt.value / 10,
+                value * 1000,
+                cp_pwm_params_min_ls.value / 10,
+                Number(cp_pwm_params_o_mode.checked),
+                parseInt(cp_pwm_params_tr_delay.text)
+            )
         }
-
-        value: platformInterface.notifications.actual_speed_value.value
-        // value: 20
-
-        // TODO: freq_caption
 
     } // end_b15e0
 
@@ -337,14 +384,30 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 27
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "0"
+        readOnly: false
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        //onAccepted: {
+        onEditingFinished : {
+            var tr_delay = parseInt(text)
+            if ((tr_delay >= 0) && (String(tr_delay) === text)) {
+                // Check if tr_delay is greater than zero
+                // Check if tr_delay and tr_delay converted to int then string equal text entry
+                console.log("Accepted:", text)
+                platformInterface.commands.pwm_params.update(
+                    cp_pwm_params_dt.value / 10,
+                    cp_pwm_params_freq.value * 1000,
+                    cp_pwm_params_min_ls.value / 10,
+                    Number(cp_pwm_params_o_mode.checked),
+                    parseInt(text)
+                )
+            } else {
+                // Any other invalid text entry then reset and do not send cmd
+                console.log("Not a valid tr_delay entry:", text)
+                console.log("Reset tr_delay to value from platformInterface:", String(platformInterface.commands.pwm_params.payload.tr_delay))
+                cp_pwm_params_tr_delay.text = String(platformInterface.commands.pwm_params.payload.tr_delay)
+            }
         }
-
-        // TODO: tr_delay_caption
 
     } // end_61e5b
 
@@ -356,11 +419,12 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 27
 
-        text: "TR Delay (clock cycles)"
+        text: "TR Delay (ns)"
         fontSizeMode: Text.Fit
         font.pixelSize: 15
         horizontalAlignment: Text.AlignHLeft
         verticalAlignment: Text.AlignVCenter
+
     } // end_bf582
 
     LayoutSGInfoBox { // start_4517c
@@ -371,7 +435,8 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 4
         layoutInfo.yRows: 33
 
-        text: "100"
+        text: "50" 
+
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
         onAccepted: {
