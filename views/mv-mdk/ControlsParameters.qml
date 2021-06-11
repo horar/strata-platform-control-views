@@ -9,8 +9,8 @@ UIBase { // start_uibase
     rowCount: 50
     
     // Objects shared between QML files
-    // property alias cp_title: cp_title
-    // property alias cp_subtitle: cp_subtitle
+    property alias cp_title: cp_title
+    property alias cp_subtitle: cp_subtitle
 
     // UI objects
 
@@ -24,7 +24,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 0
 
-        text: "BLDC Motor Drive EVB for 30-60V 1200W Applications"
+        text: platformInterface.notifications.title_caption.caption
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
@@ -40,7 +40,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 2
 
-        text: "Part of the Motor Development Kit (MDK) Family"
+        text: platformInterface.notifications.subtitle_caption.caption
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter

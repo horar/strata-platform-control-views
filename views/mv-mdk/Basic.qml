@@ -9,12 +9,39 @@ UIBase { // start_uibase
     rowCount: 25
 
     // Objects shared between QML files
-    // property alias b_title: b_title
-    // property alias b_subtitle: b_subtitle
+    // property alias b_title: title
+    // property alias b_subtitle: subtitle
 
     // Setup default variables
-    // actual_speed
-    // platformInterface.notifications.actual_speed.caption : "Actual Speed (RPM)"
+    // Do this here instead of in PlatformInterface.qml because PIG overwrites values
+    Component.onCompleted: {
+        // Notifications
+        // ??
+        // plat
+        // title
+        platformInterface.notifications.title_caption.caption = "BLDC Motor Drive EVB for 30-60V 1200W Applications"
+        // subtitle
+        platformInterface.notifications.subtitle_caption.caption = "Part of the Motor Development Kit (MDK) Family"
+
+        // various ways to do this:
+        // platformInterface.commands.pwm_params.payload.dt = 1
+        // platformInterface.commands.pwm_params.set(99,99,99,99,99)
+        // platformInterface.notifications.actual_speed.caption = "asdf"
+
+        // Notifications
+        // actual_speed
+        // platformInterface.notifications.actual_speed.caption = "Actual Speed (RPM)"
+
+        // Commands
+        // pwm_params
+        // platformInterface.commands.pwm_params.set(10,20000,10,1,0) // alternative
+        // platformInterface.commands.pwm_params.payload.dt = 10
+        // platformInterface.commands.pwm_params.payload.freq = 20000
+        // platformInterface.commands.pwm_params.payload.min_ls = 10
+        // platformInterface.commands.pwm_params.payload.o_mode = 1
+        // platformInterface.commands.pwm_params.payload.tr_delay = 0
+        
+    }
 
     // UI objects
     LayoutText { // start_8695e
@@ -25,7 +52,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 0
 
-        text: "BLDC Motor Drive EVB for 30-60V 1200W Applications"
+        text: platformInterface.notifications.title_caption.caption
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
@@ -41,7 +68,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 1
 
-        text: "Part of the Motor Development Kit (MDK) Family"
+        text: platformInterface.notifications.subtitle_caption.caption
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter

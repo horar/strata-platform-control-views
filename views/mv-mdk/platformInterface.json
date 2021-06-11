@@ -334,13 +334,13 @@
         {
             "value": "title_caption",
             "payload": {
-                "caption": "int"
+                "caption": "string"
             }
         },
         {
             "value": "subtitle_caption",
             "payload": {
-                "caption": "int"
+                "caption": "string"
             }
         },
         {
