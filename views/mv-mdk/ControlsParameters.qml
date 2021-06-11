@@ -11,32 +11,6 @@ UIBase { // start_uibase
     // Objects shared between QML files
     // property alias cp_title: cp_title
     // property alias cp_subtitle: cp_subtitle
-    
-    // Setup default variables in platformInterface
-    // Component.onCompleted: {
-    // Component.onCompleted: {
-
-    //     // various ways to do this:
-    //     // platformInterface.commands.pwm_params.payload.dt = 1
-    //     // platformInterface.commands.pwm_params.set(99,99,99,99,99)
-    //     // platformInterface.notifications.actual_speed.caption = "asdf"
-
-    //     // Notifications
-    //     // actual_speed
-    //     platformInterface.notifications.actual_speed.caption = "Actual Speed (RPM)"
-
-    //     // Commands
-    //     // pwm_params
-    //     // platformInterface.commands.pwm_params.set(10,20000,10,1,0) // alternative
-    //     platformInterface.commands.pwm_params.payload.dt = 10
-    //     platformInterface.commands.pwm_params.payload.freq = 20000
-    //     platformInterface.commands.pwm_params.payload.min_ls = 10
-    //     platformInterface.commands.pwm_params.payload.o_mode = 1
-    //     platformInterface.commands.pwm_params.payload.tr_delay = 0
-        
-    // }
-
-    // UIBase.default_values()
 
     // UI objects
     LayoutText { // start_8695e
@@ -223,7 +197,7 @@ UIBase { // start_uibase
                 cp_pwm_params_freq.value * 1000,
                 cp_pwm_params_min_ls.value / 10,
                 Number(checked),
-                parseInt(cp_pwm_params_tr_delay.text)
+                Number(cp_pwm_params_tr_delay.text)
             )
         }
         
@@ -267,7 +241,7 @@ UIBase { // start_uibase
                 cp_pwm_params_freq.value * 1000,
                 cp_pwm_params_min_ls.value / 10,
                 Number(cp_pwm_params_o_mode.checked),
-                parseInt(cp_pwm_params_tr_delay.text)
+                Number(cp_pwm_params_tr_delay.text)
             )
         }
 
@@ -311,7 +285,7 @@ UIBase { // start_uibase
                 cp_pwm_params_freq.value * 1000,
                 value / 10,
                 Number(cp_pwm_params_o_mode.checked),
-                parseInt(cp_pwm_params_tr_delay.text)
+                Number(cp_pwm_params_tr_delay.text)
             )
         }
 
@@ -359,7 +333,6 @@ UIBase { // start_uibase
         to: 50
         stepSize: 1
         live: false
-        inputBox.readOnly: true
 
         value: 20
 
@@ -370,7 +343,7 @@ UIBase { // start_uibase
                 value * 1000,
                 cp_pwm_params_min_ls.value / 10,
                 Number(cp_pwm_params_o_mode.checked),
-                parseInt(cp_pwm_params_tr_delay.text)
+                Number(cp_pwm_params_tr_delay.text)
             )
         }
 
@@ -387,26 +360,19 @@ UIBase { // start_uibase
         text: "0"
         readOnly: false
 
-        //onAccepted: {
+        validator: IntValidator {
+            bottom: 0
+        }
+
         onEditingFinished : {
-            var tr_delay = parseInt(text)
-            if ((tr_delay >= 0) && (String(tr_delay) === text)) {
-                // Check if tr_delay is greater than zero
-                // Check if tr_delay and tr_delay converted to int then string equal text entry
-                console.log("Accepted:", text)
-                platformInterface.commands.pwm_params.update(
-                    cp_pwm_params_dt.value / 10,
-                    cp_pwm_params_freq.value * 1000,
-                    cp_pwm_params_min_ls.value / 10,
-                    Number(cp_pwm_params_o_mode.checked),
-                    parseInt(text)
-                )
-            } else {
-                // Any other invalid text entry then reset and do not send cmd
-                console.log("Not a valid tr_delay entry:", text)
-                console.log("Reset tr_delay to value from platformInterface:", String(platformInterface.commands.pwm_params.payload.tr_delay))
-                cp_pwm_params_tr_delay.text = String(platformInterface.commands.pwm_params.payload.tr_delay)
-            }
+            console.log("Accepted:", text)
+            platformInterface.commands.pwm_params.update(
+                cp_pwm_params_dt.value / 10,
+                cp_pwm_params_freq.value * 1000,
+                cp_pwm_params_min_ls.value / 10,
+                Number(cp_pwm_params_o_mode.checked),
+                Number(text)
+            )
         }
 
     } // end_61e5b
@@ -435,12 +401,25 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 4
         layoutInfo.yRows: 33
 
-        text: "50" 
+        readOnly: false
+        text: "50.0" 
 
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.pid_params.update(
+                Number(text),
+                Number(cp_pid_params_ki.text),
+                Number(cp_pid_params_kd.text),
+                Number(cp_pid_params_wd.text),
+                Number(cp_pid_params_lim.text),
+                Number(cp_pid_params_tau_sys.text),
+                Number(cp_pid_params_mode.checked)
+            )
         }
     } // end_4517c
 
@@ -452,12 +431,27 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 6
         layoutInfo.yRows: 33
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
+        text: "50.0" 
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
         }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.pid_params.update(
+                Number(cp_pid_params_kp.text),
+                Number(text),
+                Number(cp_pid_params_kd.text),
+                Number(cp_pid_params_wd.text),
+                Number(cp_pid_params_lim.text),
+                Number(cp_pid_params_tau_sys.text),
+                Number(cp_pid_params_mode.checked)
+            )
+        }
+
     } // end_1d4dc
 
     LayoutSGInfoBox { // start_4b295
@@ -468,11 +462,25 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 8
         layoutInfo.yRows: 33
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        readOnly: false
+        text: "50.0" 
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.pid_params.update(
+                Number(cp_pid_params_kp.text),
+                Number(cp_pid_params_ki.text),
+                Number(text),
+                Number(cp_pid_params_wd.text),
+                Number(cp_pid_params_lim.text),
+                Number(cp_pid_params_tau_sys.text),
+                Number(cp_pid_params_mode.checked)
+            )
         }
     } // end_4b295
 
@@ -544,11 +552,25 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 36
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "1000.0"
+        readOnly: false
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.pid_params.update(
+                Number(cp_pid_params_kp.text),
+                Number(cp_pid_params_ki.text),
+                Number(cp_pid_params_kd.text),
+                Number(text),
+                Number(cp_pid_params_lim.text),
+                Number(cp_pid_params_tau_sys.text),
+                Number(cp_pid_params_mode.checked)
+            )
         }
     } // end_cd9bc
 
@@ -560,11 +582,25 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 39
 
-        text: "100"
-        readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
+        text: "24.0"
+        readOnly: false
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.pid_params.update(
+                Number(cp_pid_params_kp.text),
+                Number(cp_pid_params_ki.text),
+                Number(cp_pid_params_kd.text),
+                Number(cp_pid_params_wd.text),
+                Number(text),
+                Number(cp_pid_params_tau_sys.text),
+                Number(cp_pid_params_mode.checked)
+            )
         }
     } // end_9ac57
 
@@ -576,11 +612,25 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 42
 
-        text: "100"
+        text: "10.0"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.pid_params.update(
+                Number(cp_pid_params_kp.text),
+                Number(cp_pid_params_ki.text),
+                Number(cp_pid_params_kd.text),
+                Number(cp_pid_params_wd.text),
+                Number(cp_pid_params_lim.text),
+                Number(text),
+                Number(cp_pid_params_mode.checked)
+            )
         }
     } // end_625e9
 
@@ -599,6 +649,15 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
+            platformInterface.commands.pid_params.update(
+                Number(cp_pid_params_kp.text),
+                Number(cp_pid_params_ki.text),
+                Number(cp_pid_params_kd.text),
+                Number(cp_pid_params_wd.text),
+                Number(cp_pid_params_lim.text),
+                Number(cp_pid_params_tau_sys.text),
+                Number(checked)
+            )
         }
     } // end_b8452
 

@@ -22,3 +22,65 @@
         }
 
 
+            // Setup default variables in platformInterface
+    // Component.onCompleted: {
+    // Component.onCompleted: {
+
+    //     // various ways to do this:
+    //     // platformInterface.commands.pwm_params.payload.dt = 1
+    //     // platformInterface.commands.pwm_params.set(99,99,99,99,99)
+    //     // platformInterface.notifications.actual_speed.caption = "asdf"
+
+    //     // Notifications
+    //     // actual_speed
+    //     platformInterface.notifications.actual_speed.caption = "Actual Speed (RPM)"
+
+    //     // Commands
+    //     // pwm_params
+    //     // platformInterface.commands.pwm_params.set(10,20000,10,1,0) // alternative
+    //     platformInterface.commands.pwm_params.payload.dt = 10
+    //     platformInterface.commands.pwm_params.payload.freq = 20000
+    //     platformInterface.commands.pwm_params.payload.min_ls = 10
+    //     platformInterface.commands.pwm_params.payload.o_mode = 1
+    //     platformInterface.commands.pwm_params.payload.tr_delay = 0
+        
+    // }
+
+    // UIBase.default_values()
+
+
+validator: DoubleValidator {
+    decimals: 1
+    bottom: 0.0
+    // top: 0.0
+}
+
+validator: IntValidator {
+    bottom: 250
+    top: 10000
+}
+
+
+
+
+        //onAccepted: {
+        onEditingFinished : {
+            // var tr_delay = parseInt(text)
+            // if ((tr_delay >= 0) && (String(tr_delay) === text)) {
+                // Check if tr_delay is greater than zero
+                // Check if tr_delay and tr_delay converted to int then string equal text entry
+                console.log("Accepted:", text)
+                platformInterface.commands.pwm_params.update(
+                    cp_pwm_params_dt.value / 10,
+                    cp_pwm_params_freq.value * 1000,
+                    cp_pwm_params_min_ls.value / 10,
+                    Number(cp_pwm_params_o_mode.checked),
+                    Number(text)
+                )
+            // } else {
+            //     // Any other invalid text entry then reset and do not send cmd
+            //     console.log("Not a valid tr_delay entry:", text)
+            //     console.log("Reset tr_delay to value from platformInterface:", String(platformInterface.commands.pwm_params.payload.tr_delay))
+            //     cp_pwm_params_tr_delay.text = String(platformInterface.commands.pwm_params.payload.tr_delay)
+            // }
+        }
