@@ -728,13 +728,34 @@ UIBase { // start_uibase
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 9
-
-        text: "100"
+        
+        text: "0.5"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
         }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(text)  
+            )
+        }
+
     } // end_7b111
 
     LayoutSGInfoBox { // start_b2002
@@ -745,11 +766,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 12
 
-        text: "100"
+        text: "0.001"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 3
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_b2002
 
@@ -761,11 +802,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 15
 
-        text: "100"
+        text: "0.000001"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 6
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_6bb67
 
@@ -777,11 +838,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 18
 
-        text: "100"
+        text: "0.000001"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 6
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_c26b5
 
@@ -793,11 +874,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 21
 
-        text: "100"
+        text: "0.000001"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 6
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_e7154
 
@@ -809,11 +910,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 24
 
-        text: "100"
+        text: "0.000001"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 6
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_d33f4
 
@@ -825,11 +946,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 27
 
-        text: "100"
+        text: "4"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: IntValidator {
+            top: 24
+            bottom: 1
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_9a955
 
@@ -841,11 +982,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 30
 
-        text: "100"
+        text: "4200.0"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_18fca
 
@@ -857,11 +1018,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 33
 
-        text: "100"
+        text: "3000.0"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_a85c0
 
@@ -873,11 +1054,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 36
 
-        text: "100"
+        text: "60.0"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_16b29
 
@@ -889,11 +1090,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 39
 
-        text: "100"
+        text: "0.01"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 2
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_cc444
 
@@ -905,11 +1126,31 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 42
 
-        text: "100"
+        text: "24.0"
         readOnly: false // Set readOnly: false if you like to make SGInfoBox Editable
 
-        onAccepted: {
-           console.log("Accepted:", text)
+        validator: DoubleValidator {
+            decimals: 1
+            bottom: 0.0
+        }
+
+        onEditingFinished: {
+            console.log("Accepted:", text)
+            platformInterface.commands.motor_params.update(
+                Number(cp_motor_params_hall_pol.checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_d3605
 
@@ -928,6 +1169,21 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
+            platformInterface.commands.motor_params.update(
+                Number(checked),
+                Number(cp_motor_params_jm.text),
+                Number(cp_motor_params_jm_load.text),
+                Number(cp_motor_params_ke.text),
+                Number(cp_motor_params_kv.text),
+                Number(cp_motor_params_kv_load.text),
+                Number(cp_motor_params_ls.text),
+                Number(cp_motor_params_max_rpm.text),
+                Number(cp_motor_params_min_rpm.text),
+                Number(cp_motor_params_pp.text),
+                Number(cp_motor_params_rated_rpm.text),
+                Number(cp_motor_params_rated_v.text),
+                Number(cp_motor_params_rs.text)  
+            )
         }
     } // end_7baa1
 
