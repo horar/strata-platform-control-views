@@ -16,34 +16,33 @@ UIBase { // start_uibase
     // Do this here instead of in PlatformInterface.qml because PIG overwrites values
     Component.onCompleted: {
         // Notifications
-        // ??
-        // plat
+        // actual_speed
+        platformInterface.notifications.actual_speed.caption = "Actual Speed (RPM)"
+        platformInterface.notifications.actual_speed.scales.index_0 = 10000
+        platformInterface.notifications.actual_speed.scales.index_1 = 0
+        platformInterface.notifications.actual_speed.scales.index_2 = 1000
+        platformInterface.notifications.actual_speed.states = [1]
+        platformInterface.notifications.actual_speed.value = 0.0
+        platformInterface.notifications.actual_speed.values = []
+        // board_temp
+        platformInterface.notifications.board_temp.caption = "MOSFET Temp (C)"
+        platformInterface.notifications.board_temp.scales.index_0 = 140
+        platformInterface.notifications.board_temp.scales.index_1 = 0
+        platformInterface.notifications.board_temp.scales.index_2 = 10
+        platformInterface.notifications.board_temp.states = [1]
+        platformInterface.notifications.board_temp.value = 0.0
+        platformInterface.notifications.board_temp.values = []
         // title
         platformInterface.notifications.title_caption.caption = "BLDC Motor Drive EVB for 30-60V 1200W Applications"
         // subtitle
         platformInterface.notifications.subtitle_caption.caption = "Part of the Motor Development Kit (MDK) Family"
-
-        // various ways to do this:
-        // platformInterface.commands.pwm_params.payload.dt = 1
-        // platformInterface.commands.pwm_params.set(99,99,99,99,99)
-        // platformInterface.notifications.actual_speed.caption = "asdf"
-
-        // Notifications
-        // actual_speed
-        // platformInterface.notifications.actual_speed.caption = "Actual Speed (RPM)"
-
-        // Commands
-        // pwm_params
-        // platformInterface.commands.pwm_params.set(10,20000,10,1,0) // alternative
-        // platformInterface.commands.pwm_params.payload.dt = 10
-        // platformInterface.commands.pwm_params.payload.freq = 20000
-        // platformInterface.commands.pwm_params.payload.min_ls = 10
-        // platformInterface.commands.pwm_params.payload.o_mode = 1
-        // platformInterface.commands.pwm_params.payload.tr_delay = 0
         
     }
 
     // UI objects
+
+    // ======================== General UI Setup and Titles ======================== //
+    
     LayoutText { // start_8695e
         id: b_title
         layoutInfo.uuid: "8695e"
@@ -150,6 +149,8 @@ UIBase { // start_uibase
         layoutInfo.yRows: 3
     } // end_ef0b6
 
+    // ======================== Gauges and Log ======================== //
+
     LayoutSGCircularGauge { // start_7b02e
         id: b_actual_speed
         layoutInfo.uuid: "7b02e"
@@ -158,12 +159,46 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 10
         layoutInfo.yRows: 3
 
-        unitText: "RPM"
-        minimumValue: 0
-        maximumValue: 10000
-        tickmarkStepSize: 1000
-        value: 7000
-
+        // units: extracted from caption between parentheses
+        unitText: platformInterface.notifications.actual_speed.caption.match(/\((.*)\)/)[1]
+        // states, scales, value, values: from combined notification
+        Connections {
+            target: platformInterface.notifications.actual_speed
+            onNotificationFinished: {
+                // states
+                // TBD, used to disable/enable/gray certain UI elements
+                // scales
+                b_actual_speed.maximumValue = platformInterface.notifications.actual_speed.scales.index_0
+                b_actual_speed.minimumValue = platformInterface.notifications.actual_speed.scales.index_1
+                b_actual_speed.tickmarkStepSize = platformInterface.notifications.actual_speed.scales.index_2
+                // value
+                b_actual_speed.value = platformInterface.notifications.actual_speed.value
+                // values
+                // TBD, used for array UI elements
+                // b_actual_speed.values = ???
+            }
+        }
+        // scales: scales specific notification
+        Connections {
+            target: platformInterface.notifications.actual_speed_scales
+            onNotificationFinished: {
+                b_actual_speed.maximumValue = platformInterface.notifications.actual_speed_scales.scales.index_0
+                b_actual_speed.minimumValue = platformInterface.notifications.actual_speed_scales.scales.index_1
+                b_actual_speed.tickmarkStepSize = platformInterface.notifications.actual_speed_scales.scales.index_2
+            }
+        }
+        // value: value specific notification
+        Connections {
+            target: platformInterface.notifications.actual_speed_value
+            onNotificationFinished: b_actual_speed.value = platformInterface.notifications.actual_speed_value.value
+        }
+        // values: values specific notification
+        Connections {
+            target: platformInterface.notifications.actual_speed_values
+            // TBD, used for array UI elements
+            // onNotificationFinished: b_actual_speed.values = ???
+        }
+        
         function lerpColor (color1, color2, x){
             if (Qt.colorEqual(color1, color2)){
                 return color1;
@@ -175,10 +210,32 @@ UIBase { // start_uibase
                     );
             }
         }
-
-        // TODO: actual_speed_caption
-
     } // end_7b02e
+
+    LayoutText { // start_18cff
+        id: b_actual_speed_caption
+        layoutInfo.uuid: "18cff"
+        layoutInfo.columnsWide: 4
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 13
+        layoutInfo.yRows: 16
+
+        text: platformInterface.notifications.actual_speed.caption
+        Connections {
+            target: platformInterface.notifications.actual_speed
+            onNotificationFinished: b_actual_speed_caption.text = platformInterface.notifications.actual_speed.caption
+        }
+        Connections {
+            target: platformInterface.notifications.actual_speed_caption
+            onNotificationFinished: b_actual_speed_caption.text = platformInterface.notifications.actual_speed_caption.caption
+        }
+
+        fontSizeMode: Text.Fit
+        font.pixelSize: 20
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_18cff
 
     LayoutSGCircularGauge { // start_116ab
         id: b_board_temp
@@ -188,11 +245,11 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 23
         layoutInfo.yRows: 7
 
-        unitText: "C"
-        minimumValue: 0
-        maximumValue: 140
-        tickmarkStepSize: 20
-        value: 23.0
+        unitText: platformInterface.notifications.board_temp.caption.match(/\((.*)\)/)[1]
+        minimumValue: platformInterface.notifications.board_temp.scales.index_1
+        maximumValue: platformInterface.notifications.board_temp.scales.index_0
+        tickmarkStepSize: platformInterface.notifications.board_temp.scales.index_2
+        value: platformInterface.notifications.board_temp.value
 
         function lerpColor (color1, color2, x){
             if (Qt.colorEqual(color1, color2)){
@@ -285,22 +342,6 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
         color: "#000000"
     } // end_f52c7
-
-    LayoutText { // start_18cff
-        id: b_actual_speed_caption
-        layoutInfo.uuid: "18cff"
-        layoutInfo.columnsWide: 4
-        layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 13
-        layoutInfo.yRows: 16
-
-        text: "Actual Speed (RPM)"
-        fontSizeMode: Text.Fit
-        font.pixelSize: 20
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        color: "#000000"
-    } // end_18cff
 
     LayoutText { // start_d490f
         id: b_board_temp_caption
