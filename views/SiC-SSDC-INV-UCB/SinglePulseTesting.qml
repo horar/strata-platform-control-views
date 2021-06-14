@@ -19,8 +19,6 @@ Item {
 
     property var t1_single: 0
     property var currentT1_singleCalc: ((dcLink*t1_single)/inductor).toFixed(0)
-    property var measuredCurrentSingle: platformInterface.measuredCurrentSingle
-    property var measuredVoltSingle: platformInterface.measuredVoltSingle
 
     Rectangle {
         id: images
@@ -67,7 +65,7 @@ Item {
                 }
             width: parent.width/10
             from: 0
-            to: 1000
+            to: 200
             value: 0
             stepSize: 1
             onValueChanged: t1_single = value
@@ -118,32 +116,6 @@ Item {
                 platformInterface.set_single.update(1)
             }
         }
-
-        Text{
-            id: measuredCurrentValue
-            text:"<b>Switch Current (measured): <b>"+ measuredCurrentSingle +" A"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: setParametersButton.top
-                topMargin: parent.height/6
-                left: singlePulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
-
-        Text{
-            id: measuredVoltDriverValue
-            text:"<b>DC Voltage (measured on driver): <b>"+ measuredVoltSingle +" V"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: measuredCurrentValue.top
-                topMargin: parent.height/6
-                left: singlePulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
 
     }
 }

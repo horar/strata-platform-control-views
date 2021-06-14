@@ -17,6 +17,8 @@ Rectangle {
 
     property var error_status: platformInterface.error.value
 
+    property bool dpt: false
+
     onError_statusChanged: {
         if  (error_status === 0) {}
             else {
@@ -97,6 +99,7 @@ Rectangle {
                 value: 0
             }
         }
+
 /*
         IconButton {
             id: brakeButton
@@ -146,7 +149,7 @@ Rectangle {
             iconColor: running ? "#db0909" : "#45e03a"
             toolTipText: "Start/stop motor"
 
-            property bool running: false
+            //property bool running: false
             property var speed: platformInterface.status_vi.a
             onSpeedChanged: {
                 if (speed < 5){
@@ -169,6 +172,19 @@ Rectangle {
                     else{settingsControl.stop()}
                 }
                 else{settingsControl.stop()}
+            }
+        }
+
+        IconButton {
+            id: dptButton
+            enabled: basicControl.motor_play === 0 //  DPT disabled when motor running
+            opacity: enabled ? 1 : .0
+            source: dpt ? "qrc:/image/double-pulse-test.png" : "qrc:/image/double-pulse-test.png"
+            iconColor: dpt ? "lightgreen" : "grey"
+            toolTipText: "Enable Pulse Test"
+
+            onClicked:  {
+            dpt = !dpt
             }
         }
 

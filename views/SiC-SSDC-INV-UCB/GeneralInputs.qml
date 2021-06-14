@@ -563,6 +563,73 @@ Item {
                     }
             }
 
+            SGAlignedLabel{
+                id: dcLinkLabel
+                target: dcLinkSlider
+                text:"<b>DC Link::<b>"
+                font.pixelSize: (parent.width + parent.height)/ 150
+                width: parent.width/10
+                anchors {
+                    top: parent.top
+                    topMargin: parent.height/30
+                    left: offsetTemp_1Label.right
+                    leftMargin: parent.width/10
+                    }
+
+            SGSlider {
+                id: dcLinkSlider
+                width: 2*parent.width
+                from: 0
+                to: 600
+                value: 0
+                stepSize: 1
+                onValueChanged: dcLink = value
+                live: true
+            }
+
+            Text{
+                id: dcLinkSliderValue
+                text:"V"
+                font.pixelSize: (parent.width + parent.height)/20
+                color: "black"
+                anchors.left: dcLinkSlider.right
+                anchors.verticalCenter: dcLinkSlider.top
+                }
+            }
+
+            SGAlignedLabel{
+                id: inductorLabel
+                target: inductorSlider
+                text:"<b>Inductor:<b>"
+                font.pixelSize: (parent.width + parent.height)/ 150
+                width: parent.width/10
+                anchors {
+                    top: dcLinkLabel.bottom
+                    topMargin: parent.height/30
+                    left: offsetTemp_1Label.right
+                    leftMargin: parent.width/10
+                    }
+
+            SGSlider {
+                id: inductorSlider
+                width: 2*parent.width
+                from: 0
+                to: 1000
+                value: platformInterface.status_vi.l
+                stepSize: 1
+                onValueChanged: inductor = value
+                live: true
+            }
+
+            Text{
+                id: inductorSliderValue
+                text:"µH"
+                font.pixelSize: (parent.width + parent.height)/150
+                color: "black"
+                anchors.left: inductorSlider.right
+                anchors.verticalCenter: inductorSlider.top
+                }
+            }
 
         }
 }

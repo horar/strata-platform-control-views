@@ -22,9 +22,6 @@ Item {
     property var t3_double: 0
     property var currentT1_doubleCalc: ((dcLink*t1_double)/inductor).toFixed(0)
     property var currentT3_doubleCalc: (((dcLink*t1_double)/inductor)+((dcLink*t3_double)/inductor)).toFixed(0)
-    property var measuredCurrentDouble: platformInterface.measuredCurrentDouble
-    property var measuredVoltDouble: platformInterface.measuredVoltDouble
-
 
     Rectangle {
         id: images
@@ -72,7 +69,7 @@ Item {
                 }
             width: parent.width/10
             from: 0
-            to: 1000
+            to: 200
             value: 0
             stepSize: 1
             onValueChanged: t1_double = value
@@ -103,7 +100,7 @@ Item {
                 }
             width: parent.width/10
             from: 0
-            to: 1000
+            to: 200
             value: 0
             stepSize: 1
             onValueChanged: t2_double = value
@@ -134,7 +131,7 @@ Item {
                 }
             width: parent.width/10
             from: 0
-            to: 1000
+            to: 200
             value: 0
             stepSize: 1
             onValueChanged: t3_double = value
@@ -199,30 +196,5 @@ Item {
             }
         }
 
-        Text{
-            id: measuredCurrentValue
-            text:"<b>Switch Current (measured): <b>"+ measuredCurrentDouble +" A"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: setParametersButton.top
-                topMargin: parent.height/8
-                left: doublePulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
-
-        Text{
-            id: measuredVoltDriverValue
-            text:"<b>DC Voltage (measured on driver): <b>"+ measuredVoltDouble +" V"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: measuredCurrentValue.top
-                topMargin: parent.height/10
-                left: doublePulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
     }
 }

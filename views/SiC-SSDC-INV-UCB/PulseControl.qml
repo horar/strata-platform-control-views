@@ -57,65 +57,32 @@ Rectangle {
         visible: true
     }
 
-        SGSlider {
-            id: dcLinkSlider
-            anchors {
-                top: parent.top
-                topMargin: parent.height/10
-                right: parent.right
-                rightMargin: (parent.width + parent.height)/100
-                }
-            width: parent.width/10
-            from: 0
-            to: 1000
-            value: platformInterface.status_vi.l
-            stepSize: 1
-            onValueChanged: dcLink = value
-            live: true
+    Text{
+        id: dcLinkSliderValue
+        text:"<b>DC Link: <b>"+ dcLink +" V"
+        font.pixelSize: (parent.width + parent.height)/150
+        color: "black"
+        anchors {
+            top: parent.top
+            topMargin: parent.height/10
+            left: switchDistributionImage.right
+            leftMargin: (parent.width + parent.height)/50
+            }
         }
 
-        Text{
-            id: dcLinkSliderValue
-            text:"<b>DC Link: <b>"+ dcLink +" V"
-            font.pixelSize: (parent.width + parent.height)/150
-            color: "black"
-            anchors {
-                top: parent.top
-                topMargin: parent.height/10
-                left: switchDistributionImage.right
-                leftMargin: (parent.width + parent.height)/50
-                }
+    Text{
+        id: inductorSliderValue
+        text:"<b>Inductor: <b>"+ inductor +" µH"
+        font.pixelSize: (parent.width + parent.height)/150
+        color: "black"
+        anchors {
+            top: dcLinkSliderValue.top
+            topMargin: parent.height/15
+            left: switchDistributionImage.right
+            leftMargin: (parent.width + parent.height)/50
             }
-
-        SGSlider {
-            id: inductorSlider
-            anchors {
-                top: dcLinkSliderValue.top
-                topMargin: parent.height/15
-                right: parent.right
-                rightMargin: (parent.width + parent.height)/100
-                }
-            width: parent.width/10
-            from: 0
-            to: 1000
-            value: platformInterface.status_vi.l
-            stepSize: 1
-            onValueChanged: inductor = value
-            live: true
         }
 
-        Text{
-            id: inductorSliderValue
-            text:"<b>Inductor: <b>"+ inductor +" µH"
-            font.pixelSize: (parent.width + parent.height)/150
-            color: "black"
-            anchors {
-                top: dcLinkSliderValue.top
-                topMargin: parent.height/15
-                left: switchDistributionImage.right
-                leftMargin: (parent.width + parent.height)/50
-                }
-            }
 
 
     SGAccordion {

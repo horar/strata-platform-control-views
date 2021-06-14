@@ -71,5 +71,6 @@
         <file>image/DPT_Set−up.png</file>
         <file>image/ShortCircuitMeasurement.png</file>
         <file>sgwidgets/SGAlignedLabel.qml</file>
+        <file>image/double-pulse-test.png</file>
     </qresource>
 </RCC>

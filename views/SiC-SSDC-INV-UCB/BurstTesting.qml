@@ -17,13 +17,10 @@ Item {
 
     property bool debugLayout: false
 
-    property var pwm: 0
+    property var pwm: 1
     property var duty: 0
     property var pulses: 0
-    property var moduleTemperature: platformInterface.moduleTemperature
-    property var peakTemperature: platformInterface.peakTemperature
-    property var measuredCurrentBurst: platformInterface.measuredCurrentBurst
-    property var measuredVoltBurst: platformInterface.measuredVoltBurst
+    property var currentMaxCalc: ((dcLink*(duty/100)*pulses)/((inductor/1000000)*pwm)).toFixed(0)
 
     Rectangle {
         id: images
@@ -70,7 +67,7 @@ Item {
                 }
             width: parent.width/10
             from: 0
-            to: 10000
+            to: 20000
             value: 0
             stepSize: 1
             onValueChanged: pwm = value
@@ -132,7 +129,7 @@ Item {
                 }
             width: parent.width/10
             from: 0
-            to: 10000
+            to: 100
             value: 0
             stepSize: 1
             onValueChanged: pulses = value
@@ -154,35 +151,23 @@ Item {
             }
 
         Text{
-            id: moduleTemperatureValue
-            text:"<b>Module temperature: <b>"+ moduleTemperature +" °C"
+            id: calculatedCurrentValue
+            text:"<b>Switch Current Max. (calculated): <b>"+ currentMaxCalc +" A"
             font.pixelSize: (parent.width + parent.height)/110
             color: "black"
             anchors {
                 top: pulsesSliderValue.top
-                topMargin: parent.height/7
+                topMargin: parent.height/6
                 left: burstPulseTestingImage.right
                 leftMargin: (parent.width + parent.height)/25
                 }
             }
 
-        Text{
-            id: peakTemperatureValue
-            text:"<b>Peak temperature: <b>"+ peakTemperature +" °C"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: moduleTemperatureValue.top
-                topMargin: parent.height/8
-                left: burstPulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
 
         Button {
             id:setParametersButton
             anchors {
-                top : peakTemperatureValue.top
+                top : calculatedCurrentValue.top
                 topMargin : parent.height/10
                 left: burstPulseTestingImage.right
                 leftMargin: (parent.width + parent.height)/25
@@ -197,30 +182,5 @@ Item {
             }
         }
 
-        Text{
-            id: measuredCurrentValue
-            text:"<b>Switch Current (measured): <b>"+ measuredCurrentBurst +" A"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: setParametersButton.top
-                topMargin: parent.height/8
-                left: burstPulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
-
-        Text{
-            id: measuredVoltDriverValue
-            text:"<b>DC Voltage (measured on driver): <b>"+ measuredVoltBurst +" V"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: measuredCurrentValue.top
-                topMargin: parent.height/10
-                left: burstPulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
     }
 }

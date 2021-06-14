@@ -18,8 +18,6 @@ Item {
     property bool debugLayout: false
 
     property var t1_short: 0
-    property var measuredCurrentShort: platformInterface.measuredCurrentShort
-    property var measuredVoltShort: platformInterface.measuredVoltShort
 
     Rectangle {
         id: images
@@ -67,7 +65,7 @@ Item {
                 }
             width: parent.width/10
             from: 0
-            to: 1000
+            to: 50
             value: 0
             stepSize: 1
             onValueChanged: t1_short = value
@@ -105,32 +103,6 @@ Item {
                 platformInterface.set_short.update(1)
             }
         }
-
-        Text{
-            id: measuredCurrentValue
-            text:"<b>Switch Current (measured): <b>"+ measuredCurrentShort +" A"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: setParametersButton.top
-                topMargin: parent.height/6
-                left: singlePulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
-
-        Text{
-            id: measuredVoltDriverValue
-            text:"<b>DC Voltage (measured on driver): <b>"+ measuredVoltShort +" V"
-            font.pixelSize: (parent.width + parent.height)/110
-            color: "black"
-            anchors {
-                top: measuredCurrentValue.top
-                topMargin: parent.height/6
-                left: singlePulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            }
 
     }
 }

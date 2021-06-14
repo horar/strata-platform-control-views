@@ -24,6 +24,8 @@ Rectangle {
     anchors.fill: parent
 
     property alias class_id: multiplePlatform.class_id
+    property bool dpt: sideBar.dpt
+    property var motor_play: basicControl.motor_play
 
     PlatformInterface {
         id: platformInterface
@@ -74,7 +76,7 @@ Rectangle {
                 advancedControl.visible = false
                 settingsControl.visible = false
                 exportControl.visible = false
-                pulseControl.visible = false
+                //pulseControl.visible = false
             }
         }
 
@@ -86,7 +88,7 @@ Rectangle {
                 advancedControl.visible = true
                 settingsControl.visible = false
                 exportControl.visible = false
-                pulseControl.visible = false
+                //pulseControl.visible = false
             }
         }
 
@@ -98,7 +100,7 @@ Rectangle {
                 advancedControl.visible = false
                 settingsControl.visible = true
                 exportControl.visible = false
-                pulseControl.visible = false
+                //pulseControl.visible = false
             }
         }
 
@@ -110,20 +112,21 @@ Rectangle {
                 advancedControl.visible = false
                 settingsControl.visible = false
                 exportControl.visible = true
-                pulseControl.visible = false
+                //pulseControl.visible = false
             }
         }
 
         TabButton {
             id: pulseButton
-            text: qsTr("Pulse Testing")
+            enabled: if (dpt === false || motor_play === 1 ){false} else {true}
+            text: if (dpt === true && motor_play === 0 ){qsTr("Pulse Testing")} else {}
             onClicked: {
                 basicControl.visible = false
                 advancedControl.visible = false
                 settingsControl.visible = false
                 exportControl.visible = false
-                pulseControl.visible = true
-            }
+                //pulseControl.visible = true
+             }
         }
 
     }
@@ -194,11 +197,11 @@ Rectangle {
         Rectangle {
             width: parent.width
             height: parent.height
-            color: "light gray"
+            color: "white"
 
             PulseControl {
                 id: pulseControl
-                visible: false
+                visible: if (dpt === false || motor_play === 1 ){false} else {true}
                 width: parent.width
                 height: parent.height
             }
