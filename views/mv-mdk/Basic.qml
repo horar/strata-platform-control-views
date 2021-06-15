@@ -8,14 +8,14 @@ UIBase { // start_uibase
     columnCount: 30
     rowCount: 25
 
-    // Objects shared between QML files
-    // property alias b_title: title
-    // property alias b_subtitle: subtitle
-
     // Setup default variables
     // Do this here instead of in PlatformInterface.qml because PIG overwrites values
     Component.onCompleted: {
         // Notifications
+        // title
+        platformInterface.notifications.title.caption = "BLDC Motor Drive EVB for 30-60V 1200W Applications"
+        // subtitle
+        platformInterface.notifications.subtitle.caption = "Part of the Motor Development Kit (MDK) Family"
         // actual_speed
         platformInterface.notifications.actual_speed.caption = "Actual Speed (RPM)"
         platformInterface.notifications.actual_speed.scales.index_0 = 10000
@@ -32,10 +32,17 @@ UIBase { // start_uibase
         platformInterface.notifications.board_temp.states = [1]
         platformInterface.notifications.board_temp.value = 0.0
         platformInterface.notifications.board_temp.values = []
-        // title
-        platformInterface.notifications.title_caption.caption = "BLDC Motor Drive EVB for 30-60V 1200W Applications"
-        // subtitle
-        platformInterface.notifications.subtitle_caption.caption = "Part of the Motor Development Kit (MDK) Family"
+        // input_voltage
+        platformInterface.notifications.input_voltage.caption = "Input Voltage (V)"
+        platformInterface.notifications.input_voltage.scales.index_0 = 100
+        platformInterface.notifications.input_voltage.scales.index_1 = 0
+        platformInterface.notifications.input_voltage.scales.index_2 = 10
+        platformInterface.notifications.input_voltage.states = [1]
+        platformInterface.notifications.input_voltage.value = 0.0
+        platformInterface.notifications.input_voltage.values = []
+        // status_log
+        platformInterface.notifications.status_log.caption = "Status Log"
+        platformInterface.notifications.status_log.value = ""    
         
     }
 
@@ -51,7 +58,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 0
 
-        text: platformInterface.notifications.title_caption.caption
+        text: platformInterface.notifications.title.caption
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
@@ -67,7 +74,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 1
 
-        text: platformInterface.notifications.subtitle_caption.caption
+        text: platformInterface.notifications.subtitle.caption
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
@@ -159,45 +166,25 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 10
         layoutInfo.yRows: 3
 
+        // Some test notifications for a dynamic payload
+        // If payload objects are missing it seems to just maintain the last value
+        // {"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed (RPM)","scales":[10000,0,1000],"states":[1],"value":0.0,"values":[]}}}
+        // {"notification":{"value":"actual_speed","payload":{"value":0.0}}}
+        // {"notification":{"value":"actual_speed","payload":{"scales":[10000,0,1000]}}}
+        // {"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed (RPM)"}}}
+        
         // units: extracted from caption between parentheses
         unitText: platformInterface.notifications.actual_speed.caption.match(/\((.*)\)/)[1]
-        // states, scales, value, values: from combined notification
-        Connections {
-            target: platformInterface.notifications.actual_speed
-            onNotificationFinished: {
-                // states
-                // TBD, used to disable/enable/gray certain UI elements
-                // scales
-                b_actual_speed.maximumValue = platformInterface.notifications.actual_speed.scales.index_0
-                b_actual_speed.minimumValue = platformInterface.notifications.actual_speed.scales.index_1
-                b_actual_speed.tickmarkStepSize = platformInterface.notifications.actual_speed.scales.index_2
-                // value
-                b_actual_speed.value = platformInterface.notifications.actual_speed.value
-                // values
-                // TBD, used for array UI elements
-                // b_actual_speed.values = ???
-            }
-        }
-        // scales: scales specific notification
-        Connections {
-            target: platformInterface.notifications.actual_speed_scales
-            onNotificationFinished: {
-                b_actual_speed.maximumValue = platformInterface.notifications.actual_speed_scales.scales.index_0
-                b_actual_speed.minimumValue = platformInterface.notifications.actual_speed_scales.scales.index_1
-                b_actual_speed.tickmarkStepSize = platformInterface.notifications.actual_speed_scales.scales.index_2
-            }
-        }
-        // value: value specific notification
-        Connections {
-            target: platformInterface.notifications.actual_speed_value
-            onNotificationFinished: b_actual_speed.value = platformInterface.notifications.actual_speed_value.value
-        }
-        // values: values specific notification
-        Connections {
-            target: platformInterface.notifications.actual_speed_values
-            // TBD, used for array UI elements
-            // onNotificationFinished: b_actual_speed.values = ???
-        }
+        // states
+        // TBD or NA, used to disable/enable/gray certain UI elements
+        // scales
+        maximumValue: platformInterface.notifications.actual_speed.scales.index_0
+        minimumValue: platformInterface.notifications.actual_speed.scales.index_1
+        tickmarkStepSize: platformInterface.notifications.actual_speed.scales.index_2
+        // value
+        value: platformInterface.notifications.actual_speed.value
+        // values
+        // TBD or NA, used for array UI elements
         
         function lerpColor (color1, color2, x){
             if (Qt.colorEqual(color1, color2)){
@@ -221,14 +208,6 @@ UIBase { // start_uibase
         layoutInfo.yRows: 16
 
         text: platformInterface.notifications.actual_speed.caption
-        Connections {
-            target: platformInterface.notifications.actual_speed
-            onNotificationFinished: b_actual_speed_caption.text = platformInterface.notifications.actual_speed.caption
-        }
-        Connections {
-            target: platformInterface.notifications.actual_speed_caption
-            onNotificationFinished: b_actual_speed_caption.text = platformInterface.notifications.actual_speed_caption.caption
-        }
 
         fontSizeMode: Text.Fit
         font.pixelSize: 20
@@ -245,11 +224,25 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 23
         layoutInfo.yRows: 7
 
+        // Some test notifications for a dynamic payload
+        // If payload objects are missing it seems to just maintain the last value
+        // {"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp (C)","scales":[140,0,10],"states":[1],"value":0.0,"values":[]}}}
+        // {"notification":{"value":"board_temp","payload":{"value":0.0}}}
+        // {"notification":{"value":"board_temp","payload":{"scales":[140,0,10]}}}
+        // {"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp (C)"}}}
+
+        // units: extracted from caption between parentheses
         unitText: platformInterface.notifications.board_temp.caption.match(/\((.*)\)/)[1]
-        minimumValue: platformInterface.notifications.board_temp.scales.index_1
+        // states
+        // TBD or NA, used to disable/enable/gray certain UI elements
+        // scales
         maximumValue: platformInterface.notifications.board_temp.scales.index_0
+        minimumValue: platformInterface.notifications.board_temp.scales.index_1
         tickmarkStepSize: platformInterface.notifications.board_temp.scales.index_2
+        // value
         value: platformInterface.notifications.board_temp.value
+        // values
+        // TBD or NA, used for array UI elements
 
         function lerpColor (color1, color2, x){
             if (Qt.colorEqual(color1, color2)){
@@ -262,86 +255,7 @@ UIBase { // start_uibase
                     );
             }
         }
-
-        // TODO: board_temp_caption
-
     } // end_116ab
-
-    LayoutSGCircularGauge { // start_b06c4
-        id: b_input_voltage
-        layoutInfo.uuid: "b06c4"
-        layoutInfo.columnsWide: 5
-        layoutInfo.rowsTall: 9
-        layoutInfo.xColumns: 2
-        layoutInfo.yRows: 7
-
-        unitText: "V"
-        minimumValue: 0
-        maximumValue: 100
-        tickmarkStepSize: 10
-        value: 48
-
-        function lerpColor (color1, color2, x){
-            if (Qt.colorEqual(color1, color2)){
-                return color1;
-            } else {
-                return Qt.hsva(
-                    color1.hsvHue * (1 +  x) + color2.hsvHue * x,
-                    color1.hsvSaturation * (1 + x) + color2.hsvSaturation * x,
-                    color1.hsvValue * (1 + x) + color2.hsvValue * x, 1
-                    );
-            }
-        }
-
-        // TODO: input_voltage_caption
-
-    } // end_b06c4
-
-    LayoutContainer { // start_abcde
-        id: b_status_log
-        layoutInfo.uuid: "abcde"
-        layoutInfo.columnsWide: 28
-        layoutInfo.rowsTall: 5
-        layoutInfo.xColumns: 1
-        layoutInfo.yRows: 19
-        contentItem: SGStatusLogBox {
-            title: "Status Log"
-            Component.onCompleted: {
-                // for (let i = 0; i < 10; i++){
-                //     append("Message " + i)
-                // }
-                append("Thu, 03 Jun 2021 01:04:05: Motor was started with target speed of 1234 RPM")
-                append("Thu, 03 Jun 2021 01:04:05: Motor brake was engaged")
-                append("Thu, 03 Jun 2021 01:04:05: Detected short on motor output windings")
-                append("Thu, 03 Jun 2021 01:04:05: Over current event occurred")
-                append("Thu, 03 Jun 2021 01:04:05: Motor was started with target speed of 1234 RPM")
-                append("Thu, 03 Jun 2021 01:04:05: Motor brake was engaged")
-                append("Thu, 03 Jun 2021 01:04:05: Detected short on motor output windings")
-                append("Thu, 03 Jun 2021 01:04:05: Over current event occurred")
-                append("Thu, 03 Jun 2021 01:04:05: Motor was started with target speed of 1234 RPM")
-                append("Thu, 03 Jun 2021 01:04:05: Motor brake was engaged")
-                append("Thu, 03 Jun 2021 01:04:05: Detected short on motor output windings")
-                append("Thu, 03 Jun 2021 01:04:05: Over current event occurred")
-            }
-        }
-    } // end_abcde
-
-
-    LayoutText { // start_f52c7
-        id: b_input_voltage_caption
-        layoutInfo.uuid: "f52c7"
-        layoutInfo.columnsWide: 5
-        layoutInfo.rowsTall: 1
-        layoutInfo.xColumns: 2
-        layoutInfo.yRows: 15
-
-        text: "Input Voltage (V)"
-        fontSizeMode: Text.Fit
-        font.pixelSize: 20
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        color: "#000000"
-    } // end_f52c7
 
     LayoutText { // start_d490f
         id: b_board_temp_caption
@@ -351,11 +265,98 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 23
         layoutInfo.yRows: 15
 
-        text: "MOSFET Temp (C)"
+        text: platformInterface.notifications.board_temp.caption
+
         fontSizeMode: Text.Fit
         font.pixelSize: 20
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         color: "#000000"
     } // end_d490f
+
+    LayoutSGCircularGauge { // start_b06c4
+        id: b_input_voltage
+        layoutInfo.uuid: "b06c4"
+        layoutInfo.columnsWide: 5
+        layoutInfo.rowsTall: 9
+        layoutInfo.xColumns: 2
+        layoutInfo.yRows: 7
+
+        // Some test notifications for a dynamic payload
+        // If payload objects are missing it seems to just maintain the last value
+        // {"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage (V)","scales":[100,0,10],"states":[1],"value":0.0,"values":[]}}}
+        // {"notification":{"value":"input_voltage","payload":{"value":0.0}}}
+        // {"notification":{"value":"input_voltage","payload":{"scales":[100,0,10]}}}
+        // {"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage (V)"}}}
+        
+        // units: extracted from caption between parentheses
+        unitText: platformInterface.notifications.input_voltage.caption.match(/\((.*)\)/)[1]
+        // states
+        // TBD or NA, used to disable/enable/gray certain UI elements
+        // scales
+        maximumValue: platformInterface.notifications.input_voltage.scales.index_0
+        minimumValue: platformInterface.notifications.input_voltage.scales.index_1
+        tickmarkStepSize: platformInterface.notifications.input_voltage.scales.index_2
+        // value
+        value: platformInterface.notifications.input_voltage.value
+        // values
+        // TBD or NA, used for array UI elements
+
+        function lerpColor (color1, color2, x){
+            if (Qt.colorEqual(color1, color2)){
+                return color1;
+            } else {
+                return Qt.hsva(
+                    color1.hsvHue * (1 +  x) + color2.hsvHue * x,
+                    color1.hsvSaturation * (1 + x) + color2.hsvSaturation * x,
+                    color1.hsvValue * (1 + x) + color2.hsvValue * x, 1
+                    );
+            }
+        }
+    } // end_b06c4
+
+    LayoutText { // start_f52c7
+        id: b_input_voltage_caption
+        layoutInfo.uuid: "f52c7"
+        layoutInfo.columnsWide: 5
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 2
+        layoutInfo.yRows: 15
+
+        text: platformInterface.notifications.input_voltage.caption
+
+        fontSizeMode: Text.Fit
+        font.pixelSize: 20
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_f52c7
+
+    LayoutContainer { // start_abcde
+        id: b_status_log
+        layoutInfo.uuid: "abcde"
+        layoutInfo.columnsWide: 28
+        layoutInfo.rowsTall: 5
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 19
+
+        contentItem: SGStatusLogBox {
+            id: b_status_log_box
+            title: platformInterface.notifications.status_log.caption
+
+            Connections {
+                target: platformInterface.notifications.status_log
+                // Create status log message in the format of "hh:mm:ss:ms: Error message from status log notification"
+                onNotificationFinished: {
+                    var status_log_message = ""
+                    var d = new Date()
+                    var time_hhmmss = d.toTimeString().split(' ')[0] // hh:mm:ss format
+                    var time_ms = String(d.getMilliseconds()).padStart(3, '0') // three digits of ms with zeros padded in front
+                    status_log_message = time_hhmmss + ":" + time_ms + ": " + platformInterface.notifications.status_log.value
+                    b_status_log_box.append(status_log_message)
+                }
+            }
+        }
+    } // end_abcde
+
 } // end_uibase

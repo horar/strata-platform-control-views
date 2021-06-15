@@ -24,7 +24,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 0
 
-        text: platformInterface.notifications.title_caption.caption
+        text: platformInterface.notifications.title.caption
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
@@ -40,7 +40,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 2
 
-        text: platformInterface.notifications.subtitle_caption.caption
+        text: platformInterface.notifications.subtitle.caption
         fontSizeMode: Text.Fit
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
