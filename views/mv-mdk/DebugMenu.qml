@@ -37,17 +37,17 @@ Rectangle {
                 {"cmd":"acceleration","payload":{"value":"double"}},
             ],
             "notifications": [
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"double","values":"array-dynamic"},"value":"actual_speed"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"double","values":"array-dynamic"},"value":"target_speed"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"double","values":"array-dynamic"},"value":"acceleration"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"double","values":"array-dynamic"},"value":"board_temp"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"double","values":"array-dynamic"},"value":"input_voltage"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"string","values":"array-dynamic"},"value":"title"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"string","values":"array-dynamic"},"value":"subtitle"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"bool","values":"array-dynamic"},"value":"warning_1"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"bool","values":"array-dynamic"},"value":"warning_2"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"bool","values":"array-dynamic"},"value":"warning_3"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","value":"string","values":"array-dynamic"},"value":"status_log"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"actual_speed"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"target_speed"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"acceleration"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"board_temp"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"input_voltage"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"string","values":"array-dynamic"},"value":"title"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"string","values":"array-dynamic"},"value":"subtitle"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_1"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_2"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_3"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"string","values":"array-dynamic"},"value":"status_log"},
             ]
         })
 

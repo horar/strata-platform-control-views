@@ -12,6 +12,7 @@ Popup {
     property string unit
     property alias from: targetSlider.from
     property alias to: targetSlider.to
+    property alias stepSize: targetSlider.stepSize
     property alias title: title.text
 
     Connections {

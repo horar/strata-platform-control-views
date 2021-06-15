@@ -8,7 +8,7 @@ UIBase { // start_uibase
     columnCount: 30
     rowCount: 25
 
-    // Setup default variables
+    // Setup default notification values
     // Do this here instead of in PlatformInterface.qml because PIG overwrites values
     Component.onCompleted: {
         // Notifications
@@ -17,29 +17,32 @@ UIBase { // start_uibase
         // subtitle
         platformInterface.notifications.subtitle.caption = "Part of the Motor Development Kit (MDK) Family"
         // actual_speed
-        platformInterface.notifications.actual_speed.caption = "Actual Speed (RPM)"
+        platformInterface.notifications.actual_speed.caption = "Actual Speed"
         platformInterface.notifications.actual_speed.scales.index_0 = 10000
         platformInterface.notifications.actual_speed.scales.index_1 = 0
         platformInterface.notifications.actual_speed.scales.index_2 = 1000
         platformInterface.notifications.actual_speed.states = [1]
         platformInterface.notifications.actual_speed.value = 0.0
         platformInterface.notifications.actual_speed.values = []
+        platformInterface.notifications.actual_speed.unit = "RPM"
         // board_temp
-        platformInterface.notifications.board_temp.caption = "MOSFET Temp (C)"
+        platformInterface.notifications.board_temp.caption = "MOSFET Temp"
         platformInterface.notifications.board_temp.scales.index_0 = 140
         platformInterface.notifications.board_temp.scales.index_1 = 0
         platformInterface.notifications.board_temp.scales.index_2 = 10
         platformInterface.notifications.board_temp.states = [1]
         platformInterface.notifications.board_temp.value = 0.0
         platformInterface.notifications.board_temp.values = []
+        platformInterface.notifications.board_temp.unit = "C"
         // input_voltage
-        platformInterface.notifications.input_voltage.caption = "Input Voltage (V)"
+        platformInterface.notifications.input_voltage.caption = "Input Voltage"
         platformInterface.notifications.input_voltage.scales.index_0 = 100
         platformInterface.notifications.input_voltage.scales.index_1 = 0
         platformInterface.notifications.input_voltage.scales.index_2 = 10
         platformInterface.notifications.input_voltage.states = [1]
         platformInterface.notifications.input_voltage.value = 0.0
         platformInterface.notifications.input_voltage.values = []
+        platformInterface.notifications.input_voltage.unit = "V"
         // status_log
         platformInterface.notifications.status_log.caption = "Status Log"
         platformInterface.notifications.status_log.value = ""    
@@ -168,13 +171,14 @@ UIBase { // start_uibase
 
         // Some test notifications for a dynamic payload
         // If payload objects are missing it seems to just maintain the last value
-        // {"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed (RPM)","scales":[10000,0,1000],"states":[1],"value":0.0,"values":[]}}}
+        // {"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed","scales":[10000,0,1000],"states":[1],"value":0.0,"values":[],"unit":"RPM"}}}
         // {"notification":{"value":"actual_speed","payload":{"value":0.0}}}
         // {"notification":{"value":"actual_speed","payload":{"scales":[10000,0,1000]}}}
-        // {"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed (RPM)"}}}
+        // {"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed"}}}
+        // {"notification":{"value":"actual_speed","payload":{"unit":"RPM"}}}
         
         // units: extracted from caption between parentheses
-        unitText: platformInterface.notifications.actual_speed.caption.match(/\((.*)\)/)[1]
+        unitText: platformInterface.notifications.actual_speed.unit
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
@@ -226,13 +230,14 @@ UIBase { // start_uibase
 
         // Some test notifications for a dynamic payload
         // If payload objects are missing it seems to just maintain the last value
-        // {"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp (C)","scales":[140,0,10],"states":[1],"value":0.0,"values":[]}}}
+        // {"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp","scales":[140,0,10],"states":[1],"value":0.0,"values":[],"unit":"C"}}}
         // {"notification":{"value":"board_temp","payload":{"value":0.0}}}
         // {"notification":{"value":"board_temp","payload":{"scales":[140,0,10]}}}
-        // {"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp (C)"}}}
+        // {"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp"}}}
+        // {"notification":{"value":"board_temp","payload":{"unit":"C"}}}
 
         // units: extracted from caption between parentheses
-        unitText: platformInterface.notifications.board_temp.caption.match(/\((.*)\)/)[1]
+        unitText: platformInterface.notifications.board_temp.unit
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
@@ -284,13 +289,14 @@ UIBase { // start_uibase
 
         // Some test notifications for a dynamic payload
         // If payload objects are missing it seems to just maintain the last value
-        // {"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage (V)","scales":[100,0,10],"states":[1],"value":0.0,"values":[]}}}
+        // {"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage","scales":[100,0,10],"states":[1],"value":0.0,"values":[],"unit":"V"}}}
         // {"notification":{"value":"input_voltage","payload":{"value":0.0}}}
         // {"notification":{"value":"input_voltage","payload":{"scales":[100,0,10]}}}
-        // {"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage (V)"}}}
+        // {"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage"}}}
+        // {"notification":{"value":"input_voltage","payload":{"unit":"V"}}}
         
         // units: extracted from caption between parentheses
-        unitText: platformInterface.notifications.input_voltage.caption.match(/\((.*)\)/)[1]
+        unitText: platformInterface.notifications.input_voltage.unit
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
