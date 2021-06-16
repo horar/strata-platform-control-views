@@ -70,63 +70,37 @@ Rectangle {
 
         TabButton {
             id: basicButton
-            text: qsTr("Basic")
-            onClicked: {
-                basicControl.visible = true
-                advancedControl.visible = false
-                settingsControl.visible = false
-                exportControl.visible = false
-                //pulseControl.visible = false
-            }
+            enabled: dpt ? false : true
+            opacity: !dpt ? 1 : 0
+            text: if (dpt === false){qsTr("Basic")} else {}
         }
 
         TabButton {
             id: advancedButton
-            text: qsTr("Advanced")
-            onClicked: {
-                basicControl.visible = false
-                advancedControl.visible = true
-                settingsControl.visible = false
-                exportControl.visible = false
-                //pulseControl.visible = false
-            }
+            enabled: dpt ? false : true
+            opacity: !dpt ? 1 : 0
+            text: if (dpt === false){qsTr("Advanced")} else {}
         }
 
         TabButton {
             id: settingsButton
-            text: qsTr("Motor Settings")
-            onClicked: {
-                basicControl.visible = false
-                advancedControl.visible = false
-                settingsControl.visible = true
-                exportControl.visible = false
-                //pulseControl.visible = false
-            }
+            enabled: dpt ? false : true
+            opacity: !dpt ? 1 : 0
+            text: if (dpt === false){qsTr("Motor Settings")} else {}
         }
 
         TabButton {
             id: exportButton
-            text: qsTr("Data Logger / Export")
-            onClicked: {
-                basicControl.visible = false
-                advancedControl.visible = false
-                settingsControl.visible = false
-                exportControl.visible = true
-                //pulseControl.visible = false
-            }
+            enabled: dpt ? false : true
+            opacity: !dpt ? 1 : 0
+            text: if (dpt === false){qsTr("Data Logger / Export")} else {}
         }
 
         TabButton {
             id: pulseButton
-            enabled: if (dpt === false || motor_play === 1 ){false} else {true}
+            enabled: (dpt === false || motor_play === 1 ) ? false : true
+            opacity: dpt ? 1 : 0
             text: if (dpt === true && motor_play === 0 ){qsTr("Pulse Testing")} else {}
-            onClicked: {
-                basicControl.visible = false
-                advancedControl.visible = false
-                settingsControl.visible = false
-                exportControl.visible = false
-                //pulseControl.visible = true
-             }
         }
 
     }
@@ -146,10 +120,11 @@ Rectangle {
         Rectangle {
             width: parent.width
             height: parent.height
+            color: "white"
 
             BasicControl {
                 id: basicControl
-                visible: true
+                visible: dpt ? false : true
                 width: parent.width
                 height: parent.height
             }
@@ -158,11 +133,11 @@ Rectangle {
         Rectangle {
             width: parent.width
             height: parent.height
-            color: "light gray"
+            color: "white"
 
             AdvancedControl {
                 id: advancedControl
-                visible: false
+                visible: dpt ? false : true
                 width: parent.width
                 height: parent.height
             }
@@ -171,11 +146,11 @@ Rectangle {
         Rectangle {
             width: parent.width
             height: parent.height
-            color: "light gray"
+            color: "white"
 
             SettingsControl {
                 id: settingsControl
-                visible: false
+                visible: dpt ? false : true
                 width: parent.width
                 height: parent.height
             }
@@ -184,11 +159,11 @@ Rectangle {
         Rectangle {
             width: parent.width
             height: parent.height
-            color: "light gray"
+            color: "white"
 
             ExportControl {
                 id: exportControl
-                visible: false
+                visible: dpt ? false : true
                 width: parent.width
                 height: parent.height
             }
@@ -201,7 +176,7 @@ Rectangle {
 
             PulseControl {
                 id: pulseControl
-                visible: if (dpt === false || motor_play === 1 ){false} else {true}
+                visible: (dpt === false || motor_play === 1 ) ? false : true
                 width: parent.width
                 height: parent.height
             }

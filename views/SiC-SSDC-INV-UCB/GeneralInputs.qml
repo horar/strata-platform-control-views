@@ -46,7 +46,7 @@ Item {
                 target: gainVolt_3Slider
                 text:"<b>Gain Voltage 3:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: parent.top
                     topMargin: parent.height/30
@@ -71,7 +71,7 @@ Item {
                 target: offsetVolt_3Slider
                 text:"<b>Offset Voltage 3:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainVolt_3Label.bottom
                     topMargin: parent.height/30
@@ -92,7 +92,7 @@ Item {
                 Text{
                     id: offsetVolt_3SliderUnit
                     text:"V"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetVolt_3Slider.right
                     anchors.verticalCenter: offsetVolt_3Slider.top
@@ -104,7 +104,7 @@ Item {
                 target: gainCurrent_3Slider
                 text:"<b>Gain Current 3:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: offsetVolt_3Label.bottom
                     topMargin: parent.height/30
@@ -129,7 +129,7 @@ Item {
                 target: offsetCurrent_3Slider
                 text:"<b>Offset Current 3:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainCurrent_3Label.bottom
                     topMargin: parent.height/30
@@ -150,7 +150,7 @@ Item {
                 Text{
                     id: offsetCurrent_3SliderUnit
                     text:"A"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetCurrent_3Slider.right
                     anchors.verticalCenter: offsetCurrent_3Slider.top
@@ -162,7 +162,7 @@ Item {
                 target: gainTemp_3Slider
                 text:"<b>Gain Temperature 3:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: offsetCurrent_3Label.bottom
                     topMargin: parent.height/30
@@ -187,7 +187,7 @@ Item {
                 target: offsetTemp_3Slider
                 text:"<b>Offset Temperature 3:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainTemp_3Label.bottom
                     topMargin: parent.height/30
@@ -208,7 +208,7 @@ Item {
                 Text{
                     id: offsetTemp_3SliderUnit
                     text:"°C"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetTemp_3Slider.right
                     anchors.verticalCenter: offsetTemp_3Slider.top
@@ -220,7 +220,7 @@ Item {
                 target: gainVolt_2Slider
                 text:"<b>Gain Voltage 2:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: parent.top
                     topMargin: parent.height/30
@@ -245,7 +245,7 @@ Item {
                 target: offsetVolt_2Slider
                 text:"<b>Offset Voltage 2:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainVolt_2Label.bottom
                     topMargin: parent.height/30
@@ -266,7 +266,7 @@ Item {
                 Text{
                     id: offsetVolt_2SliderUnit
                     text:"V"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetVolt_2Slider.right
                     anchors.verticalCenter: offsetVolt_2Slider.top
@@ -278,7 +278,7 @@ Item {
                 target: gainCurrent_2Slider
                 text:"<b>Gain Current 2:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: offsetVolt_2Label.bottom
                     topMargin: parent.height/30
@@ -303,7 +303,7 @@ Item {
                 target: offsetCurrent_2Slider
                 text:"<b>Offset Current 2:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainCurrent_2Label.bottom
                     topMargin: parent.height/30
@@ -324,7 +324,7 @@ Item {
                 Text{
                     id: offsetCurrent_2SliderUnit
                     text:"A"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetCurrent_2Slider.right
                     anchors.verticalCenter: offsetCurrent_2Slider.top
@@ -336,7 +336,7 @@ Item {
                 target: gainTemp_2Slider
                 text:"<b>Gain Temperature 2:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: offsetCurrent_2Label.bottom
                     topMargin: parent.height/30
@@ -361,7 +361,7 @@ Item {
                 target: offsetTemp_2Slider
                 text:"<b>Offset Temperature 2:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainTemp_2Label.bottom
                     topMargin: parent.height/30
@@ -382,7 +382,7 @@ Item {
                 Text{
                     id: offsetTemp_2SliderUnit
                     text:"°C"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetTemp_2Slider.right
                     anchors.verticalCenter: offsetTemp_2Slider.top
@@ -394,7 +394,7 @@ Item {
                 target: gainVolt_1Slider
                 text:"<b>Gain Voltage 1:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: parent.top
                     topMargin: parent.height/30
@@ -419,7 +419,7 @@ Item {
                 target: offsetVolt_1Slider
                 text:"<b>Offset Voltage 1:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainVolt_1Label.bottom
                     topMargin: parent.height/30
@@ -440,7 +440,7 @@ Item {
                 Text{
                     id: offsetVolt_1SliderUnit
                     text:"V"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetVolt_1Slider.right
                     anchors.verticalCenter: offsetVolt_1Slider.top
@@ -452,7 +452,7 @@ Item {
                 target: gainCurrent_1Slider
                 text:"<b>Gain Current 1:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: offsetVolt_1Label.bottom
                     topMargin: parent.height/30
@@ -477,7 +477,7 @@ Item {
                 target: offsetCurrent_1Slider
                 text:"<b>Offset Current 1:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainCurrent_1Label.bottom
                     topMargin: parent.height/30
@@ -498,7 +498,7 @@ Item {
                 Text{
                     id: offsetCurrent_1SliderUnit
                     text:"A"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetCurrent_1Slider.right
                     anchors.verticalCenter: offsetCurrent_1Slider.top
@@ -510,7 +510,7 @@ Item {
                 target: gainTemp_1Slider
                 text:"<b>Gain Temperature 1:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: offsetCurrent_1Label.bottom
                     topMargin: parent.height/30
@@ -535,7 +535,7 @@ Item {
                 target: offsetTemp_1Slider
                 text:"<b>Offset Temperature 1:<b>"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
+                width: parent.width/3.5
                 anchors {
                     top: gainTemp_1Label.bottom
                     topMargin: parent.height/30
@@ -556,79 +556,11 @@ Item {
                 Text{
                     id: offsetTemp_1SliderUnit
                     text:"°C"
-                    font.pixelSize: (parent.width + parent.height)/20
+                    font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
                     anchors.left: offsetTemp_1Slider.right
                     anchors.verticalCenter: offsetTemp_1Slider.top
                     }
-            }
-
-            SGAlignedLabel{
-                id: dcLinkLabel
-                target: dcLinkSlider
-                text:"<b>DC Link::<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
-                anchors {
-                    top: parent.top
-                    topMargin: parent.height/30
-                    left: offsetTemp_1Label.right
-                    leftMargin: parent.width/10
-                    }
-
-            SGSlider {
-                id: dcLinkSlider
-                width: 2*parent.width
-                from: 0
-                to: 600
-                value: 0
-                stepSize: 1
-                onValueChanged: dcLink = value
-                live: true
-            }
-
-            Text{
-                id: dcLinkSliderValue
-                text:"V"
-                font.pixelSize: (parent.width + parent.height)/20
-                color: "black"
-                anchors.left: dcLinkSlider.right
-                anchors.verticalCenter: dcLinkSlider.top
-                }
-            }
-
-            SGAlignedLabel{
-                id: inductorLabel
-                target: inductorSlider
-                text:"<b>Inductor:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/10
-                anchors {
-                    top: dcLinkLabel.bottom
-                    topMargin: parent.height/30
-                    left: offsetTemp_1Label.right
-                    leftMargin: parent.width/10
-                    }
-
-            SGSlider {
-                id: inductorSlider
-                width: 2*parent.width
-                from: 0
-                to: 1000
-                value: platformInterface.status_vi.l
-                stepSize: 1
-                onValueChanged: inductor = value
-                live: true
-            }
-
-            Text{
-                id: inductorSliderValue
-                text:"µH"
-                font.pixelSize: (parent.width + parent.height)/150
-                color: "black"
-                anchors.left: inductorSlider.right
-                anchors.verticalCenter: inductorSlider.top
-                }
             }
 
         }

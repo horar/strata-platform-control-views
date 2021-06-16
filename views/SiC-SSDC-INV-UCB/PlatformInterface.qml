@@ -11,12 +11,12 @@ Item {
         "t": 0,       // Target speed in RPM
         "a": 0,       // Actual speed in RPM
         "l": 0,       // Dc link Vin in Volts
-        "u": 0,       // Winding Iout Iu in Amps
-        "v": 0,       // Winding Iout Iv in Amps
-        "w": 0,       // Winding Iout Iw in Amps
-        "U": 0,       // Winding temperature U in °C
-        "V": 0,       // Winding temperature V in °C
-        "W": 0,       // Winding temperature W in °C
+        "u": 0,       // Winding Iout Iu (1) in Amps
+        "v": 0,       // Winding Iout Iv (2) in Amps
+        "w": 0,       // Winding Iout Iw (3) in Amps
+        "U": 0,       // Winding temperature U (1) in °C
+        "V": 0,       // Winding temperature V (2) in °C
+        "W": 0,       // Winding temperature W (3) in °C
     }
 
     property var status_IO: {"motor_EN": ""}

@@ -64,12 +64,12 @@ Item {
         Help.registerTarget(actualSpeedGauge, "This gauge shows the actual speed.", 2, "advanceHelp")
         Help.registerTarget(hzGauge, "This gauge shows the output frequency.", 3, "advanceHelp")
         Help.registerTarget(actualSpeedGraph, "The actual speed is plotted in real time.", 4, "advanceHelp")
-        Help.registerTarget(temp_U_graph, "Temperature U is plotted in real time", 5, "advanceHelp")
-        Help.registerTarget(temp_V_graph, "Temperature V is plotted in real time", 6, "advanceHelp")
-        Help.registerTarget(temp_W_graph, "Temperature W is plotted in real time", 7, "advanceHelp")
-        Help.registerTarget(winding_iout_IuGraph, "Motor winding current, Iu is plotted in real time", 8, "advanceHelp")
-        Help.registerTarget(winding_iout_IvGraph, "Motor winding current, Iv is plotted in real time", 9, "advanceHelp")
-        Help.registerTarget(winding_iout_IwGraph, "Motor winding current, Iw is plotted in real time", 10, "advanceHelp")
+        Help.registerTarget(temp_U_graph, "Temperature 1 is plotted in real time", 5, "advanceHelp")
+        Help.registerTarget(temp_V_graph, "Temperature 2 is plotted in real time", 6, "advanceHelp")
+        Help.registerTarget(temp_W_graph, "Temperature 3 is plotted in real time", 7, "advanceHelp")
+        Help.registerTarget(winding_iout_IuGraph, "Motor winding current, I1 is plotted in real time", 8, "advanceHelp")
+        Help.registerTarget(winding_iout_IvGraph, "Motor winding current, I2 is plotted in real time", 9, "advanceHelp")
+        Help.registerTarget(winding_iout_IwGraph, "Motor winding current, I3 is plotted in real time", 10, "advanceHelp")
     }
 
     Rectangle{
@@ -398,7 +398,7 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "Temperature U (°C)"
+                        yAxisTitle: "Temperature 1 (°C)"
                         inputData: temp_U_calc
                         maxYValue: 200
                         showYGrids: true
@@ -452,7 +452,7 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "Temperature V (°C)"
+                        yAxisTitle: "Temperature 3 (°C)"
                         inputData: temp_V_calc
                         maxYValue: 200
                         showYGrids: true
@@ -506,7 +506,7 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "Temperature W (°C)"
+                        yAxisTitle: "Temperature 3 (°C)"
                         inputData: temp_W_calc
                         maxYValue: 200
                         showYGrids: true
@@ -560,7 +560,7 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "Iu (A)"
+                        yAxisTitle: "I1 (A)"
                         inputData: winding_iout_iu_calc
                         maxYValue: amperes
                         minYValue: amperes*-1
@@ -615,7 +615,7 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "Iv (A)"
+                        yAxisTitle: "I2 (A)"
                         inputData: winding_iout_iv_calc
                         maxYValue: amperes
                         minYValue: amperes*-1
@@ -670,7 +670,7 @@ Item {
                         throttlePlotting: true
                         pointCount: pointsCount
                         xAxisTitle: ""
-                        yAxisTitle: "Iw (A)"
+                        yAxisTitle: "I3 (A)"
                         inputData: winding_iout_iw_calc
                         maxYValue: amperes
                         minYValue: amperes*-1

@@ -127,9 +127,9 @@ Item {
         Help.registerTarget(labelledInfoBox,"Error messages are shown here.", 6, "basicHelp")
 
         Help.registerTarget(actualSpeed,"Actual speed is shown here.", 7, "basicHelp")
-        Help.registerTarget(iout_u, "Motor winding current, Iu is plotted in real time", 8, "basicHelp")
-        Help.registerTarget(iout_v, "Motor winding current, Iv is plotted in real time", 9, "basicHelp")
-        Help.registerTarget(iout_w, "Motor winding current, Iw is plotted in real time", 10, "basicHelp")
+        Help.registerTarget(iout_u, "Motor winding current, I1 is plotted in real time", 8, "basicHelp")
+        Help.registerTarget(iout_v, "Motor winding current, I2 is plotted in real time", 9, "basicHelp")
+        Help.registerTarget(iout_w, "Motor winding current, I3 is plotted in real time", 10, "basicHelp")
 
         Help.registerTarget(statusInfoBoxWidget,"Status messages are shown here.", 11, "basicHelp")
     }
@@ -824,7 +824,7 @@ Item {
 
                 SGLabelledInfoBox {
                     id: iout_u
-                    label: "Iu (A)"
+                    label: "I1 (A)"
                     info: winding_iout_iu_calc
 
                     infoBoxColor: "lightgrey"
@@ -846,7 +846,7 @@ Item {
 
                 SGLabelledInfoBox {
                     id: iout_v
-                    label: "Iv (A)"
+                    label: "I2 (A)"
                     info: winding_iout_iv_calc
 
                     infoBoxColor: "lightgrey"
@@ -868,7 +868,7 @@ Item {
 
                 SGLabelledInfoBox {
                     id: iout_w
-                    label: "Iw (A)"
+                    label: "I3 (A)"
                     info: winding_iout_iw_calc
 
                     infoBoxColor: "lightgrey"

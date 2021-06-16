@@ -286,10 +286,10 @@ ColumnLayout {
 
                             text:  {
                                 if(one_time_top_row_excel===0){
-                                    "Time\tDC_Link(V)\tIu(A)\tIv(A)\tIw(A)\tU(°C)\tV(°C)\tW(°C)\tPole Pairs\tMax vout\tMax speed\tC.prop gain\tC.int gain\tS.prop gain\tS.int gain\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
+                                    "Time\tDC_Link(V)\tI1(A)\tI2(A)\tI3(A)\tT1(°C)\tT2(°C)\tT3(°C)\tPole Pairs\tMax vout\tMax speed\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
                                     one_time_top_row_excel=1
                                     }
-                                else("‚"+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_U_calc +"\t"+ temp_V_calc +"\t"+ temp_W_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ current_pi_p_gain +"\t"+ current_pi_i_gain +"\t"+ speed_pi_p_gain +"\t"+ speed_pi_i_gain +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
+                                else("‚"+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_U_calc +"\t"+ temp_V_calc +"\t"+ temp_W_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
                                     }
                                 }
 
@@ -467,7 +467,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Winding Iu")
+                                                text: qsTr("Winding I1")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected3 = 1
@@ -480,7 +480,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Winding Iv")
+                                                text: qsTr("Winding I2")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected4 = 1
@@ -493,7 +493,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Winding Iw")
+                                                text: qsTr("Winding I3")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected5 = 1
@@ -506,7 +506,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Temp. U")
+                                                text: qsTr("Temp. 1")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected6 = 1
@@ -519,7 +519,7 @@ ColumnLayout {
                                             }
 
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Temp. V")
+                                                text: qsTr("Temp. 2")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected7 = 1
@@ -531,7 +531,7 @@ ColumnLayout {
                                                 }
                                             }
                                             Widget09.SGSegmentedButton{
-                                                text: qsTr("Temp. W")
+                                                text: qsTr("Temp. 3")
                                                 onCheckedChanged: {
                                                     if (checked) {
                                                         graph_selected8 = 1
@@ -704,7 +704,7 @@ ColumnLayout {
 
                                             Text {
                                                 id: iWText
-                                                text: "<b>Temp.W<b>"
+                                                text: "<b>Temp.3<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: parent.right
@@ -715,7 +715,7 @@ ColumnLayout {
 
                                             Text {
                                                 id: iVText
-                                                text: "<b>Temp.V<b>"
+                                                text: "<b>Temp.2<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: iWText.left
@@ -726,7 +726,7 @@ ColumnLayout {
 
                                             Text {
                                                 id: iUText
-                                                text: "<b>Temp.U<b>"
+                                                text: "<b>Temp.1<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: iVText.left
@@ -737,7 +737,7 @@ ColumnLayout {
 
                                             Text {
                                                 id: winding_iout_iwText
-                                                text: "<b>Winding Iw<b>"
+                                                text: "<b>Winding I3<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: iUText.left
@@ -748,7 +748,7 @@ ColumnLayout {
 
                                             Text {
                                                 id: winding_iout_ivText
-                                                text: "<b>Winding Iv<b>"
+                                                text: "<b>Winding I2<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: winding_iout_iwText.left
@@ -759,7 +759,7 @@ ColumnLayout {
 
                                             Text {
                                                 id: winding_iout_iuText
-                                                text: "<b>Winding Iu<b>"
+                                                text: "<b>Winding I1<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
                                                 anchors.right: winding_iout_ivText.left
