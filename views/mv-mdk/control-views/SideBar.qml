@@ -147,15 +147,15 @@ Rectangle {
             }
         }
 
-        //IconButton {
-        //    id: brakeButton
-        //    source: "qrc:/images/brake.svg"
-        //    toolTipText: "Set brake"
-        //
-        //    onClicked:  {
-        //        // braking logic here
-        //    }
-        //}
+        IconButton {
+           id: brakeButton
+           source: "qrc:/images/brake.svg"
+           toolTipText: "Set brake"
+        
+           onClicked:  {
+               // braking logic here
+           }
+        }
 
         IconButton {
             id: directionButton

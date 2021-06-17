@@ -13,36 +13,36 @@ UIBase { // start_uibase
     Component.onCompleted: {
         // Notifications
         // title
-        platformInterface.notifications.title.caption = "BLDC Motor Drive EVB for 30-60V 1200W Applications"
+        platformInterface.notifications.title.caption = "Title"
         // subtitle
-        platformInterface.notifications.subtitle.caption = "Part of the Motor Development Kit (MDK) Family"
+        platformInterface.notifications.subtitle.caption = "Subtitle"
         // actual_speed
-        platformInterface.notifications.actual_speed.caption = "Actual Speed"
-        platformInterface.notifications.actual_speed.scales.index_0 = 10000
+        platformInterface.notifications.actual_speed.caption = ""
+        platformInterface.notifications.actual_speed.scales.index_0 = 0
         platformInterface.notifications.actual_speed.scales.index_1 = 0
-        platformInterface.notifications.actual_speed.scales.index_2 = 1000
+        platformInterface.notifications.actual_speed.scales.index_2 = 0
         platformInterface.notifications.actual_speed.states = [1]
         platformInterface.notifications.actual_speed.value = 0.0
         platformInterface.notifications.actual_speed.values = []
-        platformInterface.notifications.actual_speed.unit = "RPM"
+        platformInterface.notifications.actual_speed.unit = "Unit"
         // board_temp
-        platformInterface.notifications.board_temp.caption = "MOSFET Temp"
-        platformInterface.notifications.board_temp.scales.index_0 = 140
+        platformInterface.notifications.board_temp.caption = "Caption"
+        platformInterface.notifications.board_temp.scales.index_0 = 0
         platformInterface.notifications.board_temp.scales.index_1 = 0
-        platformInterface.notifications.board_temp.scales.index_2 = 10
+        platformInterface.notifications.board_temp.scales.index_2 = 0
         platformInterface.notifications.board_temp.states = [1]
         platformInterface.notifications.board_temp.value = 0.0
         platformInterface.notifications.board_temp.values = []
-        platformInterface.notifications.board_temp.unit = "C"
+        platformInterface.notifications.board_temp.unit = "Unit"
         // input_voltage
-        platformInterface.notifications.input_voltage.caption = "Input Voltage"
-        platformInterface.notifications.input_voltage.scales.index_0 = 100
+        platformInterface.notifications.input_voltage.caption = "Caption"
+        platformInterface.notifications.input_voltage.scales.index_0 = 0
         platformInterface.notifications.input_voltage.scales.index_1 = 0
-        platformInterface.notifications.input_voltage.scales.index_2 = 10
+        platformInterface.notifications.input_voltage.scales.index_2 = 0
         platformInterface.notifications.input_voltage.states = [1]
         platformInterface.notifications.input_voltage.value = 0.0
         platformInterface.notifications.input_voltage.values = []
-        platformInterface.notifications.input_voltage.unit = "V"
+        platformInterface.notifications.input_voltage.unit = "Unit"
         // status_log
         platformInterface.notifications.status_log.caption = "Status Log"
         platformInterface.notifications.status_log.value = ""    
@@ -164,8 +164,8 @@ UIBase { // start_uibase
     LayoutSGCircularGauge { // start_7b02e
         id: b_actual_speed
         layoutInfo.uuid: "7b02e"
-        layoutInfo.columnsWide: 10
-        layoutInfo.rowsTall: 15
+        layoutInfo.columnsWide: 9
+        layoutInfo.rowsTall: 14
         layoutInfo.xColumns: 10
         layoutInfo.yRows: 3
 
