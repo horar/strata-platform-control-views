@@ -57,7 +57,6 @@ Rectangle {
 
             onClicked:  {
                 dpt = !dpt
-                //dpt ? PulseControl : BasicControl
             }
         }
 

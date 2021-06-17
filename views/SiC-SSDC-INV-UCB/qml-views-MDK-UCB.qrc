@@ -73,5 +73,6 @@
         <file>sgwidgets/SGAlignedLabel.qml</file>
         <file>image/double-pulse-test.png</file>
         <file>image/DPT.png</file>
+        <file>ValuesPulse.qml</file>
     </qresource>
 </RCC>

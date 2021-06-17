@@ -86,23 +86,5 @@ Item {
                 }
             }
 
-        Button {
-            id:setParametersButton
-            anchors {
-                top : t1SliderValue.top
-                topMargin : parent.height/6
-                left: singlePulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            font.pixelSize: (parent.width + parent.height)/150
-            text: "<b>TEST<b>"
-            visible: true
-            width: parent.width/8
-            height: parent.height/12
-            onClicked: {
-                platformInterface.set_short.update(1)
-            }
-        }
-
     }
 }

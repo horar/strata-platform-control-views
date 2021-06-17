@@ -68,32 +68,34 @@ Rectangle {
             right: controlNavigation.right
         }
 
+        //position : dpt ? TabBar.Footer : TabBar.Header
+
         TabButton {
             id: basicButton
             enabled: dpt ? false : true
             opacity: !dpt ? 1 : 0
-            text: if (dpt === false){qsTr("Basic")} else {}
+            text: if (dpt === false){qsTr("Basic MDK")} else {}
         }
 
         TabButton {
             id: advancedButton
             enabled: dpt ? false : true
             opacity: !dpt ? 1 : 0
-            text: if (dpt === false){qsTr("Advanced")} else {}
+            text: if (dpt === false){qsTr("Advanced MDK")} else {}
         }
 
         TabButton {
             id: settingsButton
             enabled: dpt ? false : true
             opacity: !dpt ? 1 : 0
-            text: if (dpt === false){qsTr("Motor Settings")} else {}
+            text: if (dpt === false){qsTr("MDK Settings")} else {}
         }
 
         TabButton {
             id: exportButton
             enabled: dpt ? false : true
             opacity: !dpt ? 1 : 0
-            text: if (dpt === false){qsTr("Data Logger / Export")} else {}
+            text: if (dpt === false){qsTr("MDK Data Logger / Export")} else {}
         }
 
         TabButton {

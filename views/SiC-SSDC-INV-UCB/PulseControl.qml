@@ -18,10 +18,6 @@ Rectangle {
     property var dcLink: 0
     property var inductor: 0
 
-    property var temp_U_calc: platformInterface.status_vi.U
-    property var temp_V_calc: platformInterface.status_vi.V
-    property var temp_W_calc: platformInterface.status_vi.W
-
     anchors.fill: parent
 
     Component.onCompleted: {
@@ -44,200 +40,157 @@ Rectangle {
     }
 
     Text{
-        id: dcLinkSliderValue
-        text:"<b>DC Link Voltage: <b>"+ dcLink +" V"
+        id: dcLinkTargetValue
+        text:"<b>Target DC Link Voltage: <b>"+ dcLink +" V"
         font.pixelSize: (parent.width + parent.height)/150
         color: "black"
         anchors {
             top: parent.top
-            topMargin: parent.height/10
+            topMargin: parent.height/3
             left: moduleImage.right
             leftMargin: (parent.width + parent.height)/50
             }
         }
 
     Text{
-        id: inductorSliderValue
-        text:"<b>Load Inductance: <b>"+ inductor +" µH"
+        id: inductorTargetValue
+        text:"<b>Target Load Inductance: <b>"+ inductor +" µH"
         font.pixelSize: (parent.width + parent.height)/150
         color: "black"
         anchors {
-            top: dcLinkSliderValue.top
+            top: dcLinkTargetValue.top
             topMargin: parent.height/20
             left: moduleImage.right
             leftMargin: (parent.width + parent.height)/50
+            }
+        }
+
+
+    Text{
+        id: testResponseText
+        text: "<b>Test:<b>"
+        font.pixelSize: (parent.width + parent.height)/140
+        color: "black"
+        anchors {
+            top : parent.top
+            topMargin : parent.height/20
+            left: moduleImage.right
+            leftMargin: (parent.width + parent.height)/50
+            }
+        }
+
+    SGComboBox {
+        id: testResponseCombo
+        model: [ "","Single Pulse","Double Pulse","Burst","Short Circuit"]
+        borderColor: "green"
+        textColor: "black"
+        indicatorColor: "green"
+        width: parent.width/10
+        height:parent.height/10
+        anchors {
+            top : testResponseText.top
+            topMargin : parent.height/30
+            left: moduleImage.right
+            leftMargin: (parent.width + parent.height)/50
+            }
+        onActivated: {
+            platformInterface.set_TestResponse.update(currentIndex)
+            platformInterface.testResponse_state = currentIndex
             }
         }
 
     Text{
-        id: temperatureUValue
-        text:"<b>Temperature 1: <b>"+ temp_U_calc +" °C"
-        font.pixelSize: (parent.width + parent.height)/150
+        id: switchResponseText
+        text: "<b>DUT:<b>"
+        font.pixelSize: (parent.width + parent.height)/140
         color: "black"
         anchors {
-            top: inductorSliderValue.top
-            topMargin: parent.height/20
-            left: moduleImage.right
+            top : parent.top
+            topMargin : parent.height/20
+            left: testResponseCombo.right
             leftMargin: (parent.width + parent.height)/50
+            }
+        }
+
+    SGComboBox {
+        id: switchResponseCombo
+        model: testResponseCombo.currentIndex > 0 ? ["Q1","Q2","Q3","Q4","Q5","Q6"] : [""]
+        borderColor: "green"
+        textColor: "black"
+        indicatorColor: "green"
+        width: parent.width/10
+        height:parent.height/10
+        anchors {
+            top : switchResponseText.top
+            topMargin : parent.height/30
+            left: testResponseCombo.right
+            leftMargin: (parent.width + parent.height)/50
+            }
+        onActivated: {
+            platformInterface.set_SwitchResponse.update(currentIndex)
+            platformInterface.switchResponse_state = currentIndex
             }
         }
 
     Text{
-        id: temperatureVValue
-        text:"<b>Temperature 2: <b>"+ temp_V_calc +" °C"
-        font.pixelSize: (parent.width + parent.height)/150
+        id: constantResponseText
+        text: "<b>Constant On Switch:<b>"
+        font.pixelSize: (parent.width + parent.height)/140
         color: "black"
         anchors {
-            top: temperatureUValue.top
-            topMargin: parent.height/20
-            left: moduleImage.right
+            top : parent.top
+            topMargin : parent.height/20
+            left: switchResponseCombo.right
             leftMargin: (parent.width + parent.height)/50
             }
         }
 
-    Text{
-        id: temperatureWValue
-        text:"<b>Temperature 3: <b>"+ temp_W_calc +" °C"
-        font.pixelSize: (parent.width + parent.height)/150
-        color: "black"
+    SGComboBox {
+        id: constantResponseCombo
+        model: {
+            if (testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 0) {["Q4","Q6"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 1) {["Q3","Q5"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 2) {["Q2","Q6"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 3) {["Q1","Q5"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 4) {["Q2","Q4"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 5) {["Q1","Q3"]}
+
+            else {[""]}
+        }
+        borderColor: "green"
+        textColor: "black"
+        indicatorColor: "green"
+        width: parent.width/10
+        height:parent.height/10
         anchors {
-            top: temperatureVValue.top
-            topMargin: parent.height/20
+            top : switchResponseText.top
+            topMargin : parent.height/30
+            left: switchResponseCombo.right
+            leftMargin: (parent.width + parent.height)/50
+            }
+        onActivated: {
+            platformInterface.set_ConstantResponse.update(currentIndex)
+            platformInterface.constantResponse_state = currentIndex
+            }
+        }
+
+    Button {
+        id:setParametersButton
+        anchors {
+            top : testResponseText.bottom
+            topMargin : parent.height/10
             left: moduleImage.right
             leftMargin: (parent.width + parent.height)/50
             }
-        }
-
-    SGRadioButtonContainer {
-        id: switchHighControl
-        anchors {
-            top: moduleImage.top
-            topMargin: moduleImage.height/4
-            left: dcLinkSliderValue.right
-            leftMargin: moduleImage.width/4
-        }
-
-        label: "<b>High Side (Load Inductor / Short Circuit Bridge):</b>"
-        labelLeft: false
-        exclusive: true
-
-        radioGroup: GridLayout {
-
-            columnSpacing: moduleImage.width/5
-
-            SGRadioButton {
-                id: q5
-                text: "Q5"
-                property bool s5: false
-                onCheckedChanged: {
-                    if (checked) {
-                        platformInterface.q5 = true
-                    }
-                    else {
-                        platformInterface.q5 = false
-                    }
-                }
-                checked: {
-                }
-            }
-
-            SGRadioButton {
-                id: q3
-                text: "Q3"
-                onCheckedChanged: {
-                    if (checked) {
-                        platformInterface.q3 = true
-                    }
-                    else {
-                        platformInterface.q3 = false
-                    }
-                }
-                checked: {
-                }
-            }
-
-            SGRadioButton {
-                id: q1
-                text: "Q1"
-                onCheckedChanged: {
-                    if (checked) {
-                        platformInterface.q1 = true
-                    }
-                    else {
-                        platformInterface.q1 = false
-                    }
-                }
-                checked: {
-                }
-            }
-        }
-
-    }
-
-    SGRadioButtonContainer {
-        id: switchLowControl
-        anchors {
-            top: moduleImage.top
-            topMargin: moduleImage.height/1.6
-            left: dcLinkSliderValue.right
-            leftMargin: moduleImage.width/4
-        }
-
-        label: "<b>Low Side (DUT):</b>"
-        labelLeft: false
-        exclusive: true
-
-        radioGroup: GridLayout {
-
-            columnSpacing: moduleImage.width/5
-
-            SGRadioButton {
-                id: q6
-                text: "Q6"
-                onCheckedChanged: {
-                    if (checked) {
-                        platformInterface.q6 = true
-                    }
-                    else {
-                        platformInterface.q6 = false
-                    }
-                }
-                checked: {
-                }
-            }
-
-            SGRadioButton {
-                id: q4
-                text: "Q4"
-                onCheckedChanged: {
-                    if (checked) {
-                        platformInterface.q4 = true
-                    }
-                    else {
-                        platformInterface.q4 = false
-                    }
-                }
-                checked: {
-                }
-            }
-
-            SGRadioButton {
-                id: q2
-                text: "Q2"
-                onCheckedChanged: {
-                    if (checked) {
-                        platformInterface.q2 = true
-                    }
-                    else {
-                        platformInterface.q2 = false
-                    }
-                }
-                checked: {
-                }
-            }
+        font.pixelSize: (parent.width + parent.height)/150
+        text: "<b>TEST<b>"
+        visible: testResponseCombo.currentIndex > 0 ? true : false
+        width: parent.width/20
+        height: parent.height/25
+        onClicked: {
+            platformInterface.set_test.update(1)
         }
     }
-
 
     SGAccordion {
         id: settingsAccordion
@@ -246,42 +199,50 @@ Rectangle {
             topMargin: parent.height/2.3
             bottom: root.bottom
         }
+        height: root.height/3
         width: root.width
 
         accordionItems: Column {
             SGAccordionItem {
                 id: generalInputs
-                title: "<b>General Inputs</b>"
+                title: "<b>Gain / Offset settings</b>"
                 open: false
                 contents: GeneralInputs { }
             }
 
             SGAccordionItem {
                 id: singlePulseTesting
-                title: "<b>Single Pulse Testing</b>"
+                title: "<b>Single Pulse settings</b>"
                 open: false
                 contents: SinglePulseTesting { }
             }
 
             SGAccordionItem {
                 id: doublePulseTesting
-                title: "<b>Double Pulse Testing</b>"
+                title: "<b>Double Pulse settings</b>"
                 open: false
                 contents: DoublePulseTesting { }
             }
 
             SGAccordionItem {
                 id: burstTesting
-                title: "<b>Burst Testing</b>"
+                title: "<b>Burst settings</b>"
                 open: false
                 contents: BurstTesting { }
             }
 
             SGAccordionItem {
                 id: shortCircuitMode
-                title: "<b>Short Circuit Mode</b>"
+                title: "<b>Short Circuit settings</b>"
                 open: false
                 contents: ShortCircuitMode { }
+            }
+
+            SGAccordionItem {
+                id: valuesPulse
+                title: "<b>Measured Values</b>"
+                open: true
+                contents: ValuesPulse { }
             }
         }
     }

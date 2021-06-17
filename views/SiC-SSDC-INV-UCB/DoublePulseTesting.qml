@@ -177,24 +177,5 @@ Item {
                 leftMargin: (parent.width + parent.height)/25
                 }
             }
-
-        Button {
-            id:setParametersButton
-            anchors {
-                top : calculatedCurrentT3Value.top
-                topMargin : parent.height/10
-                left: doublePulseTestingImage.right
-                leftMargin: (parent.width + parent.height)/25
-                }
-            font.pixelSize: (parent.width + parent.height)/150
-            text: "<b>TEST<b>"
-            visible: true
-            width: parent.width/8
-            height: parent.height/12
-            onClicked: {
-                platformInterface.set_double.update(1)
-            }
-        }
-
     }
 }
