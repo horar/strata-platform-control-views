@@ -4,17 +4,14 @@ import tech.strata.sgwidgets 1.0
 
 UIBase { // start_uibase
     
-    // General settings    
+    // ======================== General Settings ======================== //
+
     columnCount: 30
     rowCount: 50
     
-    // Objects shared between QML files
-    property alias cp_title: cp_title
-    property alias cp_subtitle: cp_subtitle
+    // ======================== UI Objects ======================== //
 
-    // UI objects
-
-    // ======================== General UI Setup and Titles ======================== //
+    // ------------------------ General UI Setup and Titles ------------------------ //
 
     LayoutText { // start_8695e
         id: cp_title
@@ -47,7 +44,6 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
         color: "#7f7f7f"
     } // end_bb4f0
-
 
     LayoutDivider { // start_578da
         id: divider_578da
@@ -179,7 +175,7 @@ UIBase { // start_uibase
         thickness: 2
     } // end_8edf6
 
-    // ======================== pwm_params ======================== //
+    // ------------------------ PWM Parameters ------------------------ //
 
     LayoutSGSwitch { // start_d68f2
         id: cp_pwm_params_o_mode
@@ -398,7 +394,7 @@ UIBase { // start_uibase
 
     } // end_bf582
 
-    // ======================== pid_params ======================== //
+    // ------------------------ PID Parameters ------------------------ //
 
     LayoutSGInfoBox { // start_4517c
         id: cp_pid_params_kp
@@ -728,7 +724,7 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
     } // end_6893f
 
-    // ======================== motor_params ======================== //
+    // ------------------------ Motor Parameters ------------------------ //
 
     LayoutSGInfoBox { // start_7b111
         id: cp_motor_params_rs
@@ -1391,7 +1387,7 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
     } // end_ee7f4
 
-    // ======================== spd_loop_params ======================== //
+    // ------------------------ Speed Loop Parameters ------------------------ //
 
     LayoutSGComboBox { // start_f5402
         id: cp_spd_loop_params_mode
@@ -1556,7 +1552,7 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
     } // end_db3ed
 
-    // ======================== protection ======================== //
+    // ------------------------ Protection ------------------------ //
 
     LayoutSGInfoBox { // start_4c1a9
         id: cp_protection_ocp
@@ -1767,4 +1763,5 @@ UIBase { // start_uibase
         horizontalAlignment: Text.AlignHLeft
         verticalAlignment: Text.AlignVCenter
     } // end_00a13
+    
 } // end_uibase

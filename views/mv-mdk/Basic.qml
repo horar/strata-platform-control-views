@@ -4,14 +4,15 @@ import tech.strata.sgwidgets 1.0
 
 UIBase { // start_uibase
 
-    // General settings 
+    // ======================== General Settings ======================== //
+
     columnCount: 30
     rowCount: 25
 
-    // Setup default notification values
+    // ======================== Default Notification Values ======================== //
     // Do this here instead of in PlatformInterface.qml because PIG overwrites values
+
     Component.onCompleted: {
-        // Notifications
         // title
         platformInterface.notifications.title.caption = "Title"
         // subtitle
@@ -46,13 +47,12 @@ UIBase { // start_uibase
         // status_log
         platformInterface.notifications.status_log.caption = "Status Log"
         platformInterface.notifications.status_log.value = ""    
-        
     }
 
-    // UI objects
+    // ======================== UI Objects ======================== //
 
-    // ======================== General UI Setup and Titles ======================== //
-    
+    // ------------------------ General UI Setup and Titles ------------------------ //
+       
     LayoutText { // start_8695e
         id: b_title
         layoutInfo.uuid: "8695e"
@@ -159,7 +159,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 3
     } // end_ef0b6
 
-    // ======================== Gauges and Log ======================== //
+   // ------------------------ Gauges and Log ------------------------ //
 
     LayoutSGCircularGauge { // start_7b02e
         id: b_actual_speed
@@ -168,16 +168,8 @@ UIBase { // start_uibase
         layoutInfo.rowsTall: 14
         layoutInfo.xColumns: 10
         layoutInfo.yRows: 3
-
-        // Some test notifications for a dynamic payload
-        // If payload objects are missing it seems to just maintain the last value
-        // {"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed","scales":[10000,0,1000],"states":[1],"value":0.0,"values":[],"unit":"RPM"}}}
-        // {"notification":{"value":"actual_speed","payload":{"value":0.0}}}
-        // {"notification":{"value":"actual_speed","payload":{"scales":[10000,0,1000]}}}
-        // {"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed"}}}
-        // {"notification":{"value":"actual_speed","payload":{"unit":"RPM"}}}
         
-        // units: extracted from caption between parentheses
+        // units
         unitText: platformInterface.notifications.actual_speed.unit
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
@@ -190,6 +182,7 @@ UIBase { // start_uibase
         // values
         // TBD or NA, used for array UI elements
         
+        // change color of gauges to match EMEA's custom colors
         function lerpColor (color1, color2, x){
             if (Qt.colorEqual(color1, color2)){
                 return color1;
@@ -228,15 +221,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 23
         layoutInfo.yRows: 7
 
-        // Some test notifications for a dynamic payload
-        // If payload objects are missing it seems to just maintain the last value
-        // {"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp","scales":[140,0,10],"states":[1],"value":0.0,"values":[],"unit":"C"}}}
-        // {"notification":{"value":"board_temp","payload":{"value":0.0}}}
-        // {"notification":{"value":"board_temp","payload":{"scales":[140,0,10]}}}
-        // {"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp"}}}
-        // {"notification":{"value":"board_temp","payload":{"unit":"C"}}}
-
-        // units: extracted from caption between parentheses
+        // units
         unitText: platformInterface.notifications.board_temp.unit
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
@@ -249,6 +234,7 @@ UIBase { // start_uibase
         // values
         // TBD or NA, used for array UI elements
 
+        // change color of gauges to match EMEA's custom colors
         function lerpColor (color1, color2, x){
             if (Qt.colorEqual(color1, color2)){
                 return color1;
@@ -287,15 +273,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 2
         layoutInfo.yRows: 7
 
-        // Some test notifications for a dynamic payload
-        // If payload objects are missing it seems to just maintain the last value
-        // {"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage","scales":[100,0,10],"states":[1],"value":0.0,"values":[],"unit":"V"}}}
-        // {"notification":{"value":"input_voltage","payload":{"value":0.0}}}
-        // {"notification":{"value":"input_voltage","payload":{"scales":[100,0,10]}}}
-        // {"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage"}}}
-        // {"notification":{"value":"input_voltage","payload":{"unit":"V"}}}
-        
-        // units: extracted from caption between parentheses
+        // units
         unitText: platformInterface.notifications.input_voltage.unit
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
@@ -308,6 +286,7 @@ UIBase { // start_uibase
         // values
         // TBD or NA, used for array UI elements
 
+        // change color of gauges to match EMEA's custom colors
         function lerpColor (color1, color2, x){
             if (Qt.colorEqual(color1, color2)){
                 return color1;
