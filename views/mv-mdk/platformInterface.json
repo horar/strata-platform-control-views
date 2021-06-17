@@ -227,7 +227,7 @@
             }
         },
         {
-            "value": "warning_3",
+            "value": "warning_3scales",
             "payload": {
                 "caption": "string",
                 "scales": [
@@ -252,6 +252,51 @@
                 ],
                 "states": "array-dynamic",
                 "value": "string",
+                "values": "array-dynamic",
+                "unit": "string"
+            }
+        },
+        {
+            "value": "run",
+            "payload": {
+                "caption": "string",
+                "scales": [
+                    "int",
+                    "int",
+                    "int"
+                ],
+                "states": "array-dynamic",
+                "value": "int",
+                "values": "array-dynamic",
+                "unit": "string"
+            }
+        },
+        {
+            "value": "brake",
+            "payload": {
+                "caption": "string",
+                "scales": [
+                    "int",
+                    "int",
+                    "int"
+                ],
+                "states": "array-dynamic",
+                "value": "int",
+                "values": "array-dynamic",
+                "unit": "string"
+            }
+        },
+        {
+            "value": "direction",
+            "payload": {
+                "caption": "string",
+                "scales": [
+                    "int",
+                    "int",
+                    "int"
+                ],
+                "states": "array-dynamic",
+                "value": "int",
                 "values": "array-dynamic",
                 "unit": "string"
             }

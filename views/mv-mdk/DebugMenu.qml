@@ -46,8 +46,11 @@ Rectangle {
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"string","values":"array-dynamic"},"value":"subtitle"},
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_1"},
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_2"},
-                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_3"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_3scales"},
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"string","values":"array-dynamic"},"value":"status_log"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"run"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"brake"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"direction"},
             ]
         })
 

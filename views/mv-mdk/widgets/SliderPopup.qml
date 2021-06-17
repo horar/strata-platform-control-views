@@ -13,6 +13,7 @@ Popup {
     property alias to: targetSlider.to
     property alias stepSize: targetSlider.stepSize
     property alias title: title.text
+
     signal userSet(real value)
     Connections {
         target: parent
@@ -48,6 +49,7 @@ Popup {
             inputBoxWidth: 100
             textColor: "white"
             onUserSet: sliderPopup.userSet(value)
+            live: false
         }
     }
 }

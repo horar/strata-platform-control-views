@@ -47,7 +47,11 @@ Rectangle {
         platformInterface.notifications.warning_2.caption = ""
         platformInterface.notifications.warning_2.value = false
         platformInterface.notifications.warning_3.caption = ""
-        platformInterface.notifications.warning_3.value = false 
+        platformInterface.notifications.warning_3.value = false
+        // run, brake, direction
+        platformInterface.notifications.run.caption = "Run"
+        platformInterface.notifications.brake.caption = "Brake"
+        platformInterface.notifications.direction.caption = "Direction"
     }
 
     // ======================== UI Objects ======================== //
@@ -93,9 +97,9 @@ Rectangle {
                 to: platformInterface.notifications.target_speed.scales.index_0
                 from: platformInterface.notifications.target_speed.scales.index_1
                 stepSize: platformInterface.notifications.target_speed.scales.index_2
-                // states
-                // enabled: runButton.running === false //  direction control disabled when motor running
-                // opacity: enabled ? 1 : .5
+                // states[0] for non-arrays, SGSlider automatically sets opacity 
+                // i.e., state = Disabled (not grayed) set to state = Disabled and Grayed Out
+                enabled: !Boolean(platformInterface.notifications.acceleration.states[0])
 
                 onUserSet: {
                     console.log("onUserSet:", value)
@@ -131,9 +135,9 @@ Rectangle {
                 to: platformInterface.notifications.acceleration.scales.index_0
                 from: platformInterface.notifications.acceleration.scales.index_1
                 stepSize: platformInterface.notifications.acceleration.scales.index_2
-                // states
-                // enabled: runButton.running === false //  direction control disabled when motor running
-                // opacity: enabled ? 1 : .5
+                // states[0] for non-arrays, SGSlider automatically sets opacity 
+                // i.e., state = Disabled (not grayed) set to state = Disabled and Grayed Out
+                enabled: !Boolean(platformInterface.notifications.acceleration.states[0])
 
                 onUserSet: {
                     console.log("onUserSet:", value)
@@ -152,9 +156,24 @@ Rectangle {
             id: runButton
             source: running ? "qrc:/images/stop-solid.svg" : "qrc:/images/play-solid.svg"
             iconColor: running ? "#db0909" : "#45e03a"
-            toolTipText: "Start/stop motor"
+            toolTipText: platformInterface.notifications.run.caption
 
             property bool running: false
+            
+            // states
+            enabled: !Boolean(platformInterface.notifications.run.states[0])
+            Connections {
+                target: platformInterface.notifications.run
+                onNotificationFinished: {
+                    if (platformInterface.notifications.run == 2) {
+                        // Disabled and grayed out
+                        runButton.opacity = 0.5
+                    } else {
+                        runButton.opacity = 1
+                    }
+                }
+
+            }           
 
             onClicked:  {
                 running = !running
@@ -180,14 +199,36 @@ Rectangle {
         // Direction
         IconButton {
             id: directionButton
-            enabled: runButton.running === false //  direction control disabled when motor running
-            opacity: enabled ? 1 : .5
+            
             source: direction ? "qrc:/images/redo-alt-solid.svg" : "qrc:/images/undo.svg"
-            toolTipText: "Set motor direction"
+            toolTipText: platformInterface.notifications.direction.caption
             animationRunning: runButton.running
             animationDirection: direction ? RotationAnimator.Clockwise : RotationAnimator.Counterclockwise
 
             property bool direction: true
+
+            enabled: !runButton.running
+            opacity: !runButton.running ? 1 : .5
+
+            Connections {
+                target: platformInterface.notifications.direction
+                onNotificationFinished: {
+                    // Direction control disabled when motor running
+                    // Otherwise use control properties
+                    if ((Boolean(platformInterface.notifications.direction.states[0])) || (runButton.running === true)) {
+                        directionButton.enabled = false
+                    } else {
+                        directionButton.enabled = true
+                    }
+                    // Disabled and grayed out
+                    if ((platformInterface.notifications.direction.states[0] == 2) || (runButton.running === true)) {
+                        directionButton.opacity = 0.5
+                    } else {
+                        directionButton.opacity = 1
+                    }
+                }
+
+            } 
 
             onClicked:  {
                 direction = !direction
