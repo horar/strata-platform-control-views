@@ -22,6 +22,8 @@ Rectangle {
 
     Component.onCompleted: {
         Help.registerTarget(runButton, "Place holder for Basic control view help messages", 0, "BasicControlHelp")
+        Help.registerTarget(speedButton, "Message", 1, "BasicControlHelp")
+        // Help.startHelpTour("BasicControlHelp")
 
         // target_speed
         platformInterface.notifications.target_speed.caption = ""
@@ -324,17 +326,18 @@ Rectangle {
         IconButton {
             id: helpIcon
             source: "qrc:/sgimages/question-circle.svg" // generic icon from SGWidgets
+            iconColor: containsMouse ? "grey" : "lightgrey"
 
             onClicked:  {
                 // start different help tours depending on which view is visible
-                switch (navTabs.currentIndex) {
-                case 0:
+                // switch (tabBar.currentIndex) {
+                // case 0:
                     Help.startHelpTour("BasicControlHelp")
-                    return
-                case 1:
-                    Help.startHelpTour("AdvancedControlHelp")
-                    return
-                }
+                //     return
+                // case 1:
+                //     Help.startHelpTour("AdvancedControlHelp")
+                //     return
+                // }
             }
         }
     }
