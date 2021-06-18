@@ -18,7 +18,7 @@ UIBase { // start_uibase
         // subtitle
         platformInterface.notifications.subtitle.caption = "Subtitle"
         // actual_speed
-        platformInterface.notifications.actual_speed.caption = ""
+        platformInterface.notifications.actual_speed.caption = "Caption"
         platformInterface.notifications.actual_speed.scales.index_0 = 0
         platformInterface.notifications.actual_speed.scales.index_1 = 0
         platformInterface.notifications.actual_speed.scales.index_2 = 0
@@ -164,7 +164,7 @@ UIBase { // start_uibase
     LayoutSGCircularGauge { // start_7b02e
         id: b_actual_speed
         layoutInfo.uuid: "7b02e"
-        layoutInfo.columnsWide: 9
+        layoutInfo.columnsWide: 10
         layoutInfo.rowsTall: 14
         layoutInfo.xColumns: 10
         layoutInfo.yRows: 3

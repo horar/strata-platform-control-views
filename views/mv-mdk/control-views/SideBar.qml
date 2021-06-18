@@ -49,9 +49,9 @@ Rectangle {
         platformInterface.notifications.warning_3.caption = ""
         platformInterface.notifications.warning_3.value = false
         // run, brake, direction
-        platformInterface.notifications.run.caption = "Run"
-        platformInterface.notifications.brake.caption = "Brake"
-        platformInterface.notifications.direction.caption = "Direction"
+        platformInterface.notifications.run.caption = ""
+        platformInterface.notifications.brake.caption = ""
+        platformInterface.notifications.direction.caption = ""
     }
 
     // ======================== UI Objects ======================== //
@@ -115,7 +115,7 @@ Rectangle {
 
         IconButton {
             id: accelButton
-            toolTipText: "Set " + platformInterface.notifications.target_speed.caption.toLowerCase()
+            toolTipText: "Set " + platformInterface.notifications.acceleration.caption.toLowerCase()
             value: platformInterface.notifications.acceleration.value
             unit: platformInterface.notifications.acceleration.unit
             source: "qrc:/images/tach.svg"
@@ -154,80 +154,102 @@ Rectangle {
         // Run
         IconButton {
             id: runButton
-            source: running ? "qrc:/images/stop-solid.svg" : "qrc:/images/play-solid.svg"
-            iconColor: running ? "#db0909" : "#45e03a"
+            source: run ? "qrc:/images/stop-solid.svg" : "qrc:/images/play-solid.svg"
+            iconColor: run ? "#db0909" : "#45e03a"
             toolTipText: platformInterface.notifications.run.caption
 
-            property bool running: false
+            property bool run: false
             
             // states
-            enabled: !Boolean(platformInterface.notifications.run.states[0])
             Connections {
                 target: platformInterface.notifications.run
                 onNotificationFinished: {
-                    if (platformInterface.notifications.run == 2) {
-                        // Disabled and grayed out
+                    runButton.run = Boolean(platformInterface.notifications.run.value)
+                    runButton.enabled = !Boolean(platformInterface.notifications.run.states[0])
+                    if (platformInterface.notifications.run.states[0] == 2) {
                         runButton.opacity = 0.5
                     } else {
                         runButton.opacity = 1
                     }
                 }
-
-            }           
+            }
 
             onClicked:  {
-                running = !running
-                console.log("onClicked:", running)
+                run = !run
+                console.log("onClicked:", run)
                 platformInterface.commands.run.update(
-                    Number(running)
+                    Number(run)
                 )
             }
         }
 
         // Brake
         IconButton {
-            // TODO: test and enable brake
+
             id: brakeButton
             source: "qrc:/images/brake.svg"
-            toolTipText: "Set brake"
-        
+            iconColor: brake ? "yellow" : "white"
+            toolTipText: platformInterface.notifications.brake.caption
+            
+            property bool brake: false
+
+            // states
+            Connections {
+                target: platformInterface.notifications.brake
+                onNotificationFinished: {
+                    brakeButton.brake = Boolean(platformInterface.notifications.brake.value)
+                    brakeButton.enabled = !Boolean(platformInterface.notifications.brake.states[0])
+                    if (platformInterface.notifications.brake.states[0] == 2) {
+                        brakeButton.opacity = 0.5
+                    } else {
+                        brakeButton.opacity = 1
+                    }
+                }
+            }
+
             onClicked:  {
-                // braking logic here
+                brake = !brake
+                console.log("onClicked:", brake)
+                platformInterface.commands.brake.update(
+                    Number(brake)
+                )
            }
         }
 
         // Direction
         IconButton {
             id: directionButton
-            
             source: direction ? "qrc:/images/redo-alt-solid.svg" : "qrc:/images/undo.svg"
             toolTipText: platformInterface.notifications.direction.caption
-            animationRunning: runButton.running
+            animationRunning: runButton.run
             animationDirection: direction ? RotationAnimator.Clockwise : RotationAnimator.Counterclockwise
 
-            property bool direction: true
+            property bool direction: true // true = CW, false = CCW
 
-            enabled: !runButton.running
-            opacity: !runButton.running ? 1 : .5
-
+            // states
             Connections {
                 target: platformInterface.notifications.direction
                 onNotificationFinished: {
-                    // Direction control disabled when motor running
-                    // Otherwise use control properties
-                    if ((Boolean(platformInterface.notifications.direction.states[0])) || (runButton.running === true)) {
-                        directionButton.enabled = false
-                    } else {
-                        directionButton.enabled = true
-                    }
-                    // Disabled and grayed out
-                    if ((platformInterface.notifications.direction.states[0] == 2) || (runButton.running === true)) {
-                        directionButton.opacity = 0.5
-                    } else {
-                        directionButton.opacity = 1
+                    // Ignore control properties if motor is running to avoid direction change
+                    if (runButton.run === false) {
+                        directionButton.direction = Boolean(platformInterface.notifications.direction.value)
+                        directionButton.enabled = !Boolean(platformInterface.notifications.direction.states[0])
+                        if (platformInterface.notifications.direction.states[0] == 2) {
+                            directionButton.opacity = 0.5
+                        } else {
+                            directionButton.opacity = 1
+                        }
                     }
                 }
-
+            }
+            // When run notification is received reset default behavior to 
+            // ensure direction button is disabled when motor is run 
+            Connections {
+                target: runButton
+                onClicked: {
+                    directionButton.enabled = !runButton.run
+                    directionButton.opacity = !runButton.run ? 1 : .5                    
+                }
             } 
 
             onClicked:  {
