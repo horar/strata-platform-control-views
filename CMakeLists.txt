@@ -4,7 +4,7 @@ project(component-views
     LANGUAGES NONE
 )
 if(NOT DEFINED CMAKE_MODULE_PATH)
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules")
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/strata-cmake-modules/Modules")
     include(FeatureSummary)
     include(CMakeDependentOption)
     include(GitVersionMacro)
