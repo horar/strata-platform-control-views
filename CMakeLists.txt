@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 project(component-views
     LANGUAGES NONE
 )
+
 if(NOT DEFINED CMAKE_MODULE_PATH)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/strata-cmake-modules/Modules")
     include(FeatureSummary)
@@ -11,6 +12,8 @@ if(NOT DEFINED CMAKE_MODULE_PATH)
 endif()
 
 include(AddViewMacro)
+
+find_package(Git)
 
 if(NOT DEFINED CMAKE_RUNTIME_OUTPUT_DIRECTORY)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
