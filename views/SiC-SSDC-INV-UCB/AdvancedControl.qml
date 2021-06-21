@@ -206,20 +206,6 @@ Item {
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
-                Image{
-                    id:rpmTargetIcon
-                    source:"image/speedGauge.png"
-                    height:parent.height*0.1
-                    anchors {
-                        top: targetSpeedGauge.top
-                        topMargin :  parent.height/1.55
-                        horizontalCenter: targetSpeedGauge.horizontalCenter
-                    }
-                    fillMode: Image.PreserveAspectFit
-                    mipmap:true
-                    opacity:1
-                }
-
                 SGCircularGauge {
                     id: actualSpeedGauge
                     anchors {
@@ -248,20 +234,6 @@ Item {
                     gaugeTitle: "Actual Speed"
                     value: actual_speed
                     Behavior on value { NumberAnimation { duration: 300 } }
-                }
-
-                Image{
-                    id:rpmActualIcon
-                    source:"image/speedGauge.png"
-                    height:parent.height*0.1
-                    anchors {
-                        top: actualSpeedGauge.top
-                        topMargin :  parent.height/1.55
-                        horizontalCenter: actualSpeedGauge.horizontalCenter
-                    }
-                    fillMode: Image.PreserveAspectFit
-                    mipmap:true
-                    opacity:1
                 }
 
                 SGCircularGauge {
@@ -294,21 +266,6 @@ Item {
                     value: frequency
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
-
-                Image{
-                    id:hzIcon
-                    source:"image/frequency.png"
-                    height:parent.height*0.1
-                    anchors {
-                        top: hzGauge.top
-                        topMargin :  parent.height/1.55
-                        horizontalCenter: hzGauge.horizontalCenter
-                    }
-                    fillMode: Image.PreserveAspectFit
-                    mipmap:true
-                    opacity:1
-                }
-
 
                 FVGraphTimed{
                     id: actualSpeedGraph

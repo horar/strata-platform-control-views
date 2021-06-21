@@ -38,8 +38,8 @@ MouseArea {
             color: "white"
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: (parent.width + parent.height)/ 8
-            fontSizeMultiplier: 0.5
+            //font.pixelSize: (parent.width + parent.height)/ 8
+            fontSizeMultiplier: 0.8
         }
     }
 }

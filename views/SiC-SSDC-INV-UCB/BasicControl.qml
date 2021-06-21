@@ -284,22 +284,6 @@ Item {
                             }
                         }
 
-
-                Image{
-                    id:switchIcon
-                    source:"image/switchIcon.svg"
-                    height:parent.height*0.08
-                    anchors {
-                        top: line.bottom
-                        topMargin :  parent.height/50
-                        right: motor_ENSwitch.right
-                        rightMargin: -(parent.width/3)
-                    }
-                    fillMode: Image.PreserveAspectFit
-                    mipmap:true
-                    opacity:1
-                }
-
                 SGCircularGauge {
                     id: dc_link_vinVoltage
                     anchors {
@@ -320,21 +304,6 @@ Item {
                     gaugeTitle: "DC Link"
                     value: dc_link_vin_calc
                     Behavior on value { NumberAnimation { duration: 300 } }
-                }
-
-                Image{
-                    id:voltageIcon
-                    source:"image/voltageIcon.svg"
-                    height:parent.height*0.08
-                    anchors {
-                        top: motor_ENSwitch.bottom
-                        topMargin :  parent.height/6.5
-                        right: dc_link_vinVoltage.right
-                        rightMargin: (parent.width/25)
-                    }
-                    fillMode: Image.PreserveAspectFit
-                    mipmap:true
-                    opacity:1
                 }
 
                 SGStatusLight {
@@ -391,21 +360,6 @@ Item {
                     gaugeTitle: "Average Temperature"
                     value: (temp_U_calc + temp_V_calc + temp_W_calc)/3
                     Behavior on value { NumberAnimation { duration: 300 } }
-                }
-
-                Image{
-                    id:temperatureIcon
-                    source:"image/temperatureIcon.svg"
-                    height:parent.height*0.08
-                    anchors {
-                        top: ledLight.bottom
-                        topMargin :  parent.height/10
-                        right: boardTemperature.right
-                        rightMargin: (parent.width/25)
-                    }
-                    fillMode: Image.PreserveAspectFit
-                    mipmap:true
-                    opacity:1
                 }
 
                 Rectangle {
@@ -497,6 +451,7 @@ Item {
                         font.bold: true
                     }
                 }
+
                 Rectangle {
                     id: lineControl
                     height: 2
@@ -805,21 +760,6 @@ Item {
                     gaugeTitle: "Actual Speed"
                     value: platformInterface.status_vi.a
                     Behavior on value { NumberAnimation { duration: 300 } }
-                }
-
-                Image{
-                    id:rpmIcon
-                    source:"image/speedGauge.png"
-                    height:parent.height*0.1
-                    anchors {
-                        top: line2.bottom
-                        topMargin :  parent.height/2.5
-                        right: parent.right
-                        rightMargin: (parent.width/2) - parent.height*0.05
-                    }
-                    fillMode: Image.PreserveAspectFit
-                    mipmap:true
-                    opacity:1
                 }
 
                 SGLabelledInfoBox {

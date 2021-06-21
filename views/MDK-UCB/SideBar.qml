@@ -97,28 +97,7 @@ Rectangle {
                 value: 0
             }
         }
-/*
-        IconButton {
-            id: brakeButton
-            source: "qrc:/image/brake.svg"
-            toolTipText: "Set motor brake de-acceleration"
-            value: brakePop.value
-            unit: "RPM/s"
-            onClicked:  {
-                // braking logic here
-                brakePop.visible = !brakePop.visible
-            }
-            SliderPopup {
-                id: brakePop
-                x: parent.width + sideBarColumn.anchors.margins
-                title: "Brake"
-                unit: "RPM/s"
-                from: 0
-                to: settingsControl.max_motor_speed
-                value: 0
-            }
-        }
-*/
+
         IconButton {
             id: forwardReverseButton
             enabled: runningButton.running === false && platformInterface.status_vi.a < 5 //  direction control disabled when motor running
@@ -270,20 +249,6 @@ Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth: true
         }
-/*
-        IconButton {
-            id: helpIcon
-            source: "qrc:/sgimages/question-circle.svg" // generic icon from SGWidgets
-
-            onClicked:  {
-                if(basicControl.visible === true) {Help.startHelpTour("basicHelp")}
-                else if(advancedControl.visible === true) {Help.startHelpTour("advanceHelp")}
-                else if(settingsControl.visible === true) {Help.startHelpTour("settingsHelp")}
-                else if(exportControl.visible === true) {Help.startHelpTour("exportControlHelp")}
-                else console.log("help not available")
-                }
-            }
-*/
-        }
+      }
     }
 
