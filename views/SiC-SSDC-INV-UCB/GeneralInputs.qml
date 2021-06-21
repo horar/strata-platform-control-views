@@ -340,7 +340,7 @@ Item {
                     SGAlignedLabel{
                         id: overTemperatureFaultLabel
                         target: overTemperatureFaultSlider
-                        text:"Over temperature Fault:"
+                        text:"Over Temperature Fault:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -372,7 +372,7 @@ Item {
                     SGAlignedLabel{
                         id: voutOVlimitFaultLabel
                         target: voutOVlimitFaultSlider
-                        text:"Vout OV Fault Limit:"
+                        text:"Over Voltage Fault Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -404,7 +404,7 @@ Item {
                     SGAlignedLabel{
                         id: voutUVlimitFaultLabel
                         target: voutUVlimitFaultSlider
-                        text:"Vout UV Fault Limit:"
+                        text:"Under Voltage Fault Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -436,7 +436,7 @@ Item {
                     SGAlignedLabel{
                         id: ioutOClimitFaultLabel
                         target: ioutOClimitFaultSlider
-                        text:"Iout OC Fault Limit:"
+                        text:"Over Current Fault Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -468,7 +468,7 @@ Item {
                     SGAlignedLabel{
                         id: overTemperatureWarningLabel
                         target: overTemperatureWarningSlider
-                        text:"Over temperature Warning:"
+                        text:"Over Temperature Warning:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -500,7 +500,7 @@ Item {
                     SGAlignedLabel{
                         id: voutOVlimitWarningLabel
                         target: voutOVlimitWarningSlider
-                        text:"Vout OV Warning Limit:"
+                        text:"Over Voltage Warning Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -532,7 +532,7 @@ Item {
                     SGAlignedLabel{
                         id: voutUVlimitWarningLabel
                         target: voutUVlimitWarningSlider
-                        text:"Vout UV Warning Limit:"
+                        text:"Under Voltage Warning Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -564,7 +564,7 @@ Item {
                     SGAlignedLabel{
                         id: ioutOClimitWarningLabel
                         target: ioutOClimitWarningSlider
-                        text:"Iout OC Warning Limit:"
+                        text:"Over Current Warning Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
