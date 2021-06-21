@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQml 2.0
 
 import tech.strata.sgwidgets 1.0
 
@@ -66,7 +67,7 @@ SGGraph {
 
         let movingCurve = createCurve("movingCurve")
         movingCurve.color = dataLineColor
-        movingCurve.autoUpdate = false
+        movingCurve.autoUpdate = true
     }
 
     Timer {

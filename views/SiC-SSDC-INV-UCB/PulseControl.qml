@@ -203,12 +203,6 @@ Rectangle {
         width: root.width
 
         accordionItems: Column {
-            SGAccordionItem {
-                id: generalInputs
-                title: "<b>Gain / Offset settings</b>"
-                open: false
-                contents: GeneralInputs { }
-            }
 
             SGAccordionItem {
                 id: singlePulseTesting

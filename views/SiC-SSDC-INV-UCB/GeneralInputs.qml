@@ -15,554 +15,583 @@ Item {
     height: 500
     width: parent.width
 
-    property var gainVolt_3: platformInterface.gainVolt_3
-    property var offsetVolt_3: platformInterface.offsetVolt_3
-    property var gainCurrent_3: platformInterface.gainCurrent_3
-    property var offsetCurrent_3: platformInterface.offsetCurrent_3
-    property var gainTemp_3: platformInterface.gainTemp_3
-    property var offsetTemp_3: platformInterface.offsetTemp_3
+    property var gainVolt: platformInterface.gainVolt
+    property var offsetVolt: platformInterface.offsetVolt
 
-    property var gainVolt_2: platformInterface.gainVolt_2
-    property var offsetVolt_2: platformInterface.offsetVolt_2
-    property var gainCurrent_2: platformInterface.gainCurrent_2
-    property var offsetCurrent_2: platformInterface.offsetCurrent_2
-    property var gainTemp_2: platformInterface.gainTemp_2
-    property var offsetTemp_2: platformInterface.offsetTemp_2
+    property var gainCurrent: platformInterface.gainCurrent
+    property var offsetCurrent: platformInterface.offsetCurrent
 
-    property var gainVolt_1: platformInterface.gainVolt_1
-    property var offsetVolt_1: platformInterface.offsetVolt_1
-    property var gainCurrent_1: platformInterface.gainCurrent_1
-    property var offsetCurrent_1: platformInterface.offsetCurrent_1
-    property var gainTemp_1: platformInterface.gainTemp_1
-    property var offsetTemp_1: platformInterface.offsetTemp_1
+    property var r25: platformInterface.r25
+    property var r2550: platformInterface.r2550
+    property var r2580: platformInterface.r2580
+    property var r25120: platformInterface.r25120
+
+    property var overTemperatureFault: platformInterface.overTemperatureFault
+    property var overTemperatureWarning: platformInterface.overTemperatureWarning
+
+    property var voutOVlimitFault: platformInterface.voutOVlimitFault
+    property var voutOVlimitWarning: platformInterface.voutOVlimitWarning
+
+    property var voutUVlimitFault: platformInterface.voutUVlimitFault
+    property var voutUVlimitWarning: platformInterface.voutUVlimitWarning
+
+    property var ioutOClimitFault: platformInterface.ioutOClimitFault
+    property var ioutOClimitWarning: platformInterface.ioutOClimitWarning
+
 
     Rectangle {
         id: gainOffset
         property bool debugLayout: false
         anchors.fill: parent
 
+        Text{
+            id: voltText
+            text: "<b>Voltage Measurements:<b>"
+            font.pixelSize: (parent.width + parent.height)/120
+            color: "black"
+            anchors {
+                top : parent.top
+                topMargin : parent.height/20
+                left: parent.left
+                leftMargin: parent.width/20
+                }
+            }
+
             SGAlignedLabel{
-                id: gainVolt_3Label
-                target: gainVolt_3Slider
-                text:"<b>Gain Voltage 3:<b>"
+                id: gainVoltLabel
+                target: gainVoltSlider
+                text:"Gain"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
+                width: parent.width/4
                 anchors {
-                    top: parent.top
-                    topMargin: parent.height/30
-                    left: parent.left
-                    leftMargin: parent.height/20
+                    top: voltText.top
+                    topMargin: parent.height/20
+                    left: voltText.left
                     }
                 SGSlider {
-                    id: gainVolt_3Slider
+                    id: gainVoltSlider
                     width: parent.width
                     from: 0
                     to: 100
-                    value: platformInterface.gainVolt_3
+                    value: platformInterface.gainVolt
                     stepSize: 0.1
-                    onValueChanged: gainVolt_3 = value
-                    onUserSet: platformInterface.gainVolt_3 = gainVolt_3Slider.value
+                    onValueChanged: gainVolt = value
+                    onUserSet: platformInterface.gainVolt = gainVoltSlider.value
                     live: false
                 }
             }
 
             SGAlignedLabel{
-                id: offsetVolt_3Label
-                target: offsetVolt_3Slider
-                text:"<b>Offset Voltage 3:<b>"
+                id: offsetVoltLabel
+                target: offsetVoltSlider
+                text:"Offset"
                 font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
+                width: parent.width/4
                 anchors {
-                    top: gainVolt_3Label.bottom
-                    topMargin: parent.height/30
-                    left: parent.left
-                    leftMargin: parent.height/20
+                    top: gainVoltLabel.bottom
+                    topMargin: parent.height/50
+                    left: voltText.left
                     }
                 SGSlider {
-                    id: offsetVolt_3Slider
+                    id: offsetVoltSlider
                     width: parent.width
-                    from: -1000
-                    to: 1000
-                    value: platformInterface.offsetVolt_3
+                    from: -multiplePlatform.nominalVin
+                    to: multiplePlatform.nominalVin
+                    value: platformInterface.offsetVolt
                     stepSize: 1
-                    onValueChanged: offsetVolt_3 = value
-                    onUserSet: platformInterface.offsetVolt_3 = offsetVolt_3Slider.value
+                    onValueChanged: offsetVolt = value
+                    onUserSet: platformInterface.offsetVolt = offsetVoltSlider.value
                     live: false
                 }
                 Text{
-                    id: offsetVolt_3SliderUnit
+                    id: offsetVoltSliderUnit
                     text:"V"
                     font.pixelSize: (parent.width + parent.height)/40
                     color: "black"
-                    anchors.left: offsetVolt_3Slider.right
-                    anchors.verticalCenter: offsetVolt_3Slider.top
+                    anchors.left: offsetVoltSlider.right
+                    anchors.verticalCenter: offsetVoltSlider.top
                     }
             }
 
-            SGAlignedLabel{
-                id: gainCurrent_3Label
-                target: gainCurrent_3Slider
-                text:"<b>Gain Current 3:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
+            Text{
+                id: currentText
+                text: "<b>Current Measurements:<b>"
+                font.pixelSize: (parent.width + parent.height)/120
+                color: "black"
                 anchors {
-                    top: offsetVolt_3Label.bottom
-                    topMargin: parent.height/30
-                    left: parent.left
-                    leftMargin: parent.height/20
+                    top : parent.top
+                    topMargin : parent.height/20
+                    left: offsetVoltLabel.right
+                    leftMargin: parent.width/20
                     }
-                SGSlider {
-                    id: gainCurrent_3Slider
-                    width: parent.width
-                    from: 0
-                    to: 100
-                    value: platformInterface.gainCurrent_3
-                    stepSize: 0.1
-                    onValueChanged: gainCurrent_3 = value
-                    onUserSet: platformInterface.gainCurrent_3 = gainCurrent_3Slider.value
-                    live: false
                 }
-            }
 
-            SGAlignedLabel{
-                id: offsetCurrent_3Label
-                target: offsetCurrent_3Slider
-                text:"<b>Offset Current 3:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: gainCurrent_3Label.bottom
-                    topMargin: parent.height/30
-                    left: parent.left
-                    leftMargin: parent.height/20
+                SGAlignedLabel{
+                    id: gainCurrentLabel
+                    target: gainCurrentSlider
+                    text:"Gain"
+                    font.pixelSize: (parent.width + parent.height)/ 150
+                    width: parent.width/4
+                    anchors {
+                        top: currentText.top
+                        topMargin: parent.height/20
+                        left: currentText.left
+                        }
+                    SGSlider {
+                        id: gainCurrentSlider
+                        width: parent.width
+                        from: 0
+                        to: 100
+                        value: platformInterface.gainCurrent
+                        stepSize: 0.1
+                        onValueChanged: gainCurrent = value
+                        onUserSet: platformInterface.gainCurrent = gainCurrentSlider.value
+                        live: false
                     }
-                SGSlider {
-                    id: offsetCurrent_3Slider
-                    width: parent.width
-                    from: -1000
-                    to: 1000
-                    value: platformInterface.offsetCurrent_3
-                    stepSize: 1
-                    onValueChanged: offsetCurrent_3 = value
-                    onUserSet: platformInterface.offsetCurrent_3 = offsetCurrent_3Slider.value
-                    live: false
                 }
+
+                SGAlignedLabel{
+                    id: offsetCurrentLabel
+                    target: offsetCurrentSlider
+                    text:"Offset"
+                    font.pixelSize: (parent.width + parent.height)/ 150
+                    width: parent.width/4
+                    anchors {
+                        top: gainCurrentLabel.bottom
+                        topMargin: parent.height/50
+                        left: currentText.left
+                        }
+                    SGSlider {
+                        id: offsetCurrentSlider
+                        width: parent.width
+                        from: -1500
+                        to: 1500
+                        value: platformInterface.offsetCurrent
+                        stepSize: 1
+                        onValueChanged: offsetCurrent = value
+                        onUserSet: platformInterface.offsetCurrent = offsetCurrentSlider.value
+                        live: false
+                    }
+                    Text{
+                        id: offsetCurrentSliderUnit
+                        text:"V"
+                        font.pixelSize: (parent.width + parent.height)/40
+                        color: "black"
+                        anchors.left: offsetCurrentSlider.right
+                        anchors.verticalCenter: offsetCurrentSlider.top
+                        }
+                }
+
+
                 Text{
-                    id: offsetCurrent_3SliderUnit
-                    text:"A"
-                    font.pixelSize: (parent.width + parent.height)/40
+                    id: tempText
+                    text: "<b>Temperature Measurements:<b>"
+                    font.pixelSize: (parent.width + parent.height)/120
                     color: "black"
-                    anchors.left: offsetCurrent_3Slider.right
-                    anchors.verticalCenter: offsetCurrent_3Slider.top
+                    anchors {
+                        top : parent.top
+                        topMargin : parent.height/20
+                        left: offsetCurrentLabel.right
+                        leftMargin: parent.width/20
+                        }
                     }
-            }
 
-            SGAlignedLabel{
-                id: gainTemp_3Label
-                target: gainTemp_3Slider
-                text:"<b>Gain Temperature 3:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: offsetCurrent_3Label.bottom
-                    topMargin: parent.height/30
-                    left: parent.left
-                    leftMargin: parent.height/20
+                    SGAlignedLabel{
+                        id: r25Label
+                        target: r25Slider
+                        text:"R25"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: tempText.top
+                            topMargin: parent.height/20
+                            left: tempText.left
+                            }
+                        SGSlider {
+                            id: r25Slider
+                            width: parent.width
+                            from: 0
+                            to: 10000
+                            value: platformInterface.r25
+                            stepSize: 1
+                            onValueChanged: r25 = value
+                            onUserSet: platformInterface.r25 = r25Slider.value
+                            live: false
+                        }
+                        Text{
+                            id: r25SliderUnit
+                            text:"Ω"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: r25Slider.right
+                            anchors.verticalCenter: r25Slider.top
+                            }
                     }
-                SGSlider {
-                    id: gainTemp_3Slider
-                    width: parent.width
-                    from: 0
-                    to: 100
-                    value: platformInterface.gainTemp_3
-                    stepSize: 0.1
-                    onValueChanged: gainTemp_3 = value
-                    onUserSet: platformInterface.gainTemp_3 = gainTemp_3Slider.value
-                    live: false
-                }
-            }
 
-            SGAlignedLabel{
-                id: offsetTemp_3Label
-                target: offsetTemp_3Slider
-                text:"<b>Offset Temperature 3:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: gainTemp_3Label.bottom
-                    topMargin: parent.height/30
-                    left: parent.left
-                    leftMargin: parent.height/20
+                    SGAlignedLabel{
+                        id: r2550Label
+                        target: r2550Slider
+                        text:"R25/50"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: r25Label.bottom
+                            topMargin: parent.height/50
+                            left: tempText.left
+                            }
+                        SGSlider {
+                            id: r2550Slider
+                            width: parent.width
+                            from: 0
+                            to: 10000
+                            value: platformInterface.r2550
+                            stepSize: 1
+                            onValueChanged: r2550 = value
+                            onUserSet: platformInterface.r2550 = r2550Slider.value
+                            live: false
+                        }
+                        Text{
+                            id: r2550SliderUnit
+                            text:"Ω"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: r2550Slider.right
+                            anchors.verticalCenter: r2550Slider.top
+                            }
                     }
-                SGSlider {
-                    id: offsetTemp_3Slider
-                    width: parent.width
-                    from: -200
-                    to: 200
-                    value: platformInterface.offsetTemp_3
-                    stepSize: 1
-                    onValueChanged: offsetTemp_3 = value
-                    onUserSet: platformInterface.offsetTemp_3 = offsetTemp_3Slider.value
-                    live: false
-                }
-                Text{
-                    id: offsetTemp_3SliderUnit
-                    text:"°C"
-                    font.pixelSize: (parent.width + parent.height)/40
-                    color: "black"
-                    anchors.left: offsetTemp_3Slider.right
-                    anchors.verticalCenter: offsetTemp_3Slider.top
-                    }
-            }
 
-            SGAlignedLabel{
-                id: gainVolt_2Label
-                target: gainVolt_2Slider
-                text:"<b>Gain Voltage 2:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: parent.top
-                    topMargin: parent.height/30
-                    left: gainVolt_3Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: r2580Label
+                        target: r2580Slider
+                        text:"R25/80"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: r2550Label.bottom
+                            topMargin: parent.height/50
+                            left: tempText.left
+                            }
+                        SGSlider {
+                            id: r2580Slider
+                            width: parent.width
+                            from: 0
+                            to: 10000
+                            value: platformInterface.r2580
+                            stepSize: 1
+                            onValueChanged: r2580 = value
+                            onUserSet: platformInterface.r2580 = r2580Slider.value
+                            live: false
+                        }
+                        Text{
+                            id: r2580SliderUnit
+                            text:"Ω"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: r2580Slider.right
+                            anchors.verticalCenter: r2580Slider.top
+                            }
                     }
-                SGSlider {
-                    id: gainVolt_2Slider
-                    width: parent.width
-                    from: 0
-                    to: 100
-                    value: platformInterface.gainVolt_2
-                    stepSize: 0.1
-                    onValueChanged: gainVolt_2 = value
-                    onUserSet: platformInterface.gainVolt_2 = gainVolt_2Slider.value
-                    live: false
-                }
-            }
 
-            SGAlignedLabel{
-                id: offsetVolt_2Label
-                target: offsetVolt_2Slider
-                text:"<b>Offset Voltage 2:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: gainVolt_2Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_3Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: r25120Label
+                        target: r25120Slider
+                        text:"R25/120"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: r2580Label.bottom
+                            topMargin: parent.height/50
+                            left: tempText.left
+                            }
+                        SGSlider {
+                            id: r25120Slider
+                            width: parent.width
+                            from: 0
+                            to: 10000
+                            value: platformInterface.r25120
+                            stepSize: 1
+                            onValueChanged: r25120 = value
+                            onUserSet: platformInterface.r25120 = r25120Slider.value
+                            live: false
+                        }
+                        Text{
+                            id: r25120SliderUnit
+                            text:"Ω"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: r25120Slider.right
+                            anchors.verticalCenter: r25120Slider.top
+                            }
                     }
-                SGSlider {
-                    id: offsetVolt_2Slider
-                    width: parent.width
-                    from: -1000
-                    to: 1000
-                    value: platformInterface.offsetVolt_2
-                    stepSize: 1
-                    onValueChanged: offsetVolt_2 = value
-                    onUserSet: platformInterface.offsetVolt_2 = offsetVolt_2Slider.value
-                    live: false
-                }
-                Text{
-                    id: offsetVolt_2SliderUnit
-                    text:"V"
-                    font.pixelSize: (parent.width + parent.height)/40
-                    color: "black"
-                    anchors.left: offsetVolt_2Slider.right
-                    anchors.verticalCenter: offsetVolt_2Slider.top
-                    }
-            }
 
-            SGAlignedLabel{
-                id: gainCurrent_2Label
-                target: gainCurrent_2Slider
-                text:"<b>Gain Current 2:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: offsetVolt_2Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_3Label.right
-                    leftMargin: parent.height/15
-                    }
-                SGSlider {
-                    id: gainCurrent_2Slider
-                    width: parent.width
-                    from: 0
-                    to: 100
-                    value: platformInterface.gainCurrent_2
-                    stepSize: 0.1
-                    onValueChanged: gainCurrent_2 = value
-                    onUserSet: platformInterface.gainCurrent_2 = gainCurrent_2Slider.value
-                    live: false
-                }
-            }
+                    Text{
+                        id: alarmText
+                        text: "<b>Fault / Warning Alarm Settings:<b>"
+                        font.pixelSize: (parent.width + parent.height)/120
+                        color: "black"
+                        anchors {
+                            top : r25120Label.top
+                            topMargin : parent.height/10
+                            left: parent.left
+                            leftMargin: parent.width/20
+                            }
+                        }
 
-            SGAlignedLabel{
-                id: offsetCurrent_2Label
-                target: offsetCurrent_2Slider
-                text:"<b>Offset Current 2:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: gainCurrent_2Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_3Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: overTemperatureFaultLabel
+                        target: overTemperatureFaultSlider
+                        text:"Over temperature Fault:"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: alarmText.top
+                            topMargin: parent.height/20
+                            left: alarmText.left
+                            }
+                        SGSlider {
+                            id: overTemperatureFaultSlider
+                            width: parent.width
+                            from: 115
+                            to: 135
+                            value: platformInterface.status_predefined_values.OT_fault
+                            stepSize: 1
+                            onValueChanged: overTemperatureFault = value
+                            onUserSet: platformInterface.overTemperatureFault = overTemperatureFaultSlider.value
+                            live: false
+                        }
+                        Text{
+                            id: overTemperatureFaultSliderUnit
+                            text:"°C"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: overTemperatureFaultSlider.right
+                            anchors.verticalCenter: overTemperatureFaultSlider.top
+                            }
                     }
-                SGSlider {
-                    id: offsetCurrent_2Slider
-                    width: parent.width
-                    from: -1000
-                    to: 1000
-                    value: platformInterface.offsetCurrent_2
-                    stepSize: 1
-                    onValueChanged: offsetCurrent_2 = value
-                    onUserSet: platformInterface.offsetCurrent_2 = offsetCurrent_2Slider.value
-                    live: false
-                }
-                Text{
-                    id: offsetCurrent_2SliderUnit
-                    text:"A"
-                    font.pixelSize: (parent.width + parent.height)/40
-                    color: "black"
-                    anchors.left: offsetCurrent_2Slider.right
-                    anchors.verticalCenter: offsetCurrent_2Slider.top
-                    }
-            }
 
-            SGAlignedLabel{
-                id: gainTemp_2Label
-                target: gainTemp_2Slider
-                text:"<b>Gain Temperature 2:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: offsetCurrent_2Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_3Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: voutOVlimitFaultLabel
+                        target: voutOVlimitFaultSlider
+                        text:"Vout OV Fault Limit:"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: overTemperatureFaultLabel.bottom
+                            topMargin: parent.height/50
+                            left: alarmText.left
+                            }
+                        SGSlider {
+                            id: voutOVlimitFaultSlider
+                            width: parent.width
+                            from: 0
+                            to: multiplePlatform.nominalVin
+                            value: platformInterface.status_predefined_values.OV_fault
+                            stepSize: 1
+                            onValueChanged: voutOVlimitFault = value
+                            onUserSet: platformInterface.voutOVlimitFault = voutOVlimitFaultSlider.value
+                            live: false
+                        }
+                        Text{
+                            id: voutOVlimitFaultSliderUnit
+                            text:"V"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: voutOVlimitFaultSlider.right
+                            anchors.verticalCenter: voutOVlimitFaultSlider.top
+                            }
                     }
-                SGSlider {
-                    id: gainTemp_2Slider
-                    width: parent.width
-                    from: 0
-                    to: 100
-                    value: platformInterface.gainTemp_2
-                    stepSize: 0.1
-                    onValueChanged: gainTemp_2 = value
-                    onUserSet: platformInterface.gainTemp_2 = gainTemp_2Slider.value
-                    live: false
-                }
-            }
 
-            SGAlignedLabel{
-                id: offsetTemp_2Label
-                target: offsetTemp_2Slider
-                text:"<b>Offset Temperature 2:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: gainTemp_2Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_3Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: voutUVlimitFaultLabel
+                        target: voutUVlimitFaultSlider
+                        text:"Vout UV Fault Limit:"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: voutOVlimitFaultLabel.bottom
+                            topMargin: parent.height/50
+                            left: alarmText.left
+                            }
+                        SGSlider {
+                            id: voutUVlimitFaultSlider
+                            width: parent.width
+                            from: 0
+                            to: multiplePlatform.nominalVin
+                            value: platformInterface.status_predefined_values.UV_fault
+                            stepSize: 1
+                            onValueChanged: voutUVlimitFault = value
+                            onUserSet: platformInterface.voutUVlimitFault = voutUVlimitFaultSlider.value
+                            live: false
+                        }
+                        Text{
+                            id: voutUVlimitFaultSliderUnit
+                            text:"V"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: voutUVlimitFaultSlider.right
+                            anchors.verticalCenter: voutUVlimitFaultSlider.top
+                            }
                     }
-                SGSlider {
-                    id: offsetTemp_2Slider
-                    width: parent.width
-                    from: -200
-                    to: 200
-                    value: platformInterface.offsetTemp_2
-                    stepSize: 1
-                    onValueChanged: offsetTemp_2 = value
-                    onUserSet: platformInterface.offsetTemp_2 = offsetTemp_2Slider.value
-                    live: false
-                }
-                Text{
-                    id: offsetTemp_2SliderUnit
-                    text:"°C"
-                    font.pixelSize: (parent.width + parent.height)/40
-                    color: "black"
-                    anchors.left: offsetTemp_2Slider.right
-                    anchors.verticalCenter: offsetTemp_2Slider.top
-                    }
-            }
 
-            SGAlignedLabel{
-                id: gainVolt_1Label
-                target: gainVolt_1Slider
-                text:"<b>Gain Voltage 1:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: parent.top
-                    topMargin: parent.height/30
-                    left: gainVolt_2Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: ioutOClimitFaultLabel
+                        target: ioutOClimitFaultSlider
+                        text:"Iout OC Fault Limit:"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: voutUVlimitFaultLabel.bottom
+                            topMargin: parent.height/50
+                            left: alarmText.left
+                            }
+                        SGSlider {
+                            id: ioutOClimitFaultSlider
+                            width: parent.width
+                            from: 0
+                            to: multiplePlatform.ioutScale
+                            value: platformInterface.status_predefined_values.OC_fault
+                            stepSize: 1
+                            onValueChanged: ioutOClimitFault = value
+                            onUserSet: platformInterface.ioutOClimitFault = ioutOClimitFaultSlider.value
+                            live: false
+                        }
+                        Text{
+                            id: ioutOClimitFaultSliderUnit
+                            text:"A"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: ioutOClimitFaultSlider.right
+                            anchors.verticalCenter: ioutOClimitFaultSlider.top
+                            }
                     }
-                SGSlider {
-                    id: gainVolt_1Slider
-                    width: parent.width
-                    from: 0
-                    to: 100
-                    value: platformInterface.gainVolt_1
-                    stepSize: 0.1
-                    onValueChanged: gainVolt_1 = value
-                    onUserSet: platformInterface.gainVolt_1 = gainVolt_1Slider.value
-                    live: false
-                }
-            }
 
-            SGAlignedLabel{
-                id: offsetVolt_1Label
-                target: offsetVolt_1Slider
-                text:"<b>Offset Voltage 1:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: gainVolt_1Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_2Label.right
-                    leftMargin: parent.height/15
-                    }
-                SGSlider {
-                    id: offsetVolt_1Slider
-                    width: parent.width
-                    from: -1000
-                    to: 1000
-                    value: platformInterface.offsetVolt_1
-                    stepSize: 1
-                    onValueChanged: offsetVolt_1 = value
-                    onUserSet: platformInterface.offsetVolt_1 = offsetVolt_1Slider.value
-                    live: false
-                }
-                Text{
-                    id: offsetVolt_1SliderUnit
-                    text:"V"
-                    font.pixelSize: (parent.width + parent.height)/40
-                    color: "black"
-                    anchors.left: offsetVolt_1Slider.right
-                    anchors.verticalCenter: offsetVolt_1Slider.top
-                    }
-            }
+                    SGAlignedLabel{
+                        id: overTemperatureWarningLabel
+                        target: overTemperatureWarningSlider
+                        text:"Over temperature Warning:"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: alarmText.top
+                            topMargin: parent.height/20
+                            left: currentText.left
+                            }
+                        SGSlider {
+                            id: overTemperatureWarningSlider
+                            width: parent.width
+                            from: 85
+                            to: 105
+                            value: platformInterface.status_predefined_values.OT_warning
+                            stepSize: 1
+                            onValueChanged: overTemperatureWarning = value
+                            onUserSet: platformInterface.overTemperatureWarning = overTemperatureWarningSlider.value
+                            live: false
+                        }
+                        Text{
+                            id: overTemperatureWarningSliderUnit
+                            text:"°C"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: overTemperatureWarningSlider.right
+                            anchors.verticalCenter: overTemperatureWarningSlider.top
+                            }
+                        }
 
-            SGAlignedLabel{
-                id: gainCurrent_1Label
-                target: gainCurrent_1Slider
-                text:"<b>Gain Current 1:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: offsetVolt_1Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_2Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: voutOVlimitWarningLabel
+                        target: voutOVlimitWarningSlider
+                        text:"Vout OV Warning Limit:"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: overTemperatureWarningLabel.bottom
+                            topMargin: parent.height/50
+                            left: currentText.left
+                            }
+                        SGSlider {
+                            id: voutOVlimitWarningSlider
+                            width: parent.width
+                            from: 0
+                            to: multiplePlatform.nominalVin
+                            value: platformInterface.status_predefined_values.OV_warning
+                            stepSize: 1
+                            onValueChanged: voutOVlimitWarning = value
+                            onUserSet: platformInterface.voutOVlimitWarning = voutOVlimitWarningSlider.value
+                            live: false
+                        }
+                        Text{
+                            id: voutOVlimitWarningSliderUnit
+                            text:"V"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: voutOVlimitWarningSlider.right
+                            anchors.verticalCenter: voutOVlimitWarningSlider.top
+                            }
                     }
-                SGSlider {
-                    id: gainCurrent_1Slider
-                    width: parent.width
-                    from: 0
-                    to: 100
-                    value: platformInterface.gainCurrent_1
-                    stepSize: 0.1
-                    onValueChanged: gainCurrent_1 = value
-                    onUserSet: platformInterface.gainCurrent_1 = gainCurrent_1Slider.value
-                    live: false
-                }
-            }
 
-            SGAlignedLabel{
-                id: offsetCurrent_1Label
-                target: offsetCurrent_1Slider
-                text:"<b>Offset Current 1:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: gainCurrent_1Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_2Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: voutUVlimitWarningLabel
+                        target: voutUVlimitWarningSlider
+                        text:"Vout UV Warning Limit:"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: voutOVlimitWarningLabel.bottom
+                            topMargin: parent.height/50
+                            left: currentText.left
+                            }
+                        SGSlider {
+                            id: voutUVlimitWarningSlider
+                            width: parent.width
+                            from: 0
+                            to: multiplePlatform.nominalVin
+                            value: platformInterface.status_predefined_values.UV_warning
+                            stepSize: 1
+                            onValueChanged: voutUVlimitWarning = value
+                            onUserSet: platformInterface.voutUVlimitWarning = voutUVlimitWarningSlider.value
+                            live: false
+                        }
+                        Text{
+                            id: voutUVlimitWarningSliderUnit
+                            text:"V"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: voutUVlimitWarningSlider.right
+                            anchors.verticalCenter: voutUVlimitWarningSlider.top
+                            }
                     }
-                SGSlider {
-                    id: offsetCurrent_1Slider
-                    width: parent.width
-                    from: -1000
-                    to: 1000
-                    value: platformInterface.offsetCurrent_1
-                    stepSize: 1
-                    onValueChanged: offsetCurrent_1 = value
-                    onUserSet: platformInterface.offsetCurrent_1 = offsetCurrent_1Slider.value
-                    live: false
-                }
-                Text{
-                    id: offsetCurrent_1SliderUnit
-                    text:"A"
-                    font.pixelSize: (parent.width + parent.height)/40
-                    color: "black"
-                    anchors.left: offsetCurrent_1Slider.right
-                    anchors.verticalCenter: offsetCurrent_1Slider.top
-                    }
-            }
 
-            SGAlignedLabel{
-                id: gainTemp_1Label
-                target: gainTemp_1Slider
-                text:"<b>Gain Temperature 1:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: offsetCurrent_1Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_2Label.right
-                    leftMargin: parent.height/15
+                    SGAlignedLabel{
+                        id: ioutOClimitWarningLabel
+                        target: ioutOClimitWarningSlider
+                        text:"Iout OC Warning Limit:"
+                        font.pixelSize: (parent.width + parent.height)/ 150
+                        width: parent.width/4
+                        anchors {
+                            top: voutUVlimitWarningLabel.bottom
+                            topMargin: parent.height/50
+                            left: currentText.left
+                            }
+                        SGSlider {
+                            id: ioutOClimitWarningSlider
+                            width: parent.width
+                            from: 0
+                            to: multiplePlatform.ioutScale
+                            value: platformInterface.status_predefined_values.OC_warning
+                            stepSize: 1
+                            onValueChanged: ioutOClimitWarning = value
+                            onUserSet: platformInterface.ioutOClimitWarning = ioutOClimitWarningSlider.value
+                            live: false
+                        }
+                        Text{
+                            id: ioutOClimitWarningSliderUnit
+                            text:"A"
+                            font.pixelSize: (parent.width + parent.height)/40
+                            color: "black"
+                            anchors.left: ioutOClimitWarningSlider.right
+                            anchors.verticalCenter: ioutOClimitWarningSlider.top
+                            }
                     }
-                SGSlider {
-                    id: gainTemp_1Slider
-                    width: parent.width
-                    from: 0
-                    to: 100
-                    value: platformInterface.gainTemp_1
-                    stepSize: 0.1
-                    onValueChanged: gainTemp_1 = value
-                    onUserSet: platformInterface.gainTemp_1 = gainTemp_1Slider.value
-                    live: false
-                }
-            }
-
-            SGAlignedLabel{
-                id: offsetTemp_1Label
-                target: offsetTemp_1Slider
-                text:"<b>Offset Temperature 1:<b>"
-                font.pixelSize: (parent.width + parent.height)/ 150
-                width: parent.width/3.5
-                anchors {
-                    top: gainTemp_1Label.bottom
-                    topMargin: parent.height/30
-                    left: gainVolt_2Label.right
-                    leftMargin: parent.height/15
-                    }
-                SGSlider {
-                    id: offsetTemp_1Slider
-                    width: parent.width
-                    from: -200
-                    to: 200
-                    value: platformInterface.offsetTemp_1
-                    stepSize: 1
-                    onValueChanged: offsetTemp_1 = value
-                    onUserSet: platformInterface.offsetTemp_1 = offsetTemp_1Slider.value
-                    live: false
-                }
-                Text{
-                    id: offsetTemp_1SliderUnit
-                    text:"°C"
-                    font.pixelSize: (parent.width + parent.height)/40
-                    color: "black"
-                    anchors.left: offsetTemp_1Slider.right
-                    anchors.verticalCenter: offsetTemp_1Slider.top
-                    }
-            }
-
         }
 }
 

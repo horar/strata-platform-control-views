@@ -173,6 +173,17 @@ Rectangle {
             }
         }
 
+        SGText {
+            text: "ALARMS"
+            enabled: !dpt
+            opacity: !dpt ? 1 : .0
+            Layout.fillWidth: true
+            wrapMode: Text.Wrap
+            horizontalAlignment: Text.AlignHCenter
+            fontSizeMultiplier: .7
+            color: "white"
+        }
+
             FaultLight {
                 enabled: !dpt
                 opacity: !dpt ? 1 : .0
@@ -188,7 +199,7 @@ Rectangle {
                 toolTipText: "ADC THRESHOLD OUTSIDE RANGE"
                 status: (error_status === 1) ? SGStatusLight.Red : SGStatusLight.Off
             }
-
+/*
             FaultLight {
                 enabled: !dpt
                 opacity: !dpt ? 1 : .0
@@ -204,7 +215,7 @@ Rectangle {
                 toolTipText: "STARTUP CURRENT INJECTION2 ERROR"
                 status: (error_status === 3) ? SGStatusLight.Red : SGStatusLight.Off
             }
-
+*/
             FaultLight {
                 enabled: !dpt
                 opacity: !dpt ? 1 : .0

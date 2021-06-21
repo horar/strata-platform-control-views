@@ -56,11 +56,9 @@
         <file>image/Module.png</file>
         <file>image/ShortCircuitMode.png</file>
         <file>image/SinglePulseTesting.png</file>
-        <file>image/SwitchDistribution.png</file>
         <file>image/DPT_Set−up.png</file>
         <file>image/ShortCircuitMeasurement.png</file>
         <file>sgwidgets/SGAlignedLabel.qml</file>
-        <file>image/double-pulse-test.png</file>
         <file>image/DPT.png</file>
         <file>ValuesPulse.qml</file>
     </qresource>

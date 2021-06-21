@@ -99,12 +99,18 @@ Rectangle {
         }
 
         TabButton {
+            id: generalButton
+            enabled: true
+            opacity: 1
+            text: "General Inputs"
+        }
+
+        TabButton {
             id: pulseButton
             enabled: (dpt === false || motor_play === 1 ) ? false : true
             opacity: dpt ? 1 : 0
             text: if (dpt === true && motor_play === 0 ){qsTr("Pulse Testing")} else {}
         }
-
     }
 
     StackLayout {
@@ -176,6 +182,19 @@ Rectangle {
             height: parent.height
             color: "white"
 
+            GeneralInputs {
+                id: generalControl
+                visible: true
+                width: parent.width
+                height: parent.height
+            }
+        }
+
+        Rectangle {
+            width: parent.width
+            height: parent.height
+            color: "white"
+
             PulseControl {
                 id: pulseControl
                 visible: (dpt === false || motor_play === 1 ) ? false : true
@@ -210,6 +229,7 @@ Rectangle {
                 else if(advancedControl.visible === true) {Help.startHelpTour("advanceHelp")}
                 else if(settingsControl.visible === true) {Help.startHelpTour("settingsHelp")}
                 else if(exportControl.visible === true) {Help.startHelpTour("exportControlHelp")}
+                else if(generalControl.visible === true) {Help.startHelpTour("generalControlHelp")}
                 else if(pulseControl.visible === true) {Help.startHelpTour("pulseControlHelp")}
                 else console.log("help not available")
             }
