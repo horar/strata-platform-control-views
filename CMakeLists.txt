@@ -14,6 +14,9 @@ endif()
 include(AddViewMacro)
 
 find_package(Git)
+if(NOT Git_FOUND)
+    message(FATAL_ERROR "'git' program not found")
+endif()
 
 if(NOT DEFINED CMAKE_RUNTIME_OUTPUT_DIRECTORY)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
