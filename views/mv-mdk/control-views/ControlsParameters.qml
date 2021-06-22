@@ -28,7 +28,7 @@ UIBase { // start_uibase
         Help.registerTarget(cp_pid_params_lim_help, "message", 7, "ControlsAndParametersHelp")
         Help.registerTarget(cp_pid_params_tau_sys_help, "message", 8, "ControlsAndParametersHelp")
         Help.registerTarget(cp_pid_params_mode_help, "message", 9, "ControlsAndParametersHelp")
-        // // Motor and Load Parameters
+        // Motor and Load Parameters
         Help.registerTarget(cp_motor_params_xs_help, "message", 10, "ControlsAndParametersHelp")
         Help.registerTarget(cp_motor_params_jm_kv_help, "message", 11, "ControlsAndParametersHelp")
         Help.registerTarget(cp_motor_params_pp_help, "message", 12, "ControlsAndParametersHelp")
@@ -36,15 +36,15 @@ UIBase { // start_uibase
         Help.registerTarget(cp_motor_params_ke_help, "message", 14, "ControlsAndParametersHelp")
         Help.registerTarget(cp_motor_params_rated_v_help, "message", 15, "ControlsAndParametersHelp")
         Help.registerTarget(cp_motor_params_hall_pol_help, "message", 16, "ControlsAndParametersHelp")
-        // // Speed Loop Parameters
-        // Help.registerTarget(cp_spd_loop_params_mode_help, "message", ADFDSFSDF, "ControlsAndParametersHelp")
-        // Help.registerTarget(cp_spd_loop_params_accel_help, "message", 17, "ControlsAndParametersHelp")
-        // Help.registerTarget(cp_spd_loop_params_fs_help, "message", 18, "ControlsAndParametersHelp")
-        // Help.registerTarget(cp_spd_loop_params_fspd_filt_help, "message", 19, "ControlsAndParametersHelp")
-        // // Protection Parameters
-        // Help.registerTarget(cp_protection_ocp_help, "message", 20, "ControlsAndParametersHelp")
-        // Help.registerTarget(cp_protection_ovp_help, "message", 21, "ControlsAndParametersHelp")
-        // Help.registerTarget(cp_protection_fet_otp_help, "message", 22, "ControlsAndParametersHelp")
+        // Speed Loop Parameters
+        Help.registerTarget(cp_spd_loop_params_mode_help, "message", 17, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_accel_help, "message", 18, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_fs_help, "message", 19, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_fspd_filt_help, "message", 20, "ControlsAndParametersHelp")
+        // Protection Parameters
+        Help.registerTarget(cp_protection_ocp_help, "message", 21, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_protection_ovp_help, "message", 22, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_protection_fet_otp_help, "message", 23, "ControlsAndParametersHelp")
 
     }
 
@@ -1983,18 +1983,82 @@ UIBase { // start_uibase
 
     // ------------------------ Speed Loop Parameters ------------------------ //
 
-    // cp_spd_loop_params_mode_help
-    // cp_spd_loop_params_accel_help
-    // cp_spd_loop_params_fs_help
-    // cp_spd_loop_params_fspd_filt_help
+    // 
+    // 
+    // 
+    // 
+
+    LayoutRectangle { // start_c1c77
+        id: cp_spd_loop_params_mode_help
+        layoutInfo.uuid: "c1c77"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 3
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 9
+        opacity: 0
+    } // end_c1c77
+
+    LayoutRectangle { // start_c8d50
+        id: cp_spd_loop_params_accel_help
+        layoutInfo.uuid: "c8d50"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 13
+        opacity: 0
+    } // end_c8d50
+
+    LayoutRectangle { // start_7b50c
+        id: cp_spd_loop_params_fs_help
+        layoutInfo.uuid: "7b50c"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 16
+        opacity: 0
+    } // end_7b50c
+
+    LayoutRectangle { // start_4fc8b
+        id: cp_spd_loop_params_fspd_filt_help
+        layoutInfo.uuid: "4fc8b"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 19
+        opacity: 0
+    } // end_4fc8b
 
     
     // ------------------------ Protection Parameters ------------------------ //
 
-    // cp_protection_ocp_help
-    // cp_protection_ovp_help
-    // cp_protection_fet_otp_help
-        
+    LayoutRectangle { // start_2e709
+        id: cp_protection_ocp_help
+        layoutInfo.uuid: "2e709"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 5
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 25
+        opacity: 0
+    } // end_2e709
 
+    LayoutRectangle { // start_ee62d
+        id: cp_protection_ovp_help
+        layoutInfo.uuid: "ee62d"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 5
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 31
+        opacity: 0
+    } // end_ee62d
+
+    LayoutRectangle { // start_55f56
+        id: cp_protection_fet_otp_help
+        layoutInfo.uuid: "55f56"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 37
+        opacity: 0
+    } // end_55f56
 
 } // end_uibase
