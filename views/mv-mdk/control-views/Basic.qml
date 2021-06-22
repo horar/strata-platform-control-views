@@ -16,9 +16,9 @@ UIBase { // start_uibase
 
         // ------------------------ Help Messages ------------------------ //
 
-        Help.registerTarget(rect_6a35c, "message", 6, "BasicControlHelp") // input rectangle
-        Help.registerTarget(layoutRectangle_bead4, "message", 7, "BasicControlHelp") // output rectangle
-        Help.registerTarget(b_status_log, "message", 8, "BasicControlHelp")
+        Help.registerTarget(rect_6a35c, "The input section displays telemetry from the platform for inputs to the motor controller.", 6, "BasicControlHelp") // input rectangle
+        Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform for outputs from the motor controller.", 7, "BasicControlHelp") // output rectangle
+        Help.registerTarget(b_status_log, "The status log will show timestamped messages reported by the motor controller.", 8, "BasicControlHelp")
 
         // ------------------------ Default Values ------------------------ //
         // Do this here instead of in PlatformInterface.qml because PIG overwrites values

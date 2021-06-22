@@ -24,12 +24,12 @@ Rectangle {
         // ------------------------ Help Messages ------------------------ //
 
         // Help messages
-        Help.registerTarget(speedButton, "message", 0, "BasicControlHelp")
-        Help.registerTarget(accelButton, "message", 1, "BasicControlHelp")
-        Help.registerTarget(runButton, "Click the run icon to start spinning the motor. The run icon will change to a stop icon once clicked. Click the stop icon to stop the motor. The motor control values on the Controls and Parameters tab may need to be adjust depending on the connected motor's specifications. The direction control icon will be disabled while the motor is spinning.", 2, "BasicControlHelp")
-        Help.registerTarget(brakeButton, "Click the brake icon to brake the motor.", 3, "BasicControlHelp")
-        Help.registerTarget(directionButton, "message", 4, "BasicControlHelp")
-        Help.registerTarget(warnings, "message", 5, "BasicControlHelp")
+        Help.registerTarget(speedButton, "Click here for a popout slider to set the motor's target speed. The maximum value will be updated based on the Max RPM set on the Motor and Load Parameters tab in the Motor and Load Parameters section.", 0, "BasicControlHelp")
+        Help.registerTarget(accelButton, "Click here for a popout slider to set the motor's startup acceleration. The value will be updated based on the Acceleration Rate set on the Motor and Load Parameters tab in the Speed Loop Parameters section.", 1, "BasicControlHelp")
+        Help.registerTarget(runButton, "Click the run icon to start spinning the motor. The run icon will change to a stop icon once clicked. Click the stop icon to stop the motor. The motor control values on the Controls and Parameters tab may need to be adjusted depending on the connected motor's specifications. The direction control icon will be disabled while the motor is spinning.", 2, "BasicControlHelp")
+        Help.registerTarget(brakeButton, "Click the brake icon to brake the motor. This feature may be disabled for certain motor contorllers", 3, "BasicControlHelp")
+        Help.registerTarget(directionButton, "Click this icon to change the direction of the motor. The direction control icon will be disabled while the motor is spinning.", 4, "BasicControlHelp")
+        Help.registerTarget(warnings, "Warnings and errors are shown here for events such as Over Current Protection (OCP).", 5, "BasicControlHelp")
 
         // ------------------------ Default Values ------------------------ //
         // Do this here instead of in PlatformInterface.qml because PIG overwrites values

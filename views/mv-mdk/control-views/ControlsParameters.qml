@@ -1051,6 +1051,8 @@ UIBase { // start_uibase
                 Number(cp_motor_params_rated_v.text),
                 Number(cp_motor_params_rs.text)  
             )
+            // Update Target Speed slider with maximum value
+            platformInterface.notifications.target_speed.scales.index_0 = Number(cp_motor_params_max_rpm.text)
         }
     } // end_18fca
 
@@ -1489,6 +1491,8 @@ UIBase { // start_uibase
                 Number(cp_spd_loop_params_fspd_filt.text),
                 cp_spd_loop_params_mode.currentIndex
             )
+            // Update Acceleration slider with set value
+            platformInterface.notifications.acceleration.value = Number(text)
         }
     } // end_33053
 
