@@ -10,17 +10,17 @@ Item{
     property string warningHVVinLable: "70V"
     property string warningLVVinLable: "30V"
     property string opn: "STR-PWRFD6000-R0-GEVK"
-    property real minVin: 30
-    property real nominalVin: 60
-    property real vinScale: 100
-    property real iinScale: 20
-    property real voutScale: 20
-    property real ioutScale: 100
-    property real poutScale: 1000
-    property real pdissScale: 500
+    property var minVin: 30
+    property var nominalVin: 60
+    property var vinScale: 100
+    property var iinScale: 20
+    property var voutScale: 20
+    property var ioutScale: 100
+    property var poutScale: 1000
+    property var pdissScale: 500
     property bool showDecimal: true
-    property real poutStep: 100
-    property real pdissStep: 50
+    property var poutStep: 100
+    property var pdissStep: 50
     property bool dio12: true
     property bool lowpowerDCDC: true
     property string pdiss: "W"

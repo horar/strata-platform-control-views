@@ -102,8 +102,8 @@ Item {
     onError_statusChanged: {
         if(error_status === 0){error_code = "NO ERROR"}
         else if(error_status === 1){error_code = "ADC THRESHOLD OUTSIDE RANGE"}
-        else if(error_status === 2){error_code = "STARTUP CURRENT INJECTION ERROR"}
-        else if(error_status === 3){error_code = "STARTUP CURRENT INJECTION2 ERROR"}
+        //else if(error_status === 2){error_code = "STARTUP CURRENT INJECTION ERROR"}
+        //else if(error_status === 3){error_code = "STARTUP CURRENT INJECTION2 ERROR"}
         else if(error_status === 4){error_code = "UNDERVOLTAGE"}
         else if(error_status === 5){error_code = "OVERVOLTAGE"}
         else if(error_status === 6){error_code = "OVER TEMPERATURE"}
@@ -116,7 +116,7 @@ Item {
     Component.onCompleted:  {
         multiplePlatform.check_class_id()
 
-        Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced, Settings/Control and Data Logger/Export views.", 0, "basicHelp")
+        Help.registerTarget(navTabs, "These tabs switch between Basic MDK, Advanced MDK, MDK Settings and MDK Data Logger/Export, General Inputs and Pulse Testing views.", 0, "basicHelp")
 
         Help.registerTarget(motor_ENSwitch, "This switch enables or disables motor. The switch will be enabled when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V. It will be dissabled when input voltage is lower than "+ " "+ multiplePlatform.minVin + "V to warn the user that input voltage is too low.", 1, "basicHelp")
         Help.registerTarget(dc_link_vinVoltage,"DC link voltage is shown here", 2, "basicHelp")
@@ -261,7 +261,7 @@ Item {
                     grooveColor: "#ccc"             // Default: "#ccc"
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.vinScale > dc_link_vin_calc) {motor_ENSwitch.checked}
+                    checked: if (multiplePlatform.nominalVin > dc_link_vin_calc) {motor_ENSwitch.checked}
                              else{
                                  platformInterface.set_motor_EN.update("off")
                              }

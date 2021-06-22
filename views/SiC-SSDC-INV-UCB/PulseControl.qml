@@ -22,6 +22,9 @@ Rectangle {
 
     Component.onCompleted: {
         platformInterface.read_initial_status.update()
+
+        Help.registerTarget(navTabs, "Pulse Testing View:\n-Testing the switching performance of power semiconductors in a safe and controlled environment is a challenge. Two or double testing is a key implement in the tool box of power electronics engineers that enables comprehensive and accurate measurements to be made early in the design cycle and so can help reduce time to market.", 0, "pulseControlHelp")
+
     }
 
     Image {
@@ -81,7 +84,7 @@ Rectangle {
 
     SGComboBox {
         id: testResponseCombo
-        model: [ "","Single Pulse","Double Pulse","Burst","Short Circuit"]
+        model: [ "","Single_Pulse","Double_Pulse","Burst","Short_Circuit"]
         borderColor: "green"
         textColor: "black"
         indicatorColor: "green"
@@ -94,8 +97,7 @@ Rectangle {
             leftMargin: (parent.width + parent.height)/50
             }
         onActivated: {
-            platformInterface.set_TestResponse.update(currentIndex)
-            platformInterface.testResponse_state = currentIndex
+            platformInterface.set_testResponse.update(currentText)
             }
         }
 
@@ -114,7 +116,7 @@ Rectangle {
 
     SGComboBox {
         id: switchResponseCombo
-        model: testResponseCombo.currentIndex > 0 ? ["Q1","Q2","Q3","Q4","Q5","Q6"] : [""]
+        model: testResponseCombo.currentIndex > 0 ? ["","Q1","Q2","Q3","Q4","Q5","Q6"] : [""]
         borderColor: "green"
         textColor: "black"
         indicatorColor: "green"
@@ -127,8 +129,7 @@ Rectangle {
             leftMargin: (parent.width + parent.height)/50
             }
         onActivated: {
-            platformInterface.set_SwitchResponse.update(currentIndex)
-            platformInterface.switchResponse_state = currentIndex
+            platformInterface.set_switchResponse.update(currentText)
             }
         }
 
@@ -148,12 +149,12 @@ Rectangle {
     SGComboBox {
         id: constantResponseCombo
         model: {
-            if (testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 0) {["Q4","Q6"]}
-                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 1) {["Q3","Q5"]}
-                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 2) {["Q2","Q6"]}
-                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 3) {["Q1","Q5"]}
-                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 4) {["Q2","Q4"]}
-                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 5) {["Q1","Q3"]}
+            if (testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 1) {["","Q4","Q6"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 2) {["","Q3","Q5"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 3) {["","Q2","Q6"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 4) {["","Q1","Q5"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 5) {["","Q2","Q4"]}
+                else if(testResponseCombo.currentIndex === 4 && switchResponseCombo.currentIndex === 6) {["","Q1","Q3"]}
 
             else {[""]}
         }
@@ -169,8 +170,7 @@ Rectangle {
             leftMargin: (parent.width + parent.height)/50
             }
         onActivated: {
-            platformInterface.set_ConstantResponse.update(currentIndex)
-            platformInterface.constantResponse_state = currentIndex
+            platformInterface.set_constantResponse.update(currentText)
             }
         }
 

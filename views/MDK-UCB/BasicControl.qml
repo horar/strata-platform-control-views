@@ -19,7 +19,7 @@ Item {
     property string warningVin: multiplePlatform.warningHVVinLable
     property string vinlable: ""
     property string labelTest: ""
-    property real ratioCalc: root.width / 1200
+    property var ratioCalc: root.width / 1200
 
     // property that reads the initial notification
     property var temp_calc: platformInterface.status_temperature_sensor.temperature
@@ -263,7 +263,7 @@ Item {
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
 
-                    checked: if (multiplePlatform.vinScale > dc_link_vin_calc) {motor_ENSwitch.checked}
+                    checked: if (multiplePlatform.nominalVin > dc_link_vin_calc) {motor_ENSwitch.checked}
                              else{
                                  platformInterface.set_motor_EN.update("off")
                              }

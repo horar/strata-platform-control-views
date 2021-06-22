@@ -44,13 +44,13 @@ ColumnLayout {
     property var graph_selected5
     property var graph_selected6
     property var graph_selected7
-    property real ratioCalc: root.width / 1200
-    property real initialAspectRatio: 1200/820
+    property var ratioCalc: root.width / 1200
+    property var initialAspectRatio: 1200/820
     property alias virtualtextarea: virtualtextarea
     property alias logSwitch: logSwitch
     property var x_Axis_Timer_:0
     property var x_Axis_Timer_1:0
-    property  int clear:0
+    property int clear:0
     property var pointsCount: settingsControl.pointsCount
 
     // property that reads the initial notification

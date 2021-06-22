@@ -8,10 +8,10 @@ Item{
     property string warningHVVinLable
     property string warningLVVinLable
     property string opn
-    property real minVin
-    property real nominalVin
-    property real vinScale
-    property real ioutScale
+    property var minVin
+    property var nominalVin
+    property var vinScale
+    property var ioutScale
 
     function check_class_id ()
     {

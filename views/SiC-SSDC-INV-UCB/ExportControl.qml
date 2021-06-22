@@ -34,7 +34,7 @@ ColumnLayout {
         }
 
         Help.registerTarget(basicGraph,"Speed/DC link graph:\n\t-Actual Speed.\n\t-DC Link Voltage.", 0, "exportControlHelp")
-        Help.registerTarget(basicGraph1,"Current graph:\n\t-Winding Iout Iu.\n\t-Winding Iout Iv.\n\t-Winding Iout Iw.\n\t-Temperature U.\n\t-Temperature V.\n\t-Temperature W.", 1, "exportControlHelp")
+        Help.registerTarget(basicGraph1,"Current graph:\n\t-Winding Iout I1.\n\t-Winding Iout I2.\n\t-Winding Iout I3.\n\t-Temperature 1.\n\t-Temperature 2.\n\t-Temperature 3.\n\t-Frequency.", 1, "exportControlHelp")
         Help.registerTarget(rect431,"Error message status are shown here.", 2, "exportControlHelp")
         Help.registerTarget(rect432,"Reset charts and starts new measurement.", 3, "exportControlHelp")
         Help.registerTarget(rect433,"Exports all data to Excel as a log file.", 4, "exportControlHelp")
@@ -62,9 +62,9 @@ ColumnLayout {
 
     property var resistance: (settingsControl.resistance/100).toFixed(3)
     property var inductance: (settingsControl.inductance/1000).toFixed(3)
-    property var target_speed: platformInterface.status_vi.t
-    property var max_motor_vout: settingsControl.max_motor_vout
-    property var actual_speed: platformInterface.status_vi.a
+    property var target_speed: platformInterface.status_vi.t.toFixed(0)
+    property var max_motor_vout: settingsControl.max_motor_vout.toFixed(0)
+    property var actual_speed: platformInterface.status_vi.a.toFixed(0)
     property var amperes: settingsControl.amperes
 
     property string error_code: basicControl.error_code

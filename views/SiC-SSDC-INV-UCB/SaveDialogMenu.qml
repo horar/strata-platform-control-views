@@ -48,32 +48,33 @@ Rectangle {
     property var my_last_time: 0
     property var one_time_top_row_excel: 0
 
-    property var temp_calc: +(platformInterface.status_temperature_sensor.temperature).toFixed(3)
-    property var dc_link_vin_calc: +(platformInterface.status_vi.l/1000).toFixed(3)
-    property var foc_iout_id_calc: +(platformInterface.status_vi.d/1000).toFixed(3)
-    property var foc_iout_iq_calc: +(platformInterface.status_vi.q/1000).toFixed(3)
-    property var winding_iout_iu_calc: +(platformInterface.status_vi.u/1000).toFixed(3)
-    property var winding_iout_iv_calc: +(platformInterface.status_vi.v/1000).toFixed(3)
-    property var winding_iout_iw_calc: +(platformInterface.status_vi.w/1000).toFixed(3)
-    property var pole_pairs: +settingsControl.pole_pairs
-    property var max_motor_vout: +settingsControl.max_motor_vout
-    property var max_motor_speed: +settingsControl.max_motor_speed
-    property var current_pi_p_gain: +(settingsControl.current_pi_p_gain).toFixed(0)
-    property var current_pi_i_gain: +(settingsControl.current_pi_i_gain).toFixed(0)
-    property var speed_pi_p_gain: +(settingsControl.speed_pi_p_gain/1000).toFixed(3)
-    property var speed_pi_i_gain: +(settingsControl.speed_pi_i_gain/1000).toFixed(3)
+    property var dc_link_vin_calc: +(platformInterface.status_vi.l).toFixed(0)
+
+    property var winding_iout_iu_calc: +platformInterface.status_vi.u.toFixed(0)
+    property var winding_iout_iv_calc: +platformInterface.status_vi.v.toFixed(0)
+    property var winding_iout_iw_calc: +platformInterface.status_vi.w.toFixed(0)
+
+    property var temp_U_calc: +platformInterface.status_vi.U.toFixed(0)
+    property var temp_V_calc: +platformInterface.status_vi.V.toFixed(0)
+    property var temp_W_calc: +platformInterface.status_vi.W.toFixed(0)
+
+
+    property var pole_pairs: +settingsControl.pole_pairs.toFixed(0)
+    property var max_motor_vout: +settingsControl.max_motor_vout.toFixed(0)
+    property var max_motor_speed: +settingsControl.max_motor_speed.toFixed(0)
+
     property var resistance: +(settingsControl.resistance/100).toFixed(3)
     property var inductance: +(settingsControl.inductance/1000).toFixed(3)
-    property var target_speed: +platformInterface.status_vi.t
-    property var actual_speed: +platformInterface.status_vi.a
+    property var target_speed: +platformInterface.status_vi.t.toFixed(0)
+    property var actual_speed: +platformInterface.status_vi.a.toFixed(0)
 
     onWinding_iout_iu_calcChanged:
             {
             if(one_time_top_row_excel===0){
-                time_data="Time\tDC_Link(V)\t    Id(A)\t    Iq(A)\t    Iu(A)\t    Iv(A)\t    Iw(A)\tTemp.(C)\tPole Pairs\tMax vout\tMax speed\tC.prop gain\tC.int gain\tS.prop gain\tS.int gain\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
+                time_data="Time\tDC_Link(V)\tI1(A)\tI2(A)\tI3(A)\tT1(°C)\tT2(°C)\tT3(°C)\tPole Pairs\tMax vout\tMax speed\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
                 one_time_top_row_excel=1
                 }
-            else(time_data=""+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ foc_iout_id_calc +"\t"+ foc_iout_iq_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ current_pi_p_gain +"\t"+ current_pi_i_gain +"\t"+ speed_pi_p_gain +"\t"+ speed_pi_i_gain +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
+            else(time_data=""+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_U_calc +"\t"+ temp_V_calc +"\t"+ temp_W_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
 
             my_last_time=(new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss:zzz"))
             save_file_dialogbox.collect_collect.push(time_data)

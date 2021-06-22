@@ -29,14 +29,20 @@ Item {
     property var overTemperatureFault: platformInterface.overTemperatureFault
     property var overTemperatureWarning: platformInterface.overTemperatureWarning
 
-    property var voutOVlimitFault: platformInterface.voutOVlimitFault
-    property var voutOVlimitWarning: platformInterface.voutOVlimitWarning
+    property var vinOVlimitFault: platformInterface.vinOVlimitFault
+    property var vinOVlimitWarning: platformInterface.vinOVlimitWarning
 
-    property var voutUVlimitFault: platformInterface.voutUVlimitFault
-    property var voutUVlimitWarning: platformInterface.voutUVlimitWarning
+    property var vinUVlimitFault: platformInterface.vinUVlimitFault
+    property var vinUVlimitWarning: platformInterface.vinUVlimitWarning
 
     property var ioutOClimitFault: platformInterface.ioutOClimitFault
     property var ioutOClimitWarning: platformInterface.ioutOClimitWarning
+
+    Component.onCompleted:  {
+
+        Help.registerTarget(navTabs, "General Inputs:\n-Gain and offset for Voltage measurement (Inputs from user based on Gate driver voltage measurement parameters).\n-Gain and offset for phase currents measurements (Inputs from user based on LEM Sensor parameters).\n-Module NTC parameters.\n-Fault / Warning Alarm Settings.", 0, "generalControlHelp")
+
+    }
 
 
     Rectangle {
@@ -72,11 +78,11 @@ Item {
                     id: gainVoltSlider
                     width: parent.width
                     from: 0
-                    to: 100
-                    value: platformInterface.gainVolt
-                    stepSize: 0.1
+                    to: multiplePlatform.nominalVin
+                    value: multiplePlatform.gainVolt
+                    stepSize: 0.001
                     onValueChanged: gainVolt = value
-                    onUserSet: platformInterface.gainVolt = gainVoltSlider.value
+                    onUserSet: platformInterface.gainVolt = gainVoltSlider.value*1000
                     live: false
                 }
             }
@@ -97,7 +103,7 @@ Item {
                     width: parent.width
                     from: -multiplePlatform.nominalVin
                     to: multiplePlatform.nominalVin
-                    value: platformInterface.offsetVolt
+                    value: multiplePlatform.offsetVolt
                     stepSize: 1
                     onValueChanged: offsetVolt = value
                     onUserSet: platformInterface.offsetVolt = offsetVoltSlider.value
@@ -141,11 +147,11 @@ Item {
                         id: gainCurrentSlider
                         width: parent.width
                         from: 0
-                        to: 100
-                        value: platformInterface.gainCurrent
-                        stepSize: 0.1
+                        to: multiplePlatform.ioutScale
+                        value: multiplePlatform.gainCurrent
+                        stepSize: 0.001
                         onValueChanged: gainCurrent = value
-                        onUserSet: platformInterface.gainCurrent = gainCurrentSlider.value
+                        onUserSet: platformInterface.gainCurrent = gainCurrentSlider.value*1000
                         live: false
                     }
                 }
@@ -164,9 +170,9 @@ Item {
                     SGSlider {
                         id: offsetCurrentSlider
                         width: parent.width
-                        from: -1500
-                        to: 1500
-                        value: platformInterface.offsetCurrent
+                        from: -multiplePlatform.ioutScale
+                        to: multiplePlatform.ioutScale
+                        value: multiplePlatform.offsetCurrent
                         stepSize: 1
                         onValueChanged: offsetCurrent = value
                         onUserSet: platformInterface.offsetCurrent = offsetCurrentSlider.value
@@ -212,7 +218,7 @@ Item {
                             width: parent.width
                             from: 0
                             to: 10000
-                            value: platformInterface.r25
+                            value: multiplePlatform.r25
                             stepSize: 1
                             onValueChanged: r25 = value
                             onUserSet: platformInterface.r25 = r25Slider.value
@@ -244,7 +250,7 @@ Item {
                             width: parent.width
                             from: 0
                             to: 10000
-                            value: platformInterface.r2550
+                            value: multiplePlatform.r2550
                             stepSize: 1
                             onValueChanged: r2550 = value
                             onUserSet: platformInterface.r2550 = r2550Slider.value
@@ -276,7 +282,7 @@ Item {
                             width: parent.width
                             from: 0
                             to: 10000
-                            value: platformInterface.r2580
+                            value: multiplePlatform.r2580
                             stepSize: 1
                             onValueChanged: r2580 = value
                             onUserSet: platformInterface.r2580 = r2580Slider.value
@@ -308,7 +314,7 @@ Item {
                             width: parent.width
                             from: 0
                             to: 10000
-                            value: platformInterface.r25120
+                            value: multiplePlatform.r25120
                             stepSize: 1
                             onValueChanged: r25120 = value
                             onUserSet: platformInterface.r25120 = r25120Slider.value
@@ -352,8 +358,8 @@ Item {
                             id: overTemperatureFaultSlider
                             width: parent.width
                             from: 115
-                            to: 135
-                            value: platformInterface.status_predefined_values.OT_fault
+                            to: 200
+                            value: multiplePlatform.overTemperatureFault
                             stepSize: 1
                             onValueChanged: overTemperatureFault = value
                             onUserSet: platformInterface.overTemperatureFault = overTemperatureFaultSlider.value
@@ -370,8 +376,8 @@ Item {
                     }
 
                     SGAlignedLabel{
-                        id: voutOVlimitFaultLabel
-                        target: voutOVlimitFaultSlider
+                        id: vinOVlimitFaultLabel
+                        target: vinOVlimitFaultSlider
                         text:"Over Voltage Fault Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
@@ -381,55 +387,55 @@ Item {
                             left: alarmText.left
                             }
                         SGSlider {
-                            id: voutOVlimitFaultSlider
+                            id: vinOVlimitFaultSlider
                             width: parent.width
                             from: 0
-                            to: multiplePlatform.nominalVin
-                            value: platformInterface.status_predefined_values.OV_fault
+                            to: multiplePlatform.vinScale
+                            value: multiplePlatform.vinOVlimitFault
                             stepSize: 1
-                            onValueChanged: voutOVlimitFault = value
-                            onUserSet: platformInterface.voutOVlimitFault = voutOVlimitFaultSlider.value
+                            onValueChanged: vinOVlimitFault = value
+                            onUserSet: platformInterface.vinOVlimitFault = vinOVlimitFaultSlider.value
                             live: false
                         }
                         Text{
-                            id: voutOVlimitFaultSliderUnit
+                            id: vinOVlimitFaultSliderUnit
                             text:"V"
                             font.pixelSize: (parent.width + parent.height)/40
                             color: "black"
-                            anchors.left: voutOVlimitFaultSlider.right
-                            anchors.verticalCenter: voutOVlimitFaultSlider.top
+                            anchors.left: vinOVlimitFaultSlider.right
+                            anchors.verticalCenter: vinOVlimitFaultSlider.top
                             }
                     }
 
                     SGAlignedLabel{
-                        id: voutUVlimitFaultLabel
-                        target: voutUVlimitFaultSlider
+                        id: vinUVlimitFaultLabel
+                        target: vinUVlimitFaultSlider
                         text:"Under Voltage Fault Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
-                            top: voutOVlimitFaultLabel.bottom
+                            top: vinOVlimitFaultLabel.bottom
                             topMargin: parent.height/50
                             left: alarmText.left
                             }
                         SGSlider {
-                            id: voutUVlimitFaultSlider
+                            id: vinUVlimitFaultSlider
                             width: parent.width
                             from: 0
-                            to: multiplePlatform.nominalVin
-                            value: platformInterface.status_predefined_values.UV_fault
+                            to: multiplePlatform.vinScale
+                            value: multiplePlatform.vinUVlimitFault
                             stepSize: 1
-                            onValueChanged: voutUVlimitFault = value
-                            onUserSet: platformInterface.voutUVlimitFault = voutUVlimitFaultSlider.value
+                            onValueChanged: vinUVlimitFault = value
+                            onUserSet: platformInterface.vinUVlimitFault = vinUVlimitFaultSlider.value
                             live: false
                         }
                         Text{
-                            id: voutUVlimitFaultSliderUnit
+                            id: vinUVlimitFaultSliderUnit
                             text:"V"
                             font.pixelSize: (parent.width + parent.height)/40
                             color: "black"
-                            anchors.left: voutUVlimitFaultSlider.right
-                            anchors.verticalCenter: voutUVlimitFaultSlider.top
+                            anchors.left: vinUVlimitFaultSlider.right
+                            anchors.verticalCenter: vinUVlimitFaultSlider.top
                             }
                     }
 
@@ -440,7 +446,7 @@ Item {
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
-                            top: voutUVlimitFaultLabel.bottom
+                            top: vinUVlimitFaultLabel.bottom
                             topMargin: parent.height/50
                             left: alarmText.left
                             }
@@ -449,7 +455,7 @@ Item {
                             width: parent.width
                             from: 0
                             to: multiplePlatform.ioutScale
-                            value: platformInterface.status_predefined_values.OC_fault
+                            value: multiplePlatform.ioutOClimitFault
                             stepSize: 1
                             onValueChanged: ioutOClimitFault = value
                             onUserSet: platformInterface.ioutOClimitFault = ioutOClimitFaultSlider.value
@@ -480,8 +486,8 @@ Item {
                             id: overTemperatureWarningSlider
                             width: parent.width
                             from: 85
-                            to: 105
-                            value: platformInterface.status_predefined_values.OT_warning
+                            to: 200
+                            value: multiplePlatform.overTemperatureWarning
                             stepSize: 1
                             onValueChanged: overTemperatureWarning = value
                             onUserSet: platformInterface.overTemperatureWarning = overTemperatureWarningSlider.value
@@ -498,8 +504,8 @@ Item {
                         }
 
                     SGAlignedLabel{
-                        id: voutOVlimitWarningLabel
-                        target: voutOVlimitWarningSlider
+                        id: vinOVlimitWarningLabel
+                        target: vinOVlimitWarningSlider
                         text:"Over Voltage Warning Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
@@ -509,55 +515,55 @@ Item {
                             left: currentText.left
                             }
                         SGSlider {
-                            id: voutOVlimitWarningSlider
+                            id: vinOVlimitWarningSlider
                             width: parent.width
                             from: 0
-                            to: multiplePlatform.nominalVin
-                            value: platformInterface.status_predefined_values.OV_warning
+                            to: multiplePlatform.vinScale
+                            value: multiplePlatform.vinOVlimitWarning
                             stepSize: 1
-                            onValueChanged: voutOVlimitWarning = value
-                            onUserSet: platformInterface.voutOVlimitWarning = voutOVlimitWarningSlider.value
+                            onValueChanged: vinOVlimitWarning = value
+                            onUserSet: platformInterface.vinOVlimitWarning = vinOVlimitWarningSlider.value
                             live: false
                         }
                         Text{
-                            id: voutOVlimitWarningSliderUnit
+                            id: vinOVlimitWarningSliderUnit
                             text:"V"
                             font.pixelSize: (parent.width + parent.height)/40
                             color: "black"
-                            anchors.left: voutOVlimitWarningSlider.right
-                            anchors.verticalCenter: voutOVlimitWarningSlider.top
+                            anchors.left: vinOVlimitWarningSlider.right
+                            anchors.verticalCenter: vinOVlimitWarningSlider.top
                             }
                     }
 
                     SGAlignedLabel{
-                        id: voutUVlimitWarningLabel
-                        target: voutUVlimitWarningSlider
+                        id: vinUVlimitWarningLabel
+                        target: vinUVlimitWarningSlider
                         text:"Under Voltage Warning Limit:"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
-                            top: voutOVlimitWarningLabel.bottom
+                            top: vinOVlimitWarningLabel.bottom
                             topMargin: parent.height/50
                             left: currentText.left
                             }
                         SGSlider {
-                            id: voutUVlimitWarningSlider
+                            id: vinUVlimitWarningSlider
                             width: parent.width
                             from: 0
-                            to: multiplePlatform.nominalVin
-                            value: platformInterface.status_predefined_values.UV_warning
+                            to: multiplePlatform.vinScale
+                            value: multiplePlatform.vinUVlimitWarning
                             stepSize: 1
-                            onValueChanged: voutUVlimitWarning = value
-                            onUserSet: platformInterface.voutUVlimitWarning = voutUVlimitWarningSlider.value
+                            onValueChanged: vinUVlimitWarning = value
+                            onUserSet: platformInterface.vinUVlimitWarning = vinUVlimitWarningSlider.value
                             live: false
                         }
                         Text{
-                            id: voutUVlimitWarningSliderUnit
+                            id: vinUVlimitWarningSliderUnit
                             text:"V"
                             font.pixelSize: (parent.width + parent.height)/40
                             color: "black"
-                            anchors.left: voutUVlimitWarningSlider.right
-                            anchors.verticalCenter: voutUVlimitWarningSlider.top
+                            anchors.left: vinUVlimitWarningSlider.right
+                            anchors.verticalCenter: vinUVlimitWarningSlider.top
                             }
                     }
 
@@ -568,7 +574,7 @@ Item {
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
-                            top: voutUVlimitWarningLabel.bottom
+                            top: vinUVlimitWarningLabel.bottom
                             topMargin: parent.height/50
                             left: currentText.left
                             }
@@ -577,7 +583,7 @@ Item {
                             width: parent.width
                             from: 0
                             to: multiplePlatform.ioutScale
-                            value: platformInterface.status_predefined_values.OC_warning
+                            value: multiplePlatform.ioutOClimitWarning
                             stepSize: 1
                             onValueChanged: ioutOClimitWarning = value
                             onUserSet: platformInterface.ioutOClimitWarning = ioutOClimitWarningSlider.value

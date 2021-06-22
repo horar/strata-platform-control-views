@@ -17,10 +17,10 @@ Item {
 
     property bool debugLayout: false
 
-    property var pwm: 1
+    property var frequency: 1
     property var duty: 0
     property var pulses: 0
-    property var currentMaxCalc: ((dcLink*(duty/100)*pulses)/((inductor/1000000)*pwm)).toFixed(0)
+    property var currentMaxCalc: ((dcLink*(duty/100)*pulses)/((inductor/1000000)*frequency)).toFixed(0)
 
     Rectangle {
         id: images
@@ -58,7 +58,7 @@ Item {
         }
 
         SGSlider {
-            id: pwmSlider
+            id: frequencySlider
             anchors {
                 top: parent.top
                 topMargin: parent.height/30
@@ -70,14 +70,14 @@ Item {
             to: 20000
             value: 0
             stepSize: 1
-            onValueChanged: pwm = value
-            onUserSet: platformInterface.pwm = pwmSlider.value
+            onValueChanged: frequency = value
+            onUserSet: platformInterface.frequency = frequencySlider.value
             live: false
         }
 
         Text{
-            id: pwmSliderValue
-            text:"<b>PWM Frequency: <b>"+ pwm +" Hz"
+            id: frequencySliderValue
+            text:"<b>PWM Frequency: <b>"+ frequency +" Hz"
             font.pixelSize: (parent.width + parent.height)/110
             color: "black"
             anchors {
@@ -91,7 +91,7 @@ Item {
         SGSlider {
             id: dutySlider
             anchors {
-                top: pwmSlider.top
+                top: frequencySlider.top
                 topMargin: parent.height/7
                 right: parent.right
                 rightMargin: (parent.width + parent.height)/100
@@ -112,7 +112,7 @@ Item {
             font.pixelSize: (parent.width + parent.height)/110
             color: "black"
             anchors {
-                top: pwmSliderValue.top
+                top: frequencySliderValue.top
                 topMargin: parent.height/7
                 left: burstPulseTestingImage.right
                 leftMargin: (parent.width + parent.height)/25

@@ -512,9 +512,9 @@ Item {
                     grooveColor: "#ccc"
                     grooveFillColor: "green"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {dio12Switch.checked}
+                    checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {dio12Switch.checked}
                              else{platformInterface.set_dio12.update("off")}
-                    onToggled: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {
+                    onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                                    platformInterface.dio12_enabled = checked
                                    if(checked){
                                        platformInterface.set_dio12.update("on")
