@@ -17,13 +17,22 @@ Rectangle {
     implicitWidth: 70
     Layout.fillHeight: true
 
-    // ======================== Default Notification Values ======================== //
-    // Do this here instead of in PlatformInterface.qml because PIG overwrites values
-
+    // ======================== UI Initialization ======================== //
+    
     Component.onCompleted: {
-        Help.registerTarget(runButton, "Place holder for Basic control view help messages", 0, "BasicControlHelp")
-        Help.registerTarget(speedButton, "Message", 1, "BasicControlHelp")
-        // Help.startHelpTour("BasicControlHelp")
+
+        // ------------------------ Help Messages ------------------------ //
+
+        // Help messages
+        Help.registerTarget(speedButton, "message", 0, "BasicControlHelp")
+        Help.registerTarget(accelButton, "message", 1, "BasicControlHelp")
+        Help.registerTarget(runButton, "Click the run icon to start spinning the motor. The run icon will change to a stop icon once clicked. Click the stop icon to stop the motor. The motor control values on the Controls and Parameters tab may need to be adjust depending on the connected motor's specifications. The direction control icon will be disabled while the motor is spinning.", 2, "BasicControlHelp")
+        Help.registerTarget(brakeButton, "Click the brake icon to brake the motor.", 3, "BasicControlHelp")
+        Help.registerTarget(directionButton, "message", 4, "BasicControlHelp")
+        Help.registerTarget(warnings, "message", 5, "BasicControlHelp")
+
+        // ------------------------ Default Values ------------------------ //
+        // Do this here instead of in PlatformInterface.qml because PIG overwrites values
 
         // target_speed
         platformInterface.notifications.target_speed.caption = ""
@@ -273,6 +282,7 @@ Rectangle {
         // ------------------------ Warnings ------------------------ //
 
         ColumnLayout {
+            id: warnings
             spacing: 8
 
             FaultLight {
@@ -321,23 +331,21 @@ Rectangle {
 
         // ------------------------ Help Messages ------------------------ //
 
-        // TODO: test and enable help messages
-
         IconButton {
             id: helpIcon
-            source: "qrc:/sgimages/question-circle.svg" // generic icon from SGWidgets
+            source: "qrc:/sgimages/question-circle.svg" // Generic icon from SGWidgets
             iconColor: containsMouse ? "grey" : "lightgrey"
 
             onClicked:  {
-                // start different help tours depending on which view is visible
-                // switch (tabBar.currentIndex) {
-                // case 0:
+                // Start different help tours depending on which view is visible
+                switch (tabBar.currentIndex) {
+                case 0:
                     Help.startHelpTour("BasicControlHelp")
-                //     return
-                // case 1:
-                //     Help.startHelpTour("AdvancedControlHelp")
-                //     return
-                // }
+                    return
+                case 1:
+                    Help.startHelpTour("ControlsAndParametersHelp")
+                    return
+                }
             }
         }
     }

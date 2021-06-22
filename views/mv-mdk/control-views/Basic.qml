@@ -1,5 +1,6 @@
 import QtQuick 2.12
 
+import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
 
 UIBase { // start_uibase
@@ -9,10 +10,19 @@ UIBase { // start_uibase
     columnCount: 30
     rowCount: 25
 
-    // ======================== Default Notification Values ======================== //
-    // Do this here instead of in PlatformInterface.qml because PIG overwrites values
-
+    // ======================== UI Initialization ======================== //
+    
     Component.onCompleted: {
+
+        // ------------------------ Help Messages ------------------------ //
+
+        Help.registerTarget(rect_6a35c, "message", 6, "BasicControlHelp") // input rectangle
+        Help.registerTarget(layoutRectangle_bead4, "message", 7, "BasicControlHelp") // output rectangle
+        Help.registerTarget(b_status_log, "message", 8, "BasicControlHelp")
+
+        // ------------------------ Default Values ------------------------ //
+        // Do this here instead of in PlatformInterface.qml because PIG overwrites values
+
         // title
         platformInterface.notifications.title.caption = "Title"
         // subtitle
@@ -328,7 +338,8 @@ UIBase { // start_uibase
         contentItem: SGStatusLogBox {
             id: b_status_log_box
             title: platformInterface.notifications.status_log.caption
-
+            filterEnabled: false
+            
             Connections {
                 target: platformInterface.notifications.status_log
                 // Create status log message in the format of "hh:mm:ss:ms: Error message from status log notification"

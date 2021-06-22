@@ -1,5 +1,6 @@
 import QtQuick 2.12
 
+import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
 
 UIBase { // start_uibase
@@ -9,6 +10,44 @@ UIBase { // start_uibase
     columnCount: 30
     rowCount: 50
     
+    // ======================== UI Initialization ======================== //
+    
+    Component.onCompleted: {
+
+        // ------------------------ Help Messages ------------------------ //
+
+        // PWM Settings
+        Help.registerTarget(cp_pwm_params_o_mode_help, "message", 0, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_dt_help, "message", 1, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_min_ls_help, "message", 2, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_freq_help, "message", 3, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_tr_delay_help, "message", 4, "ControlsAndParametersHelp")
+        // PID Control Parameters
+        Help.registerTarget(cp_pid_params_kx_help, "message", 5, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_wd_help, "message", 6, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_lim_help, "message", 7, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_tau_sys_help, "message", 8, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_mode_help, "message", 9, "ControlsAndParametersHelp")
+        // // Motor and Load Parameters
+        Help.registerTarget(cp_motor_params_xs_help, "message", 10, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_jm_kv_help, "message", 11, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_pp_help, "message", 12, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_rpm_help, "message", 13, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_ke_help, "message", 14, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_rated_v_help, "message", 15, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_hall_pol_help, "message", 16, "ControlsAndParametersHelp")
+        // // Speed Loop Parameters
+        // Help.registerTarget(cp_spd_loop_params_mode_help, "message", ADFDSFSDF, "ControlsAndParametersHelp")
+        // Help.registerTarget(cp_spd_loop_params_accel_help, "message", 17, "ControlsAndParametersHelp")
+        // Help.registerTarget(cp_spd_loop_params_fs_help, "message", 18, "ControlsAndParametersHelp")
+        // Help.registerTarget(cp_spd_loop_params_fspd_filt_help, "message", 19, "ControlsAndParametersHelp")
+        // // Protection Parameters
+        // Help.registerTarget(cp_protection_ocp_help, "message", 20, "ControlsAndParametersHelp")
+        // Help.registerTarget(cp_protection_ovp_help, "message", 21, "ControlsAndParametersHelp")
+        // Help.registerTarget(cp_protection_fet_otp_help, "message", 22, "ControlsAndParametersHelp")
+
+    }
+
     // ======================== UI Objects ======================== //
 
     // ------------------------ General UI Setup and Titles ------------------------ //
@@ -1763,5 +1802,199 @@ UIBase { // start_uibase
         horizontalAlignment: Text.AlignHLeft
         verticalAlignment: Text.AlignVCenter
     } // end_00a13
+
+    // ======================== Help Message Helper Rectangles ======================== //
+
+    // ------------------------ PWM Settings ------------------------ //
+
+    LayoutRectangle { // start_972fd
+        id: cp_pwm_params_o_mode_help
+        layoutInfo.uuid: "972fd"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 9
+        opacity: 0
+    } // end_972fd
+
+    LayoutRectangle { // start_c909f
+        id: cp_pwm_params_dt_help
+        layoutInfo.uuid: "c909f"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 4
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 12
+        opacity: 0
+    } // end_c909f
+
+        LayoutRectangle { // start_57609
+        id: cp_pwm_params_min_ls_help
+        layoutInfo.uuid: "57609"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 4
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 17
+        opacity: 0
+    } // end_57609
+
+    LayoutRectangle { // start_af100
+        id: cp_pwm_params_freq_help
+        layoutInfo.uuid: "af100"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 4
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 22
+        opacity: 0
+    } // end_af100
+
+    LayoutRectangle { // start_29459
+        id: cp_pwm_params_tr_delay_help
+        layoutInfo.uuid: "29459"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 27
+        opacity: 0
+    } // end_29459
+
+    // ------------------------ PID Control Parameters------------------------ //
+
+    LayoutRectangle { // start_a2689
+        id: cp_pid_params_kx_help
+        layoutInfo.uuid: "a2689"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 33
+        opacity: 0
+    } // end_a2689
+
+    LayoutRectangle { // start_a9c70
+        id: cp_pid_params_wd_help
+        layoutInfo.uuid: "a9c70"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 36
+        opacity: 0
+    } // end_a9c70
+
+    LayoutRectangle { // start_72aab
+        id: cp_pid_params_lim_help
+        layoutInfo.uuid: "72aab"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 39
+        opacity: 0
+    } // end_72aab
+
+    LayoutRectangle { // start_3e0c1
+        id: cp_pid_params_tau_sys_help
+        layoutInfo.uuid: "3e0c1"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 42
+        opacity: 0
+    } // end_3e0c1
+
+    LayoutRectangle { // start_be538
+        id: cp_pid_params_mode_help
+        layoutInfo.uuid: "be538"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 45
+        opacity: 0
+    } // end_be538
+        
+    // ------------------------ Motor and Load Parameters ------------------------ //
+
+    LayoutRectangle { // start_7b801
+        id: cp_motor_params_xs_help
+        layoutInfo.uuid: "7b801"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 5
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 9
+        opacity: 0
+    } // end_7b801
+
+    LayoutRectangle { // start_32708
+        id: cp_motor_params_jm_kv_help
+        layoutInfo.uuid: "32708"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 11
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 15
+        opacity: 0
+    } // end_32708
+
+    LayoutRectangle { // start_6f32d
+        id: cp_motor_params_pp_help
+        layoutInfo.uuid: "6f32d"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 27
+        opacity: 0
+    } // end_6f32d
+
+    LayoutRectangle { // start_cc648
+        id: cp_motor_params_rpm_help
+        layoutInfo.uuid: "cc648"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 8
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 30
+        opacity: 0
+    } // end_cc648
+
+    LayoutRectangle { // start_fada4
+        id: cp_motor_params_ke_help
+        layoutInfo.uuid: "fada4"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 39
+        opacity: 0
+    } // end_fada4
+
+    LayoutRectangle { // start_1fd07
+        id: cp_motor_params_rated_v_help
+        layoutInfo.uuid: "1fd07"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 42
+        opacity: 0
+    } // end_1fd07
+
+    LayoutRectangle { // start_e789f
+        id: cp_motor_params_hall_pol_help
+        layoutInfo.uuid: "e789f"
+        layoutInfo.columnsWide: 10
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 10
+        layoutInfo.yRows: 45
+        opacity: 0
+    } // end_e789f
+
+    // ------------------------ Speed Loop Parameters ------------------------ //
+
+    // cp_spd_loop_params_mode_help
+    // cp_spd_loop_params_accel_help
+    // cp_spd_loop_params_fs_help
+    // cp_spd_loop_params_fspd_filt_help
+
     
+    // ------------------------ Protection Parameters ------------------------ //
+
+    // cp_protection_ocp_help
+    // cp_protection_ovp_help
+    // cp_protection_fet_otp_help
+        
+
+
 } // end_uibase
