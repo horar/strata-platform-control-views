@@ -1807,6 +1807,169 @@ UIBase { // start_uibase
         verticalAlignment: Text.AlignVCenter
     } // end_00a13
 
+    // ======================== Save and Load Parameters ======================== //
+
+    function loadSettings(settingsName) {
+        let config = sgUserSettings.readFile(settingsName, cp_save_button.subdirName)
+        if (config.hasOwnProperty('cp_pwm_params_o_mode')) {
+            cp_pwm_params_o_mode_caption.text = config.cp_pwm_params_o_mode.caption
+            cp_pwm_params_o_mode.enabled = config.cp_pwm_params_o_mode.states[0]
+            cp_pwm_params_o_mode.checked = config.cp_pwm_params_o_mode.value
+        }
+        if (config.hasOwnProperty('cp_pwm_params_dt')) {
+            cp_pwm_params_dt_caption.text = config.cp_pwm_params_dt.caption
+            cp_pwm_params_dt.to = config.cp_pwm_params_dt.scales[0]
+            cp_pwm_params_dt.from = config.cp_pwm_params_dt.scales[1]
+            cp_pwm_params_dt.stepSize = config.cp_pwm_params_dt.scales[2]
+            cp_pwm_params_dt.enabled = config.cp_pwm_params_dt.states[0]
+            cp_pwm_params_dt.value = config.cp_pwm_params_dt.value
+        }
+    }
+    
+    function saveSettings(settingsName) {
+        sgUserSettings.writeFile(`${settingsName}.json`,
+            {
+                "cp_pwm_params_o_mode": {
+                    "caption": cp_pwm_params_o_mode_caption.text,
+                    "scales": [0, 0, 0],
+                    "states": [cp_pwm_params_o_mode.enabled],
+                    "value": cp_pwm_params_o_mode.checked,
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pwm_params_dt": {
+                    "caption": cp_pwm_params_dt_caption.text,
+                    "scales": [cp_pwm_params_dt.to, cp_pwm_params_dt.from, cp_pwm_params_dt.stepSize],
+                    "states": [cp_pwm_params_dt.enabled],
+                    "value": cp_pwm_params_dt.value,
+                    "values": [],
+                    "unit": ""
+                }
+            },
+            cp_save_button.subdirName
+        );
+    }
+
+    LayoutText { // start_36f96
+        id: layoutText_36f96
+        layoutInfo.uuid: "36f96"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 40
+
+        text: "Save and Load Parameters"
+        fontSizeMode: Text.Fit
+        font.pixelSize: 20
+        horizontalAlignment: Text.AlignHLeft
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    } // end_36f96
+
+    LayoutDivider { // start_65192
+        id: layoutDivider_65192
+        layoutInfo.uuid: "65192"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 41
+        thickness: 2
+    } // end_65192
+
+    LayoutSGInfoBox { // start_708bd
+        id: cp_save_filename
+        layoutInfo.uuid: "708bd"
+        layoutInfo.columnsWide: 6
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 43
+
+        placeholderText: "Enter Configuration Name"
+        horizontalAlignment: Text.AlignLeft
+        readOnly: false
+    } // end_708bd
+
+    LayoutButton { // start_912e7
+        id: cp_save_button
+        layoutInfo.uuid: "912e7"
+        layoutInfo.columnsWide: 1
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 28
+        layoutInfo.yRows: 43
+
+        property string subdirName: "mv-mdk"
+        text: "Save"
+
+        onClicked: {
+            if (cp_save_filename.text.length > 0) { // TODO: also check for valid system filename
+                saveSettings(cp_save_filename.text)
+                cp_load_filename.updateList();
+                cp_save_filename.text = "";
+            }
+        }
+    } // end_912e7
+
+    LayoutSGComboBox { // start_93f08
+        id: cp_load_filename
+        layoutInfo.uuid: "93f08"
+        layoutInfo.columnsWide: 4
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 46
+
+        // placeholderText: "Select Configuration" // TODO: why does this not work with LayoutSGComboBox but fine with SGComboBox
+        dividers: true
+        model: filesInDir.length > 0 ? filesInDir.map((file) => getFileNameFromFile(file)) : [];
+
+        // This variable stores a list of paths for each file found in the base output directory for the current platform
+        property var filesInDir: sgUserSettings.listFilesInDirectory(cp_save_button.subdirName);
+
+        function getFileNameFromFile(file) {
+            return file.slice(0, file.lastIndexOf('.'));
+        }
+
+        function updateList() {
+            filesInDir = sgUserSettings.listFilesInDirectory(cp_save_button.subdirName);
+            model = filesInDir.map((file) => getFileNameFromFile(file));
+        }
+    } // end_93f08
+
+    LayoutButton { // start_e96bf
+        id: cp_delete_button
+        layoutInfo.uuid: "e96bf"
+        layoutInfo.columnsWide: 1
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 28
+        layoutInfo.yRows: 46
+
+        onClicked: {
+            console.log("Clicked!")
+        }
+        text: "Delete"
+    } // end_e96bf
+
+    LayoutButton { // start_053a0
+        id: cp_load_button
+        layoutInfo.uuid: "053a0"
+        layoutInfo.columnsWide: 1
+        layoutInfo.rowsTall: 2
+        layoutInfo.xColumns: 26
+        layoutInfo.yRows: 46
+
+        text: "Load"
+
+        onClicked: {
+            if (cp_load_filename.currentIndex >= 0) {
+                // advancedSettingsControl.loadSettings()
+                loadSettings(cp_load_filename.model[cp_load_filename.currentIndex] + ".json")
+            }
+
+            // To rename a file: sgUserSettings.renameFile(<oldFileName>, <newFileName>)
+        }
+
+    } // end_053a0
+
+
     // ======================== Help Message Helper Rectangles ======================== //
 
     // ------------------------ PWM Settings ------------------------ //
