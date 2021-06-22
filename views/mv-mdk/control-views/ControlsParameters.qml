@@ -17,34 +17,34 @@ UIBase { // start_uibase
         // ------------------------ Help Messages ------------------------ //
 
         // PWM Settings
-        Help.registerTarget(cp_pwm_params_o_mode_help, "message", 0, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pwm_params_dt_help, "message", 1, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pwm_params_min_ls_help, "message", 2, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pwm_params_freq_help, "message", 3, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pwm_params_tr_delay_help, "message", 4, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_o_mode_help, "PWM output set to either bipolar or unipolar.", 0, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_dt_help, "PWM deadtime received by the MOSFET gate driver. This may need to be adjusted based on the MOSFET selection to avoid cross conduction.", 1, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_min_ls_help, "Minimum allowed low side MOSFET ON time.", 2, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_freq_help, "PWM switching frequency received by the gate driver.", 3, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_tr_delay_help, "Clock cycles to delay ADC sampling from midpoint of PWM on time.", 4, "ControlsAndParametersHelp")
         // PID Control Parameters
-        Help.registerTarget(cp_pid_params_kx_help, "message", 5, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pid_params_wd_help, "message", 6, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pid_params_lim_help, "message", 7, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pid_params_tau_sys_help, "message", 8, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pid_params_mode_help, "message", 9, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_kx_help, "PID gain controls for proportional (Kp), integral (Ki), and derivative (Kd) gains. Set derivative gain to zero for only PI control.", 5, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_wd_help, "Derivative term low-pass filter cutoff frequency.", 6, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_lim_help, "Integral error term limit. Normally set to DC bus voltage.", 7, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_tau_sys_help, "System time constant for auto IMC-calculated PID gain.", 8, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_mode_help, "PID control gain mode. Auto = calculated from motor params. Manual = manual settings above used.", 9, "ControlsAndParametersHelp")
         // Motor and Load Parameters
-        Help.registerTarget(cp_motor_params_xs_help, "message", 10, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_jm_kv_help, "message", 11, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_pp_help, "message", 12, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_rpm_help, "message", 13, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_ke_help, "message", 14, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_rated_v_help, "message", 15, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_hall_pol_help, "message", 16, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_xs_help, "Motor line to line stator resistance and inductance.", 10, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_jm_kv_help, "Motor/load inertia and viscous damping.", 11, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_pp_help, "Number of motor pole pairs.", 12, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_rpm_help, "Maximum RPM of the motor. Setting the maximum value will update the Target Speed slider maximum value on the left menu.", 13, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_ke_help, "Motor back electromotive force (BEMF) constant.", 14, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_rated_v_help, "Motor rated DC bus voltage.", 15, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_hall_pol_help, "Hall sensor polarity set to active high/low.", 16, "ControlsAndParametersHelp")
         // Speed Loop Parameters
-        Help.registerTarget(cp_spd_loop_params_mode_help, "message", 17, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_spd_loop_params_accel_help, "message", 18, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_spd_loop_params_fs_help, "message", 19, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_spd_loop_params_fspd_filt_help, "message", 20, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_mode_help, "Speed loop mode options.", 17, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_accel_help, "Acceleration applied when the motor is starting. Setting the value will update the Acceleration slider value on the left menu.", 18, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_fs_help, "Speed loop sampling frequency.", 19, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_fspd_filt_help, "Speed measurement low-pass filter cutoff frequency.", 20, "ControlsAndParametersHelp")
         // Protection Parameters
-        Help.registerTarget(cp_protection_ocp_help, "message", 21, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_protection_ovp_help, "message", 22, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_protection_fet_otp_help, "message", 23, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_protection_ocp_help, "Software over current protection (OCP) value and state. The status of an OCP event is shown on the left menu. A protection event will disable the motor.", 21, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor.", 22, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
 
     }
 
