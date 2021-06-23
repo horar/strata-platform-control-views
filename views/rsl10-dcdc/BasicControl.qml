@@ -548,9 +548,9 @@ Item {
                     grooveColor: "#ccc"             // Default: "#ccc"
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {dio12Switch.checked}
+                    checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {dio12Switch.checked}
                              else{platformInterface.set_dio12.update("off")}
-                    onToggled: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {
+                    onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                                    platformInterface.dio12_enabled = checked
                                    if(checked){
                                        platformInterface.set_dio12.update("on")
@@ -654,9 +654,9 @@ Item {
                     grooveColor: "#ccc"             // Default: "#ccc"
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {platformInterface.dio13_enabled}
+                    checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {platformInterface.dio13_enabled}
                              else{platformInterface.set_dio13.update("off")}
-                    onToggled: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {
+                    onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                                    platformInterface.dio13_enabled = checked
                                    if(checked){
                                        platformInterface.set_dio13.update("on")
@@ -702,9 +702,9 @@ Item {
                     grooveColor: "#ccc"             // Default: "#ccc"
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {platformInterface.dio04_enabled}
+                    checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {platformInterface.dio04_enabled}
                              else{platformInterface.set_dio04.update("off")}
-                    onToggled: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {
+                    onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                                    platformInterface.dio04_enabled = checked
                                    if(checked){
                                        platformInterface.set_dio04.update("on")

@@ -266,7 +266,7 @@ Item {
                                  platformInterface.set_motor_EN.update("off")
                              }
                     onToggled: {
-                        if (multiplePlatform.vinScale > dc_link_vin_calc) {
+                        if (multiplePlatform.nominalVin > dc_link_vin_calc) {
                                    platformInterface.motor_EN_enabled = checked
                                    if(checked){
                                        platformInterface.set_motor_EN.update("on")
