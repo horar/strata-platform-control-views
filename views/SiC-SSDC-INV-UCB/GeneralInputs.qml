@@ -237,7 +237,7 @@ Item {
                     SGAlignedLabel{
                         id: r2550Label
                         target: r2550Slider
-                        text:"R25/50"
+                        text:"B25/50"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -258,7 +258,7 @@ Item {
                         }
                         Text{
                             id: r2550SliderUnit
-                            text:"Ω"
+                            text:"K"
                             font.pixelSize: (parent.width + parent.height)/40
                             color: "black"
                             anchors.left: r2550Slider.right
@@ -269,7 +269,7 @@ Item {
                     SGAlignedLabel{
                         id: r2580Label
                         target: r2580Slider
-                        text:"R25/80"
+                        text:"B25/80"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -290,7 +290,7 @@ Item {
                         }
                         Text{
                             id: r2580SliderUnit
-                            text:"Ω"
+                            text:"K"
                             font.pixelSize: (parent.width + parent.height)/40
                             color: "black"
                             anchors.left: r2580Slider.right
@@ -301,7 +301,7 @@ Item {
                     SGAlignedLabel{
                         id: r25120Label
                         target: r25120Slider
-                        text:"R25/120"
+                        text:"B25/120"
                         font.pixelSize: (parent.width + parent.height)/ 150
                         width: parent.width/4
                         anchors {
@@ -322,7 +322,7 @@ Item {
                         }
                         Text{
                             id: r25120SliderUnit
-                            text:"Ω"
+                            text:"K"
                             font.pixelSize: (parent.width + parent.height)/40
                             color: "black"
                             anchors.left: r25120Slider.right

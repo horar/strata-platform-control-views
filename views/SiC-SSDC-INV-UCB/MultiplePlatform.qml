@@ -12,7 +12,7 @@ Item{
     property var minVin
     property var nominalVin
     property var vinScale
-    property var ioutScale
+    property var ioutScale:1500
 
     property var ot_warning
     property var ot_fault
@@ -56,8 +56,8 @@ Item{
             opn = "STR-SiC-SSDC-INV-UCB-GEVK"
 
             minVin = 0
-            nominalVin = 800
-            vinScale = 1000
+            nominalVin = 600
+            vinScale = 800
             ioutScale = 1500
 
             gainVolt = 205.338

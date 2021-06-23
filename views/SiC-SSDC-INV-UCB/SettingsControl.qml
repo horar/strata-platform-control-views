@@ -35,7 +35,7 @@ Item {
     property var time:20
     property var pointsCount:50
     property var amperes: multiplePlatform.ioutScale
-    property var ioutScaleCalc:multiplePlatform.ioutScale
+    property var ioutScaleCalc: multiplePlatform.ioutScale
 
     property var speedLine: []
 
