@@ -45,7 +45,7 @@ UIBase { // start_uibase
         Help.registerTarget(cp_protection_ocp_help, "Software over current protection (OCP) value and state. The status of an OCP event is shown on the left menu. A protection event will disable the motor.", 21, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor.", 22, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
-
+        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box. Select the desired parameter set and the combo box and click Load to recall. Select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json file in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transfer between PCs if desired.", 24, "ControlsAndParametersHelp")
     }
 
     // ======================== UI Objects ======================== //
@@ -2664,5 +2664,17 @@ UIBase { // start_uibase
         layoutInfo.yRows: 37
         opacity: 0
     } // end_55f56
+
+    // ------------------------ Save and Load Parameters ------------------------ //
+
+    LayoutRectangle { // start_cf371
+        id: cp_save_load_parameters_help
+        layoutInfo.uuid: "cf371"
+        layoutInfo.columnsWide: 8
+        layoutInfo.rowsTall: 8
+        layoutInfo.xColumns: 21
+        layoutInfo.yRows: 40
+        opacity: 0
+    } // end_cf371
 
 } // end_uibase
