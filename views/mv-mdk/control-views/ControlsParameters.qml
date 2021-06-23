@@ -1884,7 +1884,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 21
         layoutInfo.yRows: 43
 
-        placeholderText: "Enter Configuration Name"
+        placeholderText: "Enter configuration name"
         horizontalAlignment: Text.AlignLeft
         readOnly: false
     } // end_708bd
@@ -1901,11 +1901,23 @@ UIBase { // start_uibase
         text: "Save"
 
         onClicked: {
-            if (cp_save_filename.text.length > 0) { // TODO: also check for valid system filename
-                saveSettings(cp_save_filename.text)
-                cp_load_filename.updateList();
-                cp_save_filename.text = "";
+            const valid_filename_regex = new RegExp(/^[^\\\/\:\*\?\"\<\>\|\.]+$/); // Validate filename
+            if (valid_filename_regex.test(cp_save_filename.text)) {
+                // Valid filename if not empty
+                if (cp_save_filename.text.length > 0) {
+                    saveSettings(cp_save_filename.text)
+                    cp_load_filename.updateList()
+                    cp_save_filename.placeholderText = "Enter configuration name"
+                } else {
+                    cp_save_filename.placeholderText = "Invalid filename"
+                }
+            } else {
+                // Invalid filename
+                cp_save_filename.placeholderText = "Invalid filename"
             }
+            cp_save_filename.text = ""
+
+            
         }
     } // end_912e7
 
@@ -1942,10 +1954,13 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 28
         layoutInfo.yRows: 46
 
-        onClicked: {
-            console.log("Clicked!")
-        }
         text: "Delete"
+
+        onClicked: {
+            sgUserSettings.deleteFile(cp_load_filename.currentText + '.json', cp_save_button.subdirName);
+            cp_load_filename.updateList()
+        }
+
     } // end_e96bf
 
     LayoutButton { // start_053a0
@@ -1960,11 +1975,8 @@ UIBase { // start_uibase
 
         onClicked: {
             if (cp_load_filename.currentIndex >= 0) {
-                // advancedSettingsControl.loadSettings()
-                loadSettings(cp_load_filename.model[cp_load_filename.currentIndex] + ".json")
+                loadSettings(cp_load_filename.currentText + ".json")
             }
-
-            // To rename a file: sgUserSettings.renameFile(<oldFileName>, <newFileName>)
         }
 
     } // end_053a0
