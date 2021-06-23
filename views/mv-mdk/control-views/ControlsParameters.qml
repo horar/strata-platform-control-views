@@ -444,7 +444,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 33
 
         readOnly: false
-        text: "50.0" 
+        text: "50" 
 
         validator: DoubleValidator {
             decimals: 1
@@ -474,7 +474,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 33
 
         readOnly: false
-        text: "50.0" 
+        text: "50" 
 
         validator: DoubleValidator {
             decimals: 1
@@ -505,7 +505,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 33
 
         readOnly: false
-        text: "50.0" 
+        text: "50" 
 
         validator: DoubleValidator {
             decimals: 1
@@ -594,7 +594,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 36
 
-        text: "1000.0"
+        text: "1000"
         readOnly: false
 
         validator: DoubleValidator {
@@ -624,7 +624,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 39
 
-        text: "24.0"
+        text: "24"
         readOnly: false
 
         validator: DoubleValidator {
@@ -654,7 +654,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 42
 
-        text: "10.0"
+        text: "10"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1026,7 +1026,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 30
 
-        text: "4200.0"
+        text: "4200"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1064,7 +1064,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 33
 
-        text: "3000.0"
+        text: "3000"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1100,7 +1100,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 36
 
-        text: "60.0"
+        text: "60"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1172,7 +1172,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 42
 
-        text: "24.0"
+        text: "24"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1475,7 +1475,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 13
 
-        text: "100.0"
+        text: "100"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1519,7 +1519,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 16
 
-        text: "1000.0"
+        text: "1000"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1546,7 +1546,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 19
 
-        text: "100.0"
+        text: "100"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1605,7 +1605,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 25
 
-        text: "80.0"
+        text: "80"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1659,7 +1659,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 31
 
-        text: "32.0"
+        text: "32"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1712,7 +1712,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 37
 
-        text: "100.0"
+        text: "100"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1811,6 +1811,7 @@ UIBase { // start_uibase
 
     function loadSettings(settingsName) {
         let config = sgUserSettings.readFile(settingsName, cp_save_button.subdirName)
+        // PWM Settings
         if (config.hasOwnProperty('cp_pwm_params_o_mode')) {
             cp_pwm_params_o_mode_caption.text = config.cp_pwm_params_o_mode.caption
             cp_pwm_params_o_mode.enabled = config.cp_pwm_params_o_mode.states[0]
@@ -1823,15 +1824,187 @@ UIBase { // start_uibase
             cp_pwm_params_dt.stepSize = config.cp_pwm_params_dt.scales[2]
             cp_pwm_params_dt.enabled = config.cp_pwm_params_dt.states[0]
             cp_pwm_params_dt.value = config.cp_pwm_params_dt.value
+        }//
+        if (config.hasOwnProperty('cp_pwm_params_min_ls')) {
+            cp_pwm_params_min_ls_caption.text = config.cp_pwm_params_min_ls.caption
+            cp_pwm_params_min_ls.to = config.cp_pwm_params_min_ls.scales[0]
+            cp_pwm_params_min_ls.from = config.cp_pwm_params_min_ls.scales[1]
+            cp_pwm_params_min_ls.stepSize = config.cp_pwm_params_min_ls.scales[2]
+            cp_pwm_params_min_ls.enabled = config.cp_pwm_params_min_ls.states[0]
+            cp_pwm_params_min_ls.value = config.cp_pwm_params_min_ls.value
+        }
+        if (config.hasOwnProperty('cp_pwm_params_freq')) {
+            cp_pwm_params_freq_caption.text = config.cp_pwm_params_freq.caption
+            cp_pwm_params_freq.to = config.cp_pwm_params_freq.scales[0]
+            cp_pwm_params_freq.from = config.cp_pwm_params_freq.scales[1]
+            cp_pwm_params_freq.stepSize = config.cp_pwm_params_freq.scales[2]
+            cp_pwm_params_freq.enabled = config.cp_pwm_params_freq.states[0]
+            cp_pwm_params_freq.value = config.cp_pwm_params_freq.value
+        }
+        if (config.hasOwnProperty('cp_pwm_params_tr_delay')) {
+            cp_pwm_params_tr_delay_caption.text = config.cp_pwm_params_tr_delay.caption
+            cp_pwm_params_tr_delay.enabled = config.cp_pwm_params_tr_delay.states[0]
+            cp_pwm_params_tr_delay.text = config.cp_pwm_params_tr_delay.value
+        }
+        // PID Control Parameters
+        if (config.hasOwnProperty('cp_pid_params_kp')) {
+            cp_pid_params_kp_caption.text = config.cp_pid_params_kp.caption
+            cp_pid_params_kp.enabled = config.cp_pid_params_kp.states[0]
+            cp_pid_params_kp.text = config.cp_pid_params_kp.value
+        }
+        if (config.hasOwnProperty('cp_pid_params_ki')) {
+            cp_pid_params_ki.text = config.cp_pid_params_ki.caption
+            cp_pid_params_ki.enabled = config.cp_pid_params_ki.states[0]
+            cp_pid_params_ki.text = config.cp_pid_params_ki.value
+        }
+        if (config.hasOwnProperty('cp_pid_params_kd')) {
+            cp_pid_params_kd_caption.text = config.cp_pid_params_kd.caption
+            cp_pid_params_kd.enabled = config.cp_pid_params_kd.states[0]
+            cp_pid_params_kd.text = config.cp_pid_params_kd.value
+        }
+        if (config.hasOwnProperty('cp_pid_params_wd')) {
+            cp_pid_params_wd_caption.text = config.cp_pid_params_wd.caption
+            cp_pid_params_wd.enabled = config.cp_pid_params_wd.states[0]
+            cp_pid_params_wd.text = config.cp_pid_params_wd.value
+        }
+        if (config.hasOwnProperty('cp_pid_params_lim')) {
+            cp_pid_params_lim_caption.text = config.cp_pid_params_lim.caption
+            cp_pid_params_lim.enabled = config.cp_pid_params_lim.states[0]
+            cp_pid_params_lim.text = config.cp_pid_params_lim.value
+        }
+        if (config.hasOwnProperty('cp_pid_params_tau_sys')) {
+            cp_pid_params_tau_sys_caption.text = config.cp_pid_params_tau_sys.caption
+            cp_pid_params_tau_sys.enabled = config.cp_pid_params_tau_sys.states[0]
+            cp_pid_params_tau_sys.text = config.cp_pid_params_tau_sys.value
+        }
+        if (config.hasOwnProperty('cp_pid_params_mode')) {
+            cp_pid_params_mode_caption.text = config.cp_pid_params_mode.caption
+            cp_pid_params_mode.enabled = config.cp_pid_params_mode.states[0]
+            cp_pid_params_mode.checked = config.cp_pid_params_mode.value
+        }
+        // Motor and Load Parameters
+        if (config.hasOwnProperty('cp_motor_params_rs')) {
+            cp_motor_params_rs_caption.text = config.cp_motor_params_rs.caption
+            cp_motor_params_rs.enabled = config.cp_motor_params_rs.states[0]
+            cp_motor_params_rs.text = config.cp_motor_params_rs.value
+        }
+        if (config.hasOwnProperty('cp_motor_params_ls')) {
+            cp_motor_params_ls_caption.text = config.cp_motor_params_ls.caption
+            cp_motor_params_ls.enabled = config.cp_motor_params_ls.states[0]
+            cp_motor_params_ls.text = config.cp_motor_params_ls.value
+        }
+        if (config.hasOwnProperty('cp_motor_params_jm')) {
+            cp_motor_params_jm_caption.text = config.cp_motor_params_jm.caption
+            cp_motor_params_jm.enabled = config.cp_motor_params_jm.states[0]
+            cp_motor_params_jm.text = String(config.cp_motor_params_jm.value) // Convert to string to remove trailing zeros
+        }
+        if (config.hasOwnProperty('cp_motor_params_jm_load')) {
+            cp_motor_params_jm_load_caption.text = config.cp_motor_params_jm_load.caption
+            cp_motor_params_jm_load.enabled = config.cp_motor_params_jm_load.states[0]
+            cp_motor_params_jm_load.text = String(config.cp_motor_params_jm_load.value) // Convert to string to remove trailing zeros
+        }
+        if (config.hasOwnProperty('cp_motor_params_kv')) {
+            cp_motor_params_kv_caption.text = config.cp_motor_params_kv.caption
+            cp_motor_params_kv.enabled = config.cp_motor_params_kv.states[0]
+            cp_motor_params_kv.text = String(config.cp_motor_params_kv.value) // Convert to string to remove trailing zeros
+        }
+        if (config.hasOwnProperty('cp_motor_params_kv_load')) {
+            cp_motor_params_kv_load_caption.text = config.cp_motor_params_kv_load.caption
+            cp_motor_params_kv_load.enabled = config.cp_motor_params_kv_load.states[0]
+            cp_motor_params_kv_load.text = String(config.cp_motor_params_kv_load.value) // Convert to string to remove trailing zeros
+        }
+        if (config.hasOwnProperty('cp_motor_params_pp')) {
+            cp_motor_params_pp_caption.text = config.cp_motor_params_pp.caption
+            cp_motor_params_pp.enabled = config.cp_motor_params_pp.states[0]
+            cp_motor_params_pp.text = config.cp_motor_params_pp.value
+        }
+        if (config.hasOwnProperty('cp_motor_params_max_rpm')) {
+            cp_motor_params_max_rpm_caption.text = config.cp_motor_params_max_rpm.caption
+            cp_motor_params_max_rpm.enabled = config.cp_motor_params_max_rpm.states[0]
+            cp_motor_params_max_rpm.text = config.cp_motor_params_max_rpm.value
+        }
+        if (config.hasOwnProperty('cp_motor_params_rated_rpm')) {
+            cp_motor_params_rated_rpm_caption.text = config.cp_motor_params_rated_rpm.caption
+            cp_motor_params_rated_rpm.enabled = config.cp_motor_params_rated_rpm.states[0]
+            cp_motor_params_rated_rpm.text = config.cp_motor_params_rated_rpm.value
+        }
+        if (config.hasOwnProperty('cp_motor_params_min_rpm')) {
+            cp_motor_params_min_rpm_caption.text = config.cp_motor_params_min_rpm.caption
+            cp_motor_params_min_rpm.enabled = config.cp_motor_params_min_rpm.states[0]
+            cp_motor_params_min_rpm.text = config.cp_motor_params_min_rpm.value
+        }
+        if (config.hasOwnProperty('cp_motor_params_ke')) {
+            cp_motor_params_ke_caption.text = config.cp_motor_params_ke.caption
+            cp_motor_params_ke.enabled = config.cp_motor_params_ke.states[0]
+            cp_motor_params_ke.text = config.cp_motor_params_ke.value
+        }
+        if (config.hasOwnProperty('cp_motor_params_rated_v')) {
+            cp_motor_params_rated_v_caption.text = config.cp_motor_params_rated_v.caption
+            cp_motor_params_rated_v.enabled = config.cp_motor_params_rated_v.states[0]
+            cp_motor_params_rated_v.text = config.cp_motor_params_rated_v.value
+        }
+        if (config.hasOwnProperty('cp_motor_params_hall_pol')) {
+            cp_motor_params_hall_pol_caption.text = config.cp_motor_params_hall_pol.caption
+            cp_motor_params_hall_pol.enabled = config.cp_motor_params_hall_pol.states[0]
+            cp_motor_params_hall_pol.checked = config.cp_motor_params_hall_pol.value
+        }
+        // Speed Loop Parameters
+        if (config.hasOwnProperty('cp_spd_loop_params_mode')) {
+            cp_spd_loop_params_mode_caption.text = config.cp_spd_loop_params_mode.caption
+            cp_spd_loop_params_mode.enabled = config.cp_spd_loop_params_mode.states[0]
+            cp_spd_loop_params_mode.currentIndex = config.cp_spd_loop_params_mode.value
+            cp_spd_loop_params_mode.model = config.cp_spd_loop_params_mode.values
+        }
+        if (config.hasOwnProperty('cp_spd_loop_params_accel')) {
+            cp_spd_loop_params_accel_caption.text = config.cp_spd_loop_params_accel.caption
+            cp_spd_loop_params_accel.enabled = config.cp_spd_loop_params_accel.states[0]
+            cp_spd_loop_params_accel.text = config.cp_spd_loop_params_accel.value
+        }
+        if (config.hasOwnProperty('cp_spd_loop_params_fs')) {
+            cp_spd_loop_params_fs_caption.text = config.cp_spd_loop_params_fs.caption
+            cp_spd_loop_params_fs.enabled = config.cp_spd_loop_params_fs.states[0]
+            cp_spd_loop_params_fs.text = config.cp_spd_loop_params_fs.value
+        }
+        if (config.hasOwnProperty('cp_spd_loop_params_fspd_filt')) {
+            cp_spd_loop_params_fspd_filt_caption.text = config.cp_spd_loop_params_fspd_filt.caption
+            cp_spd_loop_params_fspd_filt.enabled = config.cp_spd_loop_params_fspd_filt.states[0]
+            cp_spd_loop_params_fspd_filt.text = config.cp_spd_loop_params_fspd_filt.value
+        }
+        // Protection Parameters
+        if (config.hasOwnProperty('cp_protection_ocp')) {
+            cp_protection_ocp_caption.text = config.cp_protection_ocp.caption
+            cp_protection_ocp.enabled = config.cp_protection_ocp.states[0]
+            cp_protection_ocp.text = config.cp_protection_ocp.value
+        }
+        if (config.hasOwnProperty('cp_protection_ocp_en')) {
+            cp_protection_ocp_en_caption.text = config.cp_protection_ocp_en.caption
+            cp_protection_ocp_en.enabled = config.cp_protection_ocp_en.states[0]
+            cp_protection_ocp_en.checked = config.cp_protection_ocp_en.value
+        }
+        if (config.hasOwnProperty('cp_protection_ovp')) {
+            cp_protection_ovp_caption.text = config.cp_protection_ovp.caption
+            cp_protection_ovp.enabled = config.cp_protection_ovp.states[0]
+            cp_protection_ovp.text = config.cp_protection_ovp.value
+        }
+        if (config.hasOwnProperty('cp_protection_ovp_en')) {
+            cp_protection_ovp_en_caption.text = config.cp_protection_ovp_en.caption
+            cp_protection_ovp_en.enabled = config.cp_protection_ovp_en.states[0]
+            cp_protection_ovp_en.checked = config.cp_protection_ovp_en.value
+        }
+        if (config.hasOwnProperty('cp_protection_fet_otp')) {
+            cp_protection_fet_otp_caption.text = config.cp_protection_fet_otp.caption
+            cp_protection_fet_otp.enabled = config.cp_protection_fet_otp.states[0]
+            cp_protection_fet_otp.text = config.cp_protection_fet_otp.value
         }
     }
     
     function saveSettings(settingsName) {
         sgUserSettings.writeFile(`${settingsName}.json`,
             {
+                // PWM Settings
                 "cp_pwm_params_o_mode": {
                     "caption": cp_pwm_params_o_mode_caption.text,
-                    "scales": [0, 0, 0],
+                    "scales": [],
                     "states": [cp_pwm_params_o_mode.enabled],
                     "value": cp_pwm_params_o_mode.checked,
                     "values": [],
@@ -1842,6 +2015,258 @@ UIBase { // start_uibase
                     "scales": [cp_pwm_params_dt.to, cp_pwm_params_dt.from, cp_pwm_params_dt.stepSize],
                     "states": [cp_pwm_params_dt.enabled],
                     "value": cp_pwm_params_dt.value,
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pwm_params_min_ls": {
+                    "caption": cp_pwm_params_min_ls_caption.text,
+                    "scales": [cp_pwm_params_min_ls.to, cp_pwm_params_min_ls.from, cp_pwm_params_min_ls.stepSize],
+                    "states": [cp_pwm_params_min_ls.enabled],
+                    "value": cp_pwm_params_min_ls.value,
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pwm_params_freq": {
+                    "caption": cp_pwm_params_freq_caption.text,
+                    "scales": [cp_pwm_params_freq.to, cp_pwm_params_freq.from, cp_pwm_params_freq.stepSize],
+                    "states": [cp_pwm_params_freq.enabled],
+                    "value": cp_pwm_params_freq.value,
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pwm_params_tr_delay": {
+                    "caption": cp_pwm_params_tr_delay_caption.text,
+                    "scales": [],
+                    "states": [cp_pwm_params_tr_delay.enabled],
+                    "value": Number(cp_pwm_params_tr_delay.text),
+                    "values": [],
+                    "unit": ""
+                },
+                // PID Control Parameters
+                "cp_pid_params_kp": {
+                    "caption": cp_pid_params_kp_caption.text,
+                    "scales": [],
+                    "states": [cp_pid_params_kp.enabled],
+                    "value": Number(cp_pid_params_kp.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pid_params_ki": {
+                    "caption": cp_pid_params_ki_caption.text,
+                    "scales": [],
+                    "states": [cp_pid_params_ki.enabled],
+                    "value": Number(cp_pid_params_ki.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pid_params_kd": {
+                    "caption": cp_pid_params_kd_caption.text,
+                    "scales": [],
+                    "states": [cp_pid_params_kd.enabled],
+                    "value": Number(cp_pid_params_kd.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pid_params_wd": {
+                    "caption": cp_pid_params_wd_caption.text,
+                    "scales": [],
+                    "states": [cp_pid_params_wd.enabled],
+                    "value": Number(cp_pid_params_wd.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pid_params_lim": {
+                    "caption": cp_pid_params_lim_caption.text,
+                    "scales": [],
+                    "states": [cp_pid_params_lim.enabled],
+                    "value": Number(cp_pid_params_lim.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pid_params_tau_sys": {
+                    "caption": cp_pid_params_tau_sys_caption.text,
+                    "scales": [],
+                    "states": [cp_pid_params_tau_sys.enabled],
+                    "value": Number(cp_pid_params_tau_sys.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_pid_params_mode": {
+                    "caption": cp_pid_params_mode_caption.text,
+                    "scales": [],
+                    "states": [cp_pid_params_mode.enabled],
+                    "value": cp_pid_params_mode.checked,
+                    "values": [],
+                    "unit": ""
+                },
+                // Motor and Load Parameters
+                "cp_motor_params_rs": {
+                    "caption": cp_motor_params_rs_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_rs.enabled],
+                    "value": Number(cp_motor_params_rs.text),
+                    "values": [],
+                    "unit": ""
+                },///
+                "cp_motor_params_ls": {
+                    "caption": cp_motor_params_ls_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_ls.enabled],
+                    "value": Number(cp_motor_params_ls.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_jm": {
+                    "caption": cp_motor_params_jm_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_jm.enabled],
+                    "value": Number(cp_motor_params_jm.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_jm_load": {
+                    "caption": cp_motor_params_jm_load_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_jm_load.enabled],
+                    "value": Number(cp_motor_params_jm_load.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_kv": {
+                    "caption": cp_motor_params_kv_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_kv.enabled],
+                    "value": Number(cp_motor_params_kv.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_kv_load": {
+                    "caption": cp_motor_params_kv_load_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_kv_load.enabled],
+                    "value": Number(cp_motor_params_kv_load.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_pp": {
+                    "caption": cp_motor_params_pp_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_pp.enabled],
+                    "value": Number(cp_motor_params_pp.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_max_rpm": {
+                    "caption": cp_motor_params_max_rpm_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_max_rpm.enabled],
+                    "value": Number(cp_motor_params_max_rpm.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_rated_rpm": {
+                    "caption": cp_motor_params_rated_rpm_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_rated_rpm.enabled],
+                    "value": Number(cp_motor_params_rated_rpm.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_min_rpm": {
+                    "caption": cp_motor_params_min_rpm_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_min_rpm.enabled],
+                    "value": Number(cp_motor_params_min_rpm.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_ke": {
+                    "caption": cp_motor_params_ke_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_ke.enabled],
+                    "value": Number(cp_motor_params_ke.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_rated_v": {
+                    "caption": cp_motor_params_rated_v_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_rated_v.enabled],
+                    "value": Number(cp_motor_params_rated_v.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_motor_params_hall_pol": {
+                    "caption": cp_motor_params_hall_pol_caption.text,
+                    "scales": [],
+                    "states": [cp_motor_params_hall_pol.enabled],
+                    "value": cp_motor_params_hall_pol.checked,
+                    "values": [],
+                    "unit": ""
+                },
+                // Speed Loop Parameters
+                "cp_spd_loop_params_mode": {
+                    "caption": cp_spd_loop_params_mode_caption.text,
+                    "scales": [],
+                    "states": [cp_spd_loop_params_mode.enabled],
+                    "value": cp_spd_loop_params_mode.currentIndex,
+                    "values": cp_spd_loop_params_mode.model,
+                    "unit": ""
+                },
+                "cp_spd_loop_params_accel": {
+                    "caption": cp_spd_loop_params_accel_caption.text,
+                    "scales": [],
+                    "states": [cp_spd_loop_params_accel.enabled],
+                    "value": Number(cp_spd_loop_params_accel.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_spd_loop_params_fs": {
+                    "caption": cp_spd_loop_params_fs_caption.text,
+                    "scales": [],
+                    "states": [cp_spd_loop_params_fs.enabled],
+                    "value": Number(cp_spd_loop_params_fs.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_spd_loop_params_fspd_filt": {
+                    "caption": cp_spd_loop_params_fspd_filt_caption.text,
+                    "scales": [],
+                    "states": [cp_spd_loop_params_fspd_filt.enabled],
+                    "value": Number(cp_spd_loop_params_fspd_filt.text),
+                    "values": [],
+                    "unit": ""
+                },
+                // Protection Parameters
+                "cp_protection_ocp": {
+                    "caption": cp_protection_ocp_caption.text,
+                    "scales": [],
+                    "states": [cp_protection_ocp.enabled],
+                    "value": Number(cp_protection_ocp.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_protection_ocp_en": {
+                    "caption": cp_protection_ocp_en_caption.text,
+                    "scales": [],
+                    "states": [cp_protection_ocp_en.enabled],
+                    "value": cp_protection_ocp_en.checked,
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_protection_ovp": {
+                    "caption": cp_protection_ovp_caption.text,
+                    "scales": [],
+                    "states": [cp_protection_ovp.enabled],
+                    "value": Number(cp_protection_ovp.text),
+                    "values": [],
+                    "unit": ""
+                },
+                "cp_protection_ovp_en": {
+                    "caption": cp_protection_ovp_en_caption.text,
+                    "scales": [],
+                    "states": [cp_protection_ovp_en.enabled],
+                    "value": cp_protection_ovp_en.checked,
                     "values": [],
                     "unit": ""
                 }
@@ -1879,12 +2304,12 @@ UIBase { // start_uibase
     LayoutSGInfoBox { // start_708bd
         id: cp_save_filename
         layoutInfo.uuid: "708bd"
-        layoutInfo.columnsWide: 6
+        layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 21
         layoutInfo.yRows: 43
 
-        placeholderText: "Enter configuration name"
+        placeholderText: "Enter parameter name"
         horizontalAlignment: Text.AlignLeft
         readOnly: false
     } // end_708bd
@@ -1892,9 +2317,9 @@ UIBase { // start_uibase
     LayoutButton { // start_912e7
         id: cp_save_button
         layoutInfo.uuid: "912e7"
-        layoutInfo.columnsWide: 1
-        layoutInfo.rowsTall: 2
-        layoutInfo.xColumns: 28
+        layoutInfo.columnsWide: 2
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 27
         layoutInfo.yRows: 43
 
         property string subdirName: "mv-mdk"
@@ -1907,7 +2332,7 @@ UIBase { // start_uibase
                 if (cp_save_filename.text.length > 0) {
                     saveSettings(cp_save_filename.text)
                     cp_load_filename.updateList()
-                    cp_save_filename.placeholderText = "Enter configuration name"
+                    cp_save_filename.placeholderText = "Enter parameter name"
                 } else {
                     cp_save_filename.placeholderText = "Invalid filename"
                 }
@@ -1924,7 +2349,7 @@ UIBase { // start_uibase
     LayoutSGComboBox { // start_93f08
         id: cp_load_filename
         layoutInfo.uuid: "93f08"
-        layoutInfo.columnsWide: 4
+        layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 21
         layoutInfo.yRows: 46
@@ -1949,10 +2374,10 @@ UIBase { // start_uibase
     LayoutButton { // start_e96bf
         id: cp_delete_button
         layoutInfo.uuid: "e96bf"
-        layoutInfo.columnsWide: 1
-        layoutInfo.rowsTall: 2
-        layoutInfo.xColumns: 28
-        layoutInfo.yRows: 46
+        layoutInfo.columnsWide: 2
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 27
+        layoutInfo.yRows: 47
 
         text: "Delete"
 
@@ -1966,10 +2391,10 @@ UIBase { // start_uibase
     LayoutButton { // start_053a0
         id: cp_load_button
         layoutInfo.uuid: "053a0"
-        layoutInfo.columnsWide: 1
-        layoutInfo.rowsTall: 2
-        layoutInfo.xColumns: 26
-        layoutInfo.yRows: 46
+        layoutInfo.columnsWide: 2
+        layoutInfo.rowsTall: 1
+        layoutInfo.xColumns: 27
+        layoutInfo.yRows: 45
 
         text: "Load"
 
