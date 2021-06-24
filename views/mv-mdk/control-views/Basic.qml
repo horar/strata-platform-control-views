@@ -2,6 +2,7 @@ import QtQuick 2.12
 
 import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
+import tech.strata.sglayout 1.0
 
 UIBase { // start_uibase
 
