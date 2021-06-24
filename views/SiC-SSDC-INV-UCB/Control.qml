@@ -102,7 +102,7 @@ Rectangle {
             id: generalButton
             enabled: true
             opacity: 1
-            text: "General Inputs"
+            text: "Default settings"
         }
 
         TabButton {

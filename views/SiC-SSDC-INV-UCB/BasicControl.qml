@@ -116,7 +116,7 @@ Item {
     Component.onCompleted:  {
         multiplePlatform.check_class_id()
 
-        Help.registerTarget(navTabs, "These tabs switch between Basic MDK, Advanced MDK, MDK Settings and MDK Data Logger/Export, General Inputs and Pulse Testing views.", 0, "basicHelp")
+        Help.registerTarget(navTabs, "These tabs switch between Basic MDK, Advanced MDK, MDK Settings and MDK Data Logger/Export, Default settings and Pulse Testing views.", 0, "basicHelp")
 
         Help.registerTarget(motor_ENSwitch, "This switch enables or disables motor. The switch will be enabled when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V. It will be dissabled when input voltage is lower than "+ " "+ multiplePlatform.minVin + "V to warn the user that input voltage is too low.", 1, "basicHelp")
         Help.registerTarget(dc_link_vinVoltage,"DC link voltage is shown here", 2, "basicHelp")

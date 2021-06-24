@@ -40,7 +40,7 @@ Item {
 
     Component.onCompleted:  {
 
-        Help.registerTarget(navTabs, "General Inputs:\n-Gain and offset for Voltage measurement (Inputs from user based on Gate driver voltage measurement parameters).\n-Gain and offset for phase currents measurements (Inputs from user based on LEM Sensor parameters).\n-Module NTC parameters.\n-Fault / Warning Alarm Settings.", 0, "generalControlHelp")
+        Help.registerTarget(navTabs, "Default settings:\n-Loaded automatically.\n-Please check datasheets before changing.\n-Gain and offset for Voltage measurement (Inputs from user based on Gate driver voltage measurement parameters).\n-Gain and offset for phase currents measurements (Inputs from user based on LEM Sensor parameters).\n-Module NTC parameters.\n-Fault / Warning Alarm Settings.", 0, "generalControlHelp")
 
     }
 
@@ -186,6 +186,30 @@ Item {
                         anchors.left: offsetCurrentSlider.right
                         anchors.verticalCenter: offsetCurrentSlider.top
                         }
+                }
+
+                Rectangle {
+                    id: warningBox
+                    color: "red"
+                    radius: 10
+                    anchors {
+                        top: offsetVoltLabel.bottom
+                        topMargin: parent.height/15
+                        left: voltText.left
+                    }
+                    width: parent.width/3
+                    height: parent.height/20
+
+                    Text {
+                        id: warningText
+                        anchors {
+                            centerIn: warningBox
+                        }
+                        text: "<b>Please check datasheets before doing changes.</b>"
+                        font.pixelSize: (parent.width + parent.height)/30
+                        color: "white"
+                    }
+
                 }
 
 
