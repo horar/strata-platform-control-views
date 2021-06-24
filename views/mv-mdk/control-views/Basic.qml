@@ -56,7 +56,10 @@ UIBase { // start_uibase
         platformInterface.notifications.input_voltage.unit = "Unit"
         // status_log
         platformInterface.notifications.status_log.caption = "Status Log"
-        platformInterface.notifications.status_log.value = ""    
+        platformInterface.notifications.status_log.value = ""
+
+        // ------------------------ Request Defaults from UI ------------------------ //
+        platformInterface.commands.control_props.send()
     }
 
     // ======================== UI Objects ======================== //

@@ -88,6 +88,10 @@
             "payload": {
                 "value": "double"
             }
+        },
+        {
+            "cmd": "control_props",
+            "payload": null
         }
     ],
     "notifications": [
