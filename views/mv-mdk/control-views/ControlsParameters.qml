@@ -51,12 +51,12 @@ UIBase { // start_uibase
         // ------------------------ Send Default Controls/Parameters to FW ------------------------ //
         
         send_pwm_params()
-        send_pid_params()
-        send_motor_params()
-        send_spd_loop_params()
-        send_protection()
+        // send_pid_params()
+        // send_motor_params()
+        // send_spd_loop_params()
+        // send_protection()
 
-        platformInterface.commands.control_props.send()
+        // platformInterface.commands.control_props.send()
     }
 
     // ======================== UI Objects ======================== //
