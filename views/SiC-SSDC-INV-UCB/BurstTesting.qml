@@ -33,7 +33,7 @@ Item {
             }
             Layout.preferredHeight: parent.height
             Layout.preferredWidth: parent.width
-            source: "image/DPT_Set−up.png"
+            source: "image/DPT_Set-up.png"
             width: parent.width/3
             height: parent.height
             fillMode: Image.PreserveAspectFit
