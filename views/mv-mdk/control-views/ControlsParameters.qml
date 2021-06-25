@@ -55,6 +55,8 @@ UIBase { // start_uibase
         send_motor_params()
         send_spd_loop_params()
         send_protection()
+
+        platformInterface.commands.control_props.send()
     }
 
     // ======================== UI Objects ======================== //
