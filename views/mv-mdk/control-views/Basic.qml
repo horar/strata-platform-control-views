@@ -60,6 +60,7 @@ UIBase { // start_uibase
         platformInterface.notifications.status_log.value = ""
 
         // ------------------------ Request Defaults from UI ------------------------ //
+        
         platformInterface.commands.control_props.send()
     }
 

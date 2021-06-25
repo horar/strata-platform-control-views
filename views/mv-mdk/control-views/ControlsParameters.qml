@@ -47,6 +47,14 @@ UIBase { // start_uibase
         Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor.", 22, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
         Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box. Select the desired parameter set and the combo box and click Load to recall. Select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json file in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transfer between PCs if desired.", 24, "ControlsAndParametersHelp")
+
+        // ------------------------ Send Default Controls/Parameters to FW ------------------------ //
+        
+        send_pwm_params()
+        send_pid_params()
+        send_motor_params()
+        send_spd_loop_params()
+        send_protection()
     }
 
     // ======================== UI Objects ======================== //
@@ -217,6 +225,16 @@ UIBase { // start_uibase
 
     // ------------------------ PWM Parameters ------------------------ //
 
+    function send_pwm_params() {
+        platformInterface.commands.pwm_params.update(
+            cp_pwm_params_dt.value / 10,
+            cp_pwm_params_freq.value * 1000,
+            cp_pwm_params_min_ls.value / 10,
+            Number(cp_pwm_params_o_mode.checked),
+            Number(cp_pwm_params_tr_delay.text)
+        )
+    }
+
     LayoutSGSwitch { // start_d68f2
         id: cp_pwm_params_o_mode
         layoutInfo.uuid: "d68f2"
@@ -233,13 +251,7 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
-            platformInterface.commands.pwm_params.update(
-                cp_pwm_params_dt.value / 10,
-                cp_pwm_params_freq.value * 1000,
-                cp_pwm_params_min_ls.value / 10,
-                Number(checked),
-                Number(cp_pwm_params_tr_delay.text)
-            )
+            send_pwm_params()
         }
         
     } // end_d68f2
@@ -277,13 +289,7 @@ UIBase { // start_uibase
 
         onUserSet: {
             console.log("onUserSet:", value)
-            platformInterface.commands.pwm_params.update(
-                value / 10,
-                cp_pwm_params_freq.value * 1000,
-                cp_pwm_params_min_ls.value / 10,
-                Number(cp_pwm_params_o_mode.checked),
-                Number(cp_pwm_params_tr_delay.text)
-            )
+            send_pwm_params()
         }
 
     } // end_b8761
@@ -321,13 +327,7 @@ UIBase { // start_uibase
 
         onUserSet: {
             console.log("onUserSet:", value)
-            platformInterface.commands.pwm_params.update(
-                cp_pwm_params_dt.value / 10,
-                cp_pwm_params_freq.value * 1000,
-                value / 10,
-                Number(cp_pwm_params_o_mode.checked),
-                Number(cp_pwm_params_tr_delay.text)
-            )
+            send_pwm_params()
         }
 
     } // end_547f7
@@ -379,15 +379,8 @@ UIBase { // start_uibase
 
         onUserSet: {
             console.log("onUserSet:", value)
-            platformInterface.commands.pwm_params.update(
-                cp_pwm_params_dt.value / 10,
-                value * 1000,
-                cp_pwm_params_min_ls.value / 10,
-                Number(cp_pwm_params_o_mode.checked),
-                Number(cp_pwm_params_tr_delay.text)
-            )
+            send_pwm_params()
         }
-
     } // end_b15e0
 
     LayoutSGInfoBox { // start_61e5b
@@ -407,13 +400,7 @@ UIBase { // start_uibase
 
         onEditingFinished : {
             console.log("Accepted:", text)
-            platformInterface.commands.pwm_params.update(
-                cp_pwm_params_dt.value / 10,
-                cp_pwm_params_freq.value * 1000,
-                cp_pwm_params_min_ls.value / 10,
-                Number(cp_pwm_params_o_mode.checked),
-                Number(text)
-            )
+            send_pwm_params()
         }
 
     } // end_61e5b
@@ -436,6 +423,18 @@ UIBase { // start_uibase
 
     // ------------------------ PID Parameters ------------------------ //
 
+    function send_pid_params() {
+        platformInterface.commands.pid_params.update(
+            Number(cp_pid_params_kd.text),
+            Number(cp_pid_params_ki.text),
+            Number(cp_pid_params_kp.text),
+            Number(cp_pid_params_lim.text),
+            Number(cp_pid_params_mode.checked),            
+            Number(cp_pid_params_tau_sys.text),
+            Number(cp_pid_params_wd.text)
+        )
+    }
+
     LayoutSGInfoBox { // start_4517c
         id: cp_pid_params_kp
         layoutInfo.uuid: "4517c"
@@ -454,15 +453,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.pid_params.update(
-                Number(text),
-                Number(cp_pid_params_ki.text),
-                Number(cp_pid_params_kd.text),
-                Number(cp_pid_params_wd.text),
-                Number(cp_pid_params_lim.text),
-                Number(cp_pid_params_tau_sys.text),
-                Number(cp_pid_params_mode.checked)
-            )
+            send_pid_params()
         }
     } // end_4517c
 
@@ -484,15 +475,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.pid_params.update(
-                Number(cp_pid_params_kp.text),
-                Number(text),
-                Number(cp_pid_params_kd.text),
-                Number(cp_pid_params_wd.text),
-                Number(cp_pid_params_lim.text),
-                Number(cp_pid_params_tau_sys.text),
-                Number(cp_pid_params_mode.checked)
-            )
+            send_pid_params()
         }
 
     } // end_1d4dc
@@ -515,15 +498,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.pid_params.update(
-                Number(cp_pid_params_kp.text),
-                Number(cp_pid_params_ki.text),
-                Number(text),
-                Number(cp_pid_params_wd.text),
-                Number(cp_pid_params_lim.text),
-                Number(cp_pid_params_tau_sys.text),
-                Number(cp_pid_params_mode.checked)
-            )
+            send_pid_params()
         }
     } // end_4b295
 
@@ -605,15 +580,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.pid_params.update(
-                Number(cp_pid_params_kp.text),
-                Number(cp_pid_params_ki.text),
-                Number(cp_pid_params_kd.text),
-                Number(text),
-                Number(cp_pid_params_lim.text),
-                Number(cp_pid_params_tau_sys.text),
-                Number(cp_pid_params_mode.checked)
-            )
+            send_pid_params()
         }
     } // end_cd9bc
 
@@ -635,15 +602,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.pid_params.update(
-                Number(cp_pid_params_kp.text),
-                Number(cp_pid_params_ki.text),
-                Number(cp_pid_params_kd.text),
-                Number(cp_pid_params_wd.text),
-                Number(text),
-                Number(cp_pid_params_tau_sys.text),
-                Number(cp_pid_params_mode.checked)
-            )
+            send_pid_params()
         }
     } // end_9ac57
 
@@ -665,15 +624,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.pid_params.update(
-                Number(cp_pid_params_kp.text),
-                Number(cp_pid_params_ki.text),
-                Number(cp_pid_params_kd.text),
-                Number(cp_pid_params_wd.text),
-                Number(cp_pid_params_lim.text),
-                Number(text),
-                Number(cp_pid_params_mode.checked)
-            )
+            send_pid_params()
         }
     } // end_625e9
 
@@ -692,15 +643,7 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
-            platformInterface.commands.pid_params.update(
-                Number(cp_pid_params_kp.text),
-                Number(cp_pid_params_ki.text),
-                Number(cp_pid_params_kd.text),
-                Number(cp_pid_params_wd.text),
-                Number(cp_pid_params_lim.text),
-                Number(cp_pid_params_tau_sys.text),
-                Number(checked)
-            )
+            send_pid_params()
         }
     } // end_b8452
 
@@ -766,6 +709,24 @@ UIBase { // start_uibase
 
     // ------------------------ Motor Parameters ------------------------ //
 
+    function send_motor_params() {
+        platformInterface.commands.motor_params.update(
+            Number(cp_motor_params_hall_pol.checked),
+            Number(cp_motor_params_jm.text),
+            Number(cp_motor_params_jm_load.text),
+            Number(cp_motor_params_ke.text),
+            Number(cp_motor_params_kv.text),
+            Number(cp_motor_params_kv_load.text),
+            Number(cp_motor_params_ls.text),
+            Number(cp_motor_params_max_rpm.text),
+            Number(cp_motor_params_min_rpm.text),
+            Number(cp_motor_params_pp.text),
+            Number(cp_motor_params_rated_rpm.text),
+            Number(cp_motor_params_rated_v.text),
+            Number(cp_motor_params_rs.text)  
+        )
+    }
+
     LayoutSGInfoBox { // start_7b111
         id: cp_motor_params_rs
         layoutInfo.uuid: "7b111"
@@ -784,21 +745,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(text)  
-            )
+            send_motor_params()
         }
 
     } // end_7b111
@@ -821,21 +768,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_b2002
 
@@ -857,21 +790,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_6bb67
 
@@ -893,21 +812,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_c26b5
 
@@ -929,21 +834,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_e7154
 
@@ -965,21 +856,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_d33f4
 
@@ -1001,21 +878,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_9a955
 
@@ -1037,21 +900,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
             // Update Target Speed slider with maximum value
             platformInterface.notifications.target_speed.scales.index_0 = Number(cp_motor_params_max_rpm.text)
         }
@@ -1075,21 +924,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_a85c0
 
@@ -1111,21 +946,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_16b29
 
@@ -1147,21 +968,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_cc444
 
@@ -1183,21 +990,7 @@ UIBase { // start_uibase
 
         onEditingFinished: {
             console.log("Accepted:", text)
-            platformInterface.commands.motor_params.update(
-                Number(cp_motor_params_hall_pol.checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_d3605
 
@@ -1216,21 +1009,7 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
-            platformInterface.commands.motor_params.update(
-                Number(checked),
-                Number(cp_motor_params_jm.text),
-                Number(cp_motor_params_jm_load.text),
-                Number(cp_motor_params_ke.text),
-                Number(cp_motor_params_kv.text),
-                Number(cp_motor_params_kv_load.text),
-                Number(cp_motor_params_ls.text),
-                Number(cp_motor_params_max_rpm.text),
-                Number(cp_motor_params_min_rpm.text),
-                Number(cp_motor_params_pp.text),
-                Number(cp_motor_params_rated_rpm.text),
-                Number(cp_motor_params_rated_v.text),
-                Number(cp_motor_params_rs.text)  
-            )
+            send_motor_params()
         }
     } // end_7baa1
 
@@ -1431,6 +1210,15 @@ UIBase { // start_uibase
 
     // ------------------------ Speed Loop Parameters ------------------------ //
 
+    function send_spd_loop_params() {
+        platformInterface.commands.spd_loop_params.update(
+            Number(cp_spd_loop_params_accel.text),
+            Number(cp_spd_loop_params_fs.text),
+            Number(cp_spd_loop_params_fspd_filt.text),
+            cp_spd_loop_params_mode.currentIndex
+        )
+    }
+
     LayoutSGComboBox { // start_f5402
         id: cp_spd_loop_params_mode
         layoutInfo.uuid: "f5402"
@@ -1444,12 +1232,7 @@ UIBase { // start_uibase
         
         onActivated: {
             console.log("onActivated:", currentIndex, currentText)
-            platformInterface.commands.spd_loop_params.update(
-                Number(cp_spd_loop_params_accel.text),
-                Number(cp_spd_loop_params_fs.text),
-                Number(cp_spd_loop_params_fspd_filt.text),
-                currentIndex
-            )
+            send_spd_loop_params()
         }        
     } // end_f5402
 
@@ -1485,13 +1268,8 @@ UIBase { // start_uibase
         }
 
         onAccepted: {
-           console.log("Accepted:", text)
-           platformInterface.commands.spd_loop_params.update(
-                Number(text),
-                Number(cp_spd_loop_params_fs.text),
-                Number(cp_spd_loop_params_fspd_filt.text),
-                cp_spd_loop_params_mode.currentIndex
-            )
+            console.log("Accepted:", text)
+            send_spd_loop_params()
             // Update Acceleration slider with set value
             platformInterface.notifications.acceleration.value = Number(text)
         }
@@ -1529,13 +1307,8 @@ UIBase { // start_uibase
         }
 
         onAccepted: {
-           console.log("Accepted:", text)
-           platformInterface.commands.spd_loop_params.update(
-                Number(cp_spd_loop_params_accel.text),
-                Number(text),
-                Number(cp_spd_loop_params_fspd_filt.text),
-                cp_spd_loop_params_mode.currentIndex
-            )
+            console.log("Accepted:", text)
+            send_spd_loop_params()
         }
     } // end_d3ebf
 
@@ -1556,13 +1329,8 @@ UIBase { // start_uibase
         }
 
         onAccepted: {
-           console.log("Accepted:", text)
-           platformInterface.commands.spd_loop_params.update(
-                Number(cp_spd_loop_params_accel.text),
-                Number(cp_spd_loop_params_fs.text),
-                Number(text),
-                cp_spd_loop_params_mode.currentIndex
-            )
+            console.log("Accepted:", text)
+            send_spd_loop_params()
         }
     } // end_c31f8
 
@@ -1598,6 +1366,16 @@ UIBase { // start_uibase
 
     // ------------------------ Protection ------------------------ //
 
+    function send_protection() {
+        platformInterface.commands.protection.update(
+            Number(cp_protection_fet_otp.text),
+            Number(cp_protection_ocp.text),
+            Number(cp_protection_ocp_en.checked),
+            Number(cp_protection_ovp.text),
+            Number(cp_protection_ovp_en.checked)
+        )
+    }
+
     LayoutSGInfoBox { // start_4c1a9
         id: cp_protection_ocp
         layoutInfo.uuid: "4c1a9"
@@ -1615,14 +1393,8 @@ UIBase { // start_uibase
         }
 
         onAccepted: {
-           console.log("Accepted:", text)
-           platformInterface.commands.protection.update(
-                Number(cp_protection_fet_otp.text),
-                Number(text),
-                Number(cp_protection_ocp_en.checked),
-                Number(cp_protection_ovp.text),
-                Number(cp_protection_ovp_en.checked)
-            )
+            console.log("Accepted:", text)
+            send_protection()
         }
 
     } // end_4c1a9
@@ -1642,13 +1414,7 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
-            platformInterface.commands.protection.update(
-                Number(cp_protection_fet_otp.text),
-                Number(cp_protection_ocp.text),
-                Number(checked),
-                Number(cp_protection_ovp.text),
-                Number(cp_protection_ovp_en.checked)
-            )
+            send_protection()
         }
     } // end_5ce22
 
@@ -1670,13 +1436,7 @@ UIBase { // start_uibase
 
         onAccepted: {
            console.log("Accepted:", text)
-           platformInterface.commands.protection.update(
-                Number(cp_protection_fet_otp.text),
-                Number(cp_protection_ocp.text),
-                Number(cp_protection_ocp_en.checked),
-                Number(text),
-                Number(cp_protection_ovp_en.checked)
-            )
+           send_protection()
         }
     } // end_90ed2
 
@@ -1695,13 +1455,7 @@ UIBase { // start_uibase
 
         onToggled: {
             console.log("onToggled:", checked)
-            platformInterface.commands.protection.update(
-                Number(cp_protection_fet_otp.text),
-                Number(cp_protection_ocp.text),
-                Number(cp_protection_ocp_en.checked),
-                Number(cp_protection_ovp.text),
-                Number(checked)
-            )
+            send_protection()
         }
     } // end_830dc
 
@@ -1723,13 +1477,7 @@ UIBase { // start_uibase
 
         onAccepted: {
            console.log("Accepted:", text)
-           platformInterface.commands.protection.update(
-                Number(text),
-                Number(cp_protection_ocp.text),
-                Number(cp_protection_ocp_en.checked),
-                Number(cp_protection_ovp.text),
-                Number(cp_protection_ovp_en.checked)
-            )
+           send_protection()
         }
     } // end_9599e
 
