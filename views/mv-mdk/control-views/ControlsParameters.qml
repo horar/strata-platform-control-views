@@ -3,6 +3,7 @@ import QtQuick 2.12
 import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
 import tech.strata.sglayout 1.0
+import QtTest 1.1
 
 UIBase { // start_uibase
     
@@ -48,15 +49,19 @@ UIBase { // start_uibase
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
         Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box. Select the desired parameter set and the combo box and click Load to recall. Select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json file in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transfer between PCs if desired.", 24, "ControlsAndParametersHelp")
 
-        // ------------------------ Send Default Controls/Parameters to FW ------------------------ //
-        
-        send_pwm_params()
-        // send_pid_params()
-        // send_motor_params()
-        // send_spd_loop_params()
-        // send_protection()
+    }
 
-        // platformInterface.commands.control_props.send()
+    // ------------------------ Send Default Controls/Parameters to FW when Requested ------------------------ //
+        
+    Connections {
+        target: platformInterface.notifications.request_params
+        onNotificationFinished: {
+            send_pwm_params()
+            send_pid_params()
+            send_motor_params()
+            send_spd_loop_params()
+            send_protection()
+        }
     }
 
     // ======================== UI Objects ======================== //

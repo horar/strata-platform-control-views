@@ -91,7 +91,9 @@
         },
         {
             "cmd": "control_props",
-            "payload": null
+            "payload": {
+                "empty": "string"
+            }
         }
     ],
     "notifications": [
@@ -303,6 +305,12 @@
                 "value": "int",
                 "values": "array-dynamic",
                 "unit": "string"
+            }
+        },
+        {
+            "value": "request_params",
+            "payload": {
+                "value": "bool"
             }
         }
     ]

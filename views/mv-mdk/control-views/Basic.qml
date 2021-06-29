@@ -61,7 +61,7 @@ UIBase { // start_uibase
 
         // ------------------------ Request Defaults from UI ------------------------ //
 
-        // platformInterface.commands.control_props.send()
+        platformInterface.commands.control_props.send()
     }
 
     // ======================== UI Objects ======================== //

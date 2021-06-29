@@ -7,7 +7,7 @@ thread_running = True
 # configure the serial connections (the parameters differs on the device you are connecting to)
 try:
     ser = serial.Serial(
-        port='COM29',
+        port='COM5',
         baudrate=115200,
         timeout=1
     )

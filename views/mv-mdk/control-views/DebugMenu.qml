@@ -35,7 +35,7 @@ Rectangle {
                 {"cmd":"direction","payload":{"value":"bool"}},
                 {"cmd":"target_speed","payload":{"value":"double"}},
                 {"cmd":"acceleration","payload":{"value":"double"}},
-                {"cmd":"control_props","payload":null},
+                {"cmd":"control_props","payload":{"empty":"string"}},
             ],
             "notifications": [
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"actual_speed"},
@@ -52,6 +52,7 @@ Rectangle {
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"run"},
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"brake"},
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"direction"},
+                {"payload":{"value":"bool"},"value":"request_params"},
             ]
         })
 
