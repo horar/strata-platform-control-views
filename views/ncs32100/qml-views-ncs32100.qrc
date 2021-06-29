@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Control.qml</file>
+        <file>PlatformInterface.qml</file>
+        <file>BasicControl.qml</file>
+        <file>RotationEncoder.qml</file>
+        <file>RotaryEncoder.svg</file>
+    </qresource>
+</RCC>
