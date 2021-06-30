@@ -859,6 +859,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
+                        repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -919,6 +920,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
+                        repeatOldData: visible
                         dataLineColor: "green"
                         textColor: "black"
                         axesColor: "black"
@@ -984,6 +986,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
+                        repeatOldData: visible
                         dataLineColor: "orange"
                         textColor: "black"
                         axesColor: "black"
@@ -1048,6 +1051,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
+                        repeatOldData: visible
                         dataLineColor: "#7bdeff"
                         textColor: "black"
                         axesColor: "black"
@@ -1108,6 +1112,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
+                        repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -1166,6 +1171,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
+                        repeatOldData: visible
                         dataLineColor: "green"
                         textColor: "black"
                         axesColor: "black"

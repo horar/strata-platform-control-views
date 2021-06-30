@@ -381,8 +381,8 @@ Item {
                         SGSlider {
                             id: overTemperatureFaultSlider
                             width: parent.width
-                            from: 115
-                            to: 200
+                            from: 60
+                            to: 150
                             value: multiplePlatform.overTemperatureFault
                             stepSize: 1
                             onValueChanged: overTemperatureFault = value
@@ -509,8 +509,8 @@ Item {
                         SGSlider {
                             id: overTemperatureWarningSlider
                             width: parent.width
-                            from: 85
-                            to: 200
+                            from: 60
+                            to: 150
                             value: multiplePlatform.overTemperatureWarning
                             stepSize: 1
                             onValueChanged: overTemperatureWarning = value
