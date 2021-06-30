@@ -63,8 +63,8 @@ Item{
             gainVolt = 205.338
             offsetVolt = 0
 
-            gainCurrent = 0
-            offsetCurrent = 0
+            gainCurrent = 495.05
+            offsetCurrent = -825.083
 
             r25 = 5147
             r2550 = 3340

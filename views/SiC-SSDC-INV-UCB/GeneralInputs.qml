@@ -173,9 +173,9 @@ Item {
                         from: -multiplePlatform.ioutScale
                         to: multiplePlatform.ioutScale
                         value: multiplePlatform.offsetCurrent
-                        stepSize: 1
+                        stepSize: 0.001
                         onValueChanged: offsetCurrent = value
-                        onUserSet: platformInterface.offsetCurrent = offsetCurrentSlider.value
+                        onUserSet: platformInterface.offsetCurrent = offsetCurrentSlider.value*1000
                         live: false
                     }
                     Text{
