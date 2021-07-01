@@ -187,10 +187,10 @@ Item {
 
 
     Component.onCompleted: {
-        adcPeriodSet.value = 1000
+        adcPeriodSet.value = 2000
 
-        platformInterface.commands.pwm_setting.update(pwmRecoverySetTest.cmd_autor_Test,pwmSettingButtonStripTest.cmd_pwm_freq_test, pwmFrequencyModeSetTest.cmd_pwm_linear_test)
-        platformInterface.commands.adc_setting.update(adcPeriodSet.cmd_adc_period_test, adcControlTest.cmd_adc_working_test)
+//        platformInterface.commands.pwm_setting.update(pwmRecoverySetTest.cmd_autor_Test,pwmSettingButtonStripTest.cmd_pwm_freq_test, pwmFrequencyModeSetTest.cmd_pwm_linear_test)
+//        platformInterface.commands.adc_setting.update(adcPeriodSet.cmd_adc_period_test, adcControlTest.cmd_adc_working_test)
         Help.registerTarget(navTabs, "    These tabs contain different user interface functionality of the \"Strata Multiple NCV7685 Chips for Rear Lighting Demo\" board. \n\n    \"Animation Demo\" page demonstrate seven kinds of animations and each one has configurable parameters. \n\n    \"Customized Test\" page shows one frame, which contains seventy-two LEDs. Each LED\'s intensity can be set individually to implement one pattern. The useful features of NCV7685 also can be enable or disable in this page.", 0, "TestPageHelp")
         Help.registerTarget(vContainer,"    The voltage gauge shows the input voltage of LED bus in real time.", 1, "TestPageHelp")
         Help.registerTarget(aContainer,  "    The current gauge shows the input current of LED bus in real time.", 2, "TestPageHelp")
@@ -1142,13 +1142,14 @@ Item {
                         unitTextFontSizeMultiplier: ratioCalc * 2.5
                         valueDecimalPlaces: 2
                         minimumValue:  0
-                        maximumValue:  5
+                        maximumValue:  4
                         tickmarkStepSize: 1
                         value: 2.00
                         property var test_current_value: platformInterface.notifications.input_voltage_current.i_in
                         onTest_current_valueChanged: {
                             currentTGauge.value = (test_current_value/1000).toFixed(2)
                         }
+
                     }
                 }
             }
@@ -1370,7 +1371,9 @@ Item {
                                     cmd_adc_working_test = false
                                 }
 
-                                platformInterface.commands.adc_setting.update(adcPeriodSet.cmd_adc_period_test, adcControlTest.cmd_adc_working_test)
+                                // {"cmd":"adc_setting","payload": {"working":true,"period": 1000 }}
+
+                                platformInterface.commands.adc_setting.update(adcControlTest.cmd_adc_working_test, Number( ( adcPeriodSet.cmd_adc_period_test).toFixed(0) ) )
                             }
                         }
                     }
@@ -1401,8 +1404,8 @@ Item {
                                 id: adcPeriodSet
                                 width: line5Test.width
                                 fontSizeMultiplier: ratioCalc * 1.2
-                                from: 100
-                                to: 2000
+                                from: 500
+                                to: 3000
                                 stepSize: 100
                                 property int cmd_adc_period_test:  1000
                                 onUserSet: {

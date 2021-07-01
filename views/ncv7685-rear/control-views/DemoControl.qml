@@ -50,8 +50,8 @@ Item {
     property bool goodbye_has_button_clicked: false
 
     Component.onCompleted: {
-        platformInterface.commands.request_platform_id.update()
-        platformInterface.commands.get_firmware_info.update()
+//        platformInterface.commands.request_platform_id.update()
+//        platformInterface.commands.get_firmware_info.update()
 
         leftturnPeriodSet.value = 1
         leftturnCycleSet.value  = 4
@@ -61,11 +61,11 @@ Item {
         warningCycleSet.value  = 4
         fadingPeriodSet.value = 1
         fadingCycleSet.value  = 4
-        brakeStrengthSet.value = 100
+        brakeStrengthSet.value = 127
 
-        platformInterface.commands.pwm_setting.payload.autor =  false
-        platformInterface.commands.pwm_setting.payload.pwm_freq = 300
-        platformInterface.commands.pwm_setting.payload.pwm_linear = false
+//        platformInterface.commands.pwm_setting.payload.autor =  false
+//        platformInterface.commands.pwm_setting.payload.pwm_freq = 300
+//        platformInterface.commands.pwm_setting.payload.pwm_linear = false
 
         Help.registerTarget(navTabs, "    These tabs contain different user interface functionality of the \"Strata Multiple NCV7685 Chips for Rear Lighting Demo\" board. \n\n    \"Animation Demo\" page demonstrate seven kinds of animations and each one has configurable parameters. \n\n    \"Customized Test\" page shows one frame, which contains seventy-two LEDs. Each LED\'s intensity can be set individually to implement one pattern. The useful features of NCV7685 also can be enable or disable in this page.", 0, "AnimationPageHelp")
         Help.registerTarget(gauge1Container, "    The voltage gauge shows the input voltage of the LED bus in real time.", 1, "AnimationPageHelp")
@@ -145,7 +145,7 @@ Item {
                 handleColor: "#F0F8FF"
                 grooveColor: "#E6E6FA"
                 grooveFillColor: "#0cf"
-                fontSizeMultiplier:  ratioCalc * 1.5
+                fontSizeMultiplier:  ratioCalc * 1.2
                 checked: true
                 checkedLabel: "<b>Gauges On</b>"
                 uncheckedLabel: "<b>Gauges Off</b>"
@@ -243,7 +243,7 @@ Item {
                     unitTextFontSizeMultiplier: ratioCalc * 2.5
                     valueDecimalPlaces: 2
                     minimumValue:   0
-                    maximumValue:  5
+                    maximumValue:  4
                     tickmarkStepSize: 1
                     value: 2.00
 
@@ -593,7 +593,7 @@ Item {
                                 width: leftturnColumnContainer.width
                                 fontSizeMultiplier: ratioCalc * 1.2
                                 from: 0.5
-                                to: 32
+                                to: 16
                                 stepSize: 0.1
                                 //                                position: 1
                                 //                                fromText: "0.5S"
@@ -619,6 +619,10 @@ Item {
                                 from: 1
                                 to: 32
                                 stepSize: 1
+//                                onUserSet: {
+//                                    // platformInterface.commands.demo_left_turn.payload.cycle = value.toFixed(0)
+////                                    value = value.toFixed(0)
+//                                }
                             }
                         }
                     }
@@ -692,9 +696,9 @@ Item {
                         color: "#00CD66"
                         onClicked: {
                             if (leftturnSettingOneshot.checked)
-                                platformInterface.commands.demo_left_turn.update( (leftturnCycleSet.value).toFixed(0),true,((leftturnPeriodSet.value)*1000).toFixed(0))
+                                platformInterface.commands.demo_left_turn.update( Number(  (leftturnCycleSet.value).toFixed(0)     ),true,  Number(  ((leftturnPeriodSet.value)*1000).toFixed(0))  )
                             else
-                                platformInterface.commands.demo_left_turn.update( (leftturnCycleSet.value).toFixed(0),false,((leftturnPeriodSet.value)*1000).toFixed(0))
+                                platformInterface.commands.demo_left_turn.update( Number(  (leftturnCycleSet.value).toFixed(0)     ),false, Number(  ((leftturnPeriodSet.value)*1000).toFixed(0))  )
                         }
                     }
                 }
@@ -778,7 +782,7 @@ Item {
                                 width: rightturnColumnContainer.width
                                 fontSizeMultiplier: ratioCalc * 1.2
                                 from: 0.5
-                                to: 32
+                                to: 16
                                 stepSize: 0.1
                                 //                                position: 1
                                 //                                fromText: "0.5S"
@@ -877,9 +881,9 @@ Item {
                         color: "#00CD66"
                         onClicked: {
                             if (rightturnSettingOneshot.checked)
-                                platformInterface.commands.demo_right_turn.update( (rightturnCycleSet.value).toFixed(0),true,((rightturnPeriodSet.value)*1000).toFixed(0))
+                                platformInterface.commands.demo_right_turn.update( Number(  (rightturnCycleSet.value).toFixed(0) ),true, Number(   ((rightturnPeriodSet.value)*1000).toFixed(0)))
                             else
-                                platformInterface.commands.demo_right_turn.update( (rightturnCycleSet.value).toFixed(0),false,((rightturnPeriodSet.value)*1000).toFixed(0))
+                                platformInterface.commands.demo_right_turn.update( Number(  (rightturnCycleSet.value).toFixed(0) ),false, Number(   ((rightturnPeriodSet.value)*1000).toFixed(0)))
                         }
                     }
                 }
@@ -962,7 +966,7 @@ Item {
                                 width: warningColumnContainer.width
                                 fontSizeMultiplier: ratioCalc * 1.2
                                 from: 0.5
-                                to: 32
+                                to: 16
                                 stepSize: 0.1
                                 //                                position: 1
                                 //                                fromText: "0.5S"
@@ -1061,9 +1065,9 @@ Item {
                         color: "#00CD66"
                         onClicked: {
                             if (warningSettingOneshot.checked)
-                                platformInterface.commands.demo_warning.update( (warningCycleSet.value).toFixed(0),true,((warningPeriodSet.value)*1000).toFixed(0))
+                                platformInterface.commands.demo_warning.update( Number( (warningCycleSet.value).toFixed(0)),true, Number(  ((warningPeriodSet.value)*10).toFixed(0)))
                             else
-                                platformInterface.commands.demo_warning.update( (warningCycleSet.value).toFixed(0),false,((warningPeriodSet.value)*1000).toFixed(0))
+                                platformInterface.commands.demo_warning.update( Number((warningCycleSet.value).toFixed(0)),false, Number( ((warningPeriodSet.value)*10).toFixed(0)))
                         }
                     }
                 }
@@ -1146,7 +1150,7 @@ Item {
                                 width: fadingColumnContainer.width
                                 fontSizeMultiplier: ratioCalc * 1.2
                                 from: 0.5
-                                to: 32
+                                to: 16
                                 stepSize: 0.1
                                 //                                position: 1
                                 //                                fromText: "0.5S"
@@ -1245,9 +1249,9 @@ Item {
                         color: "#00CD66"
                         onClicked: {
                             if (fadingSettingOneshot.checked)
-                                platformInterface.commands.demo_fading.update( (fadingCycleSet.value).toFixed(0),true,((fadingPeriodSet.value)*1000).toFixed(0))
+                                platformInterface.commands.demo_fading.update( Number( (fadingCycleSet.value).toFixed(0)),true, Number( ((fadingPeriodSet.value)*10).toFixed(0)))
                             else
-                                platformInterface.commands.demo_fading.update( (fadingCycleSet.value).toFixed(0),false,((fadingPeriodSet.value)*1000).toFixed(0))
+                                platformInterface.commands.demo_fading.update( Number( (fadingCycleSet.value).toFixed(0)),false,Number( ((fadingPeriodSet.value)*10).toFixed(0)))
                         }
                     }
                 }
@@ -1399,7 +1403,7 @@ Item {
                         fontSizeMultiplier: ratioCalc * 2
                         color: "#00CD66"
                         onClicked: {
-                                 platformInterface.commands.demo_brake.update(brakeStrengthSet.value.toFixed(0))
+                                 platformInterface.commands.demo_brake.update( Number( brakeStrengthSet.value.toFixed(0)))
                         }
                     }
                 }

@@ -145,6 +145,7 @@ PlatformInterfaceBase {
             signal notificationFinished()
         }
 
+
         // @notification: adc_setting
         // @property period: int
         // @property working: bool
@@ -164,6 +165,13 @@ PlatformInterfaceBase {
 
             signal notificationFinished()
         }
+
+        property QtObject report_vi: QtObject {
+            property string status: "handler updated"
+
+            signal notificationFinished()
+        }
+
 
         // @notification: dcs_1
         // @property led_0_35: int
@@ -553,8 +561,8 @@ PlatformInterfaceBase {
                 "period": 0,
                 "working": false
             },
-            update: function (period,working) {
-                this.set(period,working)
+            update: function (working,period){
+                this.set(working,period)
                 this.send(this)
             },
             set: function (period,working) {
