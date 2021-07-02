@@ -72,9 +72,9 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
 
-        text: "LIGHTING-LED-GEVK"
+        text: "STR-DEMO-LIGHTING-KIT-GEVK"
         font.bold: true
-        fontSizeMultiplier: 5.0
+        fontSizeMultiplier: 4.0
         color: "green"
     }
 
