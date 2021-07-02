@@ -1,0 +1,46 @@
+{
+    "commands": [
+        {
+            "cmd": "read",
+            "payload": {
+                "service": "string",
+                "characteristic": "string"
+            }
+        },
+        {
+            "cmd": "write",
+            "payload": {
+                "service": "string",
+                "characteristic": "string",
+                "data": "string"
+            }
+        },
+        {
+            "cmd": "write_descriptor",
+            "payload": {
+                "service": "string",
+                "characteristic": "string",
+                "descriptor": "string",
+                "data": "string"
+            }
+        }
+    ],
+    "notifications": [
+        {
+            "value": "read",
+            "payload": {
+                "service": "string",
+                "characteristic": "string",
+                "data": "string"
+            }
+        },
+        {
+            "value": "notify",
+            "payload": {
+                "service": "string",
+                "characteristic": "string",
+                "data": "string"
+            }
+        }
+    ]
+}
