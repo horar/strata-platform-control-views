@@ -1,0 +1,8 @@
+project(NCS32200
+    LANGUAGES NONE
+)
+
+add_view(
+    NAME ${PROJECT_NAME}
+    VERSION ${PROJECT_VERSION}
+)

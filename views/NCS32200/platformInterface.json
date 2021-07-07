@@ -1,0 +1,150 @@
+{
+    "commands": [
+        {
+            "cmd": "get_data",
+            "payload": null
+        },
+        {
+            "cmd": "bat_en",
+            "payload": {
+                "enable": "string"
+            }
+        },
+        {
+            "cmd": "vcc_en",
+            "payload": {
+                "enable": "string"
+            }
+        },
+        {
+            "cmd": "reset_positionset_battv",
+            "payload": null
+        },
+        {
+            "cmd": "reset_turns",
+            "payload": null
+        },
+        {
+            "cmd": "reset_errors",
+            "payload": null
+        },
+        {
+            "cmd": "set_low_batt",
+            "payload": {
+                "battv_threshold": "double"
+            }
+        },
+        {
+            "cmd": "set_over_temp",
+            "payload": {
+                "temp_threshold": "double"
+            }
+        },
+        {
+            "cmd": "get_alarmbattv",
+            "payload": null
+        },
+        {
+            "cmd": "get_lowbattv",
+            "payload": null
+        },
+        {
+            "cmd": "set_battv",
+            "payload": {
+                "battv": "double"
+            }
+        }
+    ],
+    "notifications": [
+        {
+            "value": "get_NCS32200_data",
+            "payload": {
+                "pos": "int",
+                "vel": "int",
+                "accel": "int",
+                "turns": "int",
+                "time": "double"
+            }
+        },
+        {
+            "value": "get_NCS32200_errors",
+            "payload": {
+                "overspeed": "int",
+                "sensor_error": "int",
+                "overflow": "int",
+                "over_temp": "int",
+                "low_bat": "int",
+                "no_power": "int",
+                "batt_alarm": "int"
+            }
+        },
+        {
+            "value": "get_NCS32200_temperature",
+            "payload": {
+                "temperature": "int"
+            }
+        },
+        {
+            "value": "status_telemetry",
+            "payload": {
+                "vcc": "double",
+                "vbat": "double",
+                "ibat": "double"
+            }
+        },
+        {
+            "value": "reset_position",
+            "payload": {
+                "position": "int"
+            }
+        },
+        {
+            "value": "reset_turns",
+            "payload": {
+                "turns": "int"
+            }
+        },
+        {
+            "value": "reset_errors",
+            "payload": {
+                "overspeed": "int",
+                "sensor_error": "int",
+                "overflow": "int",
+                "over_temp": "int",
+                "low_bat": "int",
+                "no_power": "int",
+                "batt_alarm": "int"
+            }
+        },
+        {
+            "value": "set_low_batt",
+            "payload": {
+                "battv_threshold": "double"
+            }
+        },
+        {
+            "value": "set_over_temp",
+            "payload": {
+                "temp_threshold": "int"
+            }
+        },
+        {
+            "value": "get_alarmbattv",
+            "payload": {
+                "alarm_threshold": "int"
+            }
+        },
+        {
+            "value": "get_lowbattv",
+            "payload": {
+                "lowbatt_threshold": "double"
+            }
+        },
+        {
+            "value": "set_battv",
+            "payload": {
+                "battv": "double"
+            }
+        }
+    ]
+}
