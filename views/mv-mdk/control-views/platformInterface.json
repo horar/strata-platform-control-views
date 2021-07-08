@@ -91,9 +91,7 @@
         },
         {
             "cmd": "control_props",
-            "payload": {
-                "empty": "string"
-            }
+            "payload": null
         }
     ],
     "notifications": [

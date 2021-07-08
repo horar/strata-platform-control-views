@@ -35,7 +35,7 @@ Rectangle {
                 {"cmd":"direction","payload":{"value":"bool"}},
                 {"cmd":"target_speed","payload":{"value":"double"}},
                 {"cmd":"acceleration","payload":{"value":"double"}},
-                {"cmd":"control_props","payload":{"empty":"string"}},
+                {"cmd":"control_props","payload":null},
             ],
             "notifications": [
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"actual_speed"},
