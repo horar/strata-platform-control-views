@@ -28,7 +28,7 @@ The following Qt5 components are required:
 
 ## Build and Integration Instructions
 * To build views you may use `./bootstrap-views.sh`
-* To integrate the views with `Strata Developer Studio` build, you may clone this repository under `components` directory of Strata Host Core repository and start the build process of `Strata Developer studio`.
+* To integrate the views with `Strata Developer Studio` build, you may clone this repository under `components` directory of strata-host-core repository and start the build process of `Strata Developer studio`.
 
 ## Contributions
 You may contribute in various ways such as reporting a bug, open a PR, or share your thoughts.
