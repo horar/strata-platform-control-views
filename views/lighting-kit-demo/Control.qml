@@ -204,17 +204,17 @@ Item {
 
     function extractInteger(hexData, byteStart, length) {
         var hexString = hexData.substr(byteStart*2, length*2)
-        return CommonCPP.SGUtilsCpp.hexStringToInt16(hexString)
+        return CommonCPP.SGConversion.hexStringLeToInt16(hexString)
     }
 
     function extractFloat(hexData, byteStart, length) {
         var hexString = hexData.substr(byteStart*2, length*2)
-        return CommonCPP.SGUtilsCpp.hexStringToFloat32(hexString)
+        return CommonCPP.SGConversion.hexStringLeToFloat32(hexString)
     }
 
     function writeLedData() {
-        var data1 = CommonCPP.SGUtilsCpp.uint16ToHexString(channel1Slider.value)
-        var data2 = CommonCPP.SGUtilsCpp.uint16ToHexString(channel2Slider.value)
+        var data1 = CommonCPP.SGConversion.uint16ToHexStringLe(channel1Slider.value)
+        var data2 = CommonCPP.SGConversion.uint16ToHexStringLe(channel2Slider.value)
 
         var data = data1+data2
 
