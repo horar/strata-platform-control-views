@@ -1366,14 +1366,18 @@ Item {
                             onToggled:  {
                                 if (checked){
                                     cmd_adc_working_test = true
+                                    voltageTGauge.visible = true
+                                    currentTGauge.visible = true
                                 }
                                 else{
                                     cmd_adc_working_test = false
+                                    voltageTGauge.visible = false
+                                    currentTGauge.visible = false
                                 }
 
                                 // {"cmd":"adc_setting","payload": {"working":true,"period": 1000 }}
 
-                                platformInterface.commands.adc_setting.update(adcControlTest.cmd_adc_working_test, Number( ( adcPeriodSet.cmd_adc_period_test).toFixed(0) ) )
+                                platformInterface.commands.adc_setting.update(Number( ( adcPeriodSet.cmd_adc_period_test).toFixed(0) ) ,adcControlTest.cmd_adc_working_test )
                             }
                         }
                     }
@@ -1407,10 +1411,10 @@ Item {
                                 from: 500
                                 to: 3000
                                 stepSize: 100
-                                property int cmd_adc_period_test:  1000
+                                property int cmd_adc_period_test:  2000
                                 onUserSet: {
-                                    cmd_adc_period_test = adcPeriodSet.value.toFixed(0)
-                                    platformInterface.commands.adc_setting.update(adcPeriodSet.cmd_adc_period_test, adcControlTest.cmd_adc_working_test)
+                                     cmd_adc_period_test = adcPeriodSet.value.toFixed(0)
+                                     platformInterface.commands.adc_setting.update(Number( ( adcPeriodSet.cmd_adc_period_test).toFixed(0) ) ,adcControlTest.cmd_adc_working_test )
                                 }
                             }
                         }

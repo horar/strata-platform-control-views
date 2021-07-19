@@ -170,7 +170,8 @@ Item {
         id: gauge1Container
         anchors.bottom: car.top
         anchors.bottomMargin:  20
-        anchors.left: sky.left
+        anchors.left: car.left
+//        anchors.left: sky.left
         anchors.leftMargin: 10
         width: car.width / 3.5
         height: width
@@ -215,7 +216,9 @@ Item {
         id: gauge2Container
         anchors.bottom: car.top
         anchors.bottomMargin:  20
-        anchors.right: sky.right
+        anchors.right: car.right
+//        anchors.right: sky.right
+
         anchors.rightMargin: 10
         width: car.width / 3.5
         height: width
