@@ -28,7 +28,7 @@ PlatformInterfaceBase {
         // @property time: double
         // @property turns: int
         // @property vel: int
-        property QtObject get_NCS32200_data: QtObject {
+        property QtObject get_data: QtObject {
             property int accel: 0
             property int pos: 0
             property double time: 0.0
@@ -46,7 +46,7 @@ PlatformInterfaceBase {
         // @property overflow: int
         // @property overspeed: int
         // @property sensor_error: int
-        property QtObject get_NCS32200_errors: QtObject {
+        property QtObject get_errors: QtObject {
             property int batt_alarm: 0
             property int low_bat: 0
             property int no_power: 0
@@ -60,8 +60,38 @@ PlatformInterfaceBase {
 
         // @notification: get_NCS32200_temperature
         // @property temperature: int
-        property QtObject get_NCS32200_temperature: QtObject {
+        property QtObject get_temperature: QtObject {
             property int temperature: 0
+
+            signal notificationFinished()
+        }
+
+        property QtObject get_alarmbattv: QtObject {
+            property int alarm_threshold: 0
+
+            signal notificationFinished()
+        }
+
+        property QtObject get_lowbattv: QtObject {
+            property double lowbatt_threshold: 0
+
+            signal notificationFinished()
+        }
+
+        property QtObject get_maxtemp: QtObject {
+            property int maxtemp_threshold: 0
+
+            signal notificationFinished()
+        }
+
+        property QtObject get_firmware_version: QtObject {
+            property int version: 0
+
+            signal notificationFinished()
+        }
+
+        property QtObject get_battv: QtObject {
+            property double battv: 0.0
 
             signal notificationFinished()
         }
@@ -130,21 +160,6 @@ PlatformInterfaceBase {
             signal notificationFinished()
         }
 
-        // @notification: get_alarmbattv
-        // @property alarm_threshold: int
-        property QtObject get_alarmbattv: QtObject {
-            property int alarm_threshold: 0
-
-            signal notificationFinished()
-        }
-
-        // @notification: get_lowbattv
-        // @property lowbatt_threshold: double
-        property QtObject get_lowbattv: QtObject {
-            property double lowbatt_threshold: 0.0
-
-            signal notificationFinished()
-        }
 
         // @notification: set_battv
         // @property battv: double
@@ -164,142 +179,186 @@ PlatformInterfaceBase {
         id: commands
         // @command get_data
         property var get_data: ({
-            "cmd": "get_data",
-            update: function () {
-                this.send(this)
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                    "cmd": "get_data",
+                                    update: function () {
+                                        this.send(this)
+                                    },
+                                    send: function () { platformInterface.send(this) }
+                                })
 
         // @command bat_en
         // @property enable: string
         property var bat_en: ({
-            "cmd": "bat_en",
-            "payload": {
-                "enable": ""
-            },
-            update: function (enable) {
-                this.set(enable)
-                this.send(this)
-            },
-            set: function (enable) {
-                this.payload.enable = enable
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                  "cmd": "bat_en",
+                                  "payload": {
+                                      "enable": ""
+                                  },
+                                  update: function (enable) {
+                                      this.set(enable)
+                                      this.send(this)
+                                  },
+                                  set: function (enable) {
+                                      this.payload.enable = enable
+                                  },
+                                  send: function () { platformInterface.send(this) }
+                              })
 
         // @command vcc_en
         // @property enable: string
         property var vcc_en: ({
-            "cmd": "vcc_en",
-            "payload": {
-                "enable": ""
-            },
-            update: function (enable) {
-                this.set(enable)
-                this.send(this)
-            },
-            set: function (enable) {
-                this.payload.enable = enable
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                  "cmd": "vcc_en",
+                                  "payload": {
+                                      "enable": ""
+                                  },
+                                  update: function (enable) {
+                                      this.set(enable)
+                                      this.send(this)
+                                  },
+                                  set: function (enable) {
+                                      this.payload.enable = enable
+                                  },
+                                  send: function () { platformInterface.send(this) }
+                              })
 
         // @command reset_positionset_battv
         property var reset_positionset_battv: ({
-            "cmd": "reset_positionset_battv",
-            update: function () {
-                this.send(this)
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                                   "cmd": "reset_positionset_battv",
+                                                   update: function () {
+                                                       this.send(this)
+                                                   },
+                                                   send: function () { platformInterface.send(this) }
+                                               })
 
         // @command reset_turns
         property var reset_turns: ({
-            "cmd": "reset_turns",
-            update: function () {
-                this.send(this)
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                       "cmd": "reset_turns",
+                                       update: function () {
+                                           this.send(this)
+                                       },
+                                       send: function () { platformInterface.send(this) }
+                                   })
 
         // @command reset_errors
         property var reset_errors: ({
-            "cmd": "reset_errors",
-            update: function () {
-                this.send(this)
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                        "cmd": "reset_errors",
+                                        update: function () {
+                                            this.send(this)
+                                        },
+                                        send: function () { platformInterface.send(this) }
+                                    })
 
         // @command set_low_batt
         // @property battv_threshold: double
         property var set_low_batt: ({
-            "cmd": "set_low_batt",
-            "payload": {
-                "battv_threshold": 0.0
-            },
-            update: function (battv_threshold) {
-                this.set(battv_threshold)
-                this.send(this)
-            },
-            set: function (battv_threshold) {
-                this.payload.battv_threshold = battv_threshold
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                        "cmd": "set_low_batt",
+                                        "payload": {
+                                            "battv_threshold": 0.0
+                                        },
+                                        update: function (battv_threshold) {
+                                            this.set(battv_threshold)
+                                            this.send(this)
+                                        },
+                                        set: function (battv_threshold) {
+                                            this.payload.battv_threshold = battv_threshold
+                                        },
+                                        send: function () { platformInterface.send(this) }
+                                    })
 
         // @command set_over_temp
         // @property temp_threshold: double
         property var set_over_temp: ({
-            "cmd": "set_over_temp",
-            "payload": {
-                "temp_threshold": 0.0
-            },
-            update: function (temp_threshold) {
-                this.set(temp_threshold)
-                this.send(this)
-            },
-            set: function (temp_threshold) {
-                this.payload.temp_threshold = temp_threshold
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                         "cmd": "set_over_temp",
+                                         "payload": {
+                                             "temp_threshold": 0.0
+                                         },
+                                         update: function (temp_threshold) {
+                                             this.set(temp_threshold)
+                                             this.send(this)
+                                         },
+                                         set: function (temp_threshold) {
+                                             this.payload.temp_threshold = temp_threshold
+                                         },
+                                         send: function () { platformInterface.send(this) }
+                                     })
 
         // @command get_alarmbattv
         property var get_alarmbattv: ({
-            "cmd": "get_alarmbattv",
-            update: function () {
-                this.send(this)
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                          "cmd": "get_alarmbattv",
+                                          update: function () {
+                                              this.send(this)
+                                          },
+                                          send: function () { platformInterface.send(this) }
+                                      })
 
-        // @command get_lowbattv
-        property var get_lowbattv: ({
-            "cmd": "get_lowbattv",
-            update: function () {
-                this.send(this)
-            },
-            send: function () { platformInterface.send(this) }
-        })
 
         // @command set_battv
         // @property battv: double
         property var set_battv: ({
-            "cmd": "set_battv",
-            "payload": {
-                "battv": 0.0
-            },
-            update: function (battv) {
-                this.set(battv)
-                this.send(this)
-            },
-            set: function (battv) {
-                this.payload.battv = battv
-            },
-            send: function () { platformInterface.send(this) }
-        })
+                                     "cmd": "set_battv",
+                                     "payload": {
+                                         "battv": 0.0
+                                     },
+                                     update: function (battv) {
+                                         this.set(battv)
+                                         this.send(this)
+                                     },
+                                     set: function (battv) {
+                                         this.payload.battv = battv
+                                     },
+                                     send: function () { platformInterface.send(this) }
+                                 })
+        // @command get_temperature
+        property var get_temperature: ({
+                                           "cmd": "get_temperature",
+                                           update: function () {
+                                               this.send(this)
+                                           },
+                                           send: function () { platformInterface.send(this) }
+                                       })
+
+
+        // @command get_errors
+        property var get_errors: ({
+                                      "cmd": "get_errors",
+                                      update: function () {
+                                          this.send(this)
+                                      },
+                                      send: function () { platformInterface.send(this) }
+                                  })
+        // @command get_lowbattv
+        property var get_lowbattv: ({
+                                        "cmd": "get_lowbattv",
+                                        update: function () {
+                                            this.send(this)
+                                        },
+                                        send: function () { platformInterface.send(this) }
+                                    })
+
+        property var get_maxtemp: ({
+                                       "cmd": "get_maxtemp",
+                                       update: function () {
+                                           this.send(this)
+                                       },
+                                       send: function () { platformInterface.send(this) }
+                                   })
+
+        property var get_firmware_version: ({
+                                                "cmd": "get_firmware_version",
+                                                update: function () {
+                                                    this.send(this)
+                                                },
+                                                send: function () { platformInterface.send(this) }
+                                            })
+        // @command get_battv
+        property var get_battv_value: ({
+                                           "cmd": "get_battv",
+                                           update: function () {
+                                               this.send(this)
+                                           },
+                                           send: function () { platformInterface.send(this) }
+                                       })
+
+
 
     }
 }

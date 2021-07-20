@@ -21,9 +21,183 @@ Item {
         topPadding: 5
     }
 
-    Component.onCompleted : {
-           platformInterface.commands.get_data.update()
+    Component.onCompleted:{
+        addCommand("get_data")
+        sendCommand()
+        startTimer()
     }
+
+    ListModel {
+        id: commandQueue
+    }
+
+    function addCommand (command,value = -1) {
+        commandQueue.append({
+                                "command": command,
+                                "value" : value
+
+                            })
+    }
+    function sendCommand () {
+        timer.running = false
+        if (commandQueue.count > 0) {
+            let command = commandQueue.get(0).command
+            if(commandQueue.get(0).value !== -1) {
+                platformInterface.commands[command].update(commandQueue.get(0).value)
+            }
+            else  {
+                platformInterface.commands[command].update()
+            }
+            commandQueue.remove(0)
+
+        } else {
+            platformInterface.commands.get_data.update()
+        }
+
+        timer.start()
+    }
+
+    Timer {
+        id: timer
+        running: false
+        repeat: false
+        interval: 500
+        onTriggered: {
+            console.log("Error: TimedOut")
+            sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.get_data
+        onNotificationFinished: {
+            timer.running = false
+            addCommand("get_data")
+            sendCommand()
+
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.get_temperature
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.get_errors
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.get_lowbattv
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.get_maxtemp
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+
+    Connections {
+        target: platformInterface.notifications.get_battv
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.get_firmware_version
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    function startTimer() {
+        getTempCommand.start()
+        getErrorCommand.start()
+        getLowBattvCommand.start()
+        getMaxTempValueCommand.start()
+        getFirmwareVersionCommand.start()
+        getBattvValueCommand.start()
+    }
+
+    Timer {
+        id: getTempCommand
+        interval: 1000
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "get_temperature"
+            console.log(command)
+            addCommand(command)
+        }
+    }
+
+    Timer {
+        id: getErrorCommand
+        interval: 2000
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "get_errors"
+            addCommand(command)
+        }
+    }
+
+    Timer {
+        id: getLowBattvCommand
+        interval: 3000
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "get_lowbattv"
+            addCommand(command)
+        }
+    }
+
+    Timer {
+        id: getMaxTempValueCommand
+        interval: 4000
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "get_maxtemp"
+            addCommand(command)
+        }
+    }
+
+    Timer {
+        id: getBattvValueCommand
+        interval: 5000
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "get_battv_value"
+            addCommand(command)
+        }
+    }
+
+    Timer {
+        id: getFirmwareVersionCommand
+        interval: 6000
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "get_firmware_version"
+            addCommand(command)
+            startTimer()
+        }
+    }
+
 
     RowLayout {
         anchors {
@@ -95,7 +269,7 @@ Item {
                             fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
                             unit: "mm "
                             unitOverrideWidth:  50 * ratioCalc
-                            text: platformInterface.notifications.get_NCS32200_data.pos
+                            text: platformInterface.notifications.get_data.pos
 
                         }
                     }
@@ -120,7 +294,7 @@ Item {
                             fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
                             unit: "mm/s"
                             unitOverrideWidth: 50 * ratioCalc
-                            text: platformInterface.notifications.get_NCS32200_data.vel
+                            text: platformInterface.notifications.get_data.vel
                         }
                     }
                 }
@@ -144,7 +318,7 @@ Item {
                             fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
                             unit: "mm/s^2"
                             unitOverrideWidth: 50 * ratioCalc
-                            text: platformInterface.notifications.get_NCS32200_data.accel
+                            text: platformInterface.notifications.get_data.accel
                         }
                     }
                 }
@@ -254,7 +428,7 @@ Item {
                                     gaugeFillColor2: "red"
                                     unitTextFontSizeMultiplier: ratioCalc * 1.5
                                     valueDecimalPlaces: 1
-                                    value: platformInterface.notifications.get_NCS32200_temperature.temperature
+                                    value: platformInterface.notifications.get_temperature.temperature
 
                                 }
                             }
@@ -599,7 +773,7 @@ Item {
                                         SGStatusLight {
                                             id: vbatLow
                                             width : 40
-                                            status: platformInterface.notifications.get_NCS32200_errors.low_bat ? SGStatusLight.Red : SGStatusLight.Off
+                                            status: platformInterface.notifications.get_errors.low_bat ? SGStatusLight.Red : SGStatusLight.Off
 
                                         }
                                     }
@@ -619,7 +793,7 @@ Item {
                                         SGStatusLight {
                                             id: noPower
                                             width : 40
-                                            status: platformInterface.notifications.get_NCS32200_errors.no_power ? SGStatusLight.Red : SGStatusLight.Off
+                                            status: platformInterface.notifications.get_errors.no_power ? SGStatusLight.Red : SGStatusLight.Off
 
                                         }
                                     }
