@@ -31,7 +31,7 @@ Item {
         id: commandQueue
     }
 
-    function addCommand (command,value = -1) {
+    function addCommand (command,value) {
         commandQueue.append({
                                 "command": command,
                                 "value" : value
@@ -43,7 +43,7 @@ Item {
         timer.running = false
         if (commandQueue.count > 0) {
             let command = commandQueue.get(0).command
-            if(commandQueue.get(0).value !== -1) {
+            if(commandQueue.get(0).value !== "") {
                 platformInterface.commands[command].update(commandQueue.get(0).value)
             }
             else  {

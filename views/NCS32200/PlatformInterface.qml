@@ -119,10 +119,17 @@ PlatformInterfaceBase {
         // @notification: reset_turns
         // @property turns: int
         property QtObject reset_turns: QtObject {
+            property string enable : ""
+
+            signal notificationFinished()
+        }
+
+        property QtObject vcc_en: QtObject {
             property int turns: 0
 
             signal notificationFinished()
         }
+
 
         // @notification: reset_errors
         // @property batt_alarm: int
