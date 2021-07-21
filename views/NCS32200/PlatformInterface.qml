@@ -22,7 +22,7 @@ PlatformInterfaceBase {
     QtObject {
         id: notifications
 
-        // @notification: get_NCS32200_data
+        // @notification: get_data
         // @property accel: int
         // @property pos: int
         // @property time: double
@@ -38,7 +38,7 @@ PlatformInterfaceBase {
             signal notificationFinished()
         }
 
-        // @notification: get_NCS32200_errors
+        // @notification: get_errors
         // @property batt_alarm: int
         // @property low_bat: int
         // @property no_power: int
@@ -58,7 +58,7 @@ PlatformInterfaceBase {
             signal notificationFinished()
         }
 
-        // @notification: get_NCS32200_temperature
+        // @notification: get_temperature
         // @property temperature: int
         property QtObject get_temperature: QtObject {
             property int temperature: 0
@@ -221,8 +221,8 @@ PlatformInterfaceBase {
                               })
 
         // @command reset_positionset_battv
-        property var reset_positionset_battv: ({
-                                                   "cmd": "reset_positionset_battv",
+        property var reset_position: ({
+                                                   "cmd": "reset_position",
                                                    update: function () {
                                                        this.send(this)
                                                    },
@@ -352,6 +352,14 @@ PlatformInterfaceBase {
         // @command get_battv
         property var get_battv_value: ({
                                            "cmd": "get_battv",
+                                           update: function () {
+                                               this.send(this)
+                                           },
+                                           send: function () { platformInterface.send(this) }
+                                       })
+        // @command status_telemetry
+        property var status_telemetry: ({
+                                           "cmd": "status_telemetry",
                                            update: function () {
                                                this.send(this)
                                            },

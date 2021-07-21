@@ -53,11 +53,15 @@
             "payload": {
                 "battv": "double"
             }
+        },
+        {
+            "cmd": "status_telemetry",
+            "payload": null
         }
     ],
     "notifications": [
         {
-            "value": "get_NCS32200_data",
+            "value": "get_data",
             "payload": {
                 "pos": "int",
                 "vel": "int",
@@ -67,7 +71,7 @@
             }
         },
         {
-            "value": "get_NCS32200_errors",
+            "value": "get_errors",
             "payload": {
                 "overspeed": "int",
                 "sensor_error": "int",
@@ -79,7 +83,7 @@
             }
         },
         {
-            "value": "get_NCS32200_temperature",
+            "value": "get_temperature",
             "payload": {
                 "temperature": "int"
             }
@@ -144,6 +148,18 @@
             "value": "set_battv",
             "payload": {
                 "battv": "double"
+            }
+        },
+        {
+            "value": "bat_en",
+            "payload": {
+                "status": "string"
+            }
+        },
+        {
+            "value": "vcc_en",
+            "payload": {
+                "status": "string"
             }
         }
     ]

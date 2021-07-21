@@ -115,6 +115,13 @@ Item {
     }
 
     Connections {
+        target: platformInterface.notifications.status_telemetry
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
         target: platformInterface.notifications.get_firmware_version
         onNotificationFinished: {
             sendCommand()
@@ -128,6 +135,7 @@ Item {
         getMaxTempValueCommand.start()
         getFirmwareVersionCommand.start()
         getBattvValueCommand.start()
+        getTelemetryCommand.start()
     }
 
     Timer {
@@ -182,6 +190,18 @@ Item {
         repeat: false
         onTriggered: {
             var command = "get_battv_value"
+            addCommand(command)
+        }
+    }
+
+    Timer {
+        id: getTelemetryCommand
+        interval: 500
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "status_telemetry"
+            console.log(command)
             addCommand(command)
         }
     }
@@ -665,7 +685,7 @@ Item {
                             SGAlignedLabel {
                                 id:  vccDisconnectLabel
                                 target: vccDisconnect
-                                text: "VCC\nDisconnect"
+                                text: "VCC\nEnable"
                                 fontSizeMultiplier: ratioCalc
                                 font.bold : true
                                 alignment: SGAlignedLabel.SideLeftCenter
