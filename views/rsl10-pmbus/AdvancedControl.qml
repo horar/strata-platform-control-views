@@ -133,7 +133,9 @@ Item {
                         top: parent.top
                         topMargin: 0
                     }
+                    showOptions: false
                     autoAdjustMaxMin: false
+                    repeatOldData: visible
                     dataLineColor: "purple"
                     textColor: "black"
                     axesColor: "black"
