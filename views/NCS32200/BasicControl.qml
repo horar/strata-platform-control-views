@@ -38,6 +38,7 @@ Item {
 
                             })
     }
+
     function sendCommand () {
         timer.running = false
         if (commandQueue.count > 0) {
@@ -123,6 +124,13 @@ Item {
 
     Connections {
         target: platformInterface.notifications.get_firmware_version
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.vcc_en
         onNotificationFinished: {
             sendCommand()
         }
@@ -697,9 +705,9 @@ Item {
                                     uncheckedLabel: "Off"
                                     onToggled: {
                                         if(checked)
-                                            platformInterface.commands.vcc_en.update("on")
+                                            addCommand("vcc_en","on")
                                         else
-                                            platformInterface.commands.vcc_en.update("off")
+                                            addCommand("vcc_en","off")
                                     }
 
                                 }
