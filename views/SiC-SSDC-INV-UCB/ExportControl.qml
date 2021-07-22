@@ -264,6 +264,8 @@ ColumnLayout {
                             id:virtualtextarea
                             visible: false
                             font.pixelSize: 5
+                            persistentSelection: true
+                            text: virtualtextarea.text
 
                             property int realtimelog:foo1()
                             function foo1(){
@@ -281,17 +283,9 @@ ColumnLayout {
                                 if(start_check===0){
                                     start_time= (new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss.zzz"))
                                     start_check=1
+                                    }
                                 }
                             }
-
-                            text:  {
-                                if(one_time_top_row_excel===0){
-                                    "Time\tDC_Link(V)\tI1(A)\tI2(A)\tI3(A)\tT1(°C)\tT2(°C)\tT3(°C)\tPole Pairs\tMax vout\tMax speed\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
-                                    one_time_top_row_excel=1
-                                    }
-                                else("‚"+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_U_calc +"\t"+ temp_V_calc +"\t"+ temp_W_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
-                                    }
-                                }
 
                         Rectangle {
                             id: rectangle_graphs

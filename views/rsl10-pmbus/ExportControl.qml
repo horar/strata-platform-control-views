@@ -215,6 +215,8 @@ ColumnLayout {
                             id:virtualtextarea
                             visible: false
                             font.pixelSize: 5
+                            persistentSelection: true
+                            text: virtualtextarea.text
 
                             property int realtimelog:foo1()
                             function foo1(){
@@ -232,17 +234,9 @@ ColumnLayout {
                                 if(start_check===0){
                                     start_time= (new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss.zzz"))
                                     start_check=1
+                                    }
                                 }
                             }
-
-                            text:  {
-                                if(one_time_top_row_excel===0){
-                                    "Time\tVin(V)\t    Iin(A)\t    Vout(V)\t    Iout(A)\t    Effi(%)\t    Temp.(°C)"+"\n"
-                                    one_time_top_row_excel=1
-                                    }
-                                else("‚"+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ vin_calc +"\t"+ iin_calc +"\t"+ vout_calc +"\t"+ iout_calc +"\t"+ effi_calc +"\t"+ temp_calc +"\n")
-                                    }
-                                }
 
                         Rectangle {
                             id: rectangle_graphs

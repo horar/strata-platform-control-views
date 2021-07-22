@@ -279,7 +279,7 @@ Item {
                         rightMargin: 5
                     }
                     autoAdjustMaxMin: false
-                    repeatOldData: visible
+                    //repeatOldData: visible
                     dataLineColor: "blue"
                     textColor: "black"
                     axesColor: "black"
@@ -342,7 +342,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        repeatOldData: visible
+                        //repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -397,7 +397,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        repeatOldData: visible
+                        //repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -453,7 +453,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        repeatOldData: visible
+                        //repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -508,7 +508,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        repeatOldData: visible
+                        //repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -563,7 +563,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        repeatOldData: visible
+                        //repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -618,7 +618,7 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        repeatOldData: visible
+                        //repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
