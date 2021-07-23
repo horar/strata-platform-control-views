@@ -88,6 +88,9 @@ SGGraph {
         onTriggered: {
             let currentTime = Date.now()
             let curve = graphConverter.curve(0)
+            if (curve === null) {
+                return
+            }
             curve.shiftPoints((currentTime - lastTime)/1000, 0)
             curve.append(0, inputData)
             removeOutOfViewPoints()
