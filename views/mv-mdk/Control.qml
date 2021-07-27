@@ -39,11 +39,11 @@ RowLayout {
             currentIndex: tabBar.currentIndex
 
             Basic {
-                id: basicView
+                id: basic
             }
 
             ControlsParameters {
-                id: controlsParametersView
+                id: controlsParameters
             }
         }
     }

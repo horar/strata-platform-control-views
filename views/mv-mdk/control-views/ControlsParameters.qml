@@ -11,7 +11,11 @@ UIBase { // start_uibase
 
     columnCount: 30
     rowCount: 50
+
+    // ======================== Aliases ======================== //
     
+    property alias cp_spd_loop_params_accel: cp_spd_loop_params_accel
+
     // ======================== UI Initialization ======================== //
     
     Component.onCompleted: {

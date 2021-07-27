@@ -17,6 +17,9 @@ Rectangle {
     implicitWidth: 70
     Layout.fillHeight: true
 
+    // property alias cp_spd_loop_params_accel: controlsParameters.cp_spd_loop_params_accel.text
+    // property alias send_spd_loop_params: controlsParameters.send_spd_loop_params()
+
     // ======================== UI Initialization ======================== //
     
     Component.onCompleted: {
@@ -110,7 +113,7 @@ Rectangle {
                 stepSize: platformInterface.notifications.target_speed.scales.index_2
                 // states[0] for non-arrays, SGSlider automatically sets opacity 
                 // i.e., state = Disabled (not grayed) set to state = Disabled and Grayed Out
-                enabled: !Boolean(platformInterface.notifications.acceleration.states[0])
+                enabled: !Boolean(platformInterface.notifications.target_speed.states[0])
 
                 onUserSet: {
                     console.log("onUserSet:", value)
@@ -152,9 +155,18 @@ Rectangle {
 
                 onUserSet: {
                     console.log("onUserSet:", value)
-                    platformInterface.commands.acceleration.update(
-                        accelPop.value
-                    )
+
+                    // Template should only need to use this line
+                    // platformInterface.commands.acceleration.update(accelPop.value)
+
+                    // MV MDK integrates acceleration into spd_loop_params command so instead:
+                    // 1) update secondary acceleration control UI element on Controls and Parameters tab
+                    // 2) set platformInterface's acceleration notification value to ensure accelPop.value tracks platformInterface
+                    // 3) send spd_loop_params with all required parameters
+                    // platformInterface.commands.acceleration.set(accelPop.value)
+                    controlsParameters.cp_spd_loop_params_accel.text = String(accelPop.value)
+                    platformInterface.notifications.acceleration.value = accelPop.value
+                    controlsParameters.send_spd_loop_params()
                 }
                 
             }
