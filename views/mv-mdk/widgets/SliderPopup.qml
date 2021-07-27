@@ -50,6 +50,7 @@ Popup {
             textColor: "white"
             onUserSet: sliderPopup.userSet(value)
             live: false
+            toolTipBackground.color: "#222"
         }
     }
 }
