@@ -746,11 +746,11 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 9
         
-        text: "0.5"
+        text: "0.500"
         readOnly: false
 
         validator: DoubleValidator {
-            decimals: 1
+            decimals: 3
             bottom: 0.0
         }
 
@@ -769,11 +769,11 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 12
 
-        text: "0.001"
+        text: "0.001000"
         readOnly: false
 
         validator: DoubleValidator {
-            decimals: 3
+            decimals: 6
             bottom: 0.0
         }
 
@@ -969,11 +969,11 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 39
 
-        text: "0.01"
+        text: "0.010000"
         readOnly: false
 
         validator: DoubleValidator {
-            decimals: 2
+            decimals: 6
             bottom: 0.0
         }
 
