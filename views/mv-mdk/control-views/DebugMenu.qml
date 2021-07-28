@@ -53,6 +53,8 @@ Rectangle {
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"brake"},
                 {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"direction"},
                 {"payload":{"value":"bool"},"value":"request_params"},
+                {"payload":{"value":"int"},"value":"request_pwm_params"},
+                {"payload":{"value":"int"},"value":"request_pid_params"},
             ]
         })
 

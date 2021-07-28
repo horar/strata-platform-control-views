@@ -61,10 +61,24 @@ UIBase { // start_uibase
         target: platformInterface.notifications.request_params
         onNotificationFinished: {
             send_pwm_params()
-            // send_pid_params()
-            // send_motor_params()
-            // send_spd_loop_params()
-            // send_protection()
+            send_pid_params()
+            send_motor_params()
+            send_spd_loop_params()
+            send_protection()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.request_pwm_params
+        onNotificationFinished: {
+            send_pwm_params()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.request_pid_params
+        onNotificationFinished: {
+            send_pid_params()
         }
     }
 
