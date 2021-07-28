@@ -57,47 +57,47 @@ UIBase { // start_uibase
 
     // ------------------------ Send Default Controls/Parameters to FW when Requested ------------------------ //
     
-    // Timer {
-    //     id: timer
-    //     interval: 500 // 500ms
-    //     repeat: false
-    //     running: false
-    //     property var commandQueue: []
-    //     onTriggered: {
-    //         console.log("timer triggered, running next function")
-    //         let poppedFunction = commandQueue.shift()
-    //         poppedFunction()
-    //         if (commandQueue.length >0) {
-    //             timer.start()
-    //         }
-    //     }
-    // }
+    Timer {
+        id: timer
+        interval: 500 // 500ms
+        repeat: false
+        running: false
+        property var commandQueue: []
+        onTriggered: {
+            console.log("timer triggered, running next function")
+            let poppedFunction = commandQueue.shift()
+            poppedFunction()
+            if (commandQueue.length >0) {
+                timer.start()
+            }
+        }
+    }
 
-    // Connections {
-    //     target: platformInterface.notifications.request_params
-    //     onNotificationFinished: {
-    //         send_pwm_params()
-    //         timer.commandQueue.push(send_pid_params)
-    //         timer.commandQueue.push(send_motor_params)
-    //         timer.commandQueue.push(send_spd_loop_params)
-    //         timer.commandQueue.push(send_protection)
-    //         timer.start()
-    //     }
-    // }
+    Connections {
+        target: platformInterface.notifications.request_params
+        onNotificationFinished: {
+            send_pwm_params()
+            timer.commandQueue.push(send_pid_params)
+            timer.commandQueue.push(send_motor_params)
+            timer.commandQueue.push(send_spd_loop_params)
+            timer.commandQueue.push(send_protection)
+            timer.start()
+        }
+    }
 
-    // // TODO: remove these and remove from PIG
-    // Connections {
-    //     target: platformInterface.notifications.request_pwm_params
-    //     onNotificationFinished: {
-    //         send_pwm_params()
-    //     }
-    // }
-    // Connections {
-    //     target: platformInterface.notifications.request_pid_params
-    //     onNotificationFinished: {
-    //         send_pid_params()
-    //     }
-    // }
+    // TODO: remove these and remove from PIG
+    Connections {
+        target: platformInterface.notifications.request_pwm_params
+        onNotificationFinished: {
+            send_pwm_params()
+        }
+    }
+    Connections {
+        target: platformInterface.notifications.request_pid_params
+        onNotificationFinished: {
+            send_pid_params()
+        }
+    }
 
     // ======================== UI Objects ======================== //
 
