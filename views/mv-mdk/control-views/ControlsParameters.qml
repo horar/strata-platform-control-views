@@ -87,20 +87,6 @@ UIBase { // start_uibase
         timer.commandQueue.push(send_spd_loop_params)
         timer.commandQueue.push(send_protection)
         timer.start()
-    }            
-
-    // TODO: remove these and remove from PIG
-    Connections {
-        target: platformInterface.notifications.request_pwm_params
-        onNotificationFinished: {
-            send_pwm_params()
-        }
-    }
-    Connections {
-        target: platformInterface.notifications.request_pid_params
-        onNotificationFinished: {
-            send_pid_params()
-        }
     }
 
     // ======================== UI Objects ======================== //

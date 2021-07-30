@@ -310,18 +310,6 @@
             "payload": {
                 "value": "bool"
             }
-        },
-        {
-            "value": "request_pwm_params",
-            "payload": {
-                "value": "int"
-            }
-        },
-        {
-            "value": "request_pid_params",
-            "payload": {
-                "value": "int"
-            }
         }
     ]
 }
