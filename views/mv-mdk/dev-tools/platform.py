@@ -55,6 +55,7 @@ def read_serial():
             ser.write('{"notification":{"value":"status_log","payload":{"value":"Motor stopped"}}}\n'.encode())
         elif out.find('control_props') != -1:
             demo_config()
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"User interface requested control and parameter values."}}}\n'.encode())
             ser.write(('{"notification":{"value":"request_params", "payload":{}}}\n').encode())
         elif out != '':
             print("\ncommand: " + out, end='')
