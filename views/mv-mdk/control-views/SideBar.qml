@@ -46,7 +46,7 @@ Rectangle {
         platformInterface.notifications.target_speed.value = 0.0
         platformInterface.notifications.target_speed.values = []
         platformInterface.notifications.target_speed.unit = ""
-        // target_speed
+        // acceleration
         platformInterface.notifications.acceleration.caption = ""
         platformInterface.notifications.acceleration.scales.index_0 = 0
         platformInterface.notifications.acceleration.scales.index_1 = 0

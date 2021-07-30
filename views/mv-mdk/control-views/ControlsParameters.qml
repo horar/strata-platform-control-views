@@ -59,7 +59,7 @@ UIBase { // start_uibase
     
     Timer {
         id: timer
-        interval: 500 // 500ms
+        interval: 200 // 200ms
         repeat: false
         running: false
         property var commandQueue: []
@@ -76,14 +76,18 @@ UIBase { // start_uibase
     Connections {
         target: platformInterface.notifications.request_params
         onNotificationFinished: {
-            send_pwm_params()
-            timer.commandQueue.push(send_pid_params)
-            timer.commandQueue.push(send_motor_params)
-            timer.commandQueue.push(send_spd_loop_params)
-            timer.commandQueue.push(send_protection)
-            timer.start()
+            send_params()
         }
     }
+
+    function send_params() {
+        send_pwm_params()
+        timer.commandQueue.push(send_pid_params)
+        timer.commandQueue.push(send_motor_params)
+        timer.commandQueue.push(send_spd_loop_params)
+        timer.commandQueue.push(send_protection)
+        timer.start()
+    }            
 
     // TODO: remove these and remove from PIG
     Connections {
@@ -1713,6 +1717,8 @@ UIBase { // start_uibase
             cp_motor_params_max_rpm_caption.text = config.cp_motor_params_max_rpm.caption
             cp_motor_params_max_rpm.enabled = config.cp_motor_params_max_rpm.states[0]
             cp_motor_params_max_rpm.text = config.cp_motor_params_max_rpm.value
+            // Also, update Target Speed slider on sidebar
+            platformInterface.notifications.target_speed.scales.index_0 = Number(config.cp_motor_params_max_rpm.value)
         }
         if (config.hasOwnProperty('cp_motor_params_rated_rpm')) {
             cp_motor_params_rated_rpm_caption.text = config.cp_motor_params_rated_rpm.caption
@@ -1750,6 +1756,8 @@ UIBase { // start_uibase
             cp_spd_loop_params_accel_caption.text = config.cp_spd_loop_params_accel.caption
             cp_spd_loop_params_accel.enabled = config.cp_spd_loop_params_accel.states[0]
             cp_spd_loop_params_accel.text = config.cp_spd_loop_params_accel.value
+            // Also, update Acceleration slider on sidebar
+            platformInterface.notifications.acceleration.value = Number(config.cp_spd_loop_params_accel.value)
         }
         if (config.hasOwnProperty('cp_spd_loop_params_fs')) {
             cp_spd_loop_params_fs_caption.text = config.cp_spd_loop_params_fs.caption
@@ -1787,6 +1795,7 @@ UIBase { // start_uibase
             cp_protection_fet_otp.enabled = config.cp_protection_fet_otp.states[0]
             cp_protection_fet_otp.text = config.cp_protection_fet_otp.value
         }
+        send_params()
     }
     
     function saveSettings(settingsName) {
@@ -2377,11 +2386,6 @@ UIBase { // start_uibase
     } // end_e789f
 
     // ------------------------ Speed Loop Parameters ------------------------ //
-
-    // 
-    // 
-    // 
-    // 
 
     LayoutRectangle { // start_c1c77
         id: cp_spd_loop_params_mode_help

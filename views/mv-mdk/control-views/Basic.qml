@@ -287,7 +287,7 @@ UIBase { // start_uibase
         layoutInfo.rowsTall: 9
         layoutInfo.xColumns: 2
         layoutInfo.yRows: 7
-
+        
         // units
         unitText: platformInterface.notifications.input_voltage.unit
         // states
@@ -298,6 +298,7 @@ UIBase { // start_uibase
         tickmarkStepSize: platformInterface.notifications.input_voltage.scales.index_2
         // value
         value: platformInterface.notifications.input_voltage.value
+        valueDecimalPlaces: 1
         // values
         // TBD or NA, used for array UI elements
 

@@ -32,13 +32,13 @@ def read_serial():
             print(">> ", end='', flush=True)
         elif out.find("request_platform_id") != -1:
             ser.write('{"ack":"request_platform_id","payload":{"return_value":true,"return_string":"commandvalid"}}\n'.encode())
-            ser.write('{"notification":{"value":"platform_id","payload":{"name":"MV MDK","controller_type":1,"platform_id":"fda98159-37f0-4e07-9ffe-28f46f80f7b5","class_id":"fda98159-37f0-4e07-9ffe-28f46f80f7b5","board_count":1}}}\n'.encode())
+            ser.write('{"notification":{"value":"platform_id","payload":{"name":"MV MDK","controller_type":1,"platform_id":"abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb","class_id":"abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb","board_count":1}}}\n'.encode())
             print("\nrequest_platform_id notification sent")
             print(">> ", end='', flush=True)
         elif out.find('{"cmd":"run","payload":{"value":1}') != -1:
             actual_speeds = [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
             board_temps = [0, 23, 30, 40, 44, 50, 66, 77, 88, 90, 95]
-            input_voltages = [61, 62, 60, 60, 59, 60, 61, 62, 60, 60, 59, 60]
+            input_voltages = [61.9, 62.1, 60.8, 60.2, 59.7, 60.3, 61.6, 62.4, 60.5, 60.1, 59.0, 60.5]
             ser.write('{"notification":{"value":"status_log","payload":{"value":"Starting motor with 500 RPM/s acceleration"}}}\n'.encode())
             for _ in range(1):
                 for (actual_speed, board_temp, input_voltage) in zip(actual_speeds, board_temps, input_voltages):
@@ -55,6 +55,7 @@ def read_serial():
             ser.write('{"notification":{"value":"status_log","payload":{"value":"Motor stopped"}}}\n'.encode())
         elif out.find('control_props') != -1:
             demo_config()
+            ser.write(('{"notification":{"value":"request_params", "payload":{}}}\n').encode())
         elif out != '':
             print("\ncommand: " + out, end='')
             print(">> ", end='', flush=True)
