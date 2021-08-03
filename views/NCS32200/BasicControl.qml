@@ -7,17 +7,18 @@ import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
 
-Item {
+Rectangle {
     id: root
     property real ratioCalc: root.width / 1200
-    property real initialAspectRatio: 1225/700
+    property real initialAspectRatio: 1164/816
+    color: "light gray"
 
     SGText {
         id: boardTitle
         anchors.horizontalCenter: parent.horizontalCenter
         text: "NCS32200 Evaluation System"
         font.bold: true
-        font.pixelSize: ratioCalc * 30
+        font.pixelSize: ratioCalc * 25
         topPadding: 5
     }
 
@@ -136,6 +137,22 @@ Item {
         }
     }
 
+    Connections {
+        target: platformInterface.notifications.reset_errors
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.reset_position
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+
+
     function startTimer() {
         getTempCommand.start()
         getErrorCommand.start()
@@ -230,11 +247,13 @@ Item {
     RowLayout {
         anchors {
             top: boardTitle.bottom
-            topMargin: 10
+            topMargin: 5
             left: parent.left
             leftMargin: 10
             right: parent.right
             rightMargin : 10
+            bottom: parent.bottom
+            bottomMargin: 10
         }
         width: parent.width
         height: root.height - boardTitle.contentHeight
@@ -247,7 +266,7 @@ Item {
                 anchors {
                     fill:parent
                 }
-                Rectangle{
+                Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: parent.height/15
                     color: "transparent"
@@ -268,7 +287,7 @@ Item {
                         height: 2
                         Layout.alignment: Qt.AlignCenter
                         width: parent.width
-                        border.color: "lightgray"
+                        border.color: "black"
                         radius: 1.5
                         anchors {
                             top: telemetryHeading.bottom
@@ -283,9 +302,9 @@ Item {
                     SGAlignedLabel {
                         id: currPositionLabel
                         target: currPosition
-                        alignment: SGAlignedLabel.SideLeftCenter
-                        anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
+                        alignment: SGAlignedLabel.SideTopLeft
+                        //anchors.centerIn: parent
+                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                         text: "Current \n Position"
 
                         font.bold : true
@@ -294,7 +313,8 @@ Item {
                             id: currPosition
                             height:  35 * ratioCalc
                             width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
+                            anchors.left: parent.left
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "mm "
                             unitOverrideWidth:  50 * ratioCalc
                             text: platformInterface.notifications.get_data.pos
@@ -308,88 +328,65 @@ Item {
                     SGAlignedLabel {
                         id: currVeloLabel
                         target: currVelo
-                        alignment: SGAlignedLabel.SideLeftCenter
-                        anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
+                        alignment: SGAlignedLabel.SideTopLeft
+                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                         text: "Current \n Velocity"
-
                         font.bold : true
                         horizontalAlignment: Text.AlignHCenter
                         SGInfoBox{
                             id: currVelo
                             height:  35 * ratioCalc
                             width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "mm/s"
+                            anchors.left: parent.left
                             unitOverrideWidth: 50 * ratioCalc
                             text: platformInterface.notifications.get_data.vel
                         }
                     }
                 }
-                Item{
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    SGAlignedLabel {
-                        id: currAccelLabel
-                        target: currAccel
-                        alignment: SGAlignedLabel.SideLeftCenter
-                        anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                        text: "Current \n Acceleration"
 
-                        font.bold : true
-                        horizontalAlignment: Text.AlignHCenter
-                        SGInfoBox{
-                            id: currAccel
-                            height:  35 * ratioCalc
-                            width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                            unit: "mm/s^2"
-                            unitOverrideWidth: 50 * ratioCalc
-                            text: platformInterface.notifications.get_data.accel
-                        }
-                    }
-                }
                 Item{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     SGAlignedLabel {
                         id: supplyVoltageLabel
                         target: supplyVoltage
-                        alignment: SGAlignedLabel.SideLeftCenter
-                        anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                        text: "Supply \n Voltage (VCC)"
+                        alignment: SGAlignedLabel.SideTopLeft
+                        //anchors.centerIn: parent
+                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                        text: "Supply \nVoltage (VCC)"
                         font.bold : true
-                        horizontalAlignment: Text.AlignHCenter
+                        // horizontalAlignment: Text.AlignHCenter
                         SGInfoBox{
                             id: supplyVoltage
                             height:  35 * ratioCalc
                             width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "V "
                             unitOverrideWidth: 50 * ratioCalc
                             text: platformInterface.notifications.status_telemetry.vcc
                         }
                     }
                 }
+
                 Item{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     SGAlignedLabel {
                         id: batteryVoltageLabel
                         target: batteryVoltage
-                        alignment: SGAlignedLabel.SideLeftCenter
-                        anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                        text: "Battery \n Voltage (VBAT)"
+                        alignment: SGAlignedLabel.SideTopLeft
+                        //anchors.centerIn: parent
+                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                        text: "Battery \nVoltage (VBAT)"
                         font.bold : true
-                        horizontalAlignment: Text.AlignHCenter
+                        //horizontalAlignment: Text.AlignHCenter
                         SGInfoBox{
                             id: batteryVoltage
                             height:  35 * ratioCalc
                             width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "V"
                             unitOverrideWidth: 50 * ratioCalc
                             text: platformInterface.notifications.status_telemetry.vbat
@@ -402,25 +399,26 @@ Item {
                     SGAlignedLabel {
                         id: batteryCurrentLabel
                         target: batteryCurrent
-                        alignment: SGAlignedLabel.SideLeftCenter
-                        anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                        text: "Battery \n Current (IBAT)"
+                        alignment: SGAlignedLabel.SideTopLeft
+                        //anchors.centerIn: parent
+                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                        text: "Battery \nCurrent (IBAT)"
                         font.bold : true
-                        horizontalAlignment: Text.AlignHCenter
+                        //horizontalAlignment: Text.AlignHCenter
                         SGInfoBox{
                             id: batteryCurrent
                             height:  35 * ratioCalc
                             width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "mA"
                             unitOverrideWidth: 50 * ratioCalc
+                            anchors.left: parent.left
                             text: platformInterface.notifications.status_telemetry.ibat
                         }
                     }
                 }
                 Item {
-                    Layout.preferredHeight: parent.height/2.5
+                    Layout.preferredHeight: parent.height/3
                     Layout.fillWidth: true
 
                     RowLayout {
@@ -451,10 +449,9 @@ Item {
                                     width:  tempGaugeContainer.width
                                     tickmarkStepSize: 10
                                     minimumValue: 0
-                                    maximumValue: 100
+                                    maximumValue: 125
                                     gaugeFillColor1: "blue"
                                     gaugeFillColor2: "red"
-                                    unitTextFontSizeMultiplier: ratioCalc * 1.5
                                     valueDecimalPlaces: 1
                                     value: platformInterface.notifications.get_temperature.temperature
 
@@ -488,7 +485,7 @@ Item {
                                     maximumValue: 5
                                     gaugeFillColor1: "blue"
                                     gaugeFillColor2: "red"
-                                    unitTextFontSizeMultiplier: ratioCalc * 1.5
+                                    //unitTextFontSizeMultiplier: ratioCalc * 1.5
                                     valueDecimalPlaces: 1
 
                                 }
@@ -496,6 +493,22 @@ Item {
                         }
                     }
                 }
+            }
+        }
+
+        Item {
+            Layout.preferredHeight: parent.height + 10
+            Layout.preferredWidth: parent.width/120
+
+            Rectangle {
+                id:rightLine
+                color: "transparent"
+                height: parent.height + 5
+                anchors.left: parent.left
+                width: 1
+                border.color: "black"
+                radius: 2
+                z: 3
             }
         }
 
@@ -513,13 +526,12 @@ Item {
                         anchors {
                             bottom: parent.bottom
                         }
-                        width: parent.width
-                        height:  parent.height/1.5
+                        anchors.fill: parent
                         title: "Time Vs.Current Position"
                         xMin: 5
                         xMax: 0
                         yMin: 0
-                        yMax: 10
+                        yMax: 20
                         yRightMin: 0
                         yRightMax: 10
                         xTitle: "Current Position(mm)"
@@ -535,9 +547,8 @@ Item {
                         autoUpdate: false
                         backgroundColor: "white"
                     }
-
-
                 }
+
                 Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
@@ -547,23 +558,27 @@ Item {
                         height:  parent.height/2
                         z: -1
                     }
-
-                    SGButton{
-                        text: "Position Export"
-                        width : 100
-                        height: 50
-                        anchors {
-                            top:parent.top
-                            right:parent.right
-                            rightMargin: 20
-                        }
-                    }
                 }
-
             }
-
         }
-        Rectangle {
+
+        Item {
+            Layout.preferredHeight: parent.height + 10
+            Layout.preferredWidth: parent.width/120
+
+            Rectangle {
+                id:leftLine
+                color: "transparent"
+                height: parent.height + 5
+                anchors.left: parent.left
+                width: 1
+                border.color: "black"
+                radius: 2
+                z: 3
+            }
+        }
+
+        Item {
             Layout.fillWidth:  true
             Layout.fillHeight: true
 
@@ -571,9 +586,9 @@ Item {
                 anchors {
                     fill:parent
                 }
-                Rectangle{
+                Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: parent.height/15
+                    Layout.preferredHeight: parent.height/20
                     color: "transparent"
                     Text {
                         id: configHeading
@@ -592,7 +607,7 @@ Item {
                         height: 2
                         Layout.alignment: Qt.AlignCenter
                         width: parent.width
-                        border.color: "lightgray"
+                        border.color: "black"
                         radius: 1.5
                         anchors {
                             top: configHeading.bottom
@@ -600,92 +615,144 @@ Item {
                         }
                     }
                 }
-                Item{
-                    Layout.fillHeight: true
+                Item {
+                    Layout.preferredHeight: parent.height/1.9
                     Layout.fillWidth: true
                     ColumnLayout {
                         anchors {
                             fill:parent
                         }
+
                         Item{
                             Layout.fillHeight: true
                             Layout.fillWidth: true
-                            RowLayout {
-                                anchors {
-                                    fill:parent
+                            SGAlignedLabel {
+                                id:  vbatLabel
+                                target: vbat
+                                text: "VBAT EN"
+                                fontSizeMultiplier: ratioCalc
+                                font.bold : true
+                                alignment: SGAlignedLabel.SideTopCenter
+                                anchors.centerIn: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                SGSwitch {
+                                    id: vbat
+                                    checkedLabel: "On"
+                                    uncheckedLabel: "Off"
                                 }
-                                Item{
-                                    Layout.fillHeight: true
-                                    Layout.fillWidth: true
-                                    SGAlignedLabel {
-                                        id:  vbatLabel
-                                        target: vbat
-                                        text: "VBAT EN"
-                                        fontSizeMultiplier: ratioCalc
-                                        font.bold : true
-                                        alignment: SGAlignedLabel.SideTopCenter
-                                        anchors.centerIn: parent
-                                        horizontalAlignment: Text.AlignHCenter
-                                        SGSwitch {
-                                            id: vbat
-                                            checkedLabel: "On"
-                                            uncheckedLabel: "Off"
-                                            // fontSizeMultiplier: ratioCalc
-
-                                        }
-                                    }
-                                }
-                                Item{
-                                    Layout.fillHeight: true
-                                    Layout.fillWidth: true
-                                    SGAlignedLabel {
-                                        id: vbatSetLabel
-                                        target: vbatSet
-                                        alignment: SGAlignedLabel.SideTopCenter
-                                        anchors.centerIn: parent
-                                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                                        font.bold : true
-                                        text: "VBAT Set"
-
-                                        SGSubmitInfoBox {
-                                            id: vbatSet
-                                            fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                                            height:  35 * ratioCalc
-                                            width: 50 * ratioCalc
-                                            unit: "V"
-                                            onAccepted: {
-                                                platformInterface.commands.set_low_batt.update(text)
-                                            }
-                                        }
-                                    }
-                                }
-                                Item{
-                                    Layout.fillHeight: true
-                                    Layout.fillWidth: true
-                                    SGAlignedLabel {
-                                        id: batteryThresholdLabel
-                                        target: batteryThreshold
-                                        alignment: SGAlignedLabel.SideTopCenter
-                                        anchors.centerIn: parent
-                                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                                        font.bold : true
-                                        text: "Battery voltage \nThreshold"
-
-                                        SGSubmitInfoBox {
-                                            id: batteryThreshold
-                                            fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
-                                            height:  35 * ratioCalc
-                                            width: 50 * ratioCalc
-                                            unit: "V"
-                                            onAccepted: {
-                                                platformInterface.commands.set_battv.update(text)
-                                            }
-                                        }
-                                    }
-                                }
-
                             }
                         }
+
+                        Item{
+                            id: vbatSetContainer
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+
+                            SGAlignedLabel {
+                                id: vbatSetLabel
+                                target: vbatSet
+                                alignment: SGAlignedLabel.SideTopLeft
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                font.bold : true
+                                text: "VBAT Set"
+
+                                SGSlider {
+                                    id: vbatSet
+                                    width: vbatSetContainer.width
+                                    live: false
+                                    from: 2.7
+                                    to: 4.5
+                                    stepSize: 0.1
+                                    fromText.text: "2.7 V"
+                                    toText.text: "4.5 V"
+                                    inputBoxWidth: vbatSetContainer.width/3
+                                    inputBox.unit: " V"
+                                    inputBox.unitFont.bold: true
+                                    fontSizeMultiplier: ratioCalc
+                                    inputBox.unitOverrideWidth: 30 * ratioCalc
+                                    inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
+
+                                    onUserSet: {
+                                        platformInterface.commands.set_low_batt.update(value)
+                                    }
+                                }
+                            }
+                        }
+                        Item{
+                            id: batteryThresholdContainer
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            SGAlignedLabel {
+                                id: batteryThresholdLabel
+                                target: batteryThreshold
+                                alignment: SGAlignedLabel.SideTopLeft
+                                anchors.centerIn: parent
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                font.bold : true
+                                text: "Battery Voltage Threshold"
+
+                                SGSlider {
+                                    id: batteryThreshold
+                                    width: batteryThresholdContainer.width
+                                    live: false
+                                    from: 2.7
+                                    to: 4.5
+                                    stepSize: 0.1
+                                    fromText.text: "2.7 V"
+                                    toText.text: "4.5 V"
+                                    inputBoxWidth: batteryThresholdContainer.width/3
+                                    inputBox.unit: " V"
+                                    inputBox.unitFont.bold: true
+                                    fontSizeMultiplier: ratioCalc
+                                    inputBox.unitOverrideWidth: 30 * ratioCalc
+                                    inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
+
+                                    onUserSet: {
+                                        platformInterface.commands.set_battv.update(value)
+                                    }
+
+                                }
+                            }
+                        }
+
+                        Item{
+                            id: tempThresholdContainer
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            SGAlignedLabel {
+                                id:tempThresholdLabel
+                                target: tempThreshold
+                                alignment: SGAlignedLabel.SideTopLeft
+                                anchors.centerIn: parent
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                font.bold : true
+                                text: "Temperature Threshold"
+
+                                SGSlider {
+                                    id: tempThreshold
+                                    width: tempThresholdContainer.width
+                                    live: false
+                                    from: 0
+                                    to: 125
+                                    stepSize: 0.1
+                                    fromText.text: "0 ˚C"
+                                    toText.text: "125 ˚C"
+                                    inputBoxWidth: tempThresholdContainer.width/3
+                                    inputBox.unit: " V"
+                                    inputBox.unitFont.bold: true
+                                    fontSizeMultiplier: ratioCalc
+                                    inputBox.unitOverrideWidth: 30 * ratioCalc
+                                    inputBox.validator: DoubleValidator { top: 125 ; bottom: 0 }
+
+                                    onUserSet: {
+                                        platformInterface.commands.set_over_temp.update(value)
+                                    }
+
+                                }
+                            }
+                        }
+
+
 
                         Item{
                             Layout.fillHeight: true
@@ -693,10 +760,10 @@ Item {
                             SGAlignedLabel {
                                 id:  vccDisconnectLabel
                                 target: vccDisconnect
-                                text: "VCC\nEnable"
+                                text: "VCC Enable"
                                 fontSizeMultiplier: ratioCalc
                                 font.bold : true
-                                alignment: SGAlignedLabel.SideLeftCenter
+                                alignment: SGAlignedLabel.SideTopCenter
                                 anchors.centerIn: parent
                                 horizontalAlignment: Text.AlignHCenter
                                 SGSwitch {
@@ -713,35 +780,9 @@ Item {
                                 }
                             }
                         }
-                        Item{
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            SGAlignedLabel {
-                                id:  positionExtrapolationLabel
-                                target: positionExtrapolation
-                                text: "Position\nExtrapolation"
-                                fontSizeMultiplier: ratioCalc
-                                font.bold : true
-                                alignment: SGAlignedLabel.SideLeftCenter
-                                anchors.centerIn: parent
-                                horizontalAlignment: Text.AlignHCenter
-                                SGSwitch {
-                                    id: positionExtrapolation
-                                    checkedLabel: "On"
-                                    uncheckedLabel: "Off"
-                                    onToggled: {
-                                        if(checked)
-                                            platformInterface.commands.bat_en.update("on")
-                                        else
-                                            platformInterface.commands.bat_en.update("off")
-                                    }
-
-                                }
-                            }
-                        }
-
                     }
                 }
+
                 Rectangle{
                     Layout.fillWidth: true
                     Layout.preferredHeight: parent.height/15
@@ -763,7 +804,7 @@ Item {
                         height: 2
                         Layout.alignment: Qt.AlignCenter
                         width: parent.width
-                        border.color: "lightgray"
+                        border.color: "black"
                         radius: 1.5
                         anchors {
                             top: diagnosticsHeading.bottom
@@ -780,12 +821,10 @@ Item {
                         }
 
                         Item {
-                            Layout.preferredHeight: parent.height/8
+                            Layout.fillHeight: true
                             Layout.fillWidth: true
                             RowLayout {
-                                anchors {
-                                    fill: parent
-                                }
+                                anchors.fill: parent
                                 Item {
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
@@ -800,48 +839,166 @@ Item {
 
                                         SGStatusLight {
                                             id: vbatLow
-                                            width : 40
+                                            width : 25
                                             status: platformInterface.notifications.get_errors.low_bat ? SGStatusLight.Red : SGStatusLight.Off
 
                                         }
                                     }
                                 }
+
                                 Item {
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
+
                                     SGAlignedLabel {
                                         id: noPowerLabel
                                         target: noPower
                                         alignment: SGAlignedLabel.SideTopCenter
                                         anchors.centerIn: parent
-                                        fontSizeMultiplier: ratioCalc === 0 ? 1.0 : ratioCalc
+                                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                                         font.bold: true
                                         text: "No Power"
 
                                         SGStatusLight {
                                             id: noPower
-                                            width : 40
+                                            width : 25
                                             status: platformInterface.notifications.get_errors.no_power ? SGStatusLight.Red : SGStatusLight.Off
 
                                         }
                                     }
                                 }
                             }
+
                         }
+
                         Item {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
-                            SGStatusLogBox {
-                                id: logBox
-                                title: "Error Status "
-                                width : parent.width/1.5
-                                height:parent.height/1.5
-                                anchors.centerIn: parent
+                            RowLayout {
+                                anchors.fill: parent
+                                Item {
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                    SGAlignedLabel {
+                                        id: sensorErrorLabel
+                                        target: sensorError
+                                        alignment: SGAlignedLabel.SideTopCenter
+                                        anchors.centerIn: parent
+                                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                        font.bold: true
+                                        text: "Sensor Error"
 
+                                        SGStatusLight {
+                                            id: sensorError
+                                            width : 25
+                                            status: platformInterface.notifications.get_errors.sensor_error ? SGStatusLight.Red : SGStatusLight.Off
+
+                                        }
+
+                                    }
+                                }
+
+                                Item {
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                    SGAlignedLabel {
+                                        id: batteryThresholdAlarmLabel
+                                        target: batteryThresholdAlarm
+                                        alignment: SGAlignedLabel.SideTopCenter
+                                        anchors.centerIn: parent
+                                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                        font.bold: true
+                                        text: "Battery Threshold Alarm"
+
+                                        SGStatusLight {
+                                            id: batteryThresholdAlarm
+                                            width : 25
+                                            status: platformInterface.notifications.get_errors.batt_alarm ? SGStatusLight.Red : SGStatusLight.Off
+
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
+
+                        Item {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+
+                            RowLayout{
+                                anchors.fill: parent
+                                Item {
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                    SGAlignedLabel {
+                                        id: overTempLabel
+                                        target: overTemp
+                                        alignment: SGAlignedLabel.SideTopCenter
+                                        anchors.centerIn: parent
+                                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                        font.bold: true
+                                        text: "Over Temperature"
+
+                                        SGStatusLight {
+                                            id: overTemp
+                                            width : 25
+                                            status: platformInterface.notifications.get_errors.over_temp ? SGStatusLight.Red : SGStatusLight.Off
+
+                                        }
+                                    }
+                                }
+
+                                Item {
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                }
+                            }
+                        }
+
+                        Item {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+
+                            RowLayout {
+                                anchors.fill: parent
+
+                                Item {
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+
+                                    SGButton {
+                                        width: 100 * ratioCalc
+                                        height: 50 * ratioCalc
+                                        text: "Reset \n Errors"
+                                        anchors.centerIn: parent
+                                        onClicked: {
+                                            for (var i = 0; i < 10 ; ++i) {
+                                                addCommand("reset_errors")
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Item {
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                    SGButton {
+                                        width: 100 * ratioCalc
+                                        height: 50 * ratioCalc
+                                        text: "Reset \n Positions"
+                                        anchors.centerIn: parent
+                                        onClicked: {
+                                            for (var i = 0; i < 10 ; ++i) {
+                                                addCommand("reset_position")
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-
                 }
             }
         }
