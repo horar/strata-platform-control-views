@@ -526,13 +526,13 @@ Rectangle {
                         let currentTime = Date.now()
                         let curve = timedGraphPoints.curve(0)
 
-                        curve.shiftPoints((currentTime - timedGraphPoints.lastTime)/1000, 0)
+                        curve.shiftPoints((currentTime - graphTimerPoints.lastTime)/1000, 0)
                         curve.append(0, positionIs)
 
-                        timedGraphPoints.removeOutOfViewPoints()
+                        graphTimerPoints.removeOutOfViewPoints()
                         timedGraphPoints.update()
 
-                        timedGraphPoints.lastTime = currentTime
+                        graphTimerPoints.lastTime = currentTime
                         //                        currentPosition.text = Number(positionIs).toFixed(2)
 
                         //                        if(positionIs.toFixed(0) === "360") {
@@ -558,8 +558,8 @@ Rectangle {
                         }
                         anchors.fill: parent
                         title: "Time Vs.Current Position"
-                        xMin: 0
-                        xMax: 5
+                        xMin: -200
+                        xMax: 200
                         yMin: 0
                         yMax: 20
                         //                        yMin: 0
