@@ -523,12 +523,16 @@ Rectangle {
                         var positionIs = platformInterface.notifications.get_data.pos
                         rotatingImage.x = positionIs
 
-                        //                        let currentTime = Date.now()
-                        //                        let curve = timedGraphPoints.curve(0)
+                        let currentTime = Date.now()
+                        let curve = timedGraphPoints.curve(0)
 
-                        //                        curve.shiftPoints((currentTime - timedGraphPoints.lastTime)/1000, 0)
-                        //                        curve.append(0, positionIs)
+                        curve.shiftPoints((currentTime - timedGraphPoints.lastTime)/1000, 0)
+                        curve.append(0, positionIs)
 
+                        timedGraphPoints.removeOutOfViewPoints()
+                        timedGraphPoints.update()
+
+                        timedGraphPoints.lastTime = currentTime
                         //                        currentPosition.text = Number(positionIs).toFixed(2)
 
                         //                        if(positionIs.toFixed(0) === "360") {
@@ -558,10 +562,10 @@ Rectangle {
                         xMax: 5
                         yMin: 0
                         yMax: 20
-//                        yMin: 0
-//                        yMax: 1
-//                        xMin: 5
-//                        xMax: 0
+                        //                        yMin: 0
+                        //                        yMax: 1
+                        //                        xMin: 5
+                        //                        xMax: 0
                         xTitle: "Current Position(mm)"
                         yTitle: "Time (s)"
                         xGrid: true
@@ -587,26 +591,26 @@ Rectangle {
                         Timer {
                             id: graphTimerPoints
                             interval: 60
-                            running: true
+                            running: false
                             repeat: true
-                            property real lastTime
 
+                            property real lastTime
                             onRunningChanged: {
                                 if (running){
-                                    timedGraphPoints.curve(0).clear()
+                                    //timedGraphPoints.curve(0).clear()
                                     lastTime = Date.now()
                                 }
                             }
 
-                            onTriggered: {
-                                let currentTime = Date.now()
-                                let curve = timedGraphPoints.curve(0)
-                                curve.shiftPoints((currentTime - lastTime)/1000, 0)
-                                curve.append(0, timedGraphPoints.yourDataValueHere())
-                                removeOutOfViewPoints()
-                                timedGraphPoints.update()
-                                lastTime = currentTime
-                            }
+                            //                            onTriggered: {
+                            //                                let currentTime = Date.now()
+                            //                                let curve = timedGraphPoints.curve(0)
+                            //                                curve.shiftPoints((currentTime - lastTime)/1000, 0)
+                            //                                curve.append(0, timedGraphPoints.yourDataValueHere())
+                            //                                removeOutOfViewPoints()
+                            //                                timedGraphPoints.update()
+                            //                                lastTime = currentTime
+                            //                            }
 
                             function removeOutOfViewPoints() {
                                 // recursively clean up points that have moved out of view
