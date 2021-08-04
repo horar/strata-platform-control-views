@@ -151,8 +151,6 @@ Rectangle {
         }
     }
 
-
-
     function startTimer() {
         getTempCommand.start()
         getErrorCommand.start()
@@ -518,6 +516,34 @@ Rectangle {
             Layout.fillHeight: true
             ColumnLayout{
                 anchors.fill:parent
+
+                Connections  {
+                    target: platformInterface.notifications.get_data
+                    onNotificationFinished: {
+                        var positionIs = platformInterface.notifications.get_data.pos
+                        rotatingImage.x = positionIs
+
+                        //                        let currentTime = Date.now()
+                        //                        let curve = timedGraphPoints.curve(0)
+
+                        //                        curve.shiftPoints((currentTime - timedGraphPoints.lastTime)/1000, 0)
+                        //                        curve.append(0, positionIs)
+
+                        //                        currentPosition.text = Number(positionIs).toFixed(2)
+
+                        //                        if(positionIs.toFixed(0) === "360") {
+                        //                            angleDial.previousAngle = 0
+                        //                            angleDial.angle = 0
+                        //                            angleDial.rotation.start()
+                        //                        }
+                        //                        else  {
+                        //                            angleDial.previousAngle = angleDial.angle
+                        //                            angleDial.angle = positionIs.toFixed(0)
+                        //                            angleDial.rotation.start()
+                        //                        }
+
+                    }
+                }
                 Item {
                     Layout.fillWidth: true
                     Layout.preferredHeight: parent.height/1.5
@@ -528,12 +554,14 @@ Rectangle {
                         }
                         anchors.fill: parent
                         title: "Time Vs.Current Position"
-                        xMin: 5
-                        xMax: 0
+                        xMin: 0
+                        xMax: 5
                         yMin: 0
                         yMax: 20
-                        yRightMin: 0
-                        yRightMax: 10
+//                        yMin: 0
+//                        yMax: 1
+//                        xMin: 5
+//                        xMax: 0
                         xTitle: "Current Position(mm)"
                         yTitle: "Time (s)"
                         xGrid: true
@@ -546,18 +574,90 @@ Rectangle {
                         zoomYEnabled: false
                         autoUpdate: false
                         backgroundColor: "white"
+                        Component.onCompleted:  {
+                            let positionCurve = createCurve("graphCurve")
+                            positionCurve.color = "blue"
+                            positionCurve.autoUpdate = false
+                        }
+
+                        function yourDataValueHere() {
+                            return Math.random()
+                        }
+
+                        Timer {
+                            id: graphTimerPoints
+                            interval: 60
+                            running: true
+                            repeat: true
+                            property real lastTime
+
+                            onRunningChanged: {
+                                if (running){
+                                    timedGraphPoints.curve(0).clear()
+                                    lastTime = Date.now()
+                                }
+                            }
+
+                            onTriggered: {
+                                let currentTime = Date.now()
+                                let curve = timedGraphPoints.curve(0)
+                                curve.shiftPoints((currentTime - lastTime)/1000, 0)
+                                curve.append(0, timedGraphPoints.yourDataValueHere())
+                                removeOutOfViewPoints()
+                                timedGraphPoints.update()
+                                lastTime = currentTime
+                            }
+
+                            function removeOutOfViewPoints() {
+                                // recursively clean up points that have moved out of view
+                                if (timedGraphPoints.curve(0).at(0).x > timedGraphPoints.xMax) {
+                                    timedGraphPoints.curve(0).remove(0)
+                                    removeOutOfViewPoints()
+                                }
+                            }
+                        }
                     }
                 }
 
                 Item {
+                    id: container
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+
                     SGRotateImage {
                         id: rotatingImage
                         width: parent.width
                         height:  parent.height/2
                         z: -1
                     }
+
+                    function getRandomArbitrary(min, max) {
+                        return Math.random() * (max - min) + min;
+                    }
+
+                    Button {
+                        width: 50
+                        height: 50
+                        text: "L"
+                        anchors.top: rotatingImage.bottom
+                        anchors.topMargin: 10
+                        anchors.left: right.right
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: rotatingImage.x = container.getRandomArbitrary(-200,200)
+                        }
+                    }
+
+                    //                    Button {
+                    //                        id: right
+                    //                        width: 50
+                    //                        height: 50
+                    //                        text: "R"
+                    //                        anchors.top: rotatingImage.bottom
+
+                    //                        MouseArea { anchors.fill: parent; onClicked: rotatingImage.x = 200 }
+                    //                    }
                 }
             }
         }

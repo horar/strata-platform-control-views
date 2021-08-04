@@ -7,26 +7,26 @@ import QtQuick.Extras 1.4
 
 
 Rectangle {
-id: rect
-width: 100; height: 100
-color: "transparent"
- z: -1
-Image {
-    id: rotatingBox
-    fillMode: Image.PreserveAspectFit
-    source: "positionImage.png"
-    anchors.fill: parent
- 
-    states: State {
-        name: "moved"
-        PropertyChanges { target: rect; x: 50 }
-    }
+    id: rect
+    width: 100; height: 100
+    color: "transparent"
+    z: -1
 
-    transitions: Transition {
-        PropertyAnimation { properties: "x,y"; easing.type: Easing.InOutQuad }
-    }  
- 
-}
+    Image {
+        id: rotatingBox
+        fillMode: Image.PreserveAspectFit
+        source: "target_edited.png"
+        anchors.fill: parent
+
+        states: State {
+            name: "moved"
+            PropertyChanges { target: rect; x: 0 }
+        }
+
+        transitions: Transition {
+            PropertyAnimation { properties: "x,y"; easing.type: Easing.InOutQuad }
+        }
+    }
 }
 
 
