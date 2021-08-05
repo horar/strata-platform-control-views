@@ -8,8 +8,9 @@ import QtQuick.Extras 1.4
 
 Rectangle {
     id: rect
-    width: 100; height: 100
+    width: 80; height: 80
     color: "transparent"
+
     z: -1
 
     Image {

@@ -526,20 +526,21 @@ Rectangle {
                         let currentTime = Date.now()
                         let curve = timedGraphPoints.curve(0)
 
-                        curve.shiftPoints((currentTime - graphTimerPoints.lastTime)/1000, 0)
-                        curve.append(0, positionIs)
+                        curve.shiftPoints(0,(currentTime - graphTimerPoints.lastTime)/1000)
+                        curve.append(positionIs,0)
 
                         graphTimerPoints.removeOutOfViewPoints()
                         timedGraphPoints.update()
 
                         graphTimerPoints.lastTime = currentTime
-                        //                        currentPosition.text = Number(positionIs).toFixed(2)
 
-                        //                        if(positionIs.toFixed(0) === "360") {
-                        //                            angleDial.previousAngle = 0
-                        //                            angleDial.angle = 0
-                        //                            angleDial.rotation.start()
-                        //                        }
+                        // currentPosition.text = Number(positionIs).toFixed(2)
+
+                        //  if(positionIs.toFixed(0) === "360") {
+                        //   angleDial.previousAngle = 0
+                        //   angleDial.angle = 0
+                        //   angleDial.rotation.start()
+                        //  }
                         //                        else  {
                         //                            angleDial.previousAngle = angleDial.angle
                         //                            angleDial.angle = positionIs.toFixed(0)
@@ -562,10 +563,6 @@ Rectangle {
                         xMax: 200
                         yMin: 0
                         yMax: 20
-                        //                        yMin: 0
-                        //                        yMax: 1
-                        //                        xMin: 5
-                        //                        xMax: 0
                         xTitle: "Current Position(mm)"
                         yTitle: "Time (s)"
                         xGrid: true
@@ -578,6 +575,7 @@ Rectangle {
                         zoomYEnabled: false
                         autoUpdate: false
                         backgroundColor: "white"
+
                         Component.onCompleted:  {
                             let positionCurve = createCurve("graphCurve")
                             positionCurve.color = "blue"
@@ -597,20 +595,9 @@ Rectangle {
                             property real lastTime
                             onRunningChanged: {
                                 if (running){
-                                    //timedGraphPoints.curve(0).clear()
                                     lastTime = Date.now()
                                 }
                             }
-
-                            //                            onTriggered: {
-                            //                                let currentTime = Date.now()
-                            //                                let curve = timedGraphPoints.curve(0)
-                            //                                curve.shiftPoints((currentTime - lastTime)/1000, 0)
-                            //                                curve.append(0, timedGraphPoints.yourDataValueHere())
-                            //                                removeOutOfViewPoints()
-                            //                                timedGraphPoints.update()
-                            //                                lastTime = currentTime
-                            //                            }
 
                             function removeOutOfViewPoints() {
                                 // recursively clean up points that have moved out of view
@@ -625,8 +612,10 @@ Rectangle {
 
                 Item {
                     id: container
-                    Layout.fillWidth: true
+                    Layout.preferredWidth: parent.width/1.1
                     Layout.fillHeight: true
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.leftMargin: 45
 
                     SGRotateImage {
                         id: rotatingImage
@@ -639,19 +628,19 @@ Rectangle {
                         return Math.random() * (max - min) + min;
                     }
 
-                    Button {
-                        width: 50
-                        height: 50
-                        text: "L"
-                        anchors.top: rotatingImage.bottom
-                        anchors.topMargin: 10
-                        anchors.left: right.right
+                    //                    Button {
+                    //                        width: 50
+                    //                        height: 50
+                    //                        text: "L"
+                    //                        anchors.top: rotatingImage.bottom
+                    //                        anchors.topMargin: 10
+                    //                        anchors.left: right.right
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: rotatingImage.x = container.getRandomArbitrary(-200,200)
-                        }
-                    }
+                    //                        MouseArea {
+                    //                            anchors.fill: parent
+                    //                            onClicked: rotatingImage.x = container.getRandomArbitrary(-200,200)
+                    //                        }
+                    //                    }
 
                     //                    Button {
                     //                        id: right
@@ -669,6 +658,7 @@ Rectangle {
         Item {
             Layout.preferredHeight: parent.height + 10
             Layout.preferredWidth: parent.width/120
+            Layout.leftMargin: 15
 
             Rectangle {
                 id:leftLine
