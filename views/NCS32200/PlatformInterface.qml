@@ -29,11 +29,10 @@ PlatformInterfaceBase {
         // @property turns: int
         // @property vel: int
         property QtObject get_data: QtObject {
-            property int accel: 0
             property int pos: 0
-            property double time: 0.0
-            property int turns: 0
             property int vel: 0
+            property int accel: 0
+            property int turns: 0
 
             signal notificationFinished()
         }
@@ -47,13 +46,13 @@ PlatformInterfaceBase {
         // @property overspeed: int
         // @property sensor_error: int
         property QtObject get_errors: QtObject {
-            property int batt_alarm: 0
-            property int low_bat: 0
-            property int no_power: 0
-            property int over_temp: 0
-            property int overflow: 0
             property int overspeed: 0
             property int sensor_error: 0
+            property int overflow: 0
+            property int over_temp: 0
+            property int low_bat: 0
+            property int no_power: 0
+            property int batt_alarm: 0
 
             signal notificationFinished()
         }
@@ -125,7 +124,7 @@ PlatformInterfaceBase {
         }
 
         property QtObject vcc_en: QtObject {
-            property int turns: 0
+            property bool status:true
 
             signal notificationFinished()
         }
@@ -229,12 +228,12 @@ PlatformInterfaceBase {
 
         // @command reset_positionset_battv
         property var reset_position: ({
-                                                   "cmd": "reset_position",
-                                                   update: function () {
-                                                       this.send(this)
-                                                   },
-                                                   send: function () { platformInterface.send(this) }
-                                               })
+                                   "cmd": "reset_position",
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { platformInterface.send(this) }
+                               })
 
         // @command reset_turns
         property var reset_turns: ({

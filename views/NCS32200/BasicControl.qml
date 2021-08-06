@@ -733,6 +733,12 @@ Rectangle {
                                     id: vbat
                                     checkedLabel: "On"
                                     uncheckedLabel: "Off"
+                                    onToggled: {
+                                        if(checked)
+                                            addCommand("bat_en","on")
+                                        else
+                                            addCommand("bat_en","off")
+                                    }
                                 }
                             }
                         }
