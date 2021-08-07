@@ -118,12 +118,18 @@ PlatformInterfaceBase {
         // @notification: reset_turns
         // @property turns: int
         property QtObject reset_turns: QtObject {
-            property string enable : ""
+            property int turns: 0
 
             signal notificationFinished()
         }
 
         property QtObject vcc_en: QtObject {
+            property bool status:true
+
+            signal notificationFinished()
+        }
+
+        property QtObject bat_en: QtObject {
             property bool status:true
 
             signal notificationFinished()
@@ -226,7 +232,7 @@ PlatformInterfaceBase {
                                   send: function () { platformInterface.send(this) }
                               })
 
-        // @command reset_positionset_battv
+        // @command reset_position
         property var reset_position: ({
                                    "cmd": "reset_position",
                                    update: function () {

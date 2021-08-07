@@ -138,6 +138,13 @@ Rectangle {
     }
 
     Connections {
+        target: platformInterface.notifications.bat_en
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
         target: platformInterface.notifications.reset_errors
         onNotificationFinished: {
             sendCommand()
@@ -773,7 +780,7 @@ Rectangle {
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        platformInterface.commands.set_low_batt.update(value)
+                                        platformInterface.commands.set_battv.update(value)
                                     }
                                 }
                             }
@@ -808,7 +815,7 @@ Rectangle {
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        platformInterface.commands.set_battv.update(value)
+                                        platformInterface.commands.set_battv.update(value.toFixed(2))
                                     }
 
                                 }
