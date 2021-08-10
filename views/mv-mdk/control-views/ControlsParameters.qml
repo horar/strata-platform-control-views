@@ -1,8 +1,10 @@
 import QtQuick 2.12
+import QtQml 2.12
 
 import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
 import tech.strata.sglayout 1.0
+import tech.strata.commoncpp 1.0
 import QtTest 1.1
 
 UIBase { // start_uibase
@@ -1590,8 +1592,7 @@ UIBase { // start_uibase
 
     // ======================== Save and Load Parameters ======================== //
 
-    function loadSettings(settingsName) {
-        let config = sgUserSettings.readFile(settingsName, cp_save_button.subdirName)
+    function loadSettings(config) {
         // PWM Settings
         if (config.hasOwnProperty('cp_pwm_params_o_mode')) {
             cp_pwm_params_o_mode_caption.text = config.cp_pwm_params_o_mode.caption
@@ -2127,8 +2128,6 @@ UIBase { // start_uibase
                 cp_save_filename.placeholderText = "Invalid filename"
             }
             cp_save_filename.text = ""
-
-            
         }
     } // end_912e7
 
@@ -2140,20 +2139,49 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 21
         layoutInfo.yRows: 46
 
-        // placeholderText: "Select Configuration" // TODO: why does this not work with LayoutSGComboBox but fine with SGComboBox
+        placeholderText: "Select Configuration"
         dividers: true
-        model: filesInDir.length > 0 ? filesInDir.map((file) => getFileNameFromFile(file)) : [];
+        textRole: "filename"
+        model: ListModel {
+            id: settingsModel
 
-        // This variable stores a list of paths for each file found in the base output directory for the current platform
-        property var filesInDir: sgUserSettings.listFilesInDirectory(cp_save_button.subdirName);
+            ListElement {
+                filename: "Aric's Sweet Custom Settings"
+                default_setting: true
+                location: ":/settings/Aric's Sweet Custom Settings.json"
+            }
+
+            ListElement {
+                filename: "Aric's Other Sweet Custom Settings"
+                default_setting: true
+                location: ":/settings/Aric's Other Sweet Custom Settings.json"
+            }
+
+            Component.onCompleted: {
+                cp_load_filename.updateList()
+            }
+        }
 
         function getFileNameFromFile(file) {
             return file.slice(0, file.lastIndexOf('.'));
         }
 
         function updateList() {
-            filesInDir = sgUserSettings.listFilesInDirectory(cp_save_button.subdirName);
-            model = filesInDir.map((file) => getFileNameFromFile(file));
+            let filesInDir = sgUserSettings.listFilesInDirectory(cp_save_button.subdirName);
+            for (let i = settingsModel.count - 1; i > -1; i--) {
+                // remove all non-default settings
+                if (settingsModel.get(i).default_setting === false) {
+                    settingsModel.remove(i)
+                }
+            }
+
+            for (let file of filesInDir) {
+                settingsModel.append({
+                                         filename: getFileNameFromFile(file),
+                                         default_setting: false,
+                                         location: ""
+                                     })
+            }
         }
     } // end_93f08
 
@@ -2168,8 +2196,15 @@ UIBase { // start_uibase
         text: "Delete"
 
         onClicked: {
-            sgUserSettings.deleteFile(cp_load_filename.currentText + '.json', cp_save_button.subdirName);
-            cp_load_filename.updateList()
+            if (cp_load_filename.currentIndex >= 0) {
+                let current_file = cp_load_filename.model.get(cp_load_filename.currentIndex)
+                if (current_file.default_setting === false) {
+                    sgUserSettings.deleteFile(current_file.filename + '.json', cp_save_button.subdirName);
+                    cp_load_filename.updateList()
+                } else {
+                    console.log("can't delete default settings")
+                }
+            }
         }
 
     } // end_e96bf
@@ -2186,10 +2221,17 @@ UIBase { // start_uibase
 
         onClicked: {
             if (cp_load_filename.currentIndex >= 0) {
-                loadSettings(cp_load_filename.currentText + ".json")
+                let current_file = cp_load_filename.model.get(cp_load_filename.currentIndex)
+                let config
+                if (current_file.default_setting) {
+                    config = SGUtilsCpp.readTextFileContent(current_file.location)
+                    config = JSON.parse(config)
+                } else {
+                    config = sgUserSettings.readFile(current_file.filename + ".json", cp_save_button.subdirName)
+                }
+                loadSettings(config)
             }
         }
-
     } // end_053a0
 
 
