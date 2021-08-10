@@ -107,8 +107,8 @@ Rectangle {
                 x: parent.width + sideBarColumn.anchors.margins
 
                 value: platformInterface.notifications.target_speed.value
-                title: platformInterface.notifications.target_speed.caption
-                unit: platformInterface.notifications.target_speed.unit
+                title: platformInterface.notifications.target_speed.caption + " (" + platformInterface.notifications.target_speed.unit + ")"
+                // unit: platformInterface.notifications.target_speed.unit
                 to: platformInterface.notifications.target_speed.scales.index_0
                 from: platformInterface.notifications.target_speed.scales.index_1
                 stepSize: platformInterface.notifications.target_speed.scales.index_2
@@ -117,10 +117,9 @@ Rectangle {
                 enabled: !Boolean(platformInterface.notifications.target_speed.states[0])
 
                 onUserSet: {
-                    console.log("onUserSet:", value)
-                    platformInterface.commands.target_speed.update(
-                        speedPop.value
-                    )
+                    console.log("onUserSet:", speedPop.value)
+                    platformInterface.notifications.target_speed.value = speedPop.value
+                    platformInterface.commands.target_speed.update(speedPop.value)
                 }
 
             }
@@ -145,8 +144,8 @@ Rectangle {
                 x: parent.width + sideBarColumn.anchors.margins
 
                 value: platformInterface.notifications.acceleration.value
-                title: platformInterface.notifications.acceleration.caption
-                unit: platformInterface.notifications.acceleration.unit
+                title: platformInterface.notifications.acceleration.caption + " (" + platformInterface.notifications.acceleration.unit + ")"
+                // unit: platformInterface.notifications.acceleration.unit
                 to: platformInterface.notifications.acceleration.scales.index_0
                 from: platformInterface.notifications.acceleration.scales.index_1
                 stepSize: platformInterface.notifications.acceleration.scales.index_2
@@ -161,11 +160,8 @@ Rectangle {
                     // platformInterface.commands.acceleration.update(accelPop.value)
 
                     // MV MDK integrates acceleration into spd_loop_params command so instead:
-                    // 1) update secondary acceleration control UI element on Controls and Parameters tab
-                    // 2) set platformInterface's acceleration notification value to ensure accelPop.value tracks platformInterface
-                    // 3) send spd_loop_params with all required parameters
-                    // platformInterface.commands.acceleration.set(accelPop.value)
-                    controlsParameters.cp_spd_loop_params_accel.text = String(accelPop.value)
+                    // 1) update notification value to sync Acceleration Rate UI element on Controls and Parameters tab
+                    // 2) send spd_loop_params with all required parameters
                     platformInterface.notifications.acceleration.value = accelPop.value
                     controlsParameters.send_spd_loop_params()
                 }

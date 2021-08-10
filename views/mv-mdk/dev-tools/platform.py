@@ -32,7 +32,7 @@ def read_serial():
             print(">> ", end='', flush=True)
         elif out.find("request_platform_id") != -1:
             ser.write('{"ack":"request_platform_id","payload":{"return_value":true,"return_string":"commandvalid"}}\n'.encode())
-            ser.write('{"notification":{"value":"platform_id","payload":{"name":"MV MDK","controller_type":1,"platform_id":"1917934f-3b79-4e8b-b37a-b1bd92d2afd5","class_id":"1917934f-3b79-4e8b-b37a-b1bd92d2afd5","board_count":1}}}\n'.encode())
+            ser.write('{"notification":{"value":"platform_id","payload":{"name":"MV MDK","controller_type":1,"platform_id":"b1133641-5b46-4d11-9b96-9126b9d2a109","class_id":"b1133641-5b46-4d11-9b96-9126b9d2a109","board_count":1}}}\n'.encode())
             print("\nrequest_platform_id notification sent")
             print(">> ", end='', flush=True)
         elif out.find('{"cmd":"run","payload":{"value":1}') != -1:
@@ -82,7 +82,7 @@ def demo_config():
     # time.sleep(0.5)
     ser.write('{"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed","scales":[10000,0,1000],"states":[1],"value":0.0,"values":[],"unit":"RPM"}}}\n'.encode())
     # time.sleep(0.5)
-    ser.write('{"notification":{"value":"target_speed","payload":{"caption":"Target Speed","scales":[10000,0,10],"states":[0],"value":100,"values":[],"unit":"RPM"}}}\n'.encode())
+    ser.write('{"notification":{"value":"target_speed","payload":{"caption":"Target Speed","scales":[5555,55,10],"states":[0],"value":100,"values":[],"unit":"RPM"}}}\n'.encode())
     # time.sleep(0.5)
     ser.write('{"notification":{"value":"acceleration","payload":{"caption":"Acceleration","scales":[1000,0,10],"states":[0],"value":100,"values":[],"unit":"RPM/s"}}}\n'.encode())
     # time.sleep(0.5)

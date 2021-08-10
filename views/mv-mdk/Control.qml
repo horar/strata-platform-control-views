@@ -10,6 +10,8 @@ RowLayout {
     id: controlViewRoot
     spacing: 0
 
+    property string class_id
+
     PlatformInterface {
         id: platformInterface
     }

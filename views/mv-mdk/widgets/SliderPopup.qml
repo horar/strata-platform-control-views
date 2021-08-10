@@ -51,6 +51,7 @@ Popup {
             onUserSet: sliderPopup.userSet(value)
             live: false
             toolTipBackground.color: "#222"
+            showInputBox: false
         }
     }
 }

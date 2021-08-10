@@ -16,7 +16,7 @@ UIBase { // start_uibase
 
     // ======================== Aliases ======================== //
     
-    property alias cp_spd_loop_params_accel: cp_spd_loop_params_accel
+    // property alias cp_spd_loop_params_accel: cp_spd_loop_params_accel
 
     // ======================== UI Initialization ======================== //
     
@@ -54,13 +54,34 @@ UIBase { // start_uibase
         Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor.", 22, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
         Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box. Select the desired parameter set and the combo box and click Load to recall. Select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json file in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transfered between PCs if desired.\n\nDefault parameters are included that were used during hardware validation for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded by default and all included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
+
+        // ---------- Default Values per class_id Regardless of Motor ---------- //
+
+        // 10-16V
+        if (controlViewRoot.class_id === "abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb") {
+            cp_motor_params_rated_v.text = "12"
+            cp_pid_params_lim.text = "12"
+            // TODO: Ask Jake for more stuff here!! Software/hardware OCPs?
+        }
+        // 16-30V
+        if (controlViewRoot.class_id === "c7069a8a-0dd9-40cf-ac89-29aafabb02a2") {
+            cp_motor_params_rated_v.text = "24"
+            cp_pid_params_lim.text = "24"
+        }
+        // 30-60V
+        if (controlViewRoot.class_id === "b1133641-5b46-4d11-9b96-9126b9d2a109") {
+            cp_motor_params_rated_v.text = "48"
+            cp_pid_params_lim.text = "48"
+        }
+        // 60-100V
+        if (controlViewRoot.class_id === "1917934f-3b79-4e8b-b37a-b1bd92d2afd5") {
+            cp_motor_params_rated_v.text = "96"
+            cp_pid_params_lim.text = "96"
+        }
+
     }
 
     // ------------- Send Default Controls/Parameters to FW when Requested ------- //
-
-    // 1) Send request_platform_id and wait until response to start timer start sending params
-    // 2) Set known parameters that do not change based on connected motor based on class_id
-    // 3) Start timer to send all parameters (dd delay because FW cannot handle back-to-back commands)
 
     Timer {
         id: cp_timer
@@ -85,43 +106,14 @@ UIBase { // start_uibase
         }
     }
     
-    // Configure parameters based on class_id
-    Connections {
-        target: platformInterface.notifications.platform_id
-        onNotificationFinished: {
-            console.log("class_id = ", platformInterface.notifications.platform_id.class_id)
-            // 10-16V
-            if (platformInterface.notifications.platform_id.class_id === "abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb") {
-                cp_motor_params_rated_v.text = "12"
-                cp_pid_params_lim.text = "12"
-                // TODO: Ask Jake for more stuff here!! Software/hardware OCPs?
-            }
-            // 16-30V
-            if (platformInterface.notifications.platform_id.class_id === "c7069a8a-0dd9-40cf-ac89-29aafabb02a2") {
-                cp_motor_params_rated_v.text = "24"
-                cp_pid_params_lim.text = "24"
-            }
-            // 30-60V
-            if (platformInterface.notifications.platform_id.class_id === "b1133641-5b46-4d11-9b96-9126b9d2a109") {
-                cp_motor_params_rated_v.text = "48"
-                cp_pid_params_lim.text = "48"
-            }
-            // 30-60V
-            if (platformInterface.notifications.platform_id.class_id === "1917934f-3b79-4e8b-b37a-b1bd92d2afd5") {
-                cp_motor_params_rated_v.text = "96"
-                cp_pid_params_lim.text = "96"
-            }
-            cp_timer.start()
-        }
-    }
-
     function send_params() {
-        platformInterface.commands.request_platform_id.send() // get class_id, wait to start timer until known
-        cp_timer.cp_commandQueue.push(send_pwm_params)
+        // platformInterface.commands.request_platform_id.send() // get class_id, wait to start timer until known
+        send_pwm_params()
         cp_timer.cp_commandQueue.push(send_pid_params)
         cp_timer.cp_commandQueue.push(send_motor_params)
         cp_timer.cp_commandQueue.push(send_spd_loop_params)
         cp_timer.cp_commandQueue.push(send_protection)
+        cp_timer.start()
     }
     
 
@@ -660,7 +652,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 39
 
-        text: "24"
+        // text: "24" // dynamic per class_id
         readOnly: false
 
         validator: DoubleValidator {
@@ -957,7 +949,7 @@ UIBase { // start_uibase
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 30
-
+            
         text: platformInterface.notifications.target_speed.scales.index_0
         readOnly: false
 
@@ -1004,7 +996,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 36
 
-        text: "60"
+        text: platformInterface.notifications.target_speed.scales.index_1
         readOnly: false
 
         validator: DoubleValidator {
@@ -1015,6 +1007,8 @@ UIBase { // start_uibase
         onEditingFinished: {
             console.log("Accepted:", text)
             send_motor_params()
+            // Update Target Speed slider with minimum value
+            platformInterface.notifications.target_speed.scales.index_1 = Number(cp_motor_params_min_rpm.text)
         }
     } // end_16b29
 
@@ -1048,7 +1042,8 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 42
 
-        text: "24"
+        // text: "" // Dynamic per class_id
+
         readOnly: false
 
         validator: DoubleValidator {
@@ -1327,7 +1322,8 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 27
         layoutInfo.yRows: 13
 
-        text: "100"
+        // text: "100"
+        text: String(platformInterface.notifications.acceleration.value)
         readOnly: false
 
         validator: DoubleValidator {
@@ -1750,6 +1746,8 @@ UIBase { // start_uibase
             cp_motor_params_min_rpm_caption.text = config.cp_motor_params_min_rpm.caption
             cp_motor_params_min_rpm.enabled = config.cp_motor_params_min_rpm.states[0]
             cp_motor_params_min_rpm.text = config.cp_motor_params_min_rpm.value
+            // Also, update Target Speed slider on sidebar
+            platformInterface.notifications.target_speed.scales.index_1 = Number(config.cp_motor_params_min_rpm.value)
         }
         if (config.hasOwnProperty('cp_motor_params_ke')) {
             cp_motor_params_ke_caption.text = config.cp_motor_params_ke.caption
@@ -2176,14 +2174,6 @@ UIBase { // start_uibase
         placeholderText: "Select Configuration"
         dividers: true
         textRole: "filename"
-
-        Volcano Motor VOL-BL06C12.json
-        ATO D110BLD1000-24A-30S.json
-        ATO 110WD-M04030-48V.json
-        ATO 110WD-M04030-96V.json
-        
-        
-
         model: ListModel {
             id: settingsModel            
             ListElement {
