@@ -17,9 +17,6 @@ Rectangle {
     implicitWidth: 70
     Layout.fillHeight: true
 
-    // property alias cp_spd_loop_params_accel: controlsParameters.cp_spd_loop_params_accel.text
-    // property alias send_spd_loop_params: controlsParameters.send_spd_loop_params()
-
     // ======================== UI Initialization ======================== //
     
     Component.onCompleted: {
