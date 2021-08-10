@@ -91,7 +91,7 @@
             true
         ],
         "unit": "",
-        "value": 4200,
+        "value": 10000,
         "values": [
         ]
     },
@@ -139,7 +139,7 @@
             true
         ],
         "unit": "",
-        "value": 24,
+        "value": 96,
         "values": [
         ]
     },
@@ -199,7 +199,7 @@
             true
         ],
         "unit": "",
-        "value": 24,
+        "value": 96,
         "values": [
         ]
     },

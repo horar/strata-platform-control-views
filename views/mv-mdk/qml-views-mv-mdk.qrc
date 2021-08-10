@@ -16,7 +16,5 @@
         <file>control-views/Basic.qml</file>
         <file>control-views/ControlsParameters.qml</file>
         <file>control-views/PlatformInterface.qml</file>
-        <file>settings/Aric's Other Sweet Custom Settings.json</file>
-        <file>settings/Aric's Sweet Custom Settings.json</file>
     </qresource>
 </RCC>
