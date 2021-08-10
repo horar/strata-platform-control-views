@@ -2176,6 +2176,14 @@ UIBase { // start_uibase
         placeholderText: "Select Configuration"
         dividers: true
         textRole: "filename"
+
+        Volcano Motor VOL-BL06C12.json
+        ATO D110BLD1000-24A-30S.json
+        ATO 110WD-M04030-48V.json
+        ATO 110WD-M04030-96V.json
+        
+        
+
         model: ListModel {
             id: settingsModel            
             ListElement {
@@ -2189,9 +2197,9 @@ UIBase { // start_uibase
                 location: ":/settings/Volcano Motor VOL-BL06C12.json"
             }
             ListElement {
-                filename: "ATO D110BLD1000-24V"
+                filename: "ATO D110BLD1000-24A-30S"
                 default_setting: true
-                location: ":/settings/ATO D110BLD1000-24V.json"
+                location: ":/settings/ATO D110BLD1000-24A-30S.json"
             }
             ListElement {
                 filename: "ATO 110WD-M04030-48V"
