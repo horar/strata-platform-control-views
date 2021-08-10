@@ -334,7 +334,7 @@ UIBase { // start_uibase
     LayoutContainer { // start_abcde
         id: b_status_log
         layoutInfo.uuid: "abcde"
-        layoutInfo.columnsWide: 28
+        layoutInfo.columnsWide: 25
         layoutInfo.rowsTall: 5
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 19
@@ -359,4 +359,18 @@ UIBase { // start_uibase
         }
     } // end_abcde
 
+    LayoutButton { // start_c06e2
+        id: b_status_log_box_clear
+        layoutInfo.uuid: "c06e2"
+        layoutInfo.columnsWide: 2
+        layoutInfo.rowsTall: 5
+        layoutInfo.xColumns: 27
+        layoutInfo.yRows: 19
+
+        text: "Clear"
+
+        onClicked: {
+            b_status_log_box.clear()
+        }
+    } // end_c06e2
 } // end_uibase

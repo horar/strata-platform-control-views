@@ -956,7 +956,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 30
 
-        text: "4200"
+        text: platformInterface.notifications.target_speed.scales.index_0
         readOnly: false
 
         validator: DoubleValidator {
