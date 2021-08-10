@@ -1627,7 +1627,7 @@ UIBase { // start_uibase
     // ======================== Save and Load Parameters ======================== //
 
     function loadSettings(config) {
-        // PWM Settings
+        // PWM Parameters
         if (config.hasOwnProperty('cp_pwm_params_o_mode')) {
             cp_pwm_params_o_mode_caption.text = config.cp_pwm_params_o_mode.caption
             cp_pwm_params_o_mode.enabled = config.cp_pwm_params_o_mode.states[0]
@@ -1640,7 +1640,7 @@ UIBase { // start_uibase
             cp_pwm_params_dt.stepSize = config.cp_pwm_params_dt.scales[2]
             cp_pwm_params_dt.enabled = config.cp_pwm_params_dt.states[0]
             cp_pwm_params_dt.value = config.cp_pwm_params_dt.value
-        }//
+        }
         if (config.hasOwnProperty('cp_pwm_params_min_ls')) {
             cp_pwm_params_min_ls_caption.text = config.cp_pwm_params_min_ls.caption
             cp_pwm_params_min_ls.to = config.cp_pwm_params_min_ls.scales[0]
@@ -2177,20 +2177,32 @@ UIBase { // start_uibase
         dividers: true
         textRole: "filename"
         model: ListModel {
-            id: settingsModel
-
+            id: settingsModel            
             ListElement {
-                filename: "Aric's Sweet Custom Settings"
+                filename: "Universal Configuration"
                 default_setting: true
-                location: ":/settings/Aric's Sweet Custom Settings.json"
+                location: ":/settings/Universal Configuration.json"
             }
-
             ListElement {
-                filename: "Aric's Other Sweet Custom Settings"
+                filename: "Volcano Motor VOL-BL06C12"
                 default_setting: true
-                location: ":/settings/Aric's Other Sweet Custom Settings.json"
+                location: ":/settings/Volcano Motor VOL-BL06C12.json"
             }
-
+            ListElement {
+                filename: "ATO D110BLD1000-24V"
+                default_setting: true
+                location: ":/settings/ATO D110BLD1000-24V.json"
+            }
+            ListElement {
+                filename: "ATO 110WD-M04030-48V"
+                default_setting: true
+                location: ":/settings/ATO 110WD-M04030-48V.json"
+            }
+            ListElement {
+                filename: "ATO 110WD-M04030-96V"
+                default_setting: true
+                location: ":/settings/ATO 110WD-M04030-96V.json"
+            }
             Component.onCompleted: {
                 cp_load_filename.updateList()
             }
