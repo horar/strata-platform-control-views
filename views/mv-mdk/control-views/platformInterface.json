@@ -92,6 +92,10 @@
         {
             "cmd": "control_props",
             "payload": null
+        },
+        {
+            "cmd": "request_platform_id",
+            "payload": null
         }
     ],
     "notifications": [
@@ -309,6 +313,16 @@
             "value": "request_params",
             "payload": {
                 "value": "bool"
+            }
+        },
+        {
+            "value": "platform_id",
+            "payload": {
+                "name": "string",
+                "controller_type": "int",
+                "platform_id": "string",
+                "class_id": "string",
+                "board_count": "int"
             }
         }
     ]

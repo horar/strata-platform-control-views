@@ -16,7 +16,6 @@ UIBase { // start_uibase
     Component.onCompleted: {
 
         // ------------------------ Help Messages ------------------------ //
-
         Help.registerTarget(rect_6a35c, "The input section displays telemetry from the platform for inputs to the motor controller.", 6, "BasicControlHelp") // input rectangle
         Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform for outputs from the motor controller.", 7, "BasicControlHelp") // output rectangle
         Help.registerTarget(b_status_log, "The status log will show timestamped messages reported by the motor controller.", 8, "BasicControlHelp")
@@ -59,8 +58,7 @@ UIBase { // start_uibase
         platformInterface.notifications.status_log.caption = "Status Log"
         platformInterface.notifications.status_log.value = ""
 
-        // ------------------------ Request Defaults from UI ------------------------ //
-
+        // request control_props from firmware
         platformInterface.commands.control_props.send()
     }
 

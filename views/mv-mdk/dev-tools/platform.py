@@ -32,7 +32,7 @@ def read_serial():
             print(">> ", end='', flush=True)
         elif out.find("request_platform_id") != -1:
             ser.write('{"ack":"request_platform_id","payload":{"return_value":true,"return_string":"commandvalid"}}\n'.encode())
-            ser.write('{"notification":{"value":"platform_id","payload":{"name":"MV MDK","controller_type":1,"platform_id":"abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb","class_id":"abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb","board_count":1}}}\n'.encode())
+            ser.write('{"notification":{"value":"platform_id","payload":{"name":"MV MDK","controller_type":1,"platform_id":"1917934f-3b79-4e8b-b37a-b1bd92d2afd5","class_id":"1917934f-3b79-4e8b-b37a-b1bd92d2afd5","board_count":1}}}\n'.encode())
             print("\nrequest_platform_id notification sent")
             print(">> ", end='', flush=True)
         elif out.find('{"cmd":"run","payload":{"value":1}') != -1:

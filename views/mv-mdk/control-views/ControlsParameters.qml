@@ -52,23 +52,26 @@ UIBase { // start_uibase
         Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor.", 22, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
         Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box. Select the desired parameter set and the combo box and click Load to recall. Select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json file in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transfer between PCs if desired.", 24, "ControlsAndParametersHelp")
-
     }
 
-    // ------------------------ Send Default Controls/Parameters to FW when Requested ------------------------ //
-    
+    // ------------- Send Default Controls/Parameters to FW when Requested ------- //
+
+    // 1) Send request_platform_id and wait until response to start timer start sending params
+    // 2) Set known parameters that do not change based on connected motor based on class_id
+    // 3) Start timer to send all parameters (dd delay because FW cannot handle back-to-back commands)
+
     Timer {
-        id: timer
+        id: cp_timer
         interval: 200 // 200ms
         repeat: false
         running: false
-        property var commandQueue: []
+        property var cp_commandQueue: []
         onTriggered: {
-            console.log("timer triggered, running next function")
-            let poppedFunction = commandQueue.shift()
-            poppedFunction()
-            if (commandQueue.length >0) {
-                timer.start()
+            // console.log("cp_timer triggered, running next function")
+            let cp_poppedFunction = cp_commandQueue.shift()
+            cp_poppedFunction()
+            if (cp_commandQueue.length > 0) {
+                cp_timer.start()
             }
         }
     }
@@ -79,15 +82,46 @@ UIBase { // start_uibase
             send_params()
         }
     }
+    
+    // Configure parameters based on class_id
+    Connections {
+        target: platformInterface.notifications.platform_id
+        onNotificationFinished: {
+            console.log("class_id = ", platformInterface.notifications.platform_id.class_id)
+            // 10-16V
+            if (platformInterface.notifications.platform_id.class_id === "abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb") {
+                cp_motor_params_rated_v.text = "12"
+                cp_pid_params_lim.text = "12"
+                // TODO: Ask Jake for more stuff here!! Software/hardware OCPs?
+            }
+            // 16-30V
+            if (platformInterface.notifications.platform_id.class_id === "c7069a8a-0dd9-40cf-ac89-29aafabb02a2") {
+                cp_motor_params_rated_v.text = "24"
+                cp_pid_params_lim.text = "24"
+            }
+            // 30-60V
+            if (platformInterface.notifications.platform_id.class_id === "b1133641-5b46-4d11-9b96-9126b9d2a109") {
+                cp_motor_params_rated_v.text = "48"
+                cp_pid_params_lim.text = "48"
+            }
+            // 30-60V
+            if (platformInterface.notifications.platform_id.class_id === "1917934f-3b79-4e8b-b37a-b1bd92d2afd5") {
+                cp_motor_params_rated_v.text = "96"
+                cp_pid_params_lim.text = "96"
+            }
+            cp_timer.start()
+        }
+    }
 
     function send_params() {
-        send_pwm_params()
-        timer.commandQueue.push(send_pid_params)
-        timer.commandQueue.push(send_motor_params)
-        timer.commandQueue.push(send_spd_loop_params)
-        timer.commandQueue.push(send_protection)
-        timer.start()
+        platformInterface.commands.request_platform_id.send() // get class_id, wait to start timer until known
+        cp_timer.cp_commandQueue.push(send_pwm_params)
+        cp_timer.cp_commandQueue.push(send_pid_params)
+        cp_timer.cp_commandQueue.push(send_motor_params)
+        cp_timer.cp_commandQueue.push(send_spd_loop_params)
+        cp_timer.cp_commandQueue.push(send_protection)
     }
+    
 
     // ======================== UI Objects ======================== //
 
@@ -1217,7 +1251,7 @@ UIBase { // start_uibase
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 10
         layoutInfo.yRows: 42
-
+    
         text: "Rated Voltage (V)"
         fontSizeMode: Text.Fit
         font.pixelSize: 15
