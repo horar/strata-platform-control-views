@@ -16,5 +16,10 @@
         <file>control-views/Basic.qml</file>
         <file>control-views/ControlsParameters.qml</file>
         <file>control-views/PlatformInterface.qml</file>
+        <file>settings/ATO 110WD-M04030-48V.json</file>
+        <file>settings/ATO 110WD-M04030-96V.json</file>
+        <file>settings/ATO D110BLD1000-24V.json</file>
+        <file>settings/Universal Configuration.json</file>
+        <file>settings/Volcano Motor VOL-BL06C12.json</file>
     </qresource>
 </RCC>
