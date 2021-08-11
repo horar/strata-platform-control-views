@@ -30,9 +30,6 @@ Rectangle {
         Help.registerTarget(brakeButton, "Click the brake icon to brake the motor. This feature may be disabled for certain motor contorllers", 3, "BasicControlHelp")
         Help.registerTarget(directionButton, "Click this icon to change the direction of the motor. The direction control icon will be disabled while the motor is spinning. The direction is from the perspective of the load. An incorrect hall polarity configuration could render the rotation direction invalid.", 4, "BasicControlHelp")
         Help.registerTarget(warnings, "Warnings and errors are shown here for events such as Over Current Protection (OCP).", 5, "BasicControlHelp")
-
-        // ------------------------ Default Values ------------------------ //
-        // No need to do this here now since PIG supports default values
         
     }
 
