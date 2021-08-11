@@ -32,38 +32,8 @@ Rectangle {
         Help.registerTarget(warnings, "Warnings and errors are shown here for events such as Over Current Protection (OCP).", 5, "BasicControlHelp")
 
         // ------------------------ Default Values ------------------------ //
-        // Do this here instead of in PlatformInterface.qml because PIG overwrites values
-        // TODO: remove this in favor of using PIG's value entry
-
-        // target_speed
-        platformInterface.notifications.target_speed.caption = ""
-        platformInterface.notifications.target_speed.scales.index_0 = 0
-        platformInterface.notifications.target_speed.scales.index_1 = 0
-        platformInterface.notifications.target_speed.scales.index_2 = 0
-        platformInterface.notifications.target_speed.states = [0]
-        platformInterface.notifications.target_speed.value = 0.0
-        platformInterface.notifications.target_speed.values = []
-        platformInterface.notifications.target_speed.unit = ""
-        // acceleration
-        platformInterface.notifications.acceleration.caption = ""
-        platformInterface.notifications.acceleration.scales.index_0 = 0
-        platformInterface.notifications.acceleration.scales.index_1 = 0
-        platformInterface.notifications.acceleration.scales.index_2 = 0
-        platformInterface.notifications.acceleration.states = [0]
-        platformInterface.notifications.acceleration.value = 0.0
-        platformInterface.notifications.acceleration.values = []
-        platformInterface.notifications.acceleration.unit = ""
-        // warnings
-        platformInterface.notifications.warning_1.caption = ""
-        platformInterface.notifications.warning_1.value = false
-        platformInterface.notifications.warning_2.caption = ""
-        platformInterface.notifications.warning_2.value = false
-        platformInterface.notifications.warning_3.caption = ""
-        platformInterface.notifications.warning_3.value = false
-        // run, brake, direction
-        platformInterface.notifications.run.caption = ""
-        platformInterface.notifications.brake.caption = ""
-        platformInterface.notifications.direction.caption = ""
+        // No need to do this here now since PIG supports default values
+        
     }
 
     // ======================== UI Objects ======================== //
@@ -109,9 +79,9 @@ Rectangle {
                 to: platformInterface.notifications.target_speed.scales.index_0
                 from: platformInterface.notifications.target_speed.scales.index_1
                 stepSize: platformInterface.notifications.target_speed.scales.index_2
-                // states[0] for non-arrays, SGSlider automatically sets opacity 
+                // states.index_0 for non-arrays, SGSlider automatically sets opacity 
                 // i.e., state = Disabled (not grayed) set to state = Disabled and Grayed Out
-                enabled: !Boolean(platformInterface.notifications.target_speed.states[0])
+                enabled: !Boolean(platformInterface.notifications.target_speed.states.index_0)
 
                 onUserSet: {
                     console.log("onUserSet:", speedPop.value)
@@ -146,9 +116,9 @@ Rectangle {
                 to: platformInterface.notifications.acceleration.scales.index_0
                 from: platformInterface.notifications.acceleration.scales.index_1
                 stepSize: platformInterface.notifications.acceleration.scales.index_2
-                // states[0] for non-arrays, SGSlider automatically sets opacity 
+                // states.index_0 for non-arrays, SGSlider automatically sets opacity 
                 // i.e., state = Disabled (not grayed) set to state = Disabled and Grayed Out
-                enabled: !Boolean(platformInterface.notifications.acceleration.states[0])
+                enabled: !Boolean(platformInterface.notifications.acceleration.states.index_0)
 
                 onUserSet: {
                     console.log("onUserSet:", value)
@@ -182,8 +152,8 @@ Rectangle {
                 target: platformInterface.notifications.run
                 onNotificationFinished: {
                     runButton.run = Boolean(platformInterface.notifications.run.value)
-                    runButton.enabled = !Boolean(platformInterface.notifications.run.states[0])
-                    if (platformInterface.notifications.run.states[0] == 2) {
+                    runButton.enabled = !Boolean(platformInterface.notifications.run.states.index_0)
+                    if (platformInterface.notifications.run.states.index_0 == 2) {
                         runButton.opacity = 0.5
                     } else {
                         runButton.opacity = 1
@@ -215,8 +185,8 @@ Rectangle {
                 target: platformInterface.notifications.brake
                 onNotificationFinished: {
                     brakeButton.brake = Boolean(platformInterface.notifications.brake.value)
-                    brakeButton.enabled = !Boolean(platformInterface.notifications.brake.states[0])
-                    if (platformInterface.notifications.brake.states[0] == 2) {
+                    brakeButton.enabled = !Boolean(platformInterface.notifications.brake.states.index_0)
+                    if (platformInterface.notifications.brake.states.index_0 == 2) {
                         brakeButton.opacity = 0.5
                     } else {
                         brakeButton.opacity = 1
@@ -250,8 +220,8 @@ Rectangle {
                     // Ignore control properties if motor is running to avoid direction change
                     if (runButton.run === false) {
                         directionButton.direction = Boolean(platformInterface.notifications.direction.value)
-                        directionButton.enabled = !Boolean(platformInterface.notifications.direction.states[0])
-                        if (platformInterface.notifications.direction.states[0] == 2) {
+                        directionButton.enabled = !Boolean(platformInterface.notifications.direction.states.index_0)
+                        if (platformInterface.notifications.direction.states.index_0 == 2) {
                             directionButton.opacity = 0.5
                         } else {
                             directionButton.opacity = 1

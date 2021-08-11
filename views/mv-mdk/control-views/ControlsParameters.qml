@@ -15,8 +15,6 @@ UIBase { // start_uibase
     rowCount: 50
 
     // ======================== Aliases ======================== //
-    
-    // property alias cp_spd_loop_params_accel: cp_spd_loop_params_accel
 
     // ======================== UI Initialization ======================== //
     
@@ -107,7 +105,6 @@ UIBase { // start_uibase
     }
     
     function send_params() {
-        // platformInterface.commands.request_platform_id.send() // get class_id, wait to start timer until known
         send_pwm_params()
         cp_timer.cp_commandQueue.push(send_pid_params)
         cp_timer.cp_commandQueue.push(send_motor_params)

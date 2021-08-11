@@ -21,45 +21,11 @@ UIBase { // start_uibase
         Help.registerTarget(b_status_log, "The status log will show timestamped messages reported by the motor controller.", 8, "BasicControlHelp")
 
         // ------------------------ Default Values ------------------------ //
-        // Do this here instead of in PlatformInterface.qml because PIG overwrites values
-
-        // title
-        platformInterface.notifications.title.caption = "Title"
-        // subtitle
-        platformInterface.notifications.subtitle.caption = "Subtitle"
-        // actual_speed
-        platformInterface.notifications.actual_speed.caption = "Caption"
-        platformInterface.notifications.actual_speed.scales.index_0 = 0
-        platformInterface.notifications.actual_speed.scales.index_1 = 0
-        platformInterface.notifications.actual_speed.scales.index_2 = 0
-        platformInterface.notifications.actual_speed.states = [1]
-        platformInterface.notifications.actual_speed.value = 0.0
-        platformInterface.notifications.actual_speed.values = []
-        platformInterface.notifications.actual_speed.unit = "Unit"
-        // board_temp
-        platformInterface.notifications.board_temp.caption = "Caption"
-        platformInterface.notifications.board_temp.scales.index_0 = 0
-        platformInterface.notifications.board_temp.scales.index_1 = 0
-        platformInterface.notifications.board_temp.scales.index_2 = 0
-        platformInterface.notifications.board_temp.states = [1]
-        platformInterface.notifications.board_temp.value = 0.0
-        platformInterface.notifications.board_temp.values = []
-        platformInterface.notifications.board_temp.unit = "Unit"
-        // input_voltage
-        platformInterface.notifications.input_voltage.caption = "Caption"
-        platformInterface.notifications.input_voltage.scales.index_0 = 0
-        platformInterface.notifications.input_voltage.scales.index_1 = 0
-        platformInterface.notifications.input_voltage.scales.index_2 = 0
-        platformInterface.notifications.input_voltage.states = [1]
-        platformInterface.notifications.input_voltage.value = 0.0
-        platformInterface.notifications.input_voltage.values = []
-        platformInterface.notifications.input_voltage.unit = "Unit"
-        // status_log
-        platformInterface.notifications.status_log.caption = "Status Log"
-        platformInterface.notifications.status_log.value = ""
-
-        // request control_props from firmware
+        // No need to do this here now since PIG supports default values
+        
+        // -------------- Request Control Properties -------------- //
         platformInterface.commands.control_props.send()
+
     }
 
     // ======================== UI Objects ======================== //
