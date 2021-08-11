@@ -4,12 +4,12 @@
             "cmd": "pwm_params",
             "payload": [
                 {
-                    "name": "dt",
+                    "name": "o_mode",
                     "type": "int",
                     "value": 0
                 },
                 {
-                    "name": "freq",
+                    "name": "dt",
                     "type": "int",
                     "value": 0
                 },
@@ -19,7 +19,7 @@
                     "value": 0
                 },
                 {
-                    "name": "o_mode",
+                    "name": "freq",
                     "type": "int",
                     "value": 0
                 },
@@ -34,7 +34,7 @@
             "cmd": "pid_params",
             "payload": [
                 {
-                    "name": "kd",
+                    "name": "kp",
                     "type": "double",
                     "value": 0
                 },
@@ -44,7 +44,12 @@
                     "value": 0
                 },
                 {
-                    "name": "kp",
+                    "name": "kd",
+                    "type": "double",
+                    "value": 0
+                },
+                {
+                    "name": "wd",
                     "type": "double",
                     "value": 0
                 },
@@ -54,18 +59,13 @@
                     "value": 0
                 },
                 {
-                    "name": "mode",
-                    "type": "int",
-                    "value": 0
-                },
-                {
                     "name": "tau_sys",
                     "type": "double",
                     "value": 0
                 },
                 {
-                    "name": "wd",
-                    "type": "double",
+                    "name": "mode",
+                    "type": "int",
                     "value": 0
                 }
             ]
@@ -74,8 +74,13 @@
             "cmd": "motor_params",
             "payload": [
                 {
-                    "name": "hall_pol",
-                    "type": "int",
+                    "name": "rs",
+                    "type": "double",
+                    "value": 0
+                },
+                {
+                    "name": "ls",
+                    "type": "double",
                     "value": 0
                 },
                 {
@@ -85,11 +90,6 @@
                 },
                 {
                     "name": "jm_load",
-                    "type": "double",
-                    "value": 0
-                },
-                {
-                    "name": "ke",
                     "type": "double",
                     "value": 0
                 },
@@ -104,12 +104,17 @@
                     "value": 0
                 },
                 {
-                    "name": "ls",
-                    "type": "double",
+                    "name": "pp",
+                    "type": "int",
                     "value": 0
                 },
                 {
                     "name": "max_rpm",
+                    "type": "double",
+                    "value": 0
+                },
+                {
+                    "name": "rated_rpm",
                     "type": "double",
                     "value": 0
                 },
@@ -119,12 +124,7 @@
                     "value": 0
                 },
                 {
-                    "name": "pp",
-                    "type": "int",
-                    "value": 0
-                },
-                {
-                    "name": "rated_rpm",
+                    "name": "ke",
                     "type": "double",
                     "value": 0
                 },
@@ -134,8 +134,8 @@
                     "value": 0
                 },
                 {
-                    "name": "rs",
-                    "type": "double",
+                    "name": "hall_pol",
+                    "type": "int",
                     "value": 0
                 }
             ]
@@ -143,6 +143,11 @@
         {
             "cmd": "spd_loop_params",
             "payload": [
+                {
+                    "name": "mode",
+                    "type": "int",
+                    "value": 0
+                },
                 {
                     "name": "accel",
                     "type": "int",
@@ -154,12 +159,7 @@
                     "value": 0
                 },
                 {
-                    "name": "fspd_filter",
-                    "type": "int",
-                    "value": 0
-                },
-                {
-                    "name": "mode",
+                    "name": "fspd_filt",
                     "type": "int",
                     "value": 0
                 }
@@ -168,11 +168,6 @@
         {
             "cmd": "protection",
             "payload": [
-                {
-                    "name": "fet_otp",
-                    "type": "int",
-                    "value": 0
-                },
                 {
                     "name": "ocp",
                     "type": "int",
@@ -190,6 +185,11 @@
                 },
                 {
                     "name": "ovp_en",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "fet_otp",
                     "type": "int",
                     "value": 0
                 }
