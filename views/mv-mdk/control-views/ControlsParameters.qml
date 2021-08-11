@@ -15,8 +15,6 @@ UIBase { // start_uibase
     rowCount: 50
 
     // ======================== Aliases ======================== //
-    
-    // property alias cp_spd_loop_params_accel: cp_spd_loop_params_accel
 
     // ======================== UI Initialization ======================== //
     
@@ -107,7 +105,6 @@ UIBase { // start_uibase
     }
     
     function send_params() {
-        // platformInterface.commands.request_platform_id.send() // get class_id, wait to start timer until known
         send_pwm_params()
         cp_timer.cp_commandQueue.push(send_pid_params)
         cp_timer.cp_commandQueue.push(send_motor_params)
@@ -287,10 +284,10 @@ UIBase { // start_uibase
 
     function send_pwm_params() {
         platformInterface.commands.pwm_params.update(
-            cp_pwm_params_dt.value / 10,
-            cp_pwm_params_freq.value * 1000,
-            cp_pwm_params_min_ls.value / 10,
             Number(cp_pwm_params_o_mode.checked),
+            cp_pwm_params_dt.value / 10,
+            cp_pwm_params_min_ls.value / 10,
+            cp_pwm_params_freq.value * 1000,            
             Number(cp_pwm_params_tr_delay.text)
         )
     }
@@ -485,13 +482,13 @@ UIBase { // start_uibase
 
     function send_pid_params() {
         platformInterface.commands.pid_params.update(
-            Number(cp_pid_params_kd.text),
-            Number(cp_pid_params_ki.text),
             Number(cp_pid_params_kp.text),
+            Number(cp_pid_params_ki.text),
+            Number(cp_pid_params_kd.text),
+            Number(cp_pid_params_wd.text),
             Number(cp_pid_params_lim.text),
-            Number(cp_pid_params_mode.checked),            
             Number(cp_pid_params_tau_sys.text),
-            Number(cp_pid_params_wd.text)
+            Number(cp_pid_params_mode.checked)
         )
     }
 
@@ -771,19 +768,19 @@ UIBase { // start_uibase
 
     function send_motor_params() {
         platformInterface.commands.motor_params.update(
-            Number(cp_motor_params_hall_pol.checked),
+            Number(cp_motor_params_rs.text),
+            Number(cp_motor_params_ls.text),
             Number(cp_motor_params_jm.text),
             Number(cp_motor_params_jm_load.text),
-            Number(cp_motor_params_ke.text),
             Number(cp_motor_params_kv.text),
             Number(cp_motor_params_kv_load.text),
-            Number(cp_motor_params_ls.text),
-            Number(cp_motor_params_max_rpm.text),
-            Number(cp_motor_params_min_rpm.text),
             Number(cp_motor_params_pp.text),
+            Number(cp_motor_params_max_rpm.text),
             Number(cp_motor_params_rated_rpm.text),
+            Number(cp_motor_params_min_rpm.text),
+            Number(cp_motor_params_ke.text),
             Number(cp_motor_params_rated_v.text),
-            Number(cp_motor_params_rs.text)  
+            Number(cp_motor_params_hall_pol.checked)
         )
     }
 
@@ -1275,10 +1272,10 @@ UIBase { // start_uibase
 
     function send_spd_loop_params() {
         platformInterface.commands.spd_loop_params.update(
+            cp_spd_loop_params_mode.currentIndex,
             Number(cp_spd_loop_params_accel.text),
             Number(cp_spd_loop_params_fs.text),
-            Number(cp_spd_loop_params_fspd_filt.text),
-            cp_spd_loop_params_mode.currentIndex
+            Number(cp_spd_loop_params_fspd_filt.text)            
         )
     }
 
@@ -1432,11 +1429,11 @@ UIBase { // start_uibase
 
     function send_protection() {
         platformInterface.commands.protection.update(
-            Number(cp_protection_fet_otp.text),
             Number(cp_protection_ocp.text),
             Number(cp_protection_ocp_en.checked),
             Number(cp_protection_ovp.text),
-            Number(cp_protection_ovp_en.checked)
+            Number(cp_protection_ovp_en.checked),
+            Number(cp_protection_fet_otp.text)
         )
     }
 
