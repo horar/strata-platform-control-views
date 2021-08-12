@@ -24,10 +24,10 @@ Rectangle {
         // ------------------------ Help Messages ------------------------ //
 
         // Help messages
-        Help.registerTarget(speedButton, "Click here for a popout slider to set the motor's target speed. The maximum value will be updated based on the Max RPM set on the Motor and Load Parameters tab in the Motor and Load Parameters section.", 0, "BasicControlHelp")
-        Help.registerTarget(accelButton, "Click here for a popout slider to set the motor's startup acceleration. The value will be updated based on the Acceleration Rate set on the Motor and Load Parameters tab in the Speed Loop Parameters section and will be disabled unless the Speed Loop Mode is set to Open loop.", 1, "BasicControlHelp")
+        Help.registerTarget(speedButton, "Click here for a popout slider to set the motor's target speed. The maximum and minimum scales will be updated based on the Max RPM or Min RPM set on the Controls and Parameters tab in the Motor and Load Parameters section.\n\nThis slider and all subsequent sliders can be finely adjusted using the keyboard's left/right arrow keys when in focus.", 0, "BasicControlHelp")
+        Help.registerTarget(accelButton, "Click here for a popout slider to set the motor's startup acceleration. The value is automatically updated based on the Acceleration Rate set on the Controls and Parameters tab in the Speed Loop Parameters section. The slider and input box will be disabled unless the Speed Loop Mode is set to Open Loop.", 1, "BasicControlHelp")
         Help.registerTarget(runButton, "Click the run icon to start spinning the motor. The run icon will change to a stop icon once clicked. Click the stop icon to stop the motor. The motor control values on the Controls and Parameters tab may need to be adjusted depending on the connected motor's specifications. The direction control icon will be disabled while the motor is spinning.", 2, "BasicControlHelp")
-        Help.registerTarget(brakeButton, "Click the brake icon to brake the motor. This feature may be disabled for certain motor contorllers", 3, "BasicControlHelp")
+        Help.registerTarget(brakeButton, "Click the brake icon to brake the motor. This feature may be disabled for certain motor controllers.", 3, "BasicControlHelp")
         Help.registerTarget(directionButton, "Click this icon to change the direction of the motor. The direction control icon will be disabled while the motor is spinning. The direction is from the perspective of the load. An incorrect hall polarity configuration could render the rotation direction invalid.", 4, "BasicControlHelp")
         Help.registerTarget(warnings, "Warnings and errors are shown here for events such as Over Current Protection (OCP).", 5, "BasicControlHelp")
         

@@ -84,7 +84,7 @@ def demo_config():
     # time.sleep(0.5)
     ser.write('{"notification":{"value":"target_speed","payload":{"caption":"Target Speed","scales":[5555,55,10],"states":[0],"value":100,"values":[],"unit":"RPM"}}}\n'.encode())
     # time.sleep(0.5)
-    ser.write('{"notification":{"value":"acceleration","payload":{"caption":"Acceleration","scales":[1000,0,10],"states":[0],"value":100,"values":[],"unit":"RPM/s"}}}\n'.encode())
+    ser.write('{"notification":{"value":"acceleration","payload":{"caption":"Acceleration","scales":[1000,0,10],"states":[2],"value":100,"values":[],"unit":"RPM/s"}}}\n'.encode())
     # time.sleep(0.5)
     ser.write('{"notification":{"value":"run","payload":{"caption":"Run","scales":[],"states":[0],"value":0,"values":[],"unit":""}}}\n'.encode())
     # time.sleep(0.5)

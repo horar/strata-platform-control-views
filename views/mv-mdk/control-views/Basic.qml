@@ -16,9 +16,9 @@ UIBase { // start_uibase
     Component.onCompleted: {
 
         // ------------------------ Help Messages ------------------------ //
-        Help.registerTarget(rect_6a35c, "The input section displays telemetry from the platform for inputs to the motor controller.", 6, "BasicControlHelp") // input rectangle
-        Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform for outputs from the motor controller.", 7, "BasicControlHelp") // output rectangle
-        Help.registerTarget(b_status_log, "The status log will show timestamped messages reported by the motor controller.", 8, "BasicControlHelp")
+        Help.registerTarget(rect_6a35c, "The input section displays telemetry from the platform by monitoring inputs to motor controller.", 6, "BasicControlHelp") // input rectangle
+        Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform by monitoring outputs of the motor controller.", 7, "BasicControlHelp") // output rectangle
+        Help.registerTarget(b_status_log_help_message, "The status log will show timestamped messages reported by the motor controller. Click the Clear button to clear the status log.", 8, "BasicControlHelp")
       
         // -------------- Request Control Properties -------------- //
         platformInterface.commands.control_props.send()
@@ -336,4 +336,15 @@ UIBase { // start_uibase
             b_status_log_box.clear()
         }
     } // end_c06e2
+
+    LayoutRectangle { // start_60e25
+        id: b_status_log_help_message
+        layoutInfo.uuid: "60e25"
+        layoutInfo.columnsWide: 28
+        layoutInfo.rowsTall: 5
+        layoutInfo.xColumns: 1
+        layoutInfo.yRows: 19
+        opacity: 0
+    } // end_60e25
+
 } // end_uibase

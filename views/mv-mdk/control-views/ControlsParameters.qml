@@ -24,34 +24,34 @@ UIBase { // start_uibase
 
         // PWM Settings
         Help.registerTarget(cp_pwm_params_o_mode_help, "PWM output set to either bipolar or unipolar.", 0, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pwm_params_dt_help, "PWM deadtime received by the MOSFET gate driver. This may need to be adjusted based on the MOSFET selection to avoid cross conduction.", 1, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pwm_params_min_ls_help, "Minimum allowed low side MOSFET ON time.", 2, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_dt_help, "PWM deadtime received by the MOSFET gate driver. This may need to be adjusted based on the MOSFET selection to avoid cross conduction.\n\nThis slider and all subsequent sliders can be finely adjusted using the keyboard's left/right arrow keys when in focus.", 1, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pwm_params_min_ls_help, "Minimum allowed low side MOSFET on time.", 2, "ControlsAndParametersHelp")
         Help.registerTarget(cp_pwm_params_freq_help, "PWM switching frequency received by the gate driver.", 3, "ControlsAndParametersHelp")
         Help.registerTarget(cp_pwm_params_tr_delay_help, "Clock cycles to delay ADC sampling from midpoint of PWM on time.", 4, "ControlsAndParametersHelp")
         // PID Control Parameters
-        Help.registerTarget(cp_pid_params_kx_help, "PID gain controls for proportional (Kp), integral (Ki), and derivative (Kd) gains. Set derivative gain to zero for only PI control.", 5, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_kx_help, "PID gain controls for proportional (Kp), integral (Ki), and derivative (Kd) gains. Set derivative gain to zero for PI control only.", 5, "ControlsAndParametersHelp")
         Help.registerTarget(cp_pid_params_wd_help, "Derivative term low-pass filter cutoff frequency.", 6, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pid_params_lim_help, "Integral error term limit. Normally set to DC bus voltage.", 7, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_lim_help, "Integral error term limit. Normally set to DC bus voltage. The voltage will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 7, "ControlsAndParametersHelp")
         Help.registerTarget(cp_pid_params_tau_sys_help, "System time constant for auto IMC-calculated PID gain.", 8, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_pid_params_mode_help, "PID control gain mode. Auto = calculated from motor params. Manual = manual settings above used.", 9, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_pid_params_mode_help, "PID control gain mode. Auto = calculated from motor parameters. Manual = manual settings above used.", 9, "ControlsAndParametersHelp")
         // Motor and Load Parameters
-        Help.registerTarget(cp_motor_params_xs_help, "Motor line to line stator resistance and inductance.", 10, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_jm_kv_help, "Motor/load inertia and viscous damping.", 11, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_xs_help, "Motor line to line stator resistance and inductance. Adjust these parameters based on the specifications of the connected motor.", 10, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_jm_kv_help, "Motor/load inertia and viscous damping. Adjust these values based on the specifications of your motor and load.", 11, "ControlsAndParametersHelp")
         Help.registerTarget(cp_motor_params_pp_help, "Number of motor pole pairs.", 12, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_rpm_help, "Maximum RPM of the motor. Setting the maximum value will update the Target Speed slider maximum value on the left menu.", 13, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_ke_help, "Motor back electromotive force (BEMF) constant.", 14, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_rated_v_help, "Motor rated DC bus voltage.", 15, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_motor_params_hall_pol_help, "Hall sensor polarity set to active high/low.", 16, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_rpm_help, "RPM specifications of the motor. The maximum and minimum values will update the scale of the Target Speed slider on the left menu.", 13, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_ke_help, "Motor back electromotive force (BEMF) constant. Adjust this parameter based on the specification of the connected motor.", 14, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_rated_v_help, "Motor rated DC bus voltage. The voltage will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 15, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_motor_params_hall_pol_help, "Hall sensor polarity set to active high/low. An incorrect hall polarity configuration could render the rotation direction invalid.", 16, "ControlsAndParametersHelp")
         // Speed Loop Parameters
-        Help.registerTarget(cp_spd_loop_params_mode_help, "Speed loop mode options.", 17, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_spd_loop_params_accel_help, "Acceleration applied when the motor is starting. Setting the value will update the Acceleration slider value on the left menu.", 18, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_mode_help, "Speed loop mode options. The Acceleration slider and Acceleration Rate input box will be disabled unless the Speed Loop Mode is set to Open Loop.", 17, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_spd_loop_params_accel_help, "Acceleration applied when the motor is starting. Setting the value will update the Acceleration slider value on the left menu. This input box will be disabled unless Speed Loop Mode is set to Open Loop.", 18, "ControlsAndParametersHelp")
         Help.registerTarget(cp_spd_loop_params_fs_help, "Speed loop sampling frequency.", 19, "ControlsAndParametersHelp")
         Help.registerTarget(cp_spd_loop_params_fspd_filt_help, "Speed measurement low-pass filter cutoff frequency.", 20, "ControlsAndParametersHelp")
         // Protection Parameters
-        Help.registerTarget(cp_protection_ocp_help, "Software over current protection (OCP) value and state. The status of an OCP event is shown on the left menu. A protection event will disable the motor.", 21, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor.", 22, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_protection_ocp_help, "Software over current protection (OCP) value and state. The status of an OCP event is shown on the left menu. A protection event will disable the motor. The OCP value will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 21, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor. The OVP value will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 22, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box. Select the desired parameter set and the combo box and click Load to recall. Select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json file in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transfered between PCs if desired.\n\nDefault parameters are included that were used during hardware validation for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded by default and all included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box.\n\nTo load parameters, select the desired parameter set in the combo box and click Load to recall the parameters and automatically configure the motor controller. The motor will need to re-enabled if already running to apply parameters.\n\nTo remove parameters, select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json files in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transferred between PCs if desired.\n\nThe parameters used during hardware validation are included for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded during user interface initialization by default with certain parameters automatically adjusted based on the voltage variant connected. These certain parameters are not are not automatically adjusted using when loading a parameter set. The included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
 
         // ---------- Default Values per class_id Regardless of Motor ---------- //
 
@@ -59,22 +59,30 @@ UIBase { // start_uibase
         if (controlViewRoot.class_id === "abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb") {
             cp_motor_params_rated_v.text = "12"
             cp_pid_params_lim.text = "12"
+            cp_protection_ocp.text = "120"
+            cp_protection_ovp.text = "24"
             // TODO: Ask Jake for more stuff here!! Software/hardware OCPs?
         }
         // 16-30V
         if (controlViewRoot.class_id === "c7069a8a-0dd9-40cf-ac89-29aafabb02a2") {
             cp_motor_params_rated_v.text = "24"
             cp_pid_params_lim.text = "24"
+            cp_protection_ocp.text = "120"
+            cp_protection_ovp.text = "35"
         }
         // 30-60V
         if (controlViewRoot.class_id === "b1133641-5b46-4d11-9b96-9126b9d2a109") {
             cp_motor_params_rated_v.text = "48"
             cp_pid_params_lim.text = "48"
+            cp_protection_ocp.text = "80"
+            cp_protection_ovp.text = "90"
         }
         // 60-100V
         if (controlViewRoot.class_id === "1917934f-3b79-4e8b-b37a-b1bd92d2afd5") {
             cp_motor_params_rated_v.text = "96"
             cp_pid_params_lim.text = "96"
+            cp_protection_ocp.text = "40"
+            cp_protection_ovp.text = "150"
         }
 
     }
@@ -1321,7 +1329,7 @@ UIBase { // start_uibase
 
         // text: "100"
         text: String(platformInterface.notifications.acceleration.value)
-        readOnly: false
+        readOnly: Boolean(platformInterface.notifications.acceleration.states.index_0)
 
         validator: DoubleValidator {
             decimals: 1
@@ -1730,8 +1738,7 @@ UIBase { // start_uibase
         if (config.hasOwnProperty('cp_motor_params_max_rpm')) {
             cp_motor_params_max_rpm_caption.text = config.cp_motor_params_max_rpm.caption
             cp_motor_params_max_rpm.enabled = config.cp_motor_params_max_rpm.states[0]
-            cp_motor_params_max_rpm.text = config.cp_motor_params_max_rpm.value
-            // Also, update Target Speed slider on sidebar
+            // This will update both slider scale and input box
             platformInterface.notifications.target_speed.scales.index_0 = Number(config.cp_motor_params_max_rpm.value)
         }
         if (config.hasOwnProperty('cp_motor_params_rated_rpm')) {
@@ -1742,8 +1749,7 @@ UIBase { // start_uibase
         if (config.hasOwnProperty('cp_motor_params_min_rpm')) {
             cp_motor_params_min_rpm_caption.text = config.cp_motor_params_min_rpm.caption
             cp_motor_params_min_rpm.enabled = config.cp_motor_params_min_rpm.states[0]
-            cp_motor_params_min_rpm.text = config.cp_motor_params_min_rpm.value
-            // Also, update Target Speed slider on sidebar
+            // This will update both slider scale and input box
             platformInterface.notifications.target_speed.scales.index_1 = Number(config.cp_motor_params_min_rpm.value)
         }
         if (config.hasOwnProperty('cp_motor_params_ke')) {
@@ -1771,8 +1777,7 @@ UIBase { // start_uibase
         if (config.hasOwnProperty('cp_spd_loop_params_accel')) {
             cp_spd_loop_params_accel_caption.text = config.cp_spd_loop_params_accel.caption
             cp_spd_loop_params_accel.enabled = config.cp_spd_loop_params_accel.states[0]
-            cp_spd_loop_params_accel.text = config.cp_spd_loop_params_accel.value
-            // Also, update Acceleration slider on sidebar
+            // This will update both slider and input box
             platformInterface.notifications.acceleration.value = Number(config.cp_spd_loop_params_accel.value)
         }
         if (config.hasOwnProperty('cp_spd_loop_params_fs')) {
