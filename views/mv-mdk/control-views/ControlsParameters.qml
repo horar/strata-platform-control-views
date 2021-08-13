@@ -51,7 +51,7 @@ UIBase { // start_uibase
         Help.registerTarget(cp_protection_ocp_help, "Software over current protection (OCP) value and state. The status of an OCP event is shown on the left menu. A protection event will disable the motor. The OCP value will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 21, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor. The OVP value will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 22, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box.\n\nTo load parameters, select the desired parameter set in the combo box and click Load to recall the parameters and automatically configure the motor controller. The motor will need to re-enabled if already running to apply parameters.\n\nTo remove parameters, select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json files in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transferred between PCs if desired.\n\nThe parameters used during hardware validation are included for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded during user interface initialization by default with certain parameters automatically adjusted based on the voltage variant connected. These certain parameters are not are not automatically adjusted using when loading a parameter set. The included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box.\n\nTo load parameters, select the desired parameter set in the combo box and click Load to recall the parameters and automatically configure the motor controller. The motor will need to be re-enabled if already running to apply parameters.\n\nTo remove parameters, select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json files in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transferred between PCs if desired.\n\nThe parameters used during hardware validation are included for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded during user interface initialization by default with certain parameters automatically adjusted based on the voltage variant connected. These certain parameters are not automatically adjusted using when loading a parameter set. The included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
 
         // ---------- Default Values per class_id Regardless of Motor ---------- //
 
@@ -59,7 +59,7 @@ UIBase { // start_uibase
         if (controlViewRoot.class_id === "abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb") {
             cp_motor_params_rated_v.text = "12"
             cp_pid_params_lim.text = "12"
-            cp_protection_ocp.text = "120"
+            cp_protection_ocp.text = "82"
             cp_protection_ovp.text = "24"
             // TODO: Ask Jake for more stuff here!! Software/hardware OCPs?
         }
@@ -67,21 +67,21 @@ UIBase { // start_uibase
         if (controlViewRoot.class_id === "c7069a8a-0dd9-40cf-ac89-29aafabb02a2") {
             cp_motor_params_rated_v.text = "24"
             cp_pid_params_lim.text = "24"
-            cp_protection_ocp.text = "120"
+            cp_protection_ocp.text = "82"
             cp_protection_ovp.text = "35"
         }
         // 30-60V
         if (controlViewRoot.class_id === "b1133641-5b46-4d11-9b96-9126b9d2a109") {
             cp_motor_params_rated_v.text = "48"
             cp_pid_params_lim.text = "48"
-            cp_protection_ocp.text = "80"
+            cp_protection_ocp.text = "61"
             cp_protection_ovp.text = "90"
         }
         // 60-100V
         if (controlViewRoot.class_id === "1917934f-3b79-4e8b-b37a-b1bd92d2afd5") {
             cp_motor_params_rated_v.text = "96"
             cp_pid_params_lim.text = "96"
-            cp_protection_ocp.text = "40"
+            cp_protection_ocp.text = "41"
             cp_protection_ovp.text = "150"
         }
 
@@ -312,7 +312,7 @@ UIBase { // start_uibase
         uncheckedLabel: "Unipolar"
         labelsInside: true
 
-        checked: true
+        checked: false
 
         onToggled: {
             console.log("onToggled:", checked)
@@ -679,7 +679,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 42
 
-        text: "10"
+        text: "1"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1070,7 +1070,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 18
         layoutInfo.yRows: 45
 
-        checked: true
+        checked: false
         checkedLabel: "Active High"
         uncheckedLabel: "Active Low"
         labelsInside: true

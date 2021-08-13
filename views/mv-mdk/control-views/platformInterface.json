@@ -993,14 +993,10 @@
             ]
         },
         {
-            "value": "request_params",
-            "payload": [
-                {
-                    "name": "value",
-                    "type": "bool",
-                    "value": false
-                }
-            ]
+            "value": "request_params"
+        },
+        {
+            "value": "startup_fault"
         }
     ]
 }
