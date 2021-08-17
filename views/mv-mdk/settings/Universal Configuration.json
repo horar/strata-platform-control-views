@@ -7,7 +7,7 @@
             true
         ],
         "unit": "",
-        "value": true,
+        "value": false,
         "values": [
         ]
     },
@@ -91,7 +91,7 @@
             true
         ],
         "unit": "",
-        "value": 10000,
+        "value": 4200,
         "values": [
         ]
     },
@@ -223,7 +223,7 @@
             true
         ],
         "unit": "",
-        "value": 10,
+        "value": 1,
         "values": [
         ]
     },
@@ -247,7 +247,7 @@
             true
         ],
         "unit": "",
-        "value": 80,
+        "value": 41,
         "values": [
         ]
     },
@@ -271,7 +271,7 @@
             true
         ],
         "unit": "",
-        "value": 32,
+        "value": 150,
         "values": [
         ]
     },
@@ -340,7 +340,7 @@
             true
         ],
         "unit": "",
-        "value": true,
+        "value": false,
         "values": [
         ]
     },

@@ -7,7 +7,7 @@
             true
         ],
         "unit": "",
-        "value": true,
+        "value": false,
         "values": [
         ]
     },
@@ -19,7 +19,7 @@
             true
         ],
         "unit": "",
-        "value": 1e-06,
+        "value": 0.00065,
         "values": [
         ]
     },
@@ -43,7 +43,7 @@
             true
         ],
         "unit": "",
-        "value": 0.01,
+        "value": 0.060765,
         "values": [
         ]
     },
@@ -79,7 +79,7 @@
             true
         ],
         "unit": "",
-        "value": 0.001,
+        "value": 3.7e-05,
         "values": [
         ]
     },
@@ -91,7 +91,7 @@
             true
         ],
         "unit": "",
-        "value": 10000,
+        "value": 4200,
         "values": [
         ]
     },
@@ -139,7 +139,7 @@
             true
         ],
         "unit": "",
-        "value": 96,
+        "value": 24,
         "values": [
         ]
     },
@@ -151,7 +151,7 @@
             true
         ],
         "unit": "",
-        "value": 0.5,
+        "value": 0.434,
         "values": [
         ]
     },
@@ -199,7 +199,7 @@
             true
         ],
         "unit": "",
-        "value": 96,
+        "value": 24,
         "values": [
         ]
     },
@@ -223,7 +223,7 @@
             true
         ],
         "unit": "",
-        "value": 10,
+        "value": 1,
         "values": [
         ]
     },
@@ -340,7 +340,7 @@
             true
         ],
         "unit": "",
-        "value": true,
+        "value": false,
         "values": [
         ]
     },

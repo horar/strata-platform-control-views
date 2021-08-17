@@ -51,10 +51,15 @@ UIBase { // start_uibase
         Help.registerTarget(cp_protection_ocp_help, "Software over current protection (OCP) value and state. The status of an OCP event is shown on the left menu. A protection event will disable the motor. The OCP value will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 21, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor. The OVP value will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 22, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box.\n\nTo load parameters, select the desired parameter set in the combo box and click Load to recall the parameters and automatically configure the motor controller. The motor will need to be re-enabled if already running to apply parameters.\n\nTo remove parameters, select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json files in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transferred between PCs if desired.\n\nThe parameters used during hardware validation are included for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded during user interface initialization by default with certain parameters automatically adjusted based on the voltage variant connected. These certain parameters are not automatically adjusted using when loading a parameter set. The included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box.\n\nTo load parameters, select the desired parameter set in the combo box and click Load to recall the parameters and automatically configure the motor controller. The motor will need to be re-enabled if already running to apply parameters.\n\nTo remove parameters, select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json files in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transferred between PCs if desired.\n\nThe parameters used during hardware validation are included for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded during user interface initialization by default with these parameters automatically adjusted based on the voltage variant connected: 'Integral Error Limit (V)', 'Rated Voltage (V)', 'Software OCP (A)', and 'Vin OVP Limit (V)'. These certain parameters are also automatically adjusted using when loading a parameter set. The included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
 
-        // ---------- Default Values per class_id Regardless of Motor ---------- //
+        defaults_per_class_id()
+    
+    }
 
+    // ---------- Default Values per class_id Regardless of Motor ---------- //
+    
+    function defaults_per_class_id() {
         // 10-16V
         if (controlViewRoot.class_id === "abc1cf67-bfb4-4e08-8c67-e6a78f9b9adb") {
             cp_motor_params_rated_v.text = "12"
@@ -84,7 +89,6 @@ UIBase { // start_uibase
             cp_protection_ocp.text = "41"
             cp_protection_ovp.text = "150"
         }
-
     }
 
     // ------------- Send Default Controls/Parameters to FW when Requested ------- //
@@ -439,6 +443,7 @@ UIBase { // start_uibase
         to: 50
         stepSize: 1
         live: false
+        inputBox.readOnly: true
 
         value: 20
 
@@ -800,7 +805,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 9
         
-        text: "0.500"
+        text: "0.5"
         readOnly: false
 
         validator: DoubleValidator {
@@ -823,7 +828,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 12
 
-        text: "0.001000"
+        text: "0.001"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1025,7 +1030,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 17
         layoutInfo.yRows: 39
 
-        text: "0.010000"
+        text: "0.01"
         readOnly: false
 
         validator: DoubleValidator {
@@ -1331,10 +1336,7 @@ UIBase { // start_uibase
         text: String(platformInterface.notifications.acceleration.value)
         readOnly: Boolean(platformInterface.notifications.acceleration.states.index_0)
 
-        validator: DoubleValidator {
-            decimals: 1
-            bottom: 0.0
-        }
+        validator: IntValidator {}
 
         onAccepted: {
             console.log("Accepted:", text)
@@ -1684,11 +1686,12 @@ UIBase { // start_uibase
             cp_pid_params_wd.enabled = config.cp_pid_params_wd.states[0]
             cp_pid_params_wd.text = config.cp_pid_params_wd.value
         }
-        if (config.hasOwnProperty('cp_pid_params_lim')) {
-            cp_pid_params_lim_caption.text = config.cp_pid_params_lim.caption
-            cp_pid_params_lim.enabled = config.cp_pid_params_lim.states[0]
-            cp_pid_params_lim.text = config.cp_pid_params_lim.value
-        }
+        // Update rated voltage per class_id later
+        // if (config.hasOwnProperty('cp_pid_params_lim')) {
+        //     cp_pid_params_lim_caption.text = config.cp_pid_params_lim.caption
+        //     cp_pid_params_lim.enabled = config.cp_pid_params_lim.states[0]
+        //     cp_pid_params_lim.text = config.cp_pid_params_lim.value
+        // }
         if (config.hasOwnProperty('cp_pid_params_tau_sys')) {
             cp_pid_params_tau_sys_caption.text = config.cp_pid_params_tau_sys.caption
             cp_pid_params_tau_sys.enabled = config.cp_pid_params_tau_sys.states[0]
@@ -1703,32 +1706,32 @@ UIBase { // start_uibase
         if (config.hasOwnProperty('cp_motor_params_rs')) {
             cp_motor_params_rs_caption.text = config.cp_motor_params_rs.caption
             cp_motor_params_rs.enabled = config.cp_motor_params_rs.states[0]
-            cp_motor_params_rs.text = config.cp_motor_params_rs.value
+            cp_motor_params_rs.text = String(config.cp_motor_params_rs.value) // Convert to string to remove trailing zeros and scientific notation
         }
         if (config.hasOwnProperty('cp_motor_params_ls')) {
             cp_motor_params_ls_caption.text = config.cp_motor_params_ls.caption
             cp_motor_params_ls.enabled = config.cp_motor_params_ls.states[0]
-            cp_motor_params_ls.text = config.cp_motor_params_ls.value
+            cp_motor_params_ls.text = String(config.cp_motor_params_ls.value) // Convert to string to remove trailing zeros and scientific notation
         }
         if (config.hasOwnProperty('cp_motor_params_jm')) {
             cp_motor_params_jm_caption.text = config.cp_motor_params_jm.caption
             cp_motor_params_jm.enabled = config.cp_motor_params_jm.states[0]
-            cp_motor_params_jm.text = String(config.cp_motor_params_jm.value) // Convert to string to remove trailing zeros
+            cp_motor_params_jm.text = String(config.cp_motor_params_jm.value) // Convert to string to remove trailing zeros and scientific notation
         }
         if (config.hasOwnProperty('cp_motor_params_jm_load')) {
             cp_motor_params_jm_load_caption.text = config.cp_motor_params_jm_load.caption
             cp_motor_params_jm_load.enabled = config.cp_motor_params_jm_load.states[0]
-            cp_motor_params_jm_load.text = String(config.cp_motor_params_jm_load.value) // Convert to string to remove trailing zeros
+            cp_motor_params_jm_load.text = String(config.cp_motor_params_jm_load.value) // Convert to string to remove trailing zeros and scientific notation
         }
         if (config.hasOwnProperty('cp_motor_params_kv')) {
             cp_motor_params_kv_caption.text = config.cp_motor_params_kv.caption
             cp_motor_params_kv.enabled = config.cp_motor_params_kv.states[0]
-            cp_motor_params_kv.text = String(config.cp_motor_params_kv.value) // Convert to string to remove trailing zeros
+            cp_motor_params_kv.text = String(config.cp_motor_params_kv.value) // Convert to string to remove trailing zeros and scientific notation
         }
         if (config.hasOwnProperty('cp_motor_params_kv_load')) {
             cp_motor_params_kv_load_caption.text = config.cp_motor_params_kv_load.caption
             cp_motor_params_kv_load.enabled = config.cp_motor_params_kv_load.states[0]
-            cp_motor_params_kv_load.text = String(config.cp_motor_params_kv_load.value) // Convert to string to remove trailing zeros
+            cp_motor_params_kv_load.text = String(config.cp_motor_params_kv_load.value) // Convert to string to remove trailing zeros and scientific notation
         }
         if (config.hasOwnProperty('cp_motor_params_pp')) {
             cp_motor_params_pp_caption.text = config.cp_motor_params_pp.caption
@@ -1755,13 +1758,14 @@ UIBase { // start_uibase
         if (config.hasOwnProperty('cp_motor_params_ke')) {
             cp_motor_params_ke_caption.text = config.cp_motor_params_ke.caption
             cp_motor_params_ke.enabled = config.cp_motor_params_ke.states[0]
-            cp_motor_params_ke.text = config.cp_motor_params_ke.value
+            cp_motor_params_ke.text = String(config.cp_motor_params_ke.value) // Convert to string to remove trailing zeros and scientific notation
         }
-        if (config.hasOwnProperty('cp_motor_params_rated_v')) {
-            cp_motor_params_rated_v_caption.text = config.cp_motor_params_rated_v.caption
-            cp_motor_params_rated_v.enabled = config.cp_motor_params_rated_v.states[0]
-            cp_motor_params_rated_v.text = config.cp_motor_params_rated_v.value
-        }
+        // Update rated voltage per class_id later
+        // if (config.hasOwnProperty('cp_motor_params_rated_v')) {
+        //     cp_motor_params_rated_v_caption.text = config.cp_motor_params_rated_v.caption
+        //     cp_motor_params_rated_v.enabled = config.cp_motor_params_rated_v.states[0]
+        //     cp_motor_params_rated_v.text = config.cp_motor_params_rated_v.value
+        // }
         if (config.hasOwnProperty('cp_motor_params_hall_pol')) {
             cp_motor_params_hall_pol_caption.text = config.cp_motor_params_hall_pol.caption
             cp_motor_params_hall_pol.enabled = config.cp_motor_params_hall_pol.states[0]
@@ -1791,21 +1795,23 @@ UIBase { // start_uibase
             cp_spd_loop_params_fspd_filt.text = config.cp_spd_loop_params_fspd_filt.value
         }
         // Protection Parameters
-        if (config.hasOwnProperty('cp_protection_ocp')) {
-            cp_protection_ocp_caption.text = config.cp_protection_ocp.caption
-            cp_protection_ocp.enabled = config.cp_protection_ocp.states[0]
-            cp_protection_ocp.text = config.cp_protection_ocp.value
-        }
+        // Update rated voltage per class_id later
+        // if (config.hasOwnProperty('cp_protection_ocp')) {
+        //     cp_protection_ocp_caption.text = config.cp_protection_ocp.caption
+        //     cp_protection_ocp.enabled = config.cp_protection_ocp.states[0]
+        //     cp_protection_ocp.text = config.cp_protection_ocp.value
+        // }
         if (config.hasOwnProperty('cp_protection_ocp_en')) {
             cp_protection_ocp_en_caption.text = config.cp_protection_ocp_en.caption
             cp_protection_ocp_en.enabled = config.cp_protection_ocp_en.states[0]
             cp_protection_ocp_en.checked = config.cp_protection_ocp_en.value
         }
-        if (config.hasOwnProperty('cp_protection_ovp')) {
-            cp_protection_ovp_caption.text = config.cp_protection_ovp.caption
-            cp_protection_ovp.enabled = config.cp_protection_ovp.states[0]
-            cp_protection_ovp.text = config.cp_protection_ovp.value
-        }
+        // Update rated voltage per class_id later
+        // if (config.hasOwnProperty('cp_protection_ovp')) {
+        //     cp_protection_ovp_caption.text = config.cp_protection_ovp.caption
+        //     cp_protection_ovp.enabled = config.cp_protection_ovp.states[0]
+        //     cp_protection_ovp.text = config.cp_protection_ovp.value
+        // }
         if (config.hasOwnProperty('cp_protection_ovp_en')) {
             cp_protection_ovp_en_caption.text = config.cp_protection_ovp_en.caption
             cp_protection_ovp_en.enabled = config.cp_protection_ovp_en.states[0]
@@ -1816,6 +1822,7 @@ UIBase { // start_uibase
             cp_protection_fet_otp.enabled = config.cp_protection_fet_otp.states[0]
             cp_protection_fet_otp.text = config.cp_protection_fet_otp.value
         }
+        defaults_per_class_id()
         send_params()
     }
     
