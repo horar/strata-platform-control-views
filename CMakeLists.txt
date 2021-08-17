@@ -10,6 +10,7 @@ if(NOT DEFINED CMAKE_MODULE_PATH)
     include(CMakeDependentOption)
     include(GitVersionMacro)
 endif()
+include(AddQmlImportPathMacro)
 
 include(AddViewMacro)
 
