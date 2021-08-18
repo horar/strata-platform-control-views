@@ -337,6 +337,8 @@ UIBase { // start_uibase
         }
     } // end_c06e2
 
+    // ======================== Help Message Helper Rectangles ======================== //
+
     LayoutRectangle { // start_60e25
         id: b_status_log_help_message
         layoutInfo.uuid: "60e25"

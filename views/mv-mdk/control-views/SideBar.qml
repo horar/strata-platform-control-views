@@ -23,7 +23,6 @@ Rectangle {
 
         // ------------------------ Help Messages ------------------------ //
 
-        // Help messages
         Help.registerTarget(speedButton, "Click here for a popout slider to set the motor's target speed. The maximum and minimum scales will be updated based on the Max RPM or Min RPM set on the Controls and Parameters tab in the Motor and Load Parameters section.\n\nThis slider and all subsequent sliders can be finely adjusted using the keyboard's left/right arrow keys when in focus.", 0, "BasicControlHelp")
         Help.registerTarget(accelButton, "Click here for a popout slider to set the motor's startup acceleration. The value is automatically updated based on the Acceleration Rate set on the Controls and Parameters tab in the Speed Loop Parameters section. The slider and input box will be disabled unless the Speed Loop Mode is set to Open Loop.", 1, "BasicControlHelp")
         Help.registerTarget(runButton, "Click the run icon to start spinning the motor. The run icon will change to a stop icon once clicked. Click the stop icon to stop the motor. The motor control values on the Controls and Parameters tab may need to be adjusted depending on the connected motor's specifications. The direction control icon will be disabled while the motor is spinning.", 2, "BasicControlHelp")
@@ -155,6 +154,9 @@ Rectangle {
                     } else {
                         runButton.opacity = 1
                     }
+                    // Ensure direction button is disabled when control_props enables motor
+                    directionButton.enabled = !runButton.run
+                    directionButton.opacity = !runButton.run ? 1 : .5  
                 }
             }
 
@@ -208,7 +210,7 @@ Rectangle {
             animationRunning: runButton.run
             animationDirection: direction ? RotationAnimator.Clockwise : RotationAnimator.Counterclockwise
 
-            property bool direction: true // true = CW, false = CCW
+            property bool direction: true // true/1 = CW, false/0 = CCW
 
             // states
             Connections {
@@ -226,15 +228,14 @@ Rectangle {
                     }
                 }
             }
-            // When run notification is received reset default behavior to 
-            // ensure direction button is disabled when motor is run 
+            // Disable direction button when motor is enabled
             Connections {
                 target: runButton
                 onClicked: {
                     directionButton.enabled = !runButton.run
                     directionButton.opacity = !runButton.run ? 1 : .5                    
                 }
-            } 
+            }
 
             onClicked:  {
                 direction = !direction

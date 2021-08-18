@@ -57,7 +57,7 @@ UIBase { // start_uibase
     
     }
 
-    // ---------- Default Values per class_id Regardless of Motor ---------- //
+    // ---------- Default Values per class_id Regardless of Connected Motor ---------- //
     
     function defaults_per_class_id() {
         // 10-16V
@@ -1822,7 +1822,7 @@ UIBase { // start_uibase
             cp_protection_fet_otp.enabled = config.cp_protection_fet_otp.states[0]
             cp_protection_fet_otp.text = config.cp_protection_fet_otp.value
         }
-        defaults_per_class_id()
+        defaults_per_class_id() // Update certain parameters commented out above here
         send_params()
     }
     
@@ -1935,7 +1935,7 @@ UIBase { // start_uibase
                     "value": Number(cp_motor_params_rs.text),
                     "values": [],
                     "unit": ""
-                },///
+                },
                 "cp_motor_params_ls": {
                     "caption": cp_motor_params_ls_caption.text,
                     "scales": [],
