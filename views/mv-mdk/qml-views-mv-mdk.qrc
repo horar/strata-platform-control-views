@@ -8,8 +8,6 @@
         <file>images/stop-solid.svg</file>
         <file>images/tach.svg</file>
         <file>images/undo.svg</file>
-        <file>widgets/CircGauge.qml</file>
-        <file>widgets/DigitalReadout.qml</file>
         <file>widgets/FaultLight.qml</file>
         <file>widgets/IconButton.qml</file>
         <file>widgets/SliderPopup.qml</file>
