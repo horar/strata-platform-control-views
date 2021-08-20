@@ -79,7 +79,7 @@ UIBase { // start_uibase
     // -------- Section Header and Divider -------- //
 
     LayoutText { // start_99acd
-        id: layoutText_99acd
+        id: section_header
         layoutInfo.uuid: "99acd"
         layoutInfo.columnsWide: 8
         layoutInfo.rowsTall: 2
@@ -95,7 +95,7 @@ UIBase { // start_uibase
     } // end_99acd
 
     LayoutDivider { // start_578da
-        id: divider_578da
+        id: section_divider
         layoutInfo.uuid: "578da"
         layoutInfo.columnsWide: 8
         layoutInfo.rowsTall: 2
@@ -104,10 +104,10 @@ UIBase { // start_uibase
         thickness: 2
     } // end_578da
 
-    // -------- Switch -------- //
+    // -------- Toggle -------- //
 
     LayoutSGSwitch { // start_d68f2
-        id: a_switch
+        id: a_toggle
         layoutInfo.uuid: "d68f2"
         layoutInfo.columnsWide: 2
         layoutInfo.rowsTall: 2
@@ -118,24 +118,26 @@ UIBase { // start_uibase
         uncheckedLabel: "False"
         labelsInside: true
 
-        checked: false
-
+        checked: platformInterface.notifications.toggle.value
+        enabled: !Boolean(platformInterface.notifications.toggle.states.index_0)
+        
         onToggled: {
-            console.log("Switch toggled:", checked)
-            // platformInterface.commands.pwm_params.update(Number())Number())
+            console.log("Toggle switched:", checked)
+            platformInterface.commands.toggle.update(a_toggle.checked)
         }
         
     } // end_d68f2
 
     LayoutText { // start_65728
-        id: a_switch_caption
+        id: a_toggle_caption
         layoutInfo.uuid: "65728"
         layoutInfo.columnsWide: 5
         layoutInfo.rowsTall: 2
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 9
 
-        text: "Switch"
+        text: platformInterface.notifications.toggle.caption // + " (" + platformInterface.notifications.toggle.unit + ")"
+
         fontSizeMode: Text.Fit
         font.pixelSize: 15
         horizontalAlignment: Text.AlignHLeft
@@ -143,7 +145,7 @@ UIBase { // start_uibase
     } // end_65728
 
     LayoutItem { // start_8991c
-        id: a_switch_help
+        id: a_toggle_help
         layoutInfo.uuid: "8991c"
         layoutInfo.columnsWide: 8
         layoutInfo.rowsTall: 2
@@ -161,17 +163,18 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 13
 
-        from: 60
-        to: 10000
-        stepSize: 10
+        value: platformInterface.notifications.slider.value
+        from: platformInterface.notifications.slider.scales.index_1
+        to: platformInterface.notifications.slider.scales.index_0
+        stepSize: platformInterface.notifications.slider.scales.index_2
+        enabled: !Boolean(platformInterface.notifications.slider.states.index_0)
+
         live: false
         inputBox.readOnly: true
 
-        value: 100
-
         onUserSet: {
             console.log("Slider value set:", value)
-            // platformInterface.commands.pwm_params.update(Number())
+            platformInterface.commands.slider.update(a_slider.value)
         }
     } // end_b8761
 
@@ -183,7 +186,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 12
 
-        text: "Slider"
+        text: platformInterface.notifications.slider.caption  + " (" + platformInterface.notifications.slider.unit + ")"
         fontSizeMode: Text.Fit
         font.pixelSize: 15
         horizontalAlignment: Text.AlignHLeft
@@ -645,22 +648,6 @@ UIBase { // start_uibase
             }
         }
     } // end_053a0
-
-    // ======================== Help Message Helper Rectangles ======================== //
-
-    // ------------------------ PWM Settings ------------------------ //
-
-    // ------------------------ PID Control Parameters------------------------ //
-
-        
-    // ------------------------ Motor and Load Parameters ------------------------ //
-
-    // ------------------------ Speed Loop Parameters ------------------------ //
-
-    
-    // ------------------------ Protection Parameters ------------------------ //
-
-    // ------------------------ Save and Load Parameters ------------------------ //
 
     LayoutRectangle { // start_cf371
         id: cp_save_load_parameters_help

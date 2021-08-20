@@ -54,7 +54,7 @@
             ]
         },
         {
-            "cmd": "switch",
+            "cmd": "toggle",
             "payload": [
                 {
                     "name": "value",
@@ -857,16 +857,13 @@
                 }
             ]
         },
-
-        ////////////////////////////
-
         {
-            "value": "switch",
+            "value": "toggle",
             "payload": [
                 {
                     "name": "caption",
                     "type": "string",
-                    "value": "Switch"
+                    "value": "Toggle"
                 },
                 {
                     "name": "scales",
@@ -1173,8 +1170,21 @@
                 },
                 {
                     "name": "values",
-                    "type": "array-dynamic-sized",
-                    "value": []
+                    "type": "array-static-sized",
+                    "value": [
+                        {
+                            "type": "string",
+                            "value": "Item 1"
+                        },
+                        {
+                            "type": "string",
+                            "value": "Item 2"
+                        },
+                        {
+                            "type": "string",
+                            "value": "Item 3"
+                        }
+                    ]
                 }
             ]
         }

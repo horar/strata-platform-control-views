@@ -155,7 +155,7 @@ Rectangle {
             onClicked:  {
                 run = !run
                 console.log("onClicked:", run)
-                platformInterface.commands.run.update(Number(run))
+                platformInterface.commands.run.update(run)
             }
         }
 
@@ -175,7 +175,7 @@ Rectangle {
                 onNotificationFinished: {
                     brakeButton.brake = Boolean(platformInterface.notifications.brake.value)
                     brakeButton.enabled = !Boolean(platformInterface.notifications.brake.states.index_0)
-                    if (platformInterface.notifications.brake.states.index_0 == 2) {
+                    if (platformInterface.notifications.brake.states.index_0 === 2) {
                         brakeButton.opacity = 0.5
                     } else {
                         brakeButton.opacity = 1
@@ -186,9 +186,7 @@ Rectangle {
             onClicked:  {
                 brake = !brake
                 console.log("onClicked:", brake)
-                platformInterface.commands.brake.update(
-                    Number(brake)
-                )
+                platformInterface.commands.brake.update(brake)
            }
         }
 
@@ -230,7 +228,7 @@ Rectangle {
             onClicked:  {
                 direction = !direction
                 console.log("onClicked:", direction)
-                platformInterface.commands.direction.update(Number(direction))
+                platformInterface.commands.direction.update(direction)
             }
         }
 

@@ -32,10 +32,10 @@ def read_serial():
             print(">> ", end='', flush=True)
         elif out.find("request_platform_id") != -1:
             ser.write('{"ack":"request_platform_id","payload":{"return_value":true,"return_string":"commandvalid"}}\n'.encode())
-            ser.write('{"notification":{"value":"platform_id","payload":{"name":"MV MDK","controller_type":1,"platform_id":"b1133641-5b46-4d11-9b96-9126b9d2a109","class_id":"b1133641-5b46-4d11-9b96-9126b9d2a109","board_count":1}}}\n'.encode())
+            ser.write('{"notification":{"value":"platform_id","payload":{"name":"MV MDK","controller_type":1,"platform_id":"a7776e2e-17e0-474d-9784-9b24233dde6f","class_id":"a7776e2e-17e0-474d-9784-9b24233dde6f","board_count":1}}}\n'.encode())
             print("\nrequest_platform_id notification sent")
             print(">> ", end='', flush=True)
-        elif out.find('{"cmd":"run","payload":{"value":1}') != -1:
+        elif out.find('{"cmd":"run","payload":{"value":true}') != -1:
             actual_speeds = [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
             board_temps = [0, 23, 30, 40, 44, 50, 66, 77, 88, 90, 95]
             input_voltages = [61.9, 62.1, 60.8, 60.2, 59.7, 60.3, 61.6, 62.4, 60.5, 60.1, 59.0, 60.5]
@@ -48,7 +48,7 @@ def read_serial():
                     time.sleep(0.1)
             ser.write('{"notification":{"value":"status_log","payload":{"value":"Motor running at target speed of 5000 RPM"}}}\n'.encode())
             print(">> ", end='', flush=True)
-        elif out.find('{"cmd":"run","payload":{"value":0}') != -1:
+        elif out.find('{"cmd":"run","payload":{"value":false}') != -1:
             ser.write(('{"notification":{"value":"actual_speed","payload":{"value":0}}}\n').encode())
             ser.write(('{"notification":{"value":"board_temp","payload":{"value":23}}}\n').encode())
             ser.write(('{"notification":{"value":"input_voltage","payload":{"value":60}}}\n').encode())
@@ -56,7 +56,6 @@ def read_serial():
         elif out.find('control_props') != -1:
             demo_config()
             ser.write('{"notification":{"value":"status_log","payload":{"value":"User interface requested control and parameter values."}}}\n'.encode())
-            ser.write(('{"notification":{"value":"request_params", "payload":{}}}\n').encode())
         elif out != '':
             print("\ncommand: " + out, end='')
             print(">> ", end='', flush=True)
@@ -71,39 +70,46 @@ def take_input():
             return
         elif (notification == 'demo_config'):
             demo_config()
+        elif (notification == "disable_all"):
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"Disable all controls to test control properties."}}}\n'.encode())
+            ser.write('{"notification":{"value":"toggle","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"slider","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"infobox_integer","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"infobox_double","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"infobox_string","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"combobox","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"target_speed","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"acceleration","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"run","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"brake","payload":{"states":[2]}}}\n'.encode())
+            ser.write('{"notification":{"value":"direction","payload":{"states":[2]}}}\n'.encode())
         else:
             ser.write((notification + '\n').encode())
 
 def demo_config():
+    # basic view
     ser.write('{"notification":{"value":"status_log","payload":{"value":"Configuring user interface configured from firmware..."}}}\n'.encode())
-    ser.write('{"notification":{"value":"title","payload":{"caption":"BLDC Motor Drive EVB for 30-60V 1200W Applications"}}}\n'.encode())
-    # time.sleep(0.5)
-    ser.write('{"notification":{"value":"subtitle","payload":{"caption":"Part of the Motor Development Kit (MDK) Family"}}}\n'.encode())
-    # time.sleep(0.5)
+    ser.write('{"notification":{"value":"title","payload":{"caption":"Motor Template Title"}}}\n'.encode())
+    ser.write('{"notification":{"value":"subtitle","payload":{"caption":"Motor Template Subtitle"}}}\n'.encode())
     ser.write('{"notification":{"value":"actual_speed","payload":{"caption":"Actual Speed","scales":[10000,0,1000],"states":[1],"value":0.0,"values":[],"unit":"RPM"}}}\n'.encode())
-    # time.sleep(0.5)
-    ser.write('{"notification":{"value":"target_speed","payload":{"caption":"Target Speed","scales":[5555,55,10],"states":[0],"value":100,"values":[],"unit":"RPM"}}}\n'.encode())
-    # time.sleep(0.5)
-    ser.write('{"notification":{"value":"acceleration","payload":{"caption":"Acceleration","scales":[1000,0,10],"states":[2],"value":100,"values":[],"unit":"RPM/s"}}}\n'.encode())
-    # time.sleep(0.5)
-    ser.write('{"notification":{"value":"run","payload":{"caption":"Run","scales":[],"states":[0],"value":0,"values":[],"unit":""}}}\n'.encode())
-    # time.sleep(0.5)
-    ser.write('{"notification":{"value":"brake","payload":{"caption":"Brake","scales":[],"states":[2],"value":0,"values":[],"unit":""}}}\n'.encode())
-    # time.sleep(0.5)
-    ser.write('{"notification":{"value":"direction","payload":{"caption":"Direction","scales":[],"states":[0],"value":1,"values":[],"unit":""}}}\n'.encode())
-    # time.sleep(0.5)
+    ser.write('{"notification":{"value":"target_speed","payload":{"caption":"Target Speed","scales":[10000,0,10],"states":[0],"value":500,"values":[],"unit":"RPM"}}}\n'.encode())
+    ser.write('{"notification":{"value":"acceleration","payload":{"caption":"Acceleration","scales":[1000,0,10],"states":[0],"value":100,"values":[],"unit":"RPM/s"}}}\n'.encode())
+    ser.write('{"notification":{"value":"run","payload":{"caption":"Run","scales":[],"states":[0],"value":false,"values":[],"unit":""}}}\n'.encode())
+    ser.write('{"notification":{"value":"brake","payload":{"caption":"Brake","scales":[],"states":[0],"value":false,"values":[],"unit":""}}}\n'.encode())
+    ser.write('{"notification":{"value":"direction","payload":{"caption":"Direction","scales":[],"states":[0],"value":true,"values":[],"unit":""}}}\n'.encode())
     ser.write('{"notification":{"value":"board_temp","payload":{"caption":"MOSFET Temp","scales":[140,0,10],"states":[1],"value":0.0,"values":[],"unit":"C"}}}\n'.encode())
-    # time.sleep(0.5)
-    ser.write('{"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage","scales":[100,0,10],"states":[1],"value":0.0,"values":[],"unit":"V"}}}\n'.encode())
-    # time.sleep(0.5)
+    ser.write('{"notification":{"value":"input_voltage","payload":{"caption":"Input Voltage","scales":[1000,0,100],"states":[1],"value":0.0,"values":[],"unit":"V"}}}\n'.encode())
     ser.write('{"notification":{"value":"warning_1","payload":{"caption":"OCP","scales":[],"states":[1],"value":false,"values":[],"unit":""}}}\n'.encode())
-    # time.sleep(0.5)
     ser.write('{"notification":{"value":"warning_2","payload":{"caption":"OTP","scales":[],"states":[1],"value":false,"values":[],"unit":""}}}\n'.encode())
-    # time.sleep(0.5)
     ser.write('{"notification":{"value":"warning_3","payload":{"caption":"OVP","scales":[],"states":[1],"value":false,"values":[],"unit":""}}}\n'.encode())
-    # time.sleep(0.5)
     ser.write('{"notification":{"value":"status_log","payload":{"value":"Done!"}}}\n'.encode())
-
+    # advanced view
+    ser.write('{"notification":{"value":"toggle","payload":{"caption":"Toggle Test","scales":[],"states":[0],"value":false,"values":[],"unit":""}}}\n'.encode())
+    ser.write('{"notification":{"value":"slider","payload":{"caption":"Slider Test","scales":[100,0,1],"states":[0],"value":59,"values":[],"unit":"Unit Test"}}}\n'.encode())
+    ser.write('{"notification":{"value":"infobox_integer","payload":{"caption":"InfoBox Integer Test","scales":[],"states":[0],"value":99,"values":[],"unit":"Unit Test"}}}\n'.encode())
+    ser.write('{"notification":{"value":"infobox_double","payload":{"caption":"InfoBox Double Test","scales":[],"states":[0],"value":99.99,"values":[],"unit":"Unit Test"}}}\n'.encode())
+    ser.write('{"notification":{"value":"infobox_string","payload":{"caption":"InfoBox String Test","scales":[],"states":[0],"value":"Fail","values":[],"unit":"Unit Test"}}}\n'.encode())
+    ser.write('{"notification":{"value":"combobox","payload":{"caption":"ComboBox Test","scales":[],"states":[0],"value":2,"values":["Item 4","Item 5","Item 6"],"unit":""}}}\n'.encode())
 if __name__ == '__main__':
     t1 = Thread(target=read_serial)
     t2 = Thread(target=take_input)
