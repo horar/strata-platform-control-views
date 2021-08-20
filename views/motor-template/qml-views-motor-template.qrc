@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Control.qml</file>
+        <file>control-views/SideBar.qml</file>
+        <file>images/brake.svg</file>
+        <file>images/play-solid.svg</file>
+        <file>images/redo-alt-solid.svg</file>
+        <file>images/stop-solid.svg</file>
+        <file>images/tach.svg</file>
+        <file>images/undo.svg</file>
+        <file>widgets/FaultLight.qml</file>
+        <file>widgets/IconButton.qml</file>
+        <file>widgets/SliderPopup.qml</file>
+        <file>control-views/Basic.qml</file>
+        <file>control-views/PlatformInterface.qml</file>
+        <file>settings/ATO 110WD-M04030-48V.json</file>
+        <file>settings/ATO 110WD-M04030-96V.json</file>
+        <file>settings/ATO D110BLD1000-24A-30S.json</file>
+        <file>settings/Volcano Motor VOL-BL06C12.json</file>
+        <file>settings/Universal Configuration.json</file>
+        <file>control-views/Advanced.qml</file>
+    </qresource>
+</RCC>
