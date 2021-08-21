@@ -159,6 +159,8 @@ def demo_config():
     time.sleep(0.01)
     ser.write('{"notification":{"value":"combobox","payload":{"caption":"ComboBox Test","scales":[],"states":[0],"value":2,"unit":""}}}\n'.encode())
     time.sleep(0.01)
+    ser.write('{"notification":{"value":"advanced_view_tab","payload":{"value":true}}}\n'.encode())
+    time.sleep(0.01)
     ser.write('{"notification":{"value":"status_log","payload":{"value":"Done!"}}}\n'.encode())
 if __name__ == '__main__':
     t1 = Thread(target=read_serial)

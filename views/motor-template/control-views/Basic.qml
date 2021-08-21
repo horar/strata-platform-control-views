@@ -16,9 +16,9 @@ UIBase { // start_uibase
     Component.onCompleted: {
 
         // ------------------------ Help Messages ------------------------ //
-        Help.registerTarget(rect_6a35c, "The input section displays telemetry from the platform by monitoring inputs to motor controller.", 6, "BasicControlHelp") // input rectangle
-        Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform by monitoring outputs of the motor controller.", 7, "BasicControlHelp") // output rectangle
-        Help.registerTarget(b_status_log_help_message, "The status log will show timestamped messages reported by the motor controller. Click the Clear button to clear the status log.", 8, "BasicControlHelp")
+        Help.registerTarget(rect_6a35c, "The input section displays telemetry from the platform by monitoring inputs to motor controller.", 7, "BasicControlHelp") // input rectangle
+        Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform by monitoring outputs of the motor controller.", 8, "BasicControlHelp") // output rectangle
+        Help.registerTarget(b_status_log_help_message, "The status log will show timestamped messages reported by the motor controller. Click the Clear button to clear the status log.", 9, "BasicControlHelp")
       
         // -------------- Other Startup Tasks -------------- //
         // Such as synchronizing the UI and firmware
