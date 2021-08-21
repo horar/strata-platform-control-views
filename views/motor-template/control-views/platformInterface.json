@@ -905,8 +905,17 @@
                 },
                 {
                     "name": "values",
-                    "type": "array-dynamic-sized",
-                    "value": []
+                    "type": "array-static-sized",
+                    "value": [
+                        {
+                            "type": "string",
+                            "value": "True"
+                        },
+                        {
+                            "type": "string",
+                            "value": "False"
+                        }
+                    ]
                 }
             ]
         },

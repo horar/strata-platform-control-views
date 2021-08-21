@@ -22,18 +22,19 @@ UIBase { // start_uibase
 
         // ------------------------ Help Messages ------------------------ //
 
-        // // Section 1
-        // Help.registerTarget(cp_pwm_params_o_mode_help, "PWM output set to either bipolar or unipolar.", 0, "AdvancedControlHelp")
-        // Help.registerTarget(cp_pwm_params_dt_help, "PWM deadtime received by the MOSFET gate driver. This may need to be adjusted based on the MOSFET selection to avoid cross conduction.\n\nThis slider and all subsequent sliders can be finely adjusted using the keyboard's left/right arrow keys when in focus.", 1, "AdvancedControlHelp")
-        // Help.registerTarget(cp_pwm_params_min_ls_help, "Minimum allowed low side MOSFET on time.", 2, "AdvancedControlHelp")
-        // Help.registerTarget(cp_pwm_params_freq_help, "PWM switching frequency received by the gate driver.", 3, "AdvancedControlHelp")
-        // Help.registerTarget(cp_pwm_params_tr_delay_help, "Clock cycles to delay ADC sampling from midpoint of PWM on time.", 4, "AdvancedControlHelp")
-        // // Section 2
-        // Help.registerTarget(cp_pid_params_kx_help, "PID gain controls for proportional (Kp), integral (Ki), and derivative (Kd) gains. Set derivative gain to zero for PI control only.", 5, "AdvancedControlHelp")
-        // Help.registerTarget(cp_pid_params_wd_help, "Derivative term low-pass filter cutoff frequency.", 6, "AdvancedControlHelp")
-        // Help.registerTarget(cp_pid_params_lim_help, "Integral error term limit. Normally set to DC bus voltage. The voltage will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 7, "AdvancedControlHelp")
-        // Help.registerTarget(cp_pid_params_tau_sys_help, "System time constant for auto IMC-calculated PID gain.", 8, "AdvancedControlHelp")
-        // Help.registerTarget(cp_pid_params_mode_help, "PID control gain mode. Auto = calculated from motor parameters. Manual = manual settings above used.", 9, "AdvancedControlHelp")
+        // Section Name
+        Help.registerTarget(a_toggle_help, "Toggle help message.", 0, "AdvancedControlHelp")
+        Help.registerTarget(a_slider_help, "Slider help message.", 1, "AdvancedControlHelp")
+        Help.registerTarget(a_infobox_integer_help, "InfoBox Integer help message.", 2, "AdvancedControlHelp")
+        Help.registerTarget(a_infobox_double_help, "InfoBox Double help message.", 3, "AdvancedControlHelp")
+        Help.registerTarget(a_infobox_string_help, "InfoBox String help message.", 4, "AdvancedControlHelp")
+        Help.registerTarget(a_combobox_help, "ComboBox help message.", 5, "AdvancedControlHelp")
+        // Save and Load Parameters
+        Help.registerTarget(a_save_load_parameters_help, "The parameters on this tab and/or other tabs can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box.\n\nTo load parameters, select the desired parameter set in the combo box and click Load to recall the parameters and automatically configure the motor controller. The motor may need to be re-enabled if already running to apply parameters.\n\nTo remove parameters, select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json files in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transferred between PCs if desired.\n\nThere are built in parameters included that can be recalled. The built in parameters cannot be deleted.", 6, "AdvancedControlHelp")
+
+        // -------------- Request Control Properties -------------- //
+        // The firmware should respond with all control properties to populate the UI elements
+        platformInterface.commands.control_props.send()
 
         // -------------- Other Startup Tasks -------------- //
         // Such as synchronizing the UI and firmware
@@ -114,16 +115,18 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 9
  
-        checkedLabel: "True"
-        uncheckedLabel: "False"
+        checkedLabel: platformInterface.notifications.toggle.values.index_0
+        uncheckedLabel: platformInterface.notifications.toggle.values.index_1
         labelsInside: true
 
         checked: platformInterface.notifications.toggle.value
-        enabled: !Boolean(platformInterface.notifications.toggle.states.index_0)
+        // states = 1 not applicable as enabled changes opacity
+        enabled: !Boolean(platformInterface.notifications.toggle.states.index_0) 
         
         onToggled: {
             console.log("Toggle switched:", checked)
-            platformInterface.commands.toggle.update(a_toggle.checked)
+            platformInterface.notifications.toggle.value = checked
+            platformInterface.commands.toggle.update(checked)
         }
         
     } // end_d68f2
@@ -137,6 +140,8 @@ UIBase { // start_uibase
         layoutInfo.yRows: 9
 
         text: platformInterface.notifications.toggle.caption // + " (" + platformInterface.notifications.toggle.unit + ")"
+        // states = 1 not applicable as enabled changes opacity
+        opacity: !Boolean(platformInterface.notifications.toggle.states.index_0) ? 1 : 0.5
 
         fontSizeMode: Text.Fit
         font.pixelSize: 15
@@ -167,13 +172,15 @@ UIBase { // start_uibase
         from: platformInterface.notifications.slider.scales.index_1
         to: platformInterface.notifications.slider.scales.index_0
         stepSize: platformInterface.notifications.slider.scales.index_2
-        enabled: !Boolean(platformInterface.notifications.slider.states.index_0)
+        // states = 1 not applicable as enabled changes opacity
+        enabled: !Boolean(platformInterface.notifications.slider.states.index_0) 
 
         live: false
         inputBox.readOnly: true
 
         onUserSet: {
             console.log("Slider value set:", value)
+            platformInterface.notifications.slider.value = value
             platformInterface.commands.slider.update(a_slider.value)
         }
     } // end_b8761
@@ -187,6 +194,9 @@ UIBase { // start_uibase
         layoutInfo.yRows: 12
 
         text: platformInterface.notifications.slider.caption  + " (" + platformInterface.notifications.slider.unit + ")"
+        // states = 1 not applicable as enabled changes opacity
+        opacity: !Boolean(platformInterface.notifications.slider.states.index_0) ? 1 : 0.5
+
         fontSizeMode: Text.Fit
         font.pixelSize: 15
         horizontalAlignment: Text.AlignHLeft
@@ -212,16 +222,19 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 17
 
-        text: "0"
-        readOnly: false
+        text: platformInterface.notifications.infobox_integer.value
+        readOnly: Boolean(platformInterface.notifications.infobox_integer.states.index_0)
+        opacity: platformInterface.notifications.infobox_integer.states.index_0 === 2 ? 0.5 : 1
 
         validator: IntValidator {
             bottom: 0
+            top: 10000
         }
 
         onEditingFinished : {
             console.log("InfoBox edit finished:", text)
-            // platformInterface.commands.pwm_params.update(Number())
+            platformInterface.notifications.infobox_integer.value = Number(text)
+            platformInterface.commands.infobox_integer.update(Number(text))
         }
 
     } // end_61e5b
@@ -234,7 +247,9 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 17
 
-        text: "InfoBox Integer"
+        text: platformInterface.notifications.infobox_integer.caption  + " (" + platformInterface.notifications.infobox_integer.unit + ")"
+        opacity: platformInterface.notifications.infobox_integer.states.index_0 === 2 ? 0.5 : 1
+
         fontSizeMode: Text.Fit
         font.pixelSize: 15
         horizontalAlignment: Text.AlignHLeft
@@ -261,16 +276,20 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 20
 
-        text: "0"
-        readOnly: false
+        text: platformInterface.notifications.infobox_double.value
+        readOnly: Boolean(platformInterface.notifications.infobox_double.states.index_0)
+        opacity: platformInterface.notifications.infobox_double.states.index_0 === 2 ? 0.5 : 1
 
-        validator: IntValidator {
+        validator: DoubleValidator {
             bottom: 0
+            top: 10000
+            decimals: 2
         }
 
         onEditingFinished : {
             console.log("InfoBox edit finished:", text)
-            // platformInterface.commands.pwm_params.update(Number())
+            platformInterface.notifications.infobox_double.value = Number(text)
+            platformInterface.commands.infobox_double.update(Number(text))
         }
 
     } // end_4d8a5
@@ -283,7 +302,9 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 20
 
-        text: "InfoBox Double"
+        text: platformInterface.notifications.infobox_double.caption  + " (" + platformInterface.notifications.infobox_double.unit + ")"
+        opacity: platformInterface.notifications.infobox_double.states.index_0 === 2 ? 0.5 : 1
+
         fontSizeMode: Text.Fit
         font.pixelSize: 15
         horizontalAlignment: Text.AlignHLeft
@@ -310,16 +331,16 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 23
 
-        text: "0"
-        readOnly: false
+        text: platformInterface.notifications.infobox_string.value
+        readOnly: Boolean(platformInterface.notifications.infobox_string.states.index_0)
+        opacity: platformInterface.notifications.infobox_string.states.index_0 === 2 ? 0.5 : 1
 
-        validator: IntValidator {
-            bottom: 0
-        }
+        // No validator required for string
 
         onEditingFinished : {
             console.log("InfoBox edit finished:", text)
-            // platformInterface.commands.pwm_params.update(Number())
+            platformInterface.notifications.infobox_string.value = text
+            platformInterface.commands.infobox_string.update(text)
         }
 
     } // end_124d2
@@ -332,7 +353,9 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 23
 
-        text: "InfoBox String"
+        text: platformInterface.notifications.infobox_string.caption  + " (" + platformInterface.notifications.infobox_string.unit + ")"
+        opacity: platformInterface.notifications.infobox_string.states.index_0 === 2 ? 0.5 : 1
+
         fontSizeMode: Text.Fit
         font.pixelSize: 15
         horizontalAlignment: Text.AlignHLeft
@@ -359,12 +382,19 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 27
 
-        model: ["Item 1", "Item 2", "Item 3"]
-        currentIndex: 1
+        model: [
+            platformInterface.notifications.combobox.values.index_0,
+            platformInterface.notifications.combobox.values.index_1,
+            platformInterface.notifications.combobox.values.index_2
+        ]
+        currentIndex: platformInterface.notifications.combobox.value
+        // states = 1 not applicable as enabled changes opacity
+        enabled: !Boolean(platformInterface.notifications.combobox.states.index_0)
         
         onActivated: {
             console.log("ComboBox activated:", currentIndex, currentText)
-            // platformInterface.commands.pwm_params.update(Number())
+            platformInterface.notifications.combobox.value = currentIndex
+            platformInterface.commands.combobox.update(currentIndex)
         }        
     } // end_f5402
 
@@ -376,7 +406,10 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 1
         layoutInfo.yRows: 26
 
-        text: "ComboBox"
+        text: platformInterface.notifications.combobox.caption //+ " (" + platformInterface.notifications.combobox.unit + ")"
+        // states = 1 not applicable as enabled changes opacity
+        opacity: !Boolean(platformInterface.notifications.combobox.states.index_0) ? 1 : 0.5
+
         fontSizeMode: Text.Fit
         font.pixelSize: 15
         horizontalAlignment: Text.AlignHLeft
@@ -394,71 +427,162 @@ UIBase { // start_uibase
 
     // ======================== Save and Load Parameters ======================== //
 
+    // This function will load settings from the stored .json configurations into the platform interface
     function loadSettings(config) {
-        // PWM Parameters
-        if (config.hasOwnProperty('cp_pwm_params_o_mode')) {
-            cp_pwm_params_o_mode_caption.text = config.cp_pwm_params_o_mode.caption
-            cp_pwm_params_o_mode.enabled = config.cp_pwm_params_o_mode.states[0]
-            cp_pwm_params_o_mode.checked = config.cp_pwm_params_o_mode.value
+        if (config.hasOwnProperty('toggle')) {
+            platformInterface.notifications.toggle.caption = config.toggle.caption
+            platformInterface.notifications.toggle.scales.index_0 = config.toggle.scales[0]
+            platformInterface.notifications.toggle.scales.index_1 = config.toggle.scales[1]
+            platformInterface.notifications.toggle.scales.index_2 = config.toggle.scales[2]
+            platformInterface.notifications.toggle.states.index_0 = config.toggle.states[0]
+            platformInterface.notifications.toggle.value = config.toggle.value
+            platformInterface.notifications.toggle.values.index_0 = config.toggle.values[0]
+            platformInterface.notifications.toggle.values.index_1 = config.toggle.values[1]
+            platformInterface.notifications.toggle.unit = config.toggle.unit
+            platformInterface.commands.toggle.update(platformInterface.notifications.toggle.value)
         }
-        if (config.hasOwnProperty('cp_pwm_params_dt')) {
-            cp_pwm_params_dt_caption.text = config.cp_pwm_params_dt.caption
-            cp_pwm_params_dt.to = config.cp_pwm_params_dt.scales[0]
-            cp_pwm_params_dt.from = config.cp_pwm_params_dt.scales[1]
-            cp_pwm_params_dt.stepSize = config.cp_pwm_params_dt.scales[2]
-            cp_pwm_params_dt.enabled = config.cp_pwm_params_dt.states[0]
-            cp_pwm_params_dt.value = config.cp_pwm_params_dt.value
+        if (config.hasOwnProperty('slider')) {
+            platformInterface.notifications.slider.caption = config.slider.caption
+            platformInterface.notifications.slider.scales.index_0 = config.slider.scales[0]
+            platformInterface.notifications.slider.scales.index_1 = config.slider.scales[1]
+            platformInterface.notifications.slider.scales.index_2 = config.slider.scales[2]
+            platformInterface.notifications.slider.states.index_0 = config.slider.states[0]
+            platformInterface.notifications.slider.value = config.slider.value            
+            platformInterface.notifications.slider.values.index_0 = config.slider.values[0]
+            platformInterface.notifications.slider.unit = config.slider.unit
+            platformInterface.commands.slider.update(platformInterface.notifications.slider.value)
         }
-        if (config.hasOwnProperty('cp_pwm_params_tr_delay')) {
-            cp_pwm_params_tr_delay_caption.text = config.cp_pwm_params_tr_delay.caption
-            cp_pwm_params_tr_delay.enabled = config.cp_pwm_params_tr_delay.states[0]
-            cp_pwm_params_tr_delay.text = config.cp_pwm_params_tr_delay.value
+        if (config.hasOwnProperty('infobox_integer')) {
+            platformInterface.notifications.infobox_integer.caption = config.infobox_integer.caption
+            platformInterface.notifications.infobox_integer.scales.index_0 = config.infobox_integer.scales[0]
+            platformInterface.notifications.infobox_integer.scales.index_1 = config.infobox_integer.scales[1]
+            platformInterface.notifications.infobox_integer.scales.index_2 = config.infobox_integer.scales[2]
+            platformInterface.notifications.infobox_integer.states.index_0 = config.infobox_integer.states[0]
+            platformInterface.notifications.infobox_integer.value = config.infobox_integer.value            
+            platformInterface.notifications.infobox_integer.values.index_0 = config.infobox_integer.values[0]
+            platformInterface.notifications.infobox_integer.unit = config.infobox_integer.unit
+            platformInterface.commands.infobox_integer.update(platformInterface.notifications.infobox_integer.value)
         }
-        if (config.hasOwnProperty('cp_spd_loop_params_mode')) {
-            cp_spd_loop_params_mode_caption.text = config.cp_spd_loop_params_mode.caption
-            cp_spd_loop_params_mode.enabled = config.cp_spd_loop_params_mode.states[0]
-            cp_spd_loop_params_mode.currentIndex = config.cp_spd_loop_params_mode.value
-            cp_spd_loop_params_mode.model = config.cp_spd_loop_params_mode.values
+        if (config.hasOwnProperty('infobox_double')) {
+            platformInterface.notifications.infobox_double.caption = config.infobox_double.caption
+            platformInterface.notifications.infobox_double.scales.index_0 = config.infobox_double.scales[0]
+            platformInterface.notifications.infobox_double.scales.index_1 = config.infobox_double.scales[1]
+            platformInterface.notifications.infobox_double.scales.index_2 = config.infobox_double.scales[2]
+            platformInterface.notifications.infobox_double.states.index_0 = config.infobox_double.states[0]
+            platformInterface.notifications.infobox_double.value = config.infobox_double.value            
+            platformInterface.notifications.infobox_double.values.index_0 = config.infobox_double.values[0]
+            platformInterface.notifications.infobox_double.unit = config.infobox_double.unit
+            platformInterface.commands.infobox_double.update(platformInterface.notifications.infobox_double.value)
         }
-        // TODO: probably send cmd in each if statement
-        // send_params()
+        if (config.hasOwnProperty('infobox_string')) {
+            platformInterface.notifications.infobox_string.caption = config.infobox_string.caption
+            platformInterface.notifications.infobox_string.scales.index_0 = config.infobox_string.scales[0]
+            platformInterface.notifications.infobox_string.scales.index_1 = config.infobox_string.scales[1]
+            platformInterface.notifications.infobox_string.scales.index_2 = config.infobox_string.scales[2]
+            platformInterface.notifications.infobox_string.states.index_0 = config.infobox_string.states[0]
+            platformInterface.notifications.infobox_string.value = config.infobox_string.value            
+            platformInterface.notifications.infobox_string.values.index_0 = config.infobox_string.values[0]
+            platformInterface.notifications.infobox_string.unit = config.infobox_integer.unit
+            platformInterface.commands.infobox_string.update(platformInterface.notifications.infobox_string.value)
+        }
+        if (config.hasOwnProperty('combobox')) {
+            platformInterface.notifications.combobox.caption = config.combobox.caption
+            platformInterface.notifications.combobox.scales.index_0 = config.combobox.scales[0]
+            platformInterface.notifications.combobox.scales.index_1 = config.combobox.scales[1]
+            platformInterface.notifications.combobox.scales.index_2 = config.combobox.scales[2]
+            platformInterface.notifications.combobox.states.index_0 = config.combobox.states[0]
+            platformInterface.notifications.combobox.values.index_0 = config.combobox.values[0]
+            platformInterface.notifications.combobox.values.index_1 = config.combobox.values[1]
+            platformInterface.notifications.combobox.values.index_2 = config.combobox.values[2]
+            platformInterface.notifications.combobox.value = -1 // index must be reset if previous index was equal to current (is this a bug?)
+            platformInterface.notifications.combobox.value = config.combobox.value // must be set after values are set
+            platformInterface.notifications.combobox.unit = config.combobox.unit
+            platformInterface.commands.combobox.update(platformInterface.notifications.combobox.value)
+        }
     }
     
+    // This function save settings to a .json configurations on disk, later to be recalled into platform interface by user
     function saveSettings(settingsName) {
         sgUserSettings.writeFile(`${settingsName}.json`,
             {
-                // PWM Settings
-                "cp_pwm_params_o_mode": {
-                    "caption": cp_pwm_params_o_mode_caption.text,
-                    "scales": [],
-                    "states": [cp_pwm_params_o_mode.enabled],
-                    "value": cp_pwm_params_o_mode.checked,
-                    "values": [],
-                    "unit": ""
+                "toggle": {
+                    "caption": platformInterface.notifications.toggle.caption,
+                    "scales": [
+                        platformInterface.notifications.toggle.scales.index_0,
+                        platformInterface.notifications.toggle.scales.index_1,
+                        platformInterface.notifications.toggle.scales.index_2
+                    ],
+                    "states": [platformInterface.notifications.toggle.states.index_0],
+                    "value": platformInterface.notifications.toggle.value,
+                    "values": [
+                        platformInterface.notifications.toggle.values.index_0,
+                        platformInterface.notifications.toggle.values.index_1
+                    ],
+                    "unit": platformInterface.notifications.toggle.unit
                 },
-                "cp_pwm_params_dt": {
-                    "caption": cp_pwm_params_dt_caption.text,
-                    "scales": [cp_pwm_params_dt.to, cp_pwm_params_dt.from, cp_pwm_params_dt.stepSize],
-                    "states": [cp_pwm_params_dt.enabled],
-                    "value": cp_pwm_params_dt.value,
-                    "values": [],
-                    "unit": ""
+                "slider": {
+                    "caption": platformInterface.notifications.slider.caption,
+                    "scales": [
+                        platformInterface.notifications.slider.scales.index_0,
+                        platformInterface.notifications.slider.scales.index_1,
+                        platformInterface.notifications.slider.scales.index_2
+                    ],
+                    "states": [platformInterface.notifications.slider.states.index_0],
+                    "value": platformInterface.notifications.slider.value,
+                    "values": platformInterface.notifications.slider.values,
+                    "unit": platformInterface.notifications.slider.unit
                 },
-                "cp_pwm_params_tr_delay": {
-                    "caption": cp_pwm_params_tr_delay_caption.text,
-                    "scales": [],
-                    "states": [cp_pwm_params_tr_delay.enabled],
-                    "value": Number(cp_pwm_params_tr_delay.text),
-                    "values": [],
-                    "unit": ""
+                "infobox_integer": {
+                    "caption": platformInterface.notifications.infobox_integer.caption,
+                    "scales": [
+                        platformInterface.notifications.infobox_integer.scales.index_0,
+                        platformInterface.notifications.infobox_integer.scales.index_1,
+                        platformInterface.notifications.infobox_integer.scales.index_2
+                    ],
+                    "states": [platformInterface.notifications.infobox_integer.states.index_0],
+                    "value": platformInterface.notifications.infobox_integer.value,
+                    "values": platformInterface.notifications.infobox_integer.values,
+                    "unit": platformInterface.notifications.infobox_integer.unit
                 },
-                "cp_spd_loop_params_mode": {
-                    "caption": cp_spd_loop_params_mode_caption.text,
-                    "scales": [],
-                    "states": [cp_spd_loop_params_mode.enabled],
-                    "value": cp_spd_loop_params_mode.currentIndex,
-                    "values": cp_spd_loop_params_mode.model,
-                    "unit": ""
+                "infobox_double": {
+                    "caption": platformInterface.notifications.infobox_double.caption,
+                    "scales": [
+                        platformInterface.notifications.infobox_double.scales.index_0,
+                        platformInterface.notifications.infobox_double.scales.index_1,
+                        platformInterface.notifications.infobox_double.scales.index_2
+                    ],
+                    "states": [platformInterface.notifications.infobox_double.states.index_0],
+                    "value": platformInterface.notifications.infobox_double.value,
+                    "values": platformInterface.notifications.infobox_double.values,
+                    "unit": platformInterface.notifications.infobox_double.unit
+                },
+                "infobox_string": {
+                    "caption": platformInterface.notifications.infobox_string.caption,
+                    "scales": [
+                        platformInterface.notifications.infobox_string.scales.index_0,
+                        platformInterface.notifications.infobox_string.scales.index_1,
+                        platformInterface.notifications.infobox_string.scales.index_2
+                    ],
+                    "states": [platformInterface.notifications.infobox_string.states.index_0],
+                    "value": platformInterface.notifications.infobox_string.value,
+                    "values": platformInterface.notifications.infobox_string.values,
+                    "unit": platformInterface.notifications.infobox_string.unit
+                },
+                "combobox": {
+                    "caption": platformInterface.notifications.combobox.caption,
+                    "scales": [
+                        platformInterface.notifications.combobox.scales.index_0,
+                        platformInterface.notifications.combobox.scales.index_1,
+                        platformInterface.notifications.combobox.scales.index_2
+                    ],
+                    "states": [platformInterface.notifications.combobox.states.index_0],
+                    "value": platformInterface.notifications.combobox.value,
+                    "values": [
+                        platformInterface.notifications.combobox.values.index_0,
+                        platformInterface.notifications.combobox.values.index_1,
+                        platformInterface.notifications.combobox.values.index_2
+                    ],
+                    "unit": platformInterface.notifications.combobox.unit
                 }
             },
             cp_save_button.subdirName
@@ -512,7 +636,7 @@ UIBase { // start_uibase
         layoutInfo.xColumns: 7
         layoutInfo.yRows: 43
 
-        property string subdirName: "mv-mdk"
+        property string subdirName: "motor-template" // change this to your UI name
         text: "Save"
 
         onClicked: {
@@ -546,31 +670,22 @@ UIBase { // start_uibase
         dividers: true
         textRole: "filename"
         model: ListModel {
-            id: settingsModel            
+            id: settingsModel
+            // Additional files can be added here but you must ensure they exist in the .qrc file
             ListElement {
-                filename: "Universal Configuration"
+                filename: "Platform Interface Defaults"
                 default_setting: true
-                location: ":/settings/Universal Configuration.json"
+                location: ":/settings/Platform Interface Defaults.json"
             }
             ListElement {
-                filename: "Volcano Motor VOL-BL06C12"
+                filename: "Alternate Configuration"
                 default_setting: true
-                location: ":/settings/Volcano Motor VOL-BL06C12.json"
+                location: ":/settings/Alternate Configuration.json"
             }
             ListElement {
-                filename: "ATO D110BLD1000-24A-30S"
+                filename: "All Disabled"
                 default_setting: true
-                location: ":/settings/ATO D110BLD1000-24A-30S.json"
-            }
-            ListElement {
-                filename: "ATO 110WD-M04030-48V"
-                default_setting: true
-                location: ":/settings/ATO 110WD-M04030-48V.json"
-            }
-            ListElement {
-                filename: "ATO 110WD-M04030-96V"
-                default_setting: true
-                location: ":/settings/ATO 110WD-M04030-96V.json"
+                location: ":/settings/All Disabled.json"
             }
             Component.onCompleted: {
                 cp_load_filename.updateList()
@@ -617,7 +732,7 @@ UIBase { // start_uibase
                     sgUserSettings.deleteFile(current_file.filename + '.json', cp_save_button.subdirName);
                     cp_load_filename.updateList()
                 } else {
-                    console.log("can't delete default settings")
+                    console.log("Can't delete default settings")
                 }
             }
         }
@@ -650,7 +765,7 @@ UIBase { // start_uibase
     } // end_053a0
 
     LayoutRectangle { // start_cf371
-        id: cp_save_load_parameters_help
+        id: a_save_load_parameters_help
         layoutInfo.uuid: "cf371"
         layoutInfo.columnsWide: 8
         layoutInfo.rowsTall: 8

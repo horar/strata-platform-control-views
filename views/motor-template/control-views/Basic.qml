@@ -20,10 +20,6 @@ UIBase { // start_uibase
         Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform by monitoring outputs of the motor controller.", 7, "BasicControlHelp") // output rectangle
         Help.registerTarget(b_status_log_help_message, "The status log will show timestamped messages reported by the motor controller. Click the Clear button to clear the status log.", 8, "BasicControlHelp")
       
-        // -------------- Request Control Properties -------------- //
-        // The firmware should respond with all control properties to populate the UI elements
-        platformInterface.commands.control_props.send()
-
         // -------------- Other Startup Tasks -------------- //
         // Such as synchronizing the UI and firmware
 
