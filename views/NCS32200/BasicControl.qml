@@ -40,15 +40,31 @@ Rectangle {
                             })
     }
 
+    function addIntCommand (command,value = -1) {
+        commandQueue.append({
+                                "command": command,
+                                "value" : value
+
+                            })
+    }
+
     function sendCommand () {
         timer.running = false
         if (commandQueue.count > 0) {
             let command = commandQueue.get(0).command
+            let value = commandQueue.get(0).value
             if(commandQueue.get(0).value !== "") {
-                platformInterface.commands[command].update(commandQueue.get(0).value)
+                platformInterface.commands[command].update(value)
+                console.log(platformInterface.commands[command].update(value))
+                console.log(command)
+                console.log(value)
+                console.log("correct value")
             }
             else  {
                 platformInterface.commands[command].update()
+                console.log(command)
+                console.log(value)
+                console.log("incorrect value")
             }
             commandQueue.remove(0)
 
@@ -158,6 +174,13 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: platformInterface.notifications.set_over_temp
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
     function startTimer() {
         getTempCommand.start()
         getErrorCommand.start()
@@ -182,7 +205,7 @@ Rectangle {
 
     Timer {
         id: getErrorCommand
-        interval: 2000
+        interval: 990
         running: false
         repeat: false
         onTriggered: {
@@ -418,7 +441,7 @@ Rectangle {
                             unit: "mA"
                             unitOverrideWidth: 50 * ratioCalc
                             anchors.left: parent.left
-                            text: platformInterface.notifications.status_telemetry.ibat
+                            text: platformInterface.notifications.status_telemetry.ibat * 1000
                         }
                     }
                 }
@@ -492,6 +515,7 @@ Rectangle {
                                     gaugeFillColor2: "red"
                                     //unitTextFontSizeMultiplier: ratioCalc * 1.5
                                     valueDecimalPlaces: 1
+                                    value: platformInterface.notifications.status_telemetry.ibat * 1000 * platformInterface.notifications.status_telemetry.vbat
 
                                 }
                             }
@@ -780,7 +804,7 @@ Rectangle {
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        platformInterface.commands.set_battv.update(value)
+                                        addIntCommand("set_battv",value.toFixed(1))
                                     }
                                 }
                             }
@@ -815,7 +839,7 @@ Rectangle {
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        platformInterface.commands.set_battv.update(value.toFixed(2))
+                                        addIntCommand("set_low_batt",value.toFixed(1))
                                     }
 
                                 }
@@ -841,18 +865,18 @@ Rectangle {
                                     live: false
                                     from: 0
                                     to: 125
-                                    stepSize: 0.1
+                                    stepSize: 1
                                     fromText.text: "0 ˚C"
                                     toText.text: "125 ˚C"
                                     inputBoxWidth: tempThresholdContainer.width/3
-                                    inputBox.unit: " V"
+                                    inputBox.unit: " C"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
                                     inputBox.validator: DoubleValidator { top: 125 ; bottom: 0 }
 
                                     onUserSet: {
-                                        platformInterface.commands.set_over_temp.update(value)
+                                        addIntCommand("set_over_temp",value.toFixed(2))
                                     }
 
                                 }
