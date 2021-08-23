@@ -13,6 +13,7 @@ Rectangle {
     property real initialAspectRatio: 1164/816
     color: "light gray"
 
+
     SGText {
         id: boardTitle
         anchors.horizontalCenter: parent.horizontalCenter
@@ -193,7 +194,7 @@ Rectangle {
 
     Timer {
         id: getTempCommand
-        interval: 1000
+        interval: 960
         running: false
         repeat: false
         onTriggered: {
@@ -205,7 +206,7 @@ Rectangle {
 
     Timer {
         id: getErrorCommand
-        interval: 990
+        interval: 980
         running: false
         repeat: false
         onTriggered: {
@@ -216,7 +217,7 @@ Rectangle {
 
     Timer {
         id: getLowBattvCommand
-        interval: 3000
+        interval: 1000
         running: false
         repeat: false
         onTriggered: {
@@ -227,7 +228,7 @@ Rectangle {
 
     Timer {
         id: getMaxTempValueCommand
-        interval: 4000
+        interval: 1020
         running: false
         repeat: false
         onTriggered: {
@@ -238,12 +239,24 @@ Rectangle {
 
     Timer {
         id: getBattvValueCommand
-        interval: 5000
+        interval: 1040
         running: false
         repeat: false
         onTriggered: {
             var command = "get_battv_value"
             addCommand(command)
+        }
+    }
+
+    Timer {
+        id: getFirmwareVersionCommand
+        interval: 1060
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "get_firmware_version"
+            addCommand(command)
+            startTimer()
         }
     }
 
@@ -256,18 +269,6 @@ Rectangle {
             var command = "status_telemetry"
             console.log(command)
             addCommand(command)
-        }
-    }
-
-    Timer {
-        id: getFirmwareVersionCommand
-        interval: 6000
-        running: false
-        repeat: false
-        onTriggered: {
-            var command = "get_firmware_version"
-            addCommand(command)
-            startTimer()
         }
     }
 
@@ -333,7 +334,7 @@ Rectangle {
                         alignment: SGAlignedLabel.SideTopLeft
                         //anchors.centerIn: parent
                         fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Current \n Position"
+                        text: "Current \n Position (mm)"
 
                         font.bold : true
                         horizontalAlignment: Text.AlignHCenter
@@ -345,11 +346,40 @@ Rectangle {
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "mm "
                             unitOverrideWidth:  50 * ratioCalc
-                            text: platformInterface.notifications.get_data.pos
+                            //text: platformInterface.notifications.get_data.pos
 
                         }
                     }
                 }
+
+                Item{
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    SGAlignedLabel {
+                        id: currPositionUmLabel
+                        target: currPositionUm
+                        alignment: SGAlignedLabel.SideTopLeft
+                        //anchors.centerIn: parent
+                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                        text: "Current \n Position (um)"
+
+                        font.bold : true
+                        horizontalAlignment: Text.AlignHCenter
+                        SGInfoBox{
+                            id: currPositionUm
+                            height:  35 * ratioCalc
+                            width: 135 * ratioCalc
+                            anchors.left: parent.left
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            unit: "um"
+                            unitOverrideWidth:  50 * ratioCalc
+                           // text:
+
+                        }
+                    }
+                }
+
+
                 Item{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
@@ -441,7 +471,7 @@ Rectangle {
                             unit: "mA"
                             unitOverrideWidth: 50 * ratioCalc
                             anchors.left: parent.left
-                            text: platformInterface.notifications.status_telemetry.ibat * 1000
+                            text: (platformInterface.notifications.status_telemetry.ibat) * 1000
                         }
                     }
                 }
@@ -547,6 +577,37 @@ Rectangle {
             Layout.fillHeight: true
             ColumnLayout{
                 anchors.fill:parent
+                spacing: 10
+
+                Rectangle {
+                    id: container
+                    Layout.preferredWidth: parent.width/1.2
+                    Layout.preferredHeight: parent.height/5
+                    Layout.alignment: Qt.AlignHCenter
+                    color: "red"
+
+                    Image {
+                        source: "board-image.png"
+                        anchors.fill: parent
+
+                        Rectangle {
+                            width: parent.width
+                            height:  parent.height/2
+                            color: "red"
+                            anchors.centerIn: parent
+                            z: 3
+                            SGRotateImage {
+                                id: rotatingImage
+                                // anchors.fill: parent
+                                z: 3
+                            }
+                        }
+                    }
+
+                    function getRandomArbitrary(min, max) {
+                        return Math.random() * (max - min) + min;
+                    }
+                }
 
                 Connections  {
                     target: platformInterface.notifications.get_data
@@ -564,6 +625,12 @@ Rectangle {
                         timedGraphPoints.update()
 
                         graphTimerPoints.lastTime = currentTime
+
+                        var data = platformInterface.notifications.get_data.pos
+                        var  x = Math.floor(data)
+                        var  y = data - x;
+                        currPositionUm.text = y
+                        currPosition.text = x
 
                         // currentPosition.text = Number(positionIs).toFixed(2)
 
@@ -585,16 +652,14 @@ Rectangle {
                     Layout.preferredHeight: parent.height/1.5
                     SGGraph {
                         id: timedGraphPoints
-                        anchors {
-                            bottom: parent.bottom
-                        }
+                        anchors.bottom: parent.bottom
                         anchors.fill: parent
-                        title: "Time Vs.Current Position"
-                        xMin: -200
-                        xMax: 200
+                        title: "Current Position Vs Time"
+                        xMin: -110
+                        xMax: 110
                         yMin: 0
                         yMax: 20
-                        xTitle: "Current Position(mm)"
+                        xTitle: "Current Position (mm)"
                         yTitle: "Time (s)"
                         xGrid: true
                         yGrid: true
@@ -641,48 +706,7 @@ Rectangle {
                     }
                 }
 
-                Item {
-                    id: container
-                    Layout.preferredWidth: parent.width/1.1
-                    Layout.fillHeight: true
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.leftMargin: 45
 
-                    SGRotateImage {
-                        id: rotatingImage
-                        width: parent.width
-                        height:  parent.height/2
-                        z: -1
-                    }
-
-                    function getRandomArbitrary(min, max) {
-                        return Math.random() * (max - min) + min;
-                    }
-
-                    //                    Button {
-                    //                        width: 50
-                    //                        height: 50
-                    //                        text: "L"
-                    //                        anchors.top: rotatingImage.bottom
-                    //                        anchors.topMargin: 10
-                    //                        anchors.left: right.right
-
-                    //                        MouseArea {
-                    //                            anchors.fill: parent
-                    //                            onClicked: rotatingImage.x = container.getRandomArbitrary(-200,200)
-                    //                        }
-                    //                    }
-
-                    //                    Button {
-                    //                        id: right
-                    //                        width: 50
-                    //                        height: 50
-                    //                        text: "R"
-                    //                        anchors.top: rotatingImage.bottom
-
-                    //                        MouseArea { anchors.fill: parent; onClicked: rotatingImage.x = 200 }
-                    //                    }
-                }
             }
         }
 
