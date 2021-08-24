@@ -12,6 +12,7 @@ Rectangle {
     property real ratioCalc: root.width / 1200
     property real initialAspectRatio: 1164/816
     color: "light gray"
+    property bool vccToggle: false
 
 
     SGText {
@@ -56,21 +57,23 @@ Rectangle {
             let value = commandQueue.get(0).value
             if(commandQueue.get(0).value !== "") {
                 platformInterface.commands[command].update(value)
-                console.log(platformInterface.commands[command].update(value))
-//                console.log(command)
-//                console.log(value)
-//                console.log("correct value")
+                //console.log(platformInterface.commands[command].update(value))
+                //                console.log(command)
+                //                console.log(value)
+                //                console.log("correct value")
             }
             else  {
                 platformInterface.commands[command].update()
-//                console.log(command)
-//                console.log(value)
-//                console.log("incorrect value")
+                //                console.log(command)
+                //                console.log(value)
+                //                console.log("incorrect value")
             }
             commandQueue.remove(0)
 
         } else {
-            platformInterface.commands.get_data.update()
+            if(!vccToggle) {
+                platformInterface.commands.get_data.update()
+            }
         }
 
         timer.start()
@@ -192,21 +195,22 @@ Rectangle {
         getTelemetryCommand.start()
     }
 
+
+
     Timer {
         id: getTempCommand
-        interval: 960
+        interval: 1000
         running: false
         repeat: false
         onTriggered: {
             var command = "get_temperature"
-            console.log(command)
             addCommand(command)
         }
     }
 
     Timer {
         id: getErrorCommand
-        interval: 980
+        interval: 2000
         running: false
         repeat: false
         onTriggered: {
@@ -217,7 +221,7 @@ Rectangle {
 
     Timer {
         id: getLowBattvCommand
-        interval: 1000
+        interval: 3000
         running: false
         repeat: false
         onTriggered: {
@@ -228,7 +232,7 @@ Rectangle {
 
     Timer {
         id: getMaxTempValueCommand
-        interval: 1020
+        interval: 4000
         running: false
         repeat: false
         onTriggered: {
@@ -239,7 +243,7 @@ Rectangle {
 
     Timer {
         id: getBattvValueCommand
-        interval: 1040
+        interval: 5000
         running: false
         repeat: false
         onTriggered: {
@@ -249,8 +253,19 @@ Rectangle {
     }
 
     Timer {
+        id: getTelemetryCommand
+        interval: 6000
+        running: false
+        repeat: false
+        onTriggered: {
+            var command = "status_telemetry"
+            addCommand(command)
+        }
+    }
+
+    Timer {
         id: getFirmwareVersionCommand
-        interval: 1060
+        interval: 7000
         running: false
         repeat: false
         onTriggered: {
@@ -260,17 +275,7 @@ Rectangle {
         }
     }
 
-    Timer {
-        id: getTelemetryCommand
-        interval: 500
-        running: false
-        repeat: false
-        onTriggered: {
-            var command = "status_telemetry"
-            console.log(command)
-            addCommand(command)
-        }
-    }
+
 
 
     RowLayout {
@@ -616,18 +621,20 @@ Rectangle {
                         source: "board-image.png"
                         anchors.fill: parent
 
-                        Rectangle {
-                            width: parent.width
+                        //                        Rectangle {
+                        //                            width: parent.width
+                        //                            height:  parent.height/2
+                        //                            //color: "red"
+                        //                            anchors.centerIn: parent
+                        //                            z: 3
+                        SGRotateImage {
+                            id: rotatingImage
+                            width: parent.width - 10
                             height:  parent.height/2
-                            //color: "red"
-                            anchors.centerIn: parent
+                            //anchors.fill: parent
                             z: 3
-                            SGRotateImage {
-                                id: rotatingImage
-                                anchors.fill: parent
-                                z: 3
-                            }
                         }
+                        //}
                     }
 
                     function getRandomArbitrary(min, max) {
@@ -848,7 +855,7 @@ Rectangle {
                                     fromText.text: "2.7 V"
                                     toText.text: "4.5 V"
                                     inputBoxWidth: vbatSetContainer.width/3
-                                   // inputBox.unit: " V"
+                                    // inputBox.unit: " V"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
@@ -953,10 +960,15 @@ Rectangle {
                                     checkedLabel: "On"
                                     uncheckedLabel: "Off"
                                     onToggled: {
-                                        if(checked)
+                                        if(checked) {
+                                            vccToggle = true
                                             addCommand("vcc_en","on")
-                                        else
+                                        }
+                                        else {
+                                            vccToggle = false
                                             addCommand("vcc_en","off")
+
+                                        }
                                     }
 
                                 }
