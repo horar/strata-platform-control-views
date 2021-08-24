@@ -25,7 +25,7 @@ Rectangle {
     }
 
     Component.onCompleted:{
-        addCommand("get_data")
+        //addCommand("get_data")
         sendCommand()
         startTimer()
     }
@@ -71,7 +71,8 @@ Rectangle {
             commandQueue.remove(0)
 
         } else {
-            if(!vccToggle) {
+            console.log(vccToggle)
+            if(vccToggle) {
                 platformInterface.commands.get_data.update()
             }
         }
