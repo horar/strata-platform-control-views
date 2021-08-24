@@ -57,15 +57,15 @@ Rectangle {
             if(commandQueue.get(0).value !== "") {
                 platformInterface.commands[command].update(value)
                 console.log(platformInterface.commands[command].update(value))
-                console.log(command)
-                console.log(value)
-                console.log("correct value")
+//                console.log(command)
+//                console.log(value)
+//                console.log("correct value")
             }
             else  {
                 platformInterface.commands[command].update()
-                console.log(command)
-                console.log(value)
-                console.log("incorrect value")
+//                console.log(command)
+//                console.log(value)
+//                console.log("incorrect value")
             }
             commandQueue.remove(0)
 
@@ -297,17 +297,17 @@ Rectangle {
                 }
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: parent.height/15
+                    Layout.preferredHeight: parent.height/20
                     color: "transparent"
                     Text {
                         id: telemetryHeading
-                        text: "Telemetry"
+                        text: "Position"
                         font.bold: true
                         font.pixelSize: ratioCalc * 20
                         color: "#696969"
                         anchors {
                             top: parent.top
-                            topMargin: 5
+                            topMargin: 2
                         }
                     }
 
@@ -320,12 +320,12 @@ Rectangle {
                         radius: 1.5
                         anchors {
                             top: telemetryHeading.bottom
-                            topMargin: 5
+                            topMargin: 2
                         }
                     }
                 }
 
-                Item{
+                Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     SGAlignedLabel {
@@ -334,10 +334,10 @@ Rectangle {
                         alignment: SGAlignedLabel.SideTopLeft
                         //anchors.centerIn: parent
                         fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Current \n Position (mm)"
+                        text: "Current\nPosition (mm)"
 
                         font.bold : true
-                        horizontalAlignment: Text.AlignHCenter
+                        //horizontalAlignment: Text.AlignHCenter
                         SGInfoBox{
                             id: currPosition
                             height:  35 * ratioCalc
@@ -346,7 +346,6 @@ Rectangle {
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "mm "
                             unitOverrideWidth:  50 * ratioCalc
-                            //text: platformInterface.notifications.get_data.pos
 
                         }
                     }
@@ -359,12 +358,11 @@ Rectangle {
                         id: currPositionUmLabel
                         target: currPositionUm
                         alignment: SGAlignedLabel.SideTopLeft
-                        //anchors.centerIn: parent
                         fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Current \n Position (um)"
+                        text: "Current\nPosition (um)"
 
                         font.bold : true
-                        horizontalAlignment: Text.AlignHCenter
+                        //horizontalAlignment: Text.AlignHCenter
                         SGInfoBox{
                             id: currPositionUm
                             height:  35 * ratioCalc
@@ -373,8 +371,36 @@ Rectangle {
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "um"
                             unitOverrideWidth:  50 * ratioCalc
-                           // text:
+                        }
+                    }
+                }
 
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: parent.height/20
+                    color: "transparent"
+                    Text {
+                        id: velocityHeading
+                        text: "Velocity"
+                        font.bold: true
+                        font.pixelSize: ratioCalc * 20
+                        color: "#696969"
+                        anchors {
+                            top: parent.top
+                            topMargin: 5
+                        }
+                    }
+
+                    Rectangle {
+                        id: lineVelo
+                        height: 2
+                        Layout.alignment: Qt.AlignCenter
+                        width: parent.width
+                        border.color: "black"
+                        radius: 1.5
+                        anchors {
+                            top: velocityHeading.bottom
+                            topMargin: 5
                         }
                     }
                 }
@@ -388,7 +414,7 @@ Rectangle {
                         target: currVelo
                         alignment: SGAlignedLabel.SideTopLeft
                         fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Current \n Velocity"
+                        text: "Current \nVelocity"
                         font.bold : true
                         horizontalAlignment: Text.AlignHCenter
                         SGInfoBox{
@@ -491,7 +517,7 @@ Rectangle {
                             SGAlignedLabel {
                                 id: tempGaugeLabel
                                 target: tempGauge
-                                text: "Temperature \n (˚c)"
+                                text: "Temperature \n (˚C)"
                                 anchors {
                                     top:parent.top
                                     horizontalCenter: parent.horizontalCenter
@@ -593,12 +619,12 @@ Rectangle {
                         Rectangle {
                             width: parent.width
                             height:  parent.height/2
-                            color: "red"
+                            //color: "red"
                             anchors.centerIn: parent
                             z: 3
                             SGRotateImage {
                                 id: rotatingImage
-                                // anchors.fill: parent
+                                anchors.fill: parent
                                 z: 3
                             }
                         }
@@ -647,6 +673,7 @@ Rectangle {
 
                     }
                 }
+
                 Item {
                     Layout.fillWidth: true
                     Layout.preferredHeight: parent.height/1.5
@@ -661,8 +688,10 @@ Rectangle {
                         yMax: 20
                         xTitle: "Current Position (mm)"
                         yTitle: "Time (s)"
+                        yRightTitle: "Velocity"
                         xGrid: true
                         yGrid: true
+                        yRightVisible: true
                         gridColor: "black"
                         foregroundColor: "black"
                         panXEnabled: false
@@ -705,8 +734,6 @@ Rectangle {
                         }
                     }
                 }
-
-
             }
         }
 
@@ -821,14 +848,14 @@ Rectangle {
                                     fromText.text: "2.7 V"
                                     toText.text: "4.5 V"
                                     inputBoxWidth: vbatSetContainer.width/3
-                                    inputBox.unit: " V"
+                                   // inputBox.unit: " V"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        addIntCommand("set_battv",value.toFixed(1))
+                                        addIntCommand("set_battv",Number(value.toFixed(1)))
                                     }
                                 }
                             }
@@ -856,7 +883,7 @@ Rectangle {
                                     fromText.text: "2.7 V"
                                     toText.text: "4.5 V"
                                     inputBoxWidth: batteryThresholdContainer.width/3
-                                    inputBox.unit: " V"
+                                    //inputBox.unit: " V"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
@@ -893,7 +920,7 @@ Rectangle {
                                     fromText.text: "0 ˚C"
                                     toText.text: "125 ˚C"
                                     inputBoxWidth: tempThresholdContainer.width/3
-                                    inputBox.unit: " C"
+                                    //inputBox.unit: " C"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
