@@ -71,6 +71,25 @@ def take_input():
             return
         elif (notification == 'demo_config'):
             demo_config()
+        elif (notification == 'status_log_fill'):
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"aaaaaaaaaaaaaaaaaaaaaaa..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"bbbbbbbbbbbbbbbbbbbbbbb..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ccccccccccccccccccccccc..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ddddddddddddddddddddddd..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"eeeeeeeeeeeeeeeeeeeeeee..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"fffffffffffffffffffffff..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ggggggggggggggggggggggg..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"hhhhhhhhhhhhhhhhhhhhhhh..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"iiiiiiiiiiiiiiiiiiiiiii..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"jjjjjjjjjjjjjjjjjjjjjjj..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"kkkkkkkkkkkkkkkkkkkkkkk..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"lllllllllllllllllllllll..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"mmmmmmmmmmmmmmmmmmmmmmm..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"nnnnnnnnnnnnnnnnnnnnnnn..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ooooooooooooooooooooooo..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ppppppppppppppppppppppp..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"qqqqqqqqqqqqqqqqqqqqqqq..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"rrrrrrrrrrrrrrrrrrrrrrr..."}}}\n'.encode())
         else:
             ser.write((notification + '\n').encode())
 
