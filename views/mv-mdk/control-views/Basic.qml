@@ -135,7 +135,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 3
     } // end_ef0b6
 
-   // ------------------------ Gauges and Log ------------------------ //
+   // ------------------------ Gauges ------------------------ //
 
     LayoutSGCircularGauge { // start_7b02e
         id: b_actual_speed
@@ -147,6 +147,7 @@ UIBase { // start_uibase
         
         // units
         unitText: platformInterface.notifications.actual_speed.unit
+        unitTextFontSizeMultiplier: 2.0
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
@@ -199,6 +200,7 @@ UIBase { // start_uibase
 
         // units
         unitText: platformInterface.notifications.board_temp.unit
+        unitTextFontSizeMultiplier: 2.0
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
@@ -251,6 +253,7 @@ UIBase { // start_uibase
         
         // units
         unitText: platformInterface.notifications.input_voltage.unit
+        unitTextFontSizeMultiplier: 2.0
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
@@ -294,6 +297,8 @@ UIBase { // start_uibase
         color: "#000000"
     } // end_f52c7
 
+    // ------------------------ Status Log ------------------------ //
+
     LayoutContainer { // start_abcde
         id: b_status_log
         layoutInfo.uuid: "abcde"
@@ -306,7 +311,16 @@ UIBase { // start_uibase
             id: b_status_log_box
             title: platformInterface.notifications.status_log.caption
             filterEnabled: false
+            scrollToEnd: true
             
+            // Changing between tabs seems to break where the end of the scroll box is
+            // Add this ensures the scroll box is always at the end when changing between tabs
+            onVisibleChanged: {
+                if (visible) {
+                    listView.positionViewAtEnd()
+                }
+            }
+
             Connections {
                 target: platformInterface.notifications.status_log
                 // Create status log message in the format of "hh:mm:ss:ms: Error message from status log notification"
@@ -317,6 +331,7 @@ UIBase { // start_uibase
                     var time_ms = String(d.getMilliseconds()).padStart(3, '0') // three digits of ms with zeros padded in front
                     status_log_message = time_hhmmss + ":" + time_ms + ": " + platformInterface.notifications.status_log.value
                     b_status_log_box.append(status_log_message)
+                    b_status_log_box.listView.positionViewAtEnd() // Scroll to the bottom every time a notification is received
                 }
             }
         }
