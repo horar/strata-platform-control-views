@@ -16,12 +16,12 @@ UIBase { // start_uibase
     Component.onCompleted: {
 
         // ------------------------ Help Messages ------------------------ //
-        Help.registerTarget(rect_6a35c, "The input section displays telemetry from the platform by monitoring inputs to motor controller.", 6, "BasicControlHelp") // input rectangle
-        Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform by monitoring outputs of the motor controller.", 7, "BasicControlHelp") // output rectangle
-        Help.registerTarget(b_status_log_help_message, "The status log will show timestamped messages reported by the motor controller. Click the Clear button to clear the status log.", 8, "BasicControlHelp")
+        Help.registerTarget(rect_6a35c, "The input section displays telemetry from the platform by monitoring inputs to motor controller.", 7, "BasicControlHelp") // input rectangle
+        Help.registerTarget(layoutRectangle_bead4, "The output section displays telemetry from the platform by monitoring outputs of the motor controller.", 8, "BasicControlHelp") // output rectangle
+        Help.registerTarget(b_status_log_help_message, "The status log will show timestamped messages reported by the motor controller. Click the Clear button to clear the status log.", 9, "BasicControlHelp")
       
-        // -------------- Request Control Properties -------------- //
-        platformInterface.commands.control_props.send()
+        // -------------- Other Startup Tasks -------------- //
+        // Such as synchronizing the UI and firmware
 
     }
 
@@ -135,7 +135,7 @@ UIBase { // start_uibase
         layoutInfo.yRows: 3
     } // end_ef0b6
 
-   // ------------------------ Gauges ------------------------ //
+   // ------------------------ Gauges and Log ------------------------ //
 
     LayoutSGCircularGauge { // start_7b02e
         id: b_actual_speed
@@ -147,7 +147,6 @@ UIBase { // start_uibase
         
         // units
         unitText: platformInterface.notifications.actual_speed.unit
-        unitTextFontSizeMultiplier: 2.0
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
@@ -200,7 +199,6 @@ UIBase { // start_uibase
 
         // units
         unitText: platformInterface.notifications.board_temp.unit
-        unitTextFontSizeMultiplier: 2.0
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
@@ -253,7 +251,6 @@ UIBase { // start_uibase
         
         // units
         unitText: platformInterface.notifications.input_voltage.unit
-        unitTextFontSizeMultiplier: 2.0
         // states
         // TBD or NA, used to disable/enable/gray certain UI elements
         // scales
@@ -297,8 +294,6 @@ UIBase { // start_uibase
         color: "#000000"
     } // end_f52c7
 
-    // ------------------------ Status Log ------------------------ //
-
     LayoutContainer { // start_abcde
         id: b_status_log
         layoutInfo.uuid: "abcde"
@@ -311,16 +306,7 @@ UIBase { // start_uibase
             id: b_status_log_box
             title: platformInterface.notifications.status_log.caption
             filterEnabled: false
-            scrollToEnd: true
             
-            // Changing between tabs seems to break where the end of the scroll box is
-            // Add this ensures the scroll box is always at the end when changing between tabs
-            onVisibleChanged: {
-                if (visible) {
-                    listView.positionViewAtEnd()
-                }
-            }
-
             Connections {
                 target: platformInterface.notifications.status_log
                 // Create status log message in the format of "hh:mm:ss:ms: Error message from status log notification"
@@ -331,7 +317,6 @@ UIBase { // start_uibase
                     var time_ms = String(d.getMilliseconds()).padStart(3, '0') // three digits of ms with zeros padded in front
                     status_log_message = time_hhmmss + ":" + time_ms + ": " + platformInterface.notifications.status_log.value
                     b_status_log_box.append(status_log_message)
-                    b_status_log_box.listView.positionViewAtEnd() // Scroll to the bottom every time a notification is received
                 }
             }
         }
