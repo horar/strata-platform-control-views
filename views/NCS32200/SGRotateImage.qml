@@ -9,7 +9,7 @@ import QtQuick.Extras 1.4
 Rectangle {
     id: rect
     width: 80; height: 80
-    color: "transparent"
+    color: "red"
 
     z: -1
 

@@ -13,6 +13,10 @@ Rectangle {
     property real initialAspectRatio: 1164/816
     color: "light gray"
     property bool vccToggle: false
+    anchors.centerIn: parent
+    height: parent.height
+    width: parent.width / parent.height > initialAspectRatio ? parent.height * initialAspectRatio : parent.width
+
 
 
     SGText {
@@ -25,7 +29,6 @@ Rectangle {
     }
 
     Component.onCompleted:{
-        //addCommand("get_data")
         sendCommand()
         startTimer()
     }
@@ -197,15 +200,16 @@ Rectangle {
     }
 
 
-
     Timer {
         id: getTempCommand
         interval: 1000
         running: false
         repeat: false
         onTriggered: {
-            var command = "get_temperature"
-            addCommand(command)
+            if(vccToggle) {
+                var command = "get_temperature"
+                addCommand(command)
+            }
         }
     }
 
@@ -215,8 +219,10 @@ Rectangle {
         running: false
         repeat: false
         onTriggered: {
-            var command = "get_errors"
-            addCommand(command)
+            if(vccToggle) {
+                var command = "get_errors"
+                addCommand(command)
+            }
         }
     }
 
@@ -226,8 +232,10 @@ Rectangle {
         running: false
         repeat: false
         onTriggered: {
-            var command = "get_lowbattv"
-            addCommand(command)
+            if(vccToggle) {
+                var command = "get_lowbattv"
+                addCommand(command)
+            }
         }
     }
 
@@ -237,8 +245,10 @@ Rectangle {
         running: false
         repeat: false
         onTriggered: {
-            var command = "get_maxtemp"
-            addCommand(command)
+            if(vccToggle) {
+                var command = "get_maxtemp"
+                addCommand(command)
+            }
         }
     }
 
@@ -248,8 +258,10 @@ Rectangle {
         running: false
         repeat: false
         onTriggered: {
-            var command = "get_battv_value"
-            addCommand(command)
+            if(vccToggle) {
+                var command = "get_battv_value"
+                addCommand(command)
+            }
         }
     }
 
@@ -270,8 +282,10 @@ Rectangle {
         running: false
         repeat: false
         onTriggered: {
-            var command = "get_firmware_version"
-            addCommand(command)
+            if(vccToggle) {
+                var command = "get_firmware_version"
+                addCommand(command)
+            }
             startTimer()
         }
     }
@@ -330,53 +344,139 @@ Rectangle {
                         }
                     }
                 }
-
-                Item {
+                RowLayout{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    SGAlignedLabel {
-                        id: currPositionLabel
-                        target: currPosition
-                        alignment: SGAlignedLabel.SideTopLeft
-                        //anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Current\nPosition (mm)"
 
-                        font.bold : true
-                        //horizontalAlignment: Text.AlignHCenter
-                        SGInfoBox{
-                            id: currPosition
-                            height:  35 * ratioCalc
-                            width: 135 * ratioCalc
-                            anchors.left: parent.left
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        SGAlignedLabel {
+                            id: currPositionLabel
+                            target: currPosition
+                            alignment: SGAlignedLabel.SideTopLeft
+                            //anchors.centerIn: parent
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "mm "
-                            unitOverrideWidth:  50 * ratioCalc
+                            text: "Position"
 
+                            font.bold : true
+                            //horizontalAlignment: Text.AlignHCenter
+                            SGInfoBox{
+                                id: currPosition
+                                height:  35 * ratioCalc
+                                width: 135 * ratioCalc
+                                anchors.left: parent.left
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                unit: "mm "
+                                unitOverrideWidth:  50 * ratioCalc
+
+                            }
+                        }
+                    }
+
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        SGAlignedLabel {
+                            id: currPositionUmLabel
+                            target: currPositionUm
+                            alignment: SGAlignedLabel.SideTopLeft
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            text: "Position"
+
+                            font.bold : true
+                            //horizontalAlignment: Text.AlignHCenter
+                            SGInfoBox{
+                                id: currPositionUm
+                                height:  35 * ratioCalc
+                                width: 135 * ratioCalc
+                                anchors.left: parent.left
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                unit: "um"
+                                unitOverrideWidth:  50 * ratioCalc
+                            }
                         }
                     }
                 }
 
-                Item{
+                RowLayout{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    SGAlignedLabel {
-                        id: currPositionUmLabel
-                        target: currPositionUm
-                        alignment: SGAlignedLabel.SideTopLeft
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Current\nPosition (um)"
 
-                        font.bold : true
-                        //horizontalAlignment: Text.AlignHCenter
-                        SGInfoBox{
-                            id: currPositionUm
-                            height:  35 * ratioCalc
-                            width: 135 * ratioCalc
-                            anchors.left: parent.left
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        SGAlignedLabel {
+                            id: currVeloLabel
+                            target: currVelo
+                            alignment: SGAlignedLabel.SideTopLeft
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "um"
-                            unitOverrideWidth:  50 * ratioCalc
+                            text: "Velocity"
+                            font.bold : true
+                            horizontalAlignment: Text.AlignHCenter
+                            SGInfoBox{
+                                id: currVelo
+                                height:  35 * ratioCalc
+                                width: 135 * ratioCalc
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                unit: "mm/s"
+                                anchors.left: parent.left
+                                unitOverrideWidth: 50 * ratioCalc
+                                text: platformInterface.notifications.get_data.vel
+                            }
+                        }
+                    }
+
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        //                        SGButton {
+                        //                            height:  40 * ratioCalc
+                        //                            width: 135 * ratioCalc
+                        //                            text: "Zero\n Position"
+                        //                            anchors.left: parent.left
+                        //                            anchors.verticalCenter: parent.verticalCenter
+                        //                            anchors.verticalCenterOffset: -10
+                        //                            //                            anchors.horizontalCenter: parent.horizontalCenter
+                        //                            //                            anchors.horizontalCenterOffset: 10
+                        //                            onClicked: {
+                        //                                for (var i = 0; i < 10 ; ++i) {
+                        //                                    addCommand("reset_position")
+                        //                                }
+                        //                            }
+                        //                        }
+                    }
+                }
+
+                RowLayout{
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        SGButton {
+                            height:  40 * ratioCalc
+                            width: 120 * ratioCalc
+                            text: "Zero\n Position"
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            onClicked: {
+                                for (var i = 0; i < 10 ; ++i) {
+                                    addCommand("reset_position")
+                                }
+                            }
+                        }
+                    }
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+
+                        SGSwitch {
+                            checkedLabel: "Relative"
+                            uncheckedLabel: "Absolute"
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
                         }
                     }
                 }
@@ -412,99 +512,90 @@ Rectangle {
                 }
 
 
-                Item{
+                RowLayout{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    SGAlignedLabel {
-                        id: currVeloLabel
-                        target: currVelo
-                        alignment: SGAlignedLabel.SideTopLeft
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Current \nVelocity"
-                        font.bold : true
-                        horizontalAlignment: Text.AlignHCenter
-                        SGInfoBox{
-                            id: currVelo
-                            height:  35 * ratioCalc
-                            width: 135 * ratioCalc
+
+
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        SGAlignedLabel {
+                            id: supplyVoltageLabel
+                            target: supplyVoltage
+                            alignment: SGAlignedLabel.SideTopLeft
+                            //anchors.centerIn: parent
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "mm/s"
-                            anchors.left: parent.left
-                            unitOverrideWidth: 50 * ratioCalc
-                            text: platformInterface.notifications.get_data.vel
+                            text: "Supply \nVoltage (VCC)"
+                            font.bold : true
+                            // horizontalAlignment: Text.AlignHCenter
+                            SGInfoBox{
+                                id: supplyVoltage
+                                height:  35 * ratioCalc
+                                width: 135 * ratioCalc
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                unit: "V "
+                                unitOverrideWidth: 50 * ratioCalc
+                                text: platformInterface.notifications.status_telemetry.vcc
+                            }
+                        }
+                    }
+
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        SGAlignedLabel {
+                            id: batteryVoltageLabel
+                            target: batteryVoltage
+                            alignment: SGAlignedLabel.SideTopLeft
+                            //anchors.centerIn: parent
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            text: "Battery \nVoltage (VBAT)"
+                            font.bold : true
+                            //horizontalAlignment: Text.AlignHCenter
+                            SGInfoBox{
+                                id: batteryVoltage
+                                height:  35 * ratioCalc
+                                width: 135 * ratioCalc
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                unit: "V"
+                                unitOverrideWidth: 50 * ratioCalc
+                                text: platformInterface.notifications.status_telemetry.vbat
+                            }
                         }
                     }
                 }
 
-                Item{
+                RowLayout{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    SGAlignedLabel {
-                        id: supplyVoltageLabel
-                        target: supplyVoltage
-                        alignment: SGAlignedLabel.SideTopLeft
-                        //anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Supply \nVoltage (VCC)"
-                        font.bold : true
-                        // horizontalAlignment: Text.AlignHCenter
-                        SGInfoBox{
-                            id: supplyVoltage
-                            height:  35 * ratioCalc
-                            width: 135 * ratioCalc
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        SGAlignedLabel {
+                            id: batteryCurrentLabel
+                            target: batteryCurrent
+                            alignment: SGAlignedLabel.SideTopLeft
+                            //anchors.centerIn: parent
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "V "
-                            unitOverrideWidth: 50 * ratioCalc
-                            text: platformInterface.notifications.status_telemetry.vcc
+                            text: "Battery \nCurrent (IBAT)"
+                            font.bold : true
+                            //horizontalAlignment: Text.AlignHCenter
+                            SGInfoBox{
+                                id: batteryCurrent
+                                height:  35 * ratioCalc
+                                width: 135 * ratioCalc
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                unit: "mA"
+                                unitOverrideWidth: 50 * ratioCalc
+                                anchors.left: parent.left
+                                text: (platformInterface.notifications.status_telemetry.ibat) * 1000
+                            }
                         }
                     }
-                }
-
-                Item{
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    SGAlignedLabel {
-                        id: batteryVoltageLabel
-                        target: batteryVoltage
-                        alignment: SGAlignedLabel.SideTopLeft
-                        //anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Battery \nVoltage (VBAT)"
-                        font.bold : true
-                        //horizontalAlignment: Text.AlignHCenter
-                        SGInfoBox{
-                            id: batteryVoltage
-                            height:  35 * ratioCalc
-                            width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "V"
-                            unitOverrideWidth: 50 * ratioCalc
-                            text: platformInterface.notifications.status_telemetry.vbat
-                        }
-                    }
-                }
-                Item{
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    SGAlignedLabel {
-                        id: batteryCurrentLabel
-                        target: batteryCurrent
-                        alignment: SGAlignedLabel.SideTopLeft
-                        //anchors.centerIn: parent
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Battery \nCurrent (IBAT)"
-                        font.bold : true
-                        //horizontalAlignment: Text.AlignHCenter
-                        SGInfoBox{
-                            id: batteryCurrent
-                            height:  35 * ratioCalc
-                            width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "mA"
-                            unitOverrideWidth: 50 * ratioCalc
-                            anchors.left: parent.left
-                            text: (platformInterface.notifications.status_telemetry.ibat) * 1000
-                        }
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
                     }
                 }
                 Item {
@@ -622,20 +713,13 @@ Rectangle {
                         source: "board-image.png"
                         anchors.fill: parent
 
-                        //                        Rectangle {
-                        //                            width: parent.width
-                        //                            height:  parent.height/2
-                        //                            //color: "red"
-                        //                            anchors.centerIn: parent
-                        //                            z: 3
                         SGRotateImage {
                             id: rotatingImage
                             width: parent.width - 10
                             height:  parent.height/2
-                            //anchors.fill: parent
+
                             z: 3
                         }
-                        //}
                     }
 
                     function getRandomArbitrary(min, max) {
@@ -689,12 +773,12 @@ Rectangle {
                         id: timedGraphPoints
                         anchors.bottom: parent.bottom
                         anchors.fill: parent
-                        title: "Current Position Vs Time"
+                        title: "Position Vs Time"
                         xMin: -110
                         xMax: 110
                         yMin: 0
                         yMax: 20
-                        xTitle: "Current Position (mm)"
+                        xTitle: "Position (mm)"
                         yTitle: "Time (s)"
                         yRightTitle: "Velocity"
                         xGrid: true
@@ -898,7 +982,7 @@ Rectangle {
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        addIntCommand("set_low_batt",value.toFixed(1))
+                                        addIntCommand("set_low_batt",Number(value.toFixed(1)))
                                     }
 
                                 }
@@ -1179,17 +1263,7 @@ Rectangle {
                                 Item {
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
-                                    SGButton {
-                                        width: 100 * ratioCalc
-                                        height: 50 * ratioCalc
-                                        text: "Reset \n Positions"
-                                        anchors.centerIn: parent
-                                        onClicked: {
-                                            for (var i = 0; i < 10 ; ++i) {
-                                                addCommand("reset_position")
-                                            }
-                                        }
-                                    }
+
                                 }
                             }
                         }

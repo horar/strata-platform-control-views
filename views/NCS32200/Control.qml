@@ -7,21 +7,18 @@ import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
 
-Item {
+Rectangle {
     id: controlRoot
     anchors {
         fill: parent
     }
+    color: "light gray"
 
-    BasicControl {
-        anchors {
-            fill: parent
-        }
-    }
+    BasicControl { }
 
     PlatformInterface {
-        id: platformInterface
-            
+        id: PlatformInterface
+
     }
 
 }
