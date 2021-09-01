@@ -189,57 +189,26 @@ Item {
     Component.onCompleted: {
         adcPeriodSet.value = 2000
 
-//        platformInterface.commands.pwm_setting.update(pwmRecoverySetTest.cmd_autor_Test,pwmSettingButtonStripTest.cmd_pwm_freq_test, pwmFrequencyModeSetTest.cmd_pwm_linear_test)
-//        platformInterface.commands.adc_setting.update(adcPeriodSet.cmd_adc_period_test, adcControlTest.cmd_adc_working_test)
         Help.registerTarget(navTabs, "    These tabs contain different user interface functionality of the \"Strata Multiple NCV7685 Chips for Rear Lighting Demo\" board. \n\n    \"Animation Demo\" page demonstrate seven kinds of animations and each one has configurable parameters. \n\n    \"Customized Test\" page shows one frame, which contains seventy-two LEDs. Each LED\'s intensity can be set individually to implement one pattern. The useful features of NCV7685 also can be enable or disable in this page.", 0, "TestPageHelp")
         Help.registerTarget(vContainer,"    The voltage gauge shows the input voltage of LED bus in real time.", 1, "TestPageHelp")
         Help.registerTarget(aContainer,  "    The current gauge shows the input current of LED bus in real time.", 2, "TestPageHelp")
         Help.registerTarget(settinglPanel, "    In this panel, setting parameters according to NCV7685’s key features. Configurable settings: \n\n    PWM Frequency:    300Hz \n    PWM Mode:           Logarithmic \n    Auto Recovery:       Off \n\n    ADC Sample Swtich: ON  \n    ADC Sample Period can changed by drag the slider.\n\n    LED Control:  All ON, All OFF, Seceted LEDs ON\n", 3, "TestPageHelp")
         Help.registerTarget(ledBoard, "    Hover on selected LEDs and drag the slider to set indensity.\n\n    The color of the slider's groove represents the color of the LED.", 4, "TestPageHelp")
-//        Help.registerTarget(welcome_button, "    It shows \"Welcome\" animation, can be used as \"Leaving Home\" in the automotive lighting. \n\n    Configurable settings: One shot    Default: ON", 5, "TestPageHelp")
-//        Help.registerTarget(brake_button, "    It shows \"Brake\" function. Intensity (PWM duty) can changed by drag the slider.\n\n    Configurable settings: PWM_DUTY    Default: 100 ", 6, "TestPageHelp")
-//        Help.registerTarget(fading_button, "    It shows \"Fading\" animation. Period and Cycle can changed by drag the slider.\n\n    Configurable settings: Period        Default: 1 \n                                    Cycle          Default: 4      \n                                    One shot     Default: ON", 7, "TestPageHelp")
-//        Help.registerTarget(leftturn_button, "    It shows \"Left Turn\" animation. Period and Cycle can changed by drag the slider.\n\n    Configurable settings: Period        Default: 1 \n                                    Cycle          Default: 4      \n                                    One shot     Default: ON", 8, "TestPageHelp")
-//        Help.registerTarget(rightturn_button, "    It shows \"Right Turn\" animation. Period and Cycle can changed by drag the slider.\n\n    Configurable settings: Period        Default: 1 \n                                    Cycle          Default: 4      \n                                    One shot     Default: ON", 9, "TestPageHelp")
-//        Help.registerTarget(warning_button, "    It shows \"Warning\" animation. Period and Cycle can changed by drag the slider.\n\n    Configurable settings: Period        Default: 1 \n                                    Cycle          Default: 4      \n                                    One shot     Default: ON", 10, "TestPageHelp")
-//        Help.registerTarget(goodbye_button, "    It shows \"Goodbye\" animation, can be used as \"Going Home\" in the automotive lighting. \n\n    Configurable settings: One shot    Default: ON", 11, "TestPageHelp")
-//        Help.registerTarget(setting_button, "    It shows \"Setting\" popup window to enable or disable the features of NCV7685.\n\nConfigurable settings: PWM Frequency: 300Hz \n                                PWM Mode: Logarithmic      \n                                Auto Recovery:  Off", 12, "TestPageHelp")
-//        Help.registerTarget(pwmSettingContainer, "    Setting popup window, each control button has own paramets to configure. \n\nSend: send out commands according to the setting.\nExit:   exit the setting wiondow.", 13, "TestPageHelp")
-
-
-        //            Help.registerTarget(name, "Place holder for Advanced control view help messages", 0, "AdvanceControlHelp")
     }
 
-//    function calculatePositionX(xpos, radx){
-//        if (boardBG.width/boardBG.height > orignalPicWidth/orignalPicHeight)
-//            return   boardBG.width/2 - boardBG.height * orignalPicWidth/orignalPicHeight/2 +  xpos * boardBG.height * orignalPicWidth/orignalPicHeight/orignalPicWidth - radx/2
-//        else
-//            return xpos * boardBG.width/orignalPicWidth - radx/2
-//    }
-
-//    function calculatePositionY(ypos, rady){
-//        if (boardBG.width/parent.height > orignalPicWidth/orignalPicHeight)
-//            return   ypos * boardBG.height/orignalPicHeight - rady/2
-//        else
-//            return boardBG.height/2 - boardBG.width * orignalPicHeight / orignalPicWidth/2 +   ypos * boardBG.width * orignalPicHeight/orignalPicWidth/orignalPicHeight - rady/2
-//   }
 
     function calculatePositionX(xpos, radx){
         if (ledBoard.width/ledBoard.height > orignalPicWidth/orignalPicHeight)
-//            return   ledBoard.width/2 - ledBoard.height * orignalPicWidth/orignalPicHeight/2 +  xpos * ledBoard.height * orignalPicWidth/orignalPicHeight/orignalPicWidth - radx/2
                     return   ledBoard.width/2 - ledBoard.height * orignalPicWidth/orignalPicHeight/2 +  xpos * ledBoard.height * orignalPicWidth/orignalPicHeight/orignalPicWidth
         else
-//            return xpos * ledBoard.width/orignalPicWidth - radx/2
          return xpos * ledBoard.width/orignalPicWidth
     }
 
     function calculatePositionY(ypos, rady){
         if (ledBoard.width/parent.height > orignalPicWidth/orignalPicHeight)
             return   ypos * ledBoard.height/orignalPicHeight
-//                    return   ypos * ledBoard.height/orignalPicHeight - rady/2
         else
             return ledBoard.height/2 - ledBoard.width * orignalPicHeight / orignalPicWidth/2 +   ypos * ledBoard.width * orignalPicHeight/orignalPicWidth/orignalPicHeight
-//        return ledBoard.height/2 - ledBoard.width * orignalPicHeight / orignalPicWidth/2 +   ypos * ledBoard.width * orignalPicHeight/orignalPicWidth/orignalPicHeight - rady/2
    }
 
     Rectangle {
@@ -260,18 +229,6 @@ Item {
                         source: "images/ledboardv2.png"
             fillMode: Image.PreserveAspectFit
 
-//            property real testPX:    1290
-//            property real testPY:     562
-
-//            LedNode {
-//                id: led000
-//                x:  (ledBoard.width/ledBoard.height > orignalPicWidth/orignalPicHeight) ? ((   (ledBoard.width/2 - (ledBoard.height * orignalPicWidth/orignalPicHeight)/2) +  testPX * (ledBoard.height * orignalPicWidth/orignalPicHeight)/orignalPicWidth).toFixed(0))  :  ((testPX * ledBoard.width/orignalPicWidth).toFixed(0))
-//                y:  (ledBoard.width/ledBoard.height > orignalPicWidth/orignalPicHeight) ? (testPY * ledBoard.height/orignalPicHeight).toFixed(0) : (((ledBoard.height/2 - (ledBoard.width * orignalPicHeight / orignalPicWidth)/2) +  testPY * (ledBoard.width * orignalPicHeight/orignalPicWidth)/orignalPicHeight).toFixed(0))
-//                redled :  true
-//                onLedValueChanged: {
-//                        console.log("onLedValueChanged:"+ledValue)
-//                    }
-//            }
 
             //-----------------------------------------------------------A01--START ------------------------------------------------------------------
             LedNode {

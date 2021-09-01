@@ -17,11 +17,6 @@ Item {
     height:  parent.height
     width:   (parent.width / parent.height) > initialAspectRatio ?  parent.width :  (parent.width * initialAspectRatio)
 
-//    width:  parent.width
-//    height: parent.width / parent.height < initialAspectRatio ? parent.width * initialAspectRatio : parent.height
-
-    //    property boolean no_active_button : true
-    //    property var no_active_button : "true"
     property bool gauges_swtich_control: true
 
     property bool button_active: false
@@ -50,8 +45,7 @@ Item {
     property bool goodbye_has_button_clicked: false
 
     Component.onCompleted: {
-//        platformInterface.commands.request_platform_id.update()
-//        platformInterface.commands.get_firmware_info.update()
+
 
         leftturnPeriodSet.value = 1
         leftturnCycleSet.value  = 4
@@ -62,10 +56,6 @@ Item {
         fadingPeriodSet.value = 1
         fadingCycleSet.value  = 4
         brakeStrengthSet.value = 127
-
-//        platformInterface.commands.pwm_setting.payload.autor =  false
-//        platformInterface.commands.pwm_setting.payload.pwm_freq = 300
-//        platformInterface.commands.pwm_setting.payload.pwm_linear = false
 
         Help.registerTarget(navTabs, "    These tabs contain different user interface functionality of the \"Strata Multiple NCV7685 Chips for Rear Lighting Demo\" board. \n\n    \"Animation Demo\" page demonstrate seven kinds of animations and each one has configurable parameters. \n\n    \"Customized Test\" page shows one frame, which contains seventy-two LEDs. Each LED\'s intensity can be set individually to implement one pattern. The useful features of NCV7685 also can be enable or disable in this page.", 0, "AnimationPageHelp")
         Help.registerTarget(gauge1Container, "    The voltage gauge shows the input voltage of the LED bus in real time.", 1, "AnimationPageHelp")
@@ -82,9 +72,6 @@ Item {
         Help.registerTarget(setting_button, "    It shows \"Setting\" popup window to enable or disable the features of NCV7685.\n\nConfigurable settings: PWM Frequency: 300Hz \n                                PWM Mode: Logarithmic      \n                                Auto Recovery:  Off", 12, "AnimationPageHelp")
         Help.registerTarget(pwmSettingContainer, "    Setting popup window, each control button has own paramets to configure. \n\nSend: send out commands according to the setting.\nExit:   exit the setting wiondow.", 13, "AnimationPageHelp")
 
-//        Help.registerTarget(controlContainerForHelp, "Use these clickable controls to simulate common tail lights on a passenger vehicle: brake, hazard, reverse, and turn signals. The hazard signals are enabled by default and must be disabled to use individual left and right turn signals.", 0, "carDemoHelp")
-//        Help.registerTarget(carContainer, "The LEDs on the PCB are updated and then subsequently updated here in the user interface from the hardware. There are two methods of controlling the background brightness to simulate brighter or darker conditions: dynamic and manual described below. Rear running lights and front headlights (user interface only) will be enabled during darker conditions.\n\nDynamic = use the onboard ambient light sensor to control the background brightness. Hover your hand over the light sensor near the bottom right of the PCB to simulate darker conditions. Expose the light sensor to a brighter light, such as a cell phone flashlight, for brighter background conditions. An initial ambient light value is measured during each Car Demo Mode session ?C this value is considered 50% brightness and may not correlate directly with actual ambient light conditions. Starting Car Demo Mode in low light conditions will have adverse effects on demonstration. \n\nManual = use the sun or moon buttons to manually control the background brightness.", 1, "carDemoHelp")
-//        Help.registerTarget(brightnessContainerForHelp, "Manual control of the ambient light background brightness. The dynamic light sensor data is used by default if the light sensor is installed on the PCB, otherwise, manual control is default. Click the sun or moon icons to enable manual control then click the sun to increase and the moon to decrease background brightness. Revert back to dynamic light sensor mode by toggling to LED Driver tab then back to Car Demo Mode tab.", 2, "carDemoHelp")
     }
 
 
@@ -305,12 +292,7 @@ Item {
                         checkedLabel: "<b>One Shot</b>"
                         uncheckedLabel: "<b>Consecutive</b>"
                         textColor: "black"
-//                        onToggled:  {
-//                            if (checked)
-//                                platformInterface.commands.demo_welcome.set(ture)
-//                            else
-//                                platformInterface.commands.demo_welcome.set(false)
-                    }
+                   }
                 }
 
                 Rectangle {
@@ -338,16 +320,6 @@ Item {
                             welcome_no_button_active = true
 
                             button_active = false
-
-//                            welcome_mouse_area.hoverEnabled = true
-//                            brake_mouse_area.hoverEnabled = true
-//                            fading_mouse_area.hoverEnabled = true
-//                            leftturn_mouse_area.hoverEnabled = true
-//                            rightturn_mouse_area.hoverEnabled = true
-//                            warning_mouse_area.hoverEnabled = true
-//                            setting_mouse_area.hoverEnabled = true
-//                            goodbye_mouse_area.hoverEnabled = true
-
 
                             welcomeSettingContainer.visible = false
                             brakeSettingContainer.visible = false
@@ -450,12 +422,7 @@ Item {
                         checkedLabel: "<b>One Shot</b>"
                         uncheckedLabel: "<b>Consecutive</b>"
                         textColor: "black"
-//                        onToggled:  {
-//                            if (checked)
-//                                platformInterface.commands.demo_welcome.set(ture)
-//                            else
-//                                platformInterface.commands.demo_welcome.set(false)
-                    }
+                   }
                 }
 
                 Rectangle {
@@ -598,10 +565,7 @@ Item {
                                 from: 0.5
                                 to: 16
                                 stepSize: 0.1
-                                //                                position: 1
-                                //                                fromText: "0.5S"
-                                //                                toText: "32S"
-                            }
+                           }
                         }
 
                         SGAlignedLabel {
@@ -622,10 +586,6 @@ Item {
                                 from: 1
                                 to: 32
                                 stepSize: 1
-//                                onUserSet: {
-//                                    // platformInterface.commands.demo_left_turn.payload.cycle = value.toFixed(0)
-////                                    value = value.toFixed(0)
-//                                }
                             }
                         }
                     }
@@ -1155,10 +1115,7 @@ Item {
                                 from: 0.5
                                 to: 16
                                 stepSize: 0.1
-                                //                                position: 1
-                                //                                fromText: "0.5S"
-                                //                                toText: "32S"
-                            }
+                          }
                         }
 
                         SGAlignedLabel {
@@ -1330,10 +1287,7 @@ Item {
                             from: 0
                             to: 127
                             stepSize: 1
-                            //                                position: 1
-                            //                                fromText: "0.5S"
-                            //                                toText: "32S"
-                        }
+                      }
                     }
                 }
 
@@ -1685,9 +1639,6 @@ Item {
         }
 
     }
-    /**********************************************************************************************
-    *                                END Coding Debugging
-    **********************************************************************************************/
 
 
     Item {
@@ -2096,85 +2047,10 @@ Item {
                 }
             }
 
-            //            states: [
-            //                State {
-            //                    name: "normal"
-            //                    PropertyChanges { target: welcome_button; source: "images/welcome.png";width: (parent.width-36)/9}
-            //                },
-            //                State {
-            //                    name: "hovered"
-            //                    PropertyChanges { target: welcome_button; source: "images/welcome_hovered.png";width: (parent.width-36)/5}
-            //                },
-            //                State {
-            //                    name: "clicked"
-            //                    PropertyChanges { target: welcome_button; source: "images/welcome_clicked.png";width: (parent.width-36)/5}
-            //                }
-            //            ]
-
-            //            transitions: Transition {
-            //                PropertyAnimation { properties: "x, y"; duration: 1000}
-            //            }
         }
 
     }  // END dashboardcontainer
 
 } //END
 
-
-
-//            SGSlider {
-//                id: motorSpeedControl
-//                anchors {
-//                    left: rightControl.left
-//                    right: setSpeed.left
-//                    rightMargin: 10
-//                    top: rightControl.top
-//                }
-//                from: 1500
-//                to: 4000
-//                label: "<b>Motor Speed:</b>"
-//                labelLeft: false
-//                value:
-//                {
-//                    if(platformInterface.motorSpeedSliderValue <= 1500 ){
-//                        return 1500
-//                    }
-//                    if( platformInterface.motorSpeedSliderValue >= 4000 ) {
-//                        return 4000
-//                    }
-//                    return platformInterface.motorSpeedSliderValue
-//                }
-
-//                onValueChanged: {
-//                    setSpeed.input = value.toFixed(0)
-//                    var current_slider_value = value.toFixed(0)
-//                    //  Don't change if FAE safety limit is enabled
-//                    if(current_slider_value >= 4000 && platformInterface.motorSpeedSliderValue >= 4000){
-//                        console.log("Do nothing")
-//                    }
-//                    else if(current_slider_value <= 1500 && platformInterface.motorSpeedSliderValue <= 1500){
-//                        console.log("Do nothing")
-//                    }
-//                    else{
-//                        platformInterface.motorSpeedSliderValue = current_slider_value
-//                    }
-//                }
-//            }
-
-//                text: "\ue80e"
-
-//        Connections {
-//            target: Help.utility
-//            onInternal_tour_indexChanged: {
-//                if(Help.current_tour_targets[index]["target"] === carContainer) {
-//                    Help.current_tour_targets[index]["helpObject"].toolTipPopup.width = 800
-//                }
-//                if(Help.current_tour_targets[index]["target"] === controlContainerForHelp) {
-//                    Help.current_tour_targets[index]["helpObject"].toolTipPopup.width = 750
-//                }
-//                if(Help.current_tour_targets[index]["target"] === brightnessContainerForHelp) {
-//                    Help.current_tour_targets[index]["helpObject"].toolTipPopup.width = 500
-//                }
-//            }
-//        }
 

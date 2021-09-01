@@ -8,12 +8,6 @@ import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
 
-/********************************************************************************************************
-    This is my first Strata GUI in QML and it's the challenge for me as the firmware AE,
-    The project is functional oriented, so maybe looks ugly.
-    Your comments and mentoring is appreciated: Austin.Shang@onsemi.com
-*********************************************************************************************************/
-
 Item {
     id: controlNavigation
     anchors {
