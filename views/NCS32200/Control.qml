@@ -17,7 +17,7 @@ Rectangle {
     BasicControl { }
 
     PlatformInterface {
-        id: PlatformInterface
+        id: platformInterface
 
     }
 

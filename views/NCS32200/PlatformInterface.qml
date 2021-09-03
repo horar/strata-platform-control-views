@@ -29,11 +29,11 @@ PlatformInterfaceBase {
         // @property turns: int
         // @property vel: int
         property QtObject get_data: QtObject {
-            property int pos: 0
-            property int vel: 0
+            property real pos: 0
+            property real vel: 0
             property int accel: 0
             property int turns: 0
-            property int auto_zero_offset: 0
+            property real auto_zero_offset: 0
 
             signal notificationFinished()
         }
@@ -130,6 +130,12 @@ PlatformInterfaceBase {
             signal notificationFinished()
         }
 
+        property QtObject dummy_data: QtObject {
+            property bool status:true
+
+            signal notificationFinished()
+        }
+
         property QtObject bat_en: QtObject {
             property bool status:true
 
@@ -212,6 +218,23 @@ PlatformInterfaceBase {
                                   },
                                   set: function (enable) {
                                       this.payload.enable = enable
+                                  },
+                                  send: function () { platformInterface.send(this) }
+                              })
+
+        // @command bat_en
+        // @property enable: string
+        property var dummy_data: ({
+                                  "cmd": "dummy_data",
+                                  "payload": {
+                                      "dummy_data": ""
+                                  },
+                                  update: function (dummy_data) {
+                                      this.set(dummy_data)
+                                      this.send(this)
+                                  },
+                                  set: function (dummy_data) {
+                                      this.payload.dummy_data = dummy_data
                                   },
                                   send: function () { platformInterface.send(this) }
                               })

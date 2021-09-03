@@ -351,13 +351,24 @@ Rectangle {
                     Item {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
+                        SGText{
+                            id: positionLabel
+                            text: "Position:"
+                            font.bold: true
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                        }
+                    }
+
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
                         SGAlignedLabel {
                             id: currPositionLabel
                             target: currPosition
                             alignment: SGAlignedLabel.SideTopLeft
                             //anchors.centerIn: parent
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            text: "Position"
+                            text: ""
 
                             font.bold : true
                             //horizontalAlignment: Text.AlignHCenter
@@ -382,7 +393,7 @@ Rectangle {
                             target: currPositionUm
                             alignment: SGAlignedLabel.SideTopLeft
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            text: "Position"
+                            text: ""
 
                             font.bold : true
                             //horizontalAlignment: Text.AlignHCenter
@@ -747,7 +758,8 @@ Rectangle {
                         var data = platformInterface.notifications.get_data.pos
                         var  x = Math.floor(data)
                         var  y = data - x;
-                        currPositionUm.text = y
+                        console.log(y)
+                        currPositionUm.text = (y*1000).toFixed(0)
                         currPosition.text = x
 
                         // currentPosition.text = Number(positionIs).toFixed(2)
@@ -1259,6 +1271,23 @@ Rectangle {
                                         }
                                     }
                                 }
+                                Item {
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+
+                                    SGSwitch {
+                                        id: dummy_switch
+                                        checkedLabel: "Dummy"
+                                        uncheckedLabel: "Real"
+                                        onToggled: {
+                                            if(checked)
+                                                addCommand("dummy_data","true")
+                                            else
+                                                addCommand("dummy_data","false")
+                                        }
+                                    }
+                                }
+
 
                                 Item {
                                     Layout.fillHeight: true
