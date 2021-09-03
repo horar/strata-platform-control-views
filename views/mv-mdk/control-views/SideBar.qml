@@ -294,6 +294,18 @@ Rectangle {
                     }
                 }
             }
+
+            FaultLight {
+                text: platformInterface.notifications.warning_4.caption
+                toolTipText: platformInterface.notifications.warning_4.caption
+                status: {
+                    if (platformInterface.notifications.warning_4.value) {
+                        status: SGStatusLight.Red
+                    } else {
+                        SGStatusLight.Off
+                    }
+                }
+            }
         }
 
         // ------------------------ Column Sidebar Filler ------------------------ //

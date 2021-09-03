@@ -121,6 +121,8 @@ def demo_config():
     # time.sleep(0.5)
     ser.write('{"notification":{"value":"warning_3","payload":{"caption":"OVP","scales":[],"states":[1],"value":false,"values":[],"unit":""}}}\n'.encode())
     # time.sleep(0.5)
+    ser.write('{"notification":{"value":"warning_4","payload":{"caption":"???","scales":[],"states":[1],"value":false,"values":[],"unit":""}}}\n'.encode())
+    # time.sleep(0.5)
     ser.write('{"notification":{"value":"status_log","payload":{"value":"Done!"}}}\n'.encode())
 
 if __name__ == '__main__':
