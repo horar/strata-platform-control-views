@@ -1,14 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>Control.qml</file>
-        <file>control-views/DebugMenu.qml</file>
         <file>control-views/PlatformInterface.qml</file>
         <file>control-views/ButttonStrip.qml</file>
         <file>control-views/DemoControl.qml</file>
         <file>control-views/LedNode.qml</file>
         <file>control-views/platformInterface.json</file>
         <file>control-views/TestControl.qml</file>
-        <file>control-views/images/board.png</file>
         <file>control-views/images/brake.png</file>
         <file>control-views/images/brake_clicked.png</file>
         <file>control-views/images/brake_hovered.png</file>
@@ -19,8 +17,6 @@
         <file>control-views/images/goodbye.png</file>
         <file>control-views/images/goodbye_clicked.png</file>
         <file>control-views/images/goodbye_hovered.png</file>
-        <file>control-views/images/led_board.png</file>
-        <file>control-views/images/ledboard.png</file>
         <file>control-views/images/ledboardv2.png</file>
         <file>control-views/images/leftturn.png</file>
         <file>control-views/images/leftturn_clicked.png</file>
