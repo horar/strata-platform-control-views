@@ -50,7 +50,7 @@ Item {
         if(multiplePlatform.minVin > ((platformInterface.status_voltage_current.vin)/1000)) {
             ledLight.status = "red"
             vinlable = "under"
-            ledLight.label = "VIN NOT Ready < "+ multiplePlatform.minVin +"V"
+            ledLight.label = "Vin < "+ multiplePlatform.minVin +"V"
 
             dio12Switch.enabled  = true
             dio12Switch.opacity = 1.0
@@ -68,7 +68,7 @@ Item {
             dio04Switch.checked = false
             ledLight.status = "red"
             vinlable = "under"
-            ledLight.label = "VIN NOT Ready > "+ multiplePlatform.nominalVin +"V"
+            ledLight.label = "Vin > "+ multiplePlatform.nominalVin +"V"
             dio12Switch.enabled  = false
             dio12Switch.opacity = 0.2
             dio13Switch.enabled  = false
@@ -242,7 +242,7 @@ Item {
                 SGStatusLight {
                     id: ledLight
                     // Optional Configuration:
-                    label: "VIN Ready < "+ multiplePlatform.nominalVin +"V"
+                    label: "Vin OK < "+ multiplePlatform.nominalVin +"V"
                     anchors {
                         top : line.bottom
                         topMargin : 40
@@ -258,17 +258,17 @@ Item {
                         if(multiplePlatform.minVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                             ledLight.status = "red"
                             vinlable = "under"
-                            ledLight.label = "VIN NOT Ready < "+ multiplePlatform.minVin +"V"
+                            ledLight.label = "Vin Low < "+ multiplePlatform.minVin +"V"
                         }
                         else if(multiplePlatform.nominalVin < ((platformInterface.status_voltage_current.vin)/1000)) {
                             ledLight.status = "red"
                             vinlable = "under"
-                            ledLight.label = "VIN NOT Ready > "+ multiplePlatform.nominalVin +"V"
+                            ledLight.label = "Vin High > "+ multiplePlatform.nominalVin +"V"
                         }
                         else {
                             ledLight.status = "green"
                             vinlable = "over"
-                            ledLight.label = "VIN Ready"
+                            ledLight.label = "Vin OK"
                         }
                     }
                 }
@@ -397,7 +397,6 @@ Item {
                         else if(multiplePlatform.eeprom_ID === "3ea08e05-0bcd-4a4a-86ec-79a1ca9750cd" && platformInterface.dimmensionalMode === true) {"images/ncv91300_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "abd65a0b-3229-44a4-a97c-38ea3c24f990" && platformInterface.dimmensionalMode === true) {"images/ncv890430_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "266f22e5-dc05-4819-b565-e5fb8035984e" && platformInterface.dimmensionalMode === true) {"images/ncv48920_3D.gif"}
-                        else if(multiplePlatform.eeprom_ID === "d4937f24-219a-4648-a711-2f6e902b6f1c" && platformInterface.dimmensionalMode === true) {"images/quarter_brick_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "b519cdcb-5068-4483-b88e-155813fae915" && platformInterface.dimmensionalMode === true) {"images/ncv816x_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "26ebc2ba-9bab-4bdd-97b6-09b5b8cbdf9e" && platformInterface.dimmensionalMode === true) {"images/ncv6323_3D.gif"}
                         else if(multiplePlatform.eeprom_ID === "cce0f32e-ee1e-44aa-81a3-0801a71048ce" && platformInterface.dimmensionalMode === true) {"images/ncv6922_3D.gif"}
@@ -409,7 +408,6 @@ Item {
                         else if(multiplePlatform.eeprom_ID === "3ea08e05-0bcd-4a4a-86ec-79a1ca9750cd" && platformInterface.dimmensionalMode === false) {"images/ncv91300_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "abd65a0b-3229-44a4-a97c-38ea3c24f990" && platformInterface.dimmensionalMode === false) {"images/ncv890430_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "266f22e5-dc05-4819-b565-e5fb8035984e" && platformInterface.dimmensionalMode === false) {"images/ncv48920_2D.gif"}
-                        else if(multiplePlatform.eeprom_ID === "d4937f24-219a-4648-a711-2f6e902b6f1c" && platformInterface.dimmensionalMode === false) {"images/quarter_brick_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "b519cdcb-5068-4483-b88e-155813fae915" && platformInterface.dimmensionalMode === false) {"images/ncv816x_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "26ebc2ba-9bab-4bdd-97b6-09b5b8cbdf9e" && platformInterface.dimmensionalMode === false) {"images/ncv6323_2D.gif"}
                         else if(multiplePlatform.eeprom_ID === "cce0f32e-ee1e-44aa-81a3-0801a71048ce" && platformInterface.dimmensionalMode === false) {"images/ncv6922_2D.gif"}
@@ -550,9 +548,9 @@ Item {
                     grooveColor: "#ccc"             // Default: "#ccc"
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {dio12Switch.checked}
+                    checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {dio12Switch.checked}
                              else{platformInterface.set_dio12.update("off")}
-                    onToggled: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {
+                    onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                                    platformInterface.dio12_enabled = checked
                                    if(checked){
                                        platformInterface.set_dio12.update("on")
@@ -656,9 +654,9 @@ Item {
                     grooveColor: "#ccc"             // Default: "#ccc"
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {platformInterface.dio13_enabled}
+                    checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {platformInterface.dio13_enabled}
                              else{platformInterface.set_dio13.update("off")}
-                    onToggled: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {
+                    onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                                    platformInterface.dio13_enabled = checked
                                    if(checked){
                                        platformInterface.set_dio13.update("on")
@@ -704,9 +702,9 @@ Item {
                     grooveColor: "#ccc"             // Default: "#ccc"
                     grooveFillColor: "green"         // Default: "#0cf"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {platformInterface.dio04_enabled}
+                    checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {platformInterface.dio04_enabled}
                              else{platformInterface.set_dio04.update("off")}
-                    onToggled: if (multiplePlatform.vinScale > ((platformInterface.status_voltage_current.vin)/1000)) {
+                    onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                                    platformInterface.dio04_enabled = checked
                                    if(checked){
                                        platformInterface.set_dio04.update("on")

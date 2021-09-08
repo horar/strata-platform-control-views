@@ -243,69 +243,6 @@ Item{
             minVout3 = 4.625
             minVout4 = 4.625
         }
-        else if(class_id === "d4937f24-219a-4648-a711-2f6e902b6f1c") {
-            eeprom_ID = "d4937f24-219a-4648-a711-2f6e902b6f1c"
-            partNumber = "<b> FD6000/A </b>"
-            title = "<b> DCX-LLC demoboard </b>"
-            warningHVVinLable = "70V"
-            warningLVVinLable = "30V"
-            opn = "STR-PWRFD6000-R0-GEVK"
-            minVin = 30
-            nominalVin = 60
-            vinScale = 100
-            iinScale = 10
-            voutScale = 20
-            ioutScale = 50
-            poutScale = 1000
-            pdissScale = 500
-            showDecimal = true
-            poutStep = 100
-            pdissStep = 50
-            rst = false
-            dio14 = false
-            jumperDIO14 = true
-            dio13 = false
-            jumperDIO13 = false
-            dio12 = true
-            jumperDIO12 = true
-            dio04 = true
-            jumperDIO04 = true
-            lowpowerDCDC = true
-            pdiss = "W"
-            current = "A"
-        }
-
-        else if(class_id === "057ec75e-e48f-42db-bea9-3d191ed8a736") {
-            eeprom_ID = "d4937f24-219a-4648-a711-2f6e902b6f1c"
-            partNumber = "<b> FD350X </b>"
-            title = "<b> 48V/12V Full-Bridge demoboard </b>"
-            warningHVVinLable = "70V"
-            warningLVVinLable = "30V"
-            opn = "STR-PWRFD350X-R0-GEVK"
-            minVin = 30
-            nominalVin = 60
-            vinScale = 100
-            iinScale = 10
-            voutScale = 20
-            ioutScale = 50
-            poutScale = 1000
-            pdissScale = 500
-            showDecimal = true
-            poutStep = 100
-            pdissStep = 50
-            rst = false
-            dio14 = false
-            jumperDIO14 = true
-            dio13 = false
-            jumperDIO13 = false
-            dio12 = true
-            jumperDIO12 = true
-            dio04 = true
-            jumperDIO04 = true
-            lowpowerDCDC = true
-            pdiss = "W"
-            current = "A"
-        }
         else if(class_id === "b519cdcb-5068-4483-b88e-155813fae915") {
             eeprom_ID = "b519cdcb-5068-4483-b88e-155813fae915"
             partNumber = "<b> NCV8163 </b>"

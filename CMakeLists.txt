@@ -9,6 +9,7 @@ if(NOT DEFINED CMAKE_MODULE_PATH)
     include(FeatureSummary)
     include(CMakeDependentOption)
     include(GitVersionMacro)
+    include(AddQmlImportPathMacro)
 endif()
 
 include(AddViewMacro)
