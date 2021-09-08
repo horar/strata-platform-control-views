@@ -13,7 +13,7 @@ Rectangle {
     id: controlPage
     objectName: "control"
     anchors.fill: parent
-    color: "transparent"
+    color: "white"
 
     Text {
         id: pageText

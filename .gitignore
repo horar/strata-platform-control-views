@@ -3,3 +3,5 @@
 *BUILD*/
 *.DS_Store
 *.rcc
+
+*.sw[po]
