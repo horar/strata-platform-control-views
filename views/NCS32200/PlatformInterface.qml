@@ -34,6 +34,7 @@ PlatformInterfaceBase {
             property int accel: 0
             property int turns: 0
             property real auto_zero_offset: 0
+            property real zero_position_offset: 0
 
             signal notificationFinished()
         }
@@ -225,19 +226,19 @@ PlatformInterfaceBase {
         // @command bat_en
         // @property enable: string
         property var dummy_data: ({
-                                  "cmd": "dummy_data",
-                                  "payload": {
-                                      "dummy_data": ""
-                                  },
-                                  update: function (dummy_data) {
-                                      this.set(dummy_data)
-                                      this.send(this)
-                                  },
-                                  set: function (dummy_data) {
-                                      this.payload.dummy_data = dummy_data
-                                  },
-                                  send: function () { platformInterface.send(this) }
-                              })
+                                      "cmd": "dummy_data",
+                                      "payload": {
+                                          "dummy_data": ""
+                                      },
+                                      update: function (dummy_data) {
+                                          this.set(dummy_data)
+                                          this.send(this)
+                                      },
+                                      set: function (dummy_data) {
+                                          this.payload.dummy_data = dummy_data
+                                      },
+                                      send: function () { platformInterface.send(this) }
+                                  })
 
         // @command vcc_en
         // @property enable: string
@@ -258,12 +259,12 @@ PlatformInterfaceBase {
 
         // @command reset_position
         property var reset_position: ({
-                                   "cmd": "reset_position",
-                                   update: function () {
-                                       this.send(this)
-                                   },
-                                   send: function () { platformInterface.send(this) }
-                               })
+                                          "cmd": "reset_position",
+                                          update: function () {
+                                              this.send(this)
+                                          },
+                                          send: function () { platformInterface.send(this) }
+                                      })
 
         // @command reset_turns
         property var reset_turns: ({
@@ -395,12 +396,12 @@ PlatformInterfaceBase {
                                        })
         // @command status_telemetry
         property var status_telemetry: ({
-                                           "cmd": "status_telemetry",
-                                           update: function () {
-                                               this.send(this)
-                                           },
-                                           send: function () { platformInterface.send(this) }
-                                       })
+                                            "cmd": "status_telemetry",
+                                            update: function () {
+                                                this.send(this)
+                                            },
+                                            send: function () { platformInterface.send(this) }
+                                        })
 
 
 

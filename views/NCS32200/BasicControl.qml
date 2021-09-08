@@ -350,11 +350,15 @@ Rectangle {
 
                     Item {
                         Layout.fillHeight: true
-                        Layout.fillWidth: true
+                        Layout.preferredWidth: parent.width/5
                         SGText{
                             id: positionLabel
                             text: "Position:"
                             font.bold: true
+                            anchors {
+                                left: parent.left
+                                verticalCenter: parent.verticalCenter
+                            }
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                         }
                     }
@@ -362,50 +366,34 @@ Rectangle {
                     Item {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
-                        SGAlignedLabel {
-                            id: currPositionLabel
-                            target: currPosition
-                            alignment: SGAlignedLabel.SideTopLeft
-                            //anchors.centerIn: parent
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            text: ""
-
-                            font.bold : true
-                            //horizontalAlignment: Text.AlignHCenter
-                            SGInfoBox{
-                                id: currPosition
-                                height:  35 * ratioCalc
-                                width: 135 * ratioCalc
-                                anchors.left: parent.left
-                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                                unit: "mm "
-                                unitOverrideWidth:  50 * ratioCalc
-
+                        SGInfoBox{
+                            id: currPosition
+                            height:  35 * ratioCalc
+                            width: 135 * ratioCalc
+                            anchors {
+                                left: parent.left
+                                verticalCenter: parent.verticalCenter
                             }
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            unit: "mm "
+                            unitOverrideWidth:  50 * ratioCalc
                         }
                     }
 
                     Item{
                         Layout.fillHeight: true
                         Layout.fillWidth: true
-                        SGAlignedLabel {
-                            id: currPositionUmLabel
-                            target: currPositionUm
-                            alignment: SGAlignedLabel.SideTopLeft
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            text: ""
-
-                            font.bold : true
-                            //horizontalAlignment: Text.AlignHCenter
-                            SGInfoBox{
-                                id: currPositionUm
-                                height:  35 * ratioCalc
-                                width: 135 * ratioCalc
-                                anchors.left: parent.left
-                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                                unit: "um"
-                                unitOverrideWidth:  50 * ratioCalc
+                        SGInfoBox{
+                            id: currPositionUm
+                            height:  35 * ratioCalc
+                            width: 135 * ratioCalc
+                            anchors {
+                                left: parent.left
+                                verticalCenter: parent.verticalCenter
                             }
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            unit: "um"
+                            unitOverrideWidth:  50 * ratioCalc
                         }
                     }
                 }
@@ -414,49 +402,58 @@ Rectangle {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
-                    Item{
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: parent.width/5
+
+                        SGText{
+                            id: velocityLabel
+                            text: "Velocity:"
+                            font.bold: true
+                            anchors {
+                                left: parent.left
+                                verticalCenter: parent.verticalCenter
+                            }
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                        }
+                    }
+
+                    Item {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
-                        SGAlignedLabel {
-                            id: currVeloLabel
-                            target: currVelo
-                            alignment: SGAlignedLabel.SideTopLeft
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            text: "Velocity"
-                            font.bold : true
-                            horizontalAlignment: Text.AlignHCenter
-                            SGInfoBox{
-                                id: currVelo
-                                height:  35 * ratioCalc
-                                width: 135 * ratioCalc
-                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                                unit: "mm/s"
-                                anchors.left: parent.left
-                                unitOverrideWidth: 50 * ratioCalc
-                                text: platformInterface.notifications.get_data.vel
+
+                        SGInfoBox {
+                            id:  currVelocity
+                            height:  35 * ratioCalc
+                            width: 135 * ratioCalc
+                            anchors {
+                                left: parent.left
+                                verticalCenter: parent.verticalCenter
                             }
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            unit: "mm/s"
+                            unitOverrideWidth:  50 * ratioCalc
                         }
                     }
 
                     Item{
                         Layout.fillHeight: true
                         Layout.fillWidth: true
-                        //                        SGButton {
-                        //                            height:  40 * ratioCalc
-                        //                            width: 135 * ratioCalc
-                        //                            text: "Zero\n Position"
-                        //                            anchors.left: parent.left
-                        //                            anchors.verticalCenter: parent.verticalCenter
-                        //                            anchors.verticalCenterOffset: -10
-                        //                            //                            anchors.horizontalCenter: parent.horizontalCenter
-                        //                            //                            anchors.horizontalCenterOffset: 10
-                        //                            onClicked: {
-                        //                                for (var i = 0; i < 10 ; ++i) {
-                        //                                    addCommand("reset_position")
-                        //                                }
-                        //                            }
-                        //                        }
+
+                        SGInfoBox {
+                            id: currVelocityUm
+                            height:  35 * ratioCalc
+                            width: 135 * ratioCalc
+                            anchors {
+                                left: parent.left
+                                verticalCenter: parent.verticalCenter
+                            }
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            unit: "um/s"
+                            unitOverrideWidth:  50 * ratioCalc
+                        }
                     }
+
                 }
 
                 RowLayout{
@@ -607,6 +604,26 @@ Rectangle {
                     Item{
                         Layout.fillHeight: true
                         Layout.fillWidth: true
+                        SGAlignedLabel {
+                            id: offsetLabel
+                            target: offset
+                            alignment: SGAlignedLabel.SideTopLeft
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            text: "Offset \n"
+                            font.bold : true
+                            SGSubmitInfoBox{
+                                id: offset
+                                height:  35 * ratioCalc
+                                width: 135 * ratioCalc
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                unit: "mm"
+                                infoBoxObject.unitOverrideWidth:50 * ratioCalc
+                                anchors.left: parent.left
+                                //                                onEditingFinished {
+
+                                //                                }
+                            }
+                        }
                     }
                 }
                 Item {
@@ -715,21 +732,34 @@ Rectangle {
 
                 Rectangle {
                     id: container
-                    Layout.preferredWidth: parent.width/1.2
+                    Layout.preferredWidth: parent.width
                     Layout.preferredHeight: parent.height/5
-                    Layout.alignment: Qt.AlignHCenter
+                    Layout.alignment: Qt.AlignCenter
                     color: "red"
 
                     Image {
+                        id: boardImage
                         source: "board-image.png"
                         anchors.fill: parent
+                        states: State {
+                            name: "moved"
+                            PropertyChanges { target: boardImage; x: 0 }
+                        }
+
+                        transitions: Transition {
+                            PropertyAnimation { properties: "x,y"; easing.type: Easing.InOutQuad }
+                        }
+
 
                         SGRotateImage {
                             id: rotatingImage
-                            width: parent.width - 10
+                            width: parent.width - 28
                             height:  parent.height/2
-
+                            anchors.bottom: parent.bottom
+                            anchors.bottomMargin: 22
                             z: 3
+                            source: "target_edited.png"
+                            // color: "red"
                         }
                     }
 
@@ -737,6 +767,32 @@ Rectangle {
                         return Math.random() * (max - min) + min;
                     }
                 }
+
+                Item{
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    SGAlignedLabel {
+                        id: zeroOffsetLabel
+                        target: zeroOffset
+                        alignment: SGAlignedLabel.SideTopLeft
+                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                        text: "Zero Offset"
+                        font.bold : true
+                        SGSubmitInfoBox {
+                            id: zeroOffset
+                            height:  35 * ratioCalc
+                            width: 135 * ratioCalc
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            infoBoxObject.unitOverrideWidth:50 * ratioCalc
+                            Layout.alignment: Qt.AlignLeft
+                            onEditingFinished: {
+                                boardImage.x = text
+                            }
+                        }
+                    }
+                }
+
+
 
                 Connections  {
                     target: platformInterface.notifications.get_data
@@ -761,6 +817,13 @@ Rectangle {
                         console.log(y)
                         currPositionUm.text = (y*1000).toFixed(0)
                         currPosition.text = x
+
+                        var data2 =  platformInterface.notifications.get_data.vel
+                        var  x2 = Math.floor(data2)
+                        var  y2 = data2 - x2;
+
+                        currVelocityUm.text = (y2*1000).toFixed(0)
+                        currVelocity.text = x2
 
                         // currentPosition.text = Number(positionIs).toFixed(2)
 

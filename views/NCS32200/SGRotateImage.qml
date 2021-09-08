@@ -4,19 +4,21 @@ import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
-
+import tech.strata.sgwidgets 1.0
+import tech.strata.fonts 1.0
 
 Rectangle {
     id: rect
-    width: 80; height: 80
-    color: "red"
-
+    width: 80
+    height: 150
+    color: "transparent"
     z: -1
+    property alias source: rotatingBox.source
 
     Image {
         id: rotatingBox
         fillMode: Image.PreserveAspectFit
-        source: "target_edited.png"
+        source: source
         anchors.fill: parent
 
         states: State {
