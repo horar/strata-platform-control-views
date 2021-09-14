@@ -739,8 +739,8 @@ Rectangle {
                     SGBoardImage {
                         id: boardImage
                         source: "board-image.png"
-                        width: parent.width*((2.4/3))//2.4/3 is the ratio of the track length to the plot
-                        height: parent.height*((2.4/3))
+                        width: parent.width*((2.68/3))//2.4/3 is the ratio of the track length to the plot
+                        height: parent.height*((2.68/3))
                         anchors.top: parent.top
 
                         SGRotateImage {
@@ -748,7 +748,7 @@ Rectangle {
                             width: parent.width - 28
                             height:  (parent.height/2)*1.1
                             anchors.bottom: parent.bottom
-                            anchors.bottomMargin: 22
+                            anchors.bottomMargin: 19
                             z: 3
                             source: "target_edited.png"
                         }
