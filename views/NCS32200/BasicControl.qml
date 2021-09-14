@@ -730,26 +730,18 @@ Rectangle {
                 anchors.fill:parent
                 spacing: 10
 
-                Rectangle {
+                Item {
                     id: container
                     Layout.preferredWidth: parent.width
                     Layout.preferredHeight: parent.height/5
                     Layout.alignment: Qt.AlignCenter
-                    color: "red"
 
-                    Image {
+                    SGBoardImage {
                         id: boardImage
                         source: "board-image.png"
-                        anchors.fill: parent
-                        states: State {
-                            name: "moved"
-                            PropertyChanges { target: boardImage; x: 0 }
-                        }
-
-                        transitions: Transition {
-                            PropertyAnimation { properties: "x,y"; easing.type: Easing.InOutQuad }
-                        }
-
+                        width: parent.width
+                        height: parent.height
+                        anchors.top: parent.top
 
                         SGRotateImage {
                             id: rotatingImage
@@ -759,7 +751,6 @@ Rectangle {
                             anchors.bottomMargin: 22
                             z: 3
                             source: "target_edited.png"
-                            // color: "red"
                         }
                     }
 
@@ -783,16 +774,16 @@ Rectangle {
                             height:  35 * ratioCalc
                             width: 135 * ratioCalc
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            infoBoxObject.unitOverrideWidth:50 * ratioCalc
+                            infoBoxObject.unitOverrideWidth: 50 * ratioCalc
                             Layout.alignment: Qt.AlignLeft
                             onEditingFinished: {
-                                boardImage.x = text
+                                var test = text
+                                boardImage.x = test
+                                console.log(boardImage.x,test)
                             }
                         }
                     }
                 }
-
-
 
                 Connections  {
                     target: platformInterface.notifications.get_data

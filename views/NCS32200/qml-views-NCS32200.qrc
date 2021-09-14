@@ -7,5 +7,6 @@
         <file>SGRotateImage.qml</file>
         <file>target_edited.png</file>
         <file>board-image.png</file>
+        <file>SGBoardImage.qml</file>
     </qresource>
 </RCC>
