@@ -18,6 +18,9 @@ Item {
     property real channel1Current: 0.0
     property real channel2Current: 0.0
     property real powerVoltage: 0.0
+
+    /*These are updated by notification of Light Control Service,
+      which does not work on windows. CS-2216 */
     property int channel1Pwm: 0
     property int channel2Pwm: 0
 
@@ -112,7 +115,7 @@ Item {
                     value: 0
 
                     onPressedChanged: {
-                        if (pressed === false && value != channel1Pwm) {
+                        if (pressed === false) {
                             Qt.callLater(writeLedData)
                         }
                     }
@@ -139,7 +142,7 @@ Item {
                     value: 0
 
                     onPressedChanged: {
-                        if (pressed === false && value != channel2Pwm) {
+                        if (pressed === false) {
                             Qt.callLater(writeLedData)
                         }
                     }

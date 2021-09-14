@@ -28,7 +28,7 @@ Rectangle {
         Help.registerTarget(runButton, "Click the run icon to start spinning the motor. The run icon will change to a stop icon once clicked. Click the stop icon to stop the motor. The motor control values on the Controls and Parameters tab may need to be adjusted depending on the connected motor's specifications. The direction control icon will be disabled while the motor is spinning.", 2, "BasicControlHelp")
         Help.registerTarget(brakeButton, "Click the brake icon to brake the motor. This feature may be disabled for certain motor controllers.", 3, "BasicControlHelp")
         Help.registerTarget(directionButton, "Click this icon to change the direction of the motor. The direction control icon will be disabled while the motor is spinning. The direction is from the perspective of the load. An incorrect hall polarity configuration could render the rotation direction invalid.", 4, "BasicControlHelp")
-        Help.registerTarget(warnings, "Warnings and errors are shown here for events such as Over Current Protection (OCP).", 5, "BasicControlHelp")
+        Help.registerTarget(warnings, "Warnings and errors are shown here for events such as Over Current Protection (OCP), Over Temperature Protection (OTP), and Over Voltage Protection (OVP).\n\nThe 'Warning' indicator is a run/stop warning that indicates the user stopped the motor before it reached the set Target Speed. The expected operation may differ during the next run command. This warning can be prevented by waiting until motor reaches the set Target Speed before stopping. Do not consider this warning during emergency stops!", 5, "BasicControlHelp")
         
     }
 
@@ -288,6 +288,18 @@ Rectangle {
                 toolTipText: platformInterface.notifications.warning_3.caption
                 status: {
                     if (platformInterface.notifications.warning_3.value) {
+                        status: SGStatusLight.Red
+                    } else {
+                        SGStatusLight.Off
+                    }
+                }
+            }
+
+            FaultLight {
+                text: platformInterface.notifications.warning_4.caption
+                toolTipText: platformInterface.notifications.warning_4.caption
+                status: {
+                    if (platformInterface.notifications.warning_4.value) {
                         status: SGStatusLight.Red
                     } else {
                         SGStatusLight.Off
