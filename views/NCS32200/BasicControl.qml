@@ -739,7 +739,7 @@ Rectangle {
                     SGBoardImage {
                         id: boardImage
                         source: "board-image.png"
-                        width: parent.width*((2.68/3))//2.4/3 is the ratio of the track length to the plot
+                        width: parent.width*((2.68/3))//2.68/3 is the ratio of the track length to the plot
                         height: parent.height*((2.68/3))
                         anchors.top: parent.top
 
@@ -815,6 +815,15 @@ Rectangle {
 
                         currVelocityUm.text = (y2*1000).toFixed(0)
                         currVelocity.text = x2
+
+                        //adjust images with offset
+
+                        var test = platformInterface.notifications.get_data.auto_zero_offset
+                        boardImage.x = test
+                        console.log(boardImage.x,test)
+
+                        zeroOffset.text = test
+
 
                         // currentPosition.text = Number(positionIs).toFixed(2)
 

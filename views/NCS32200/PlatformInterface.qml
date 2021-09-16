@@ -34,7 +34,6 @@ PlatformInterfaceBase {
             property int accel: 0
             property int turns: 0
             property real auto_zero_offset: 0
-            property real zero_position_offset: 0
 
             signal notificationFinished()
         }
