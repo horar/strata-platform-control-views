@@ -726,7 +726,8 @@ Rectangle {
         Item  {
             Layout.preferredWidth: parent.width/2.3
             Layout.fillHeight: true
-            ColumnLayout{
+
+            ColumnLayout {
                 anchors.fill:parent
                 spacing: 10
 
@@ -735,20 +736,27 @@ Rectangle {
                     Layout.preferredWidth: parent.width
                     Layout.preferredHeight: parent.height/5
                     Layout.alignment: Qt.AlignCenter
+                    Layout.leftMargin: 25
 
                     SGBoardImage {
                         id: boardImage
                         source: "board-image.png"
                         width: parent.width*((2.68/3))//2.68/3 is the ratio of the track length to the plot
                         height: parent.height*((2.68/3))
+//                        width: parent.width
+//                        height: parent.height
+
                         anchors.top: parent.top
 
                         SGRotateImage {
                             id: rotatingImage
-                            width: parent.width - 28
-                            height:  (parent.height/2)*1.1
+
+                            width: parent.width
+                            height:  (parent.height/2) * 1.1
+
                             anchors.bottom: parent.bottom
                             anchors.bottomMargin: 19
+
                             z: 3
                             source: "target_edited.png"
                         }
@@ -778,7 +786,7 @@ Rectangle {
                             Layout.alignment: Qt.AlignLeft
                             onEditingFinished: {
                                 var test = text
-                                boardImage.x = test
+                                boardImage.x = test.toString()
                                 console.log(boardImage.x,test)
                             }
                         }

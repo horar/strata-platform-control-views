@@ -20,6 +20,7 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
         source: source
         anchors.fill: parent
+        //horizontalAlignment: Image.AlignRight
 
         states: State {
             name: "moved"
@@ -27,7 +28,7 @@ Rectangle {
         }
 
         transitions: Transition {
-            PropertyAnimation { properties: "x,y"; easing.type: Easing.InOutQuad }
+            PropertyAnimation { properties: "x"; easing.type: Easing.InOutQuad }
         }
     }
 }
