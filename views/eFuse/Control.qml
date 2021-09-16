@@ -29,7 +29,7 @@ Item {
                 advanced.warningBox.visible = true
                 advanced.warningBackground.visible = true
                 advanced.resetButton.enabled = false
-                Help.current_tour_targets[index]["helpObject"].restoreFocus()
+                Help.help_object.restoreFocus()
             }
             else {
                 advanced.warningBox.close()

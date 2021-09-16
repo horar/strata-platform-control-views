@@ -55,7 +55,7 @@ Item {
         }
         onInternal_tour_indexChanged: {
             if(Help.current_tour_targets[index]["target"] === vedInputVoltageType) {
-                Help.current_tour_targets[index]["helpObject"].toolTipPopup.width = 800
+                Help.help_object.toolTipPopup.width = 800
             }
         }
     }

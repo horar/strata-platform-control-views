@@ -55,13 +55,13 @@ Rectangle{
             target: Help.utility
             onInternal_tour_indexChanged: {
                 if(Help.current_tour_targets[index]["target"] === carContainer) {
-                    Help.current_tour_targets[index]["helpObject"].toolTipPopup.width = 800
+                    Help.help_object.toolTipPopup.width = 800
                 }
                 if(Help.current_tour_targets[index]["target"] === controlContainerForHelp) {
-                    Help.current_tour_targets[index]["helpObject"].toolTipPopup.width = 750
+                    Help.help_object.toolTipPopup.width = 750
                 }
                 if(Help.current_tour_targets[index]["target"] === brightnessContainerForHelp) {
-                    Help.current_tour_targets[index]["helpObject"].toolTipPopup.width = 500
+                    Help.help_object.toolTipPopup.width = 500
                 }
             }
         }
