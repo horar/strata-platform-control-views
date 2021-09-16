@@ -852,7 +852,7 @@ Rectangle {
                         xMin: -110
                         xMax: 110
                         yMin: 0
-                        yMax: 20
+                        yMax: 60
                         xTitle: "Position (mm)"
                         yTitle: "Time (s)"
                         yRightTitle: "Velocity"
