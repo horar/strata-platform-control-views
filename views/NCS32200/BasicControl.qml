@@ -731,6 +731,7 @@ Rectangle {
                 anchors.fill:parent
                 spacing: 10
 
+
                 Item {
                     id: container
                     Layout.preferredWidth: parent.width
@@ -743,22 +744,34 @@ Rectangle {
                         source: "board-image.png"
                         width: parent.width*((2.68/3))//2.68/3 is the ratio of the track length to the plot
                         height: parent.height*((2.68/3))
-//                        width: parent.width
-//                        height: parent.height
+                        //                        width: parent.width
+                        //                        height: parent.height
 
                         anchors.top: parent.top
+                        color: "green"
 
-                        SGRotateImage {
-                            id: rotatingImage
 
-                            width: parent.width
-                            height:  (parent.height/2) * 1.1
-
+                        Rectangle {
+                            width: parent.width * 35/82
+                            height: (parent.height/2) * 1.1
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.horizontalCenterOffset: -65
                             anchors.bottom: parent.bottom
                             anchors.bottomMargin: 19
+                            color: "pink"
+                            opacity: 0.5
 
-                            z: 3
-                            source: "target_edited.png"
+                            SGRotateImage {
+                                id: rotatingImage
+
+                                width: parent.width
+                                height:  parent.height
+
+                                z: 3
+                                source: "target_edited.png"
+                                color: "red"
+                                opacity: 0.8
+                            }
                         }
                     }
 
@@ -766,6 +779,7 @@ Rectangle {
                         return Math.random() * (max - min) + min;
                     }
                 }
+
 
                 Item{
                     Layout.fillHeight: true
@@ -785,7 +799,7 @@ Rectangle {
                             infoBoxObject.unitOverrideWidth: 50 * ratioCalc
                             Layout.alignment: Qt.AlignLeft
                             onEditingFinished: {
-                                var test = text
+                                var test = (text * 7/5) + 60
                                 boardImage.x = test.toString()
                                 console.log(boardImage.x,test)
                             }
@@ -827,7 +841,7 @@ Rectangle {
                         //adjust images with offset
 
                         var test = platformInterface.notifications.get_data.auto_zero_offset
-                        boardImage.x = test
+                        boardImage.x = (test * 7/5) + 60
                         console.log(boardImage.x,test)
 
                         zeroOffset.text = test
@@ -875,6 +889,7 @@ Rectangle {
                         zoomYEnabled: false
                         autoUpdate: false
                         backgroundColor: "white"
+
 
                         Component.onCompleted:  {
                             let positionCurve = createCurve("graphCurve")
