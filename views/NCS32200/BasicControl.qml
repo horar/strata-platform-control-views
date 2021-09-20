@@ -742,13 +742,13 @@ Rectangle {
                     SGBoardImage {
                         id: boardImage
                         source: "board-image.png"
-                        width: parent.width*((2.68/3))//2.68/3 is the ratio of the track length to the plot
-                        height: parent.height*((2.68/3))
+                        width: parent.width*((1))//2.68/3 is the ratio of the track length to the plot
+                        height: parent.height*((1))
                         //                        width: parent.width
                         //                        height: parent.height
 
                         anchors.top: parent.top
-                        color: "green"
+                        //color: "green"
 
 
                         Rectangle {
@@ -757,9 +757,9 @@ Rectangle {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.horizontalCenterOffset: -65
                             anchors.bottom: parent.bottom
-                            anchors.bottomMargin: 19
-                            color: "pink"
-                            opacity: 0.5
+                            anchors.bottomMargin: 23
+                            color: "transparent"
+                            //opacity: 0.5
 
                             SGRotateImage {
                                 id: rotatingImage
@@ -769,8 +769,8 @@ Rectangle {
 
                                 z: 3
                                 source: "target_edited.png"
-                                color: "red"
-                                opacity: 0.8
+                                //color: "red"
+                                opacity: 1
                             }
                         }
                     }
@@ -811,7 +811,7 @@ Rectangle {
                     target: platformInterface.notifications.get_data
                     onNotificationFinished: {
                         var positionIs = platformInterface.notifications.get_data.pos
-                        rotatingImage.x = positionIs
+                        rotatingImage.x = positionIs * (70/50) + 23
 
                         let currentTime = Date.now()
                         let curve = timedGraphPoints.curve(0)
@@ -841,7 +841,7 @@ Rectangle {
                         //adjust images with offset
 
                         var test = platformInterface.notifications.get_data.auto_zero_offset
-                        boardImage.x = (test * 7/5) + 60
+                        boardImage.x = (test * 7/5) + 50
                         console.log(boardImage.x,test)
 
                         zeroOffset.text = test
