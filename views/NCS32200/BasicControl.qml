@@ -810,8 +810,15 @@ Rectangle {
                 Connections  {
                     target: platformInterface.notifications.get_data
                     onNotificationFinished: {
+                        //adjust images with offset
+
+                        var offset = platformInterface.notifications.get_data.auto_zero_offset
+                        boardImage.x = (offset * 7/5) + 50
+                        console.log(boardImage.x,offset)
+                        zeroOffset.text = offset
+
                         var positionIs = platformInterface.notifications.get_data.pos
-                        rotatingImage.x = positionIs * (70/50) + 23
+                        rotatingImage.x = positionIs * (70/50) - ((offset)*5/7)
 
                         let currentTime = Date.now()
                         let curve = timedGraphPoints.curve(0)
@@ -838,13 +845,7 @@ Rectangle {
                         currVelocityUm.text = (y2*1000).toFixed(0)
                         currVelocity.text = x2
 
-                        //adjust images with offset
 
-                        var test = platformInterface.notifications.get_data.auto_zero_offset
-                        boardImage.x = (test * 7/5) + 50
-                        console.log(boardImage.x,test)
-
-                        zeroOffset.text = test
 
 
                         // currentPosition.text = Number(positionIs).toFixed(2)
