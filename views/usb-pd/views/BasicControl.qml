@@ -202,7 +202,7 @@ Item {
 
             Text{
                 id:converterNameText
-                text:"ON Semiconductor NCP4060A"
+                text:"onsemi NCP4060A"
                 visible: false //inputConversionStats.inputPowerConnected
                 font.pixelSize: 20
                 //color: "#bbb"
