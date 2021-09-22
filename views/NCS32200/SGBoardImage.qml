@@ -7,30 +7,18 @@ import QtQuick.Extras 1.4
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
 
-Rectangle {
-    id: rect
-    width: 80
-    height: 150
-    color: "transparent"
-    z: -1
-    property alias source: rotatingBox.source
-    onXChanged: {
-        console.info("test", x)
+Image {
+    id: rotatingBox
+    fillMode: Image.PreserveAspectFit
+    source: source
+
+    states: State {
+        name: "moved"
+        PropertyChanges { target: rect; x: 0 }
     }
 
-    Image {
-        id: rotatingBox
-        fillMode: Image.PreserveAspectFit
-        source: source
-        anchors.fill: parent
-
-        states: State {
-            name: "moved"
-            PropertyChanges { target: rect; x: 0 }
-        }
-
-        transitions: Transition {
-            PropertyAnimation { properties: "x,y"; easing.type: Easing.InOutQuad }
-        }
+    transitions: Transition {
+        PropertyAnimation { properties: "x,y"; easing.type: Easing.InOutQuad }
     }
 }
+

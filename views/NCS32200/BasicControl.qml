@@ -87,7 +87,7 @@ Rectangle {
         id: timer
         running: false
         repeat: false
-        interval: 200
+        interval: 500
         onTriggered: {
             console.log("Error: TimedOut")
             sendCommand()
@@ -369,7 +369,7 @@ Rectangle {
                         SGInfoBox{
                             id: currPosition
                             height:  35 * ratioCalc
-                            width: 135 * ratioCalc
+                            width: 125 * ratioCalc
                             anchors {
                                 left: parent.left
                                 verticalCenter: parent.verticalCenter
@@ -386,7 +386,7 @@ Rectangle {
                         SGInfoBox{
                             id: currPositionUm
                             height:  35 * ratioCalc
-                            width: 135 * ratioCalc
+                            width: 125 * ratioCalc
                             anchors {
                                 left: parent.left
                                 verticalCenter: parent.verticalCenter
@@ -425,7 +425,7 @@ Rectangle {
                         SGInfoBox {
                             id:  currVelocity
                             height:  35 * ratioCalc
-                            width: 135 * ratioCalc
+                            width: 125 * ratioCalc
                             anchors {
                                 left: parent.left
                                 verticalCenter: parent.verticalCenter
@@ -443,7 +443,7 @@ Rectangle {
                         SGInfoBox {
                             id: currVelocityUm
                             height:  35 * ratioCalc
-                            width: 135 * ratioCalc
+                            width: 125 * ratioCalc
                             anchors {
                                 left: parent.left
                                 verticalCenter: parent.verticalCenter
@@ -455,7 +455,28 @@ Rectangle {
                     }
 
                 }
+                Item{
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
 
+                    SGAlignedLabel {
+                        id: zeroOffsetLabel
+                        target: zeroOffset
+                        alignment: SGAlignedLabel.SideTopLeft
+                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                        text: "Zero Offset"
+                        font.bold : true
+
+                        SGSubmitInfoBox {
+                            id: zeroOffset
+                            height:  35 * ratioCalc
+                            width: 135 * ratioCalc
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            infoBoxObject.unitOverrideWidth: 50 * ratioCalc
+                            Layout.alignment: Qt.AlignLeft
+                        }
+                    }
+                }
                 RowLayout{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
@@ -722,89 +743,94 @@ Rectangle {
             }
         }
 
-
         Item  {
-            Layout.preferredWidth: parent.width/2.3
+            Layout.preferredWidth: parent.width/2
             Layout.fillHeight: true
 
             ColumnLayout {
-                anchors.fill:parent
+                id: column1
+                height: parent.height
+                width: parent.width/1.25
                 spacing: 10
-
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    horizontalCenterOffset: parent.width * .025
+                }
 
                 Item {
                     id: container
-                    Layout.preferredWidth: parent.width
-                    Layout.preferredHeight: parent.height/5
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
                     Layout.alignment: Qt.AlignCenter
-                    Layout.leftMargin: 25
+                    z: 10
 
                     SGBoardImage {
                         id: boardImage
                         source: "board-image.png"
-                        width: parent.width*((1))//2.68/3 is the ratio of the track length to the plot
-                        height: parent.height*((1))
-                        //                        width: parent.width
-                        //                        height: parent.height
+                        anchors {
+                            bottom: parent.bottom
+                        }
+                        width: {
+                            let left = timedGraphPoints.mapToPosition(Qt.point(-110, 0))
+                            let right = timedGraphPoints.mapToPosition(Qt.point(110, 0))
+                            boardImage.graphBaseDimension = (right.x - left.x)/220
+                            return (right.x - left.x) / (.475 * 2)
+                        }
 
-                        anchors.top: parent.top
-                        //color: "green"
+                        property real graphBaseDimension
 
+                        Component.onCompleted: {
+                            if (visible) {
+                                update()
+                            }
+                        }
 
-                        Rectangle {
-                            width: parent.width * 35/82
-                            height: (parent.height/2) * 1.1
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.horizontalCenterOffset: 10
-                            anchors.bottom: parent.bottom
-                            anchors.bottomMargin: 23
-                            //color: "transparent"
-                            color: "pink"
-                            opacity: 0.5
+                        Connections {
+                            target: timedGraphPoints
+                            onWidthChanged: {
+                               boardImage.update()
+                            }
+                        }
+
+                        Connections {
+                            target: zeroOffset
+                            onTextChanged: {
+                                boardImage.update()
+                            }
+                        }
+
+                        function update() {
+                            let left = timedGraphPoints.mapToPosition(Qt.point(-110, 0))
+                            let right = timedGraphPoints.mapToPosition(Qt.point(110, 0))
+                            boardImage.graphBaseDimension = (right.x - left.x)/220
+                            boardImage.width = (right.x - left.x) / (.475 * 2) // 110mm scale is .475 of total board width. since graph is 2x110, divide by (.475 *2)
+                            boardImage.x = left.x - (boardImage.width * .28) + (-zeroOffset.text * boardImage.graphBaseDimension) + (110 * boardImage.graphBaseDimension)
+                        }
+
+                        Item {
+                            width: .475 * boardImage.width
+                            height: .55 * boardImage.height
+                            x: .28 * boardImage.width
+                            y: .29 * boardImage.height
 
                             SGRotateImage {
                                 id: rotatingImage
-
-                                width: parent.width
-                                height:  parent.height
-
-                                z: 3
+                                x: boardImage.graphBaseDimension * (Number(currPosition.text) + Number(zeroOffset.text))
+                                width: 0
+                                height: parent.height
                                 source: "target_edited.png"
-                                color: "red"
-                                opacity: 1
+
+                                Rectangle {
+                                    color: "black"
+                                    width: 1
+                                    height: 2000
+                                }
                             }
                         }
                     }
 
                     function getRandomArbitrary(min, max) {
                         return Math.random() * (max - min) + min;
-                    }
-                }
-
-
-                Item{
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    SGAlignedLabel {
-                        id: zeroOffsetLabel
-                        target: zeroOffset
-                        alignment: SGAlignedLabel.SideTopLeft
-                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                        text: "Zero Offset"
-                        font.bold : true
-                        SGSubmitInfoBox {
-                            id: zeroOffset
-                            height:  35 * ratioCalc
-                            width: 135 * ratioCalc
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            infoBoxObject.unitOverrideWidth: 50 * ratioCalc
-                            Layout.alignment: Qt.AlignLeft
-                            onEditingFinished: {
-                                var test = text
-                                boardImage.x = test
-                                console.log(boardImage.x,test)
-                            }
-                        }
                     }
                 }
 
@@ -818,13 +844,10 @@ Rectangle {
                         //adjust images with offset
 
                         var offset = platformInterface.notifications.get_data.auto_zero_offset
-                        boardImage.x = (-1 * offset * 1.3) + 50
                         console.log(boardImage.x,offset)
                         zeroOffset.text = offset
 
                         var positionIs = platformInterface.notifications.get_data.pos
-                        //rotatingImage.x = positionIs * (70/50) + ((offset)*7/5)
-                        rotatingImage.x = (positionIs*1.7*offset_label) + 30 + Number(posmult_label) + (offset * 1.3)
 
                         let currentTime = Date.now()
                         let curve = timedGraphPoints.curve(0)
@@ -850,29 +873,14 @@ Rectangle {
 
                         currVelocityUm.text = (y2*1000).toFixed(0)
                         currVelocity.text = x2
-
-
-
-
-                        // currentPosition.text = Number(positionIs).toFixed(2)
-
-                        //  if(positionIs.toFixed(0) === "360") {
-                        //   angleDial.previousAngle = 0
-                        //   angleDial.angle = 0
-                        //   angleDial.rotation.start()
-                        //  }
-                        //                        else  {
-                        //                            angleDial.previousAngle = angleDial.angle
-                        //                            angleDial.angle = positionIs.toFixed(0)
-                        //                            angleDial.rotation.start()
-                        //                        }
-
                     }
                 }
 
                 Item {
+                    id: graphContainer
                     Layout.fillWidth: true
-                    Layout.preferredHeight: parent.height/1.5
+                    Layout.preferredHeight: parent.height/1.35
+
                     SGGraph {
                         id: timedGraphPoints
                         anchors.bottom: parent.bottom

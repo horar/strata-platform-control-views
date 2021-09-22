@@ -7,20 +7,23 @@ import QtQuick.Extras 1.4
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
 
-Rectangle {
-    id: rect
-    width: 80
-    height: 150
-    color: "transparent"
-    z: -1
+Item {
     property alias source: rotatingBox.source
 
     Image {
         id: rotatingBox
         fillMode: Image.PreserveAspectFit
         source: source
-        anchors.fill: parent
-        //horizontalAlignment: Image.AlignRight
+        height: parent.height
+        anchors {
+            centerIn: parent
+        }
+        layer.enabled: true
+        layer.effect: DropShadow {
+            samples: 8
+            verticalOffset: 3
+            horizontalOffset: 1
+        }
 
         states: State {
             name: "moved"
