@@ -87,7 +87,7 @@ Rectangle {
         id: timer
         running: false
         repeat: false
-        interval: 500
+        interval: 200
         onTriggered: {
             console.log("Error: TimedOut")
             sendCommand()
@@ -755,11 +755,12 @@ Rectangle {
                             width: parent.width * 35/82
                             height: (parent.height/2) * 1.1
                             anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.horizontalCenterOffset: -65
+                            anchors.horizontalCenterOffset: 10
                             anchors.bottom: parent.bottom
                             anchors.bottomMargin: 23
-                            color: "transparent"
-                            //opacity: 0.5
+                            //color: "transparent"
+                            color: "pink"
+                            opacity: 0.5
 
                             SGRotateImage {
                                 id: rotatingImage
@@ -769,7 +770,7 @@ Rectangle {
 
                                 z: 3
                                 source: "target_edited.png"
-                                //color: "red"
+                                color: "red"
                                 opacity: 1
                             }
                         }
@@ -799,8 +800,8 @@ Rectangle {
                             infoBoxObject.unitOverrideWidth: 50 * ratioCalc
                             Layout.alignment: Qt.AlignLeft
                             onEditingFinished: {
-                                var test = (text * 7/5) + 60
-                                boardImage.x = test.toString()
+                                var test = text
+                                boardImage.x = test
                                 console.log(boardImage.x,test)
                             }
                         }
@@ -810,15 +811,20 @@ Rectangle {
                 Connections  {
                     target: platformInterface.notifications.get_data
                     onNotificationFinished: {
+
+                        var offset_label = Number(posmult.text)
+
+                        var posmult_label = Number(offsetbox.text)
                         //adjust images with offset
 
                         var offset = platformInterface.notifications.get_data.auto_zero_offset
-                        boardImage.x = (offset * 7/5) + 50
+                        boardImage.x = (-1 * offset * 1.3) + 50
                         console.log(boardImage.x,offset)
                         zeroOffset.text = offset
 
                         var positionIs = platformInterface.notifications.get_data.pos
-                        rotatingImage.x = positionIs * (70/50) - ((offset)*5/7)
+                        //rotatingImage.x = positionIs * (70/50) + ((offset)*7/5)
+                        rotatingImage.x = (positionIs*1.7*offset_label) + 30 + Number(posmult_label) + (offset * 1.3)
 
                         let currentTime = Date.now()
                         let curve = timedGraphPoints.curve(0)
@@ -1371,6 +1377,44 @@ Rectangle {
                                                 addCommand("dummy_data","true")
                                             else
                                                 addCommand("dummy_data","false")
+                                        }
+                                    }
+                                }
+                                Item{
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                    SGAlignedLabel {
+                                        id: posmultlabel
+                                        alignment: SGAlignedLabel.SideTopLeft
+                                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                        text: "position mult"
+                                        font.bold : true
+                                        SGSubmitInfoBox {
+                                            id: posmult
+                                            height:  35 * ratioCalc
+                                            width: 50 * ratioCalc
+                                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                            infoBoxObject.unitOverrideWidth: 50 * ratioCalc
+                                            Layout.alignment: Qt.AlignLeft
+                                        }
+                                    }
+                                }
+                                Item{
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                    SGAlignedLabel {
+                                        id: offsetlabel
+                                        alignment: SGAlignedLabel.SideTopLeft
+                                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                        text: "Offset"
+                                        font.bold : true
+                                        SGSubmitInfoBox {
+                                            id: offsetbox
+                                            height:  35 * ratioCalc
+                                            width: 50 * ratioCalc
+                                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                            infoBoxObject.unitOverrideWidth: 50 * ratioCalc
+                                            Layout.alignment: Qt.AlignLeft
                                         }
                                     }
                                 }
