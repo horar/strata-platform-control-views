@@ -837,7 +837,7 @@ Rectangle {
 
                     SGBoardImage {
                         id: boardImage
-                        source: "board-image.png"
+                        source: "images/board-image.png"
                         anchors {
                             bottom: parent.bottom
                         }
@@ -895,7 +895,7 @@ Rectangle {
                                 x: boardImage.graphBaseDimension * (Number(currPosition.text) + Number(zeroOffset))
                                 width: 0
                                 height: parent.height
-                                source: "target_edited.png"
+                                source: "images/target_edited.png"
 
                                 Rectangle {
                                     color: "black"
@@ -913,7 +913,6 @@ Rectangle {
                         var offset = platformInterface.notifications.get_data.auto_zero_offset
                         console.log(boardImage.x,offset)
                         zeroOffset = offset
-
 
                         currOffsetMm.text = Math.floor(zeroOffset)
                         currOffsetUm.text = ((offset - Math.floor(zeroOffset))*1000).toFixed(0)
@@ -1164,7 +1163,6 @@ Rectangle {
                                     onUserSet: {
                                         addIntCommand("set_low_batt",value.toFixed(1))
                                     }
-
                                 }
                             }
                         }
