@@ -781,6 +781,59 @@
             ]
         },
         {
+            "value": "warning_4",
+            "payload": [
+                {
+                    "name": "caption",
+                    "type": "string",
+                    "value": "Warning 4"
+                },
+                {
+                    "name": "scales",
+                    "type": "array-static-sized",
+                    "value": [
+                        {
+                            "type": "int",
+                            "value": 0
+                        },
+                        {
+                            "type": "int",
+                            "value": 0
+                        },
+                        {
+                            "type": "int",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "name": "states",
+                    "type": "array-static-sized",
+                    "value": [
+                        {
+                            "type": "int",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "unit",
+                    "type": "string",
+                    "value": ""
+                },
+                {
+                    "name": "value",
+                    "type": "bool",
+                    "value": false
+                },
+                {
+                    "name": "values",
+                    "type": "array-dynamic-sized",
+                    "value": []
+                }
+            ]
+        },
+        {
             "value": "status_log",
             "payload": [
                 {

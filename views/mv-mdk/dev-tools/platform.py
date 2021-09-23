@@ -1,3 +1,11 @@
+#
+# Copyright (c) 2018-2021 onsemi.
+#
+# All rights reserved. This software and/or documentation is licensed by onsemi under
+# limited terms and conditions. The terms and conditions pertaining to the software and/or
+# documentation are available at http://www.onsemi.com/site/pdf/ONSEMI_T&C.pdf (“onsemi Standard
+# Terms and Conditions of Sale, Section 8 Software”).
+#
 from threading import Thread
 import time
 import serial
@@ -71,6 +79,25 @@ def take_input():
             return
         elif (notification == 'demo_config'):
             demo_config()
+        elif (notification == 'status_log_fill'):
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"aaaaaaaaaaaaaaaaaaaaaaa..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"bbbbbbbbbbbbbbbbbbbbbbb..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ccccccccccccccccccccccc..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ddddddddddddddddddddddd..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"eeeeeeeeeeeeeeeeeeeeeee..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"fffffffffffffffffffffff..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ggggggggggggggggggggggg..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"hhhhhhhhhhhhhhhhhhhhhhh..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"iiiiiiiiiiiiiiiiiiiiiii..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"jjjjjjjjjjjjjjjjjjjjjjj..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"kkkkkkkkkkkkkkkkkkkkkkk..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"lllllllllllllllllllllll..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"mmmmmmmmmmmmmmmmmmmmmmm..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"nnnnnnnnnnnnnnnnnnnnnnn..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ooooooooooooooooooooooo..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"ppppppppppppppppppppppp..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"qqqqqqqqqqqqqqqqqqqqqqq..."}}}\n'.encode())
+            ser.write('{"notification":{"value":"status_log","payload":{"value":"rrrrrrrrrrrrrrrrrrrrrrr..."}}}\n'.encode())
         else:
             ser.write((notification + '\n').encode())
 
@@ -101,6 +128,8 @@ def demo_config():
     ser.write('{"notification":{"value":"warning_2","payload":{"caption":"OTP","scales":[],"states":[1],"value":false,"values":[],"unit":""}}}\n'.encode())
     # time.sleep(0.5)
     ser.write('{"notification":{"value":"warning_3","payload":{"caption":"OVP","scales":[],"states":[1],"value":false,"values":[],"unit":""}}}\n'.encode())
+    # time.sleep(0.5)
+    ser.write('{"notification":{"value":"warning_4","payload":{"caption":"???","scales":[],"states":[1],"value":false,"values":[],"unit":""}}}\n'.encode())
     # time.sleep(0.5)
     ser.write('{"notification":{"value":"status_log","payload":{"value":"Done!"}}}\n'.encode())
 

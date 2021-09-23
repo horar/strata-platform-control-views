@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2018-2021 onsemi.
+ *
+ * All rights reserved. This software and/or documentation is licensed by onsemi under
+ * limited terms and conditions. The terms and conditions pertaining to the software and/or
+ * documentation are available at http://www.onsemi.com/site/pdf/ONSEMI_T&C.pdf (“onsemi Standard
+ * Terms and Conditions of Sale, Section 8 Software”).
+ */
 import QtQuick 2.12
 import QtQml 2.12
 
@@ -5,7 +13,6 @@ import "qrc:/js/help_layout_manager.js" as Help
 import tech.strata.sgwidgets 1.0
 import tech.strata.sglayout 1.0
 import tech.strata.commoncpp 1.0
-import QtTest 1.1
 
 UIBase { // start_uibase
     
@@ -51,7 +58,7 @@ UIBase { // start_uibase
         Help.registerTarget(cp_protection_ocp_help, "Software over current protection (OCP) value and state. The status of an OCP event is shown on the left menu. A protection event will disable the motor. The OCP value will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 21, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_ovp_help, "Hardware over voltage protection (OVP) value and state. The status of an OVP event is shown on the left menu. A protection event will disable the motor. The OVP value will be automatically adjusted based on the voltage variant connected but can be overridden by the user.", 22, "ControlsAndParametersHelp")
         Help.registerTarget(cp_protection_fet_otp_help, "MOSFET over temperature (OTP) value. The status of an OTP event is shown on the left menu. A protection event will disable the motor.", 23, "ControlsAndParametersHelp")
-        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box.\n\nTo load parameters, select the desired parameter set in the combo box and click Load to recall the parameters and automatically configure the motor controller. The motor will need to be re-enabled if already running to apply parameters.\n\nTo remove parameters, select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json files in '%APPDATA%\\Roaming\\ON Semiconductor\\Strata Developer Studio\\settings' directory and can be transferred between PCs if desired.\n\nThe parameters used during hardware validation are included for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded during user interface initialization by default with these parameters automatically adjusted based on the voltage variant connected: 'Integral Error Limit (V)', 'Rated Voltage (V)', 'Software OCP (A)', and 'Vin OVP Limit (V)'. These certain parameters are also automatically adjusted using when loading a parameter set. The included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
+        Help.registerTarget(cp_save_load_parameters_help, "The parameters on this tab can be saved to disk and recalled for flexibility testing with motors, loads, etc. that have different specifications. Enter a name for the parameter set and click Save to write to disk. This will place the parameter set into the combo box.\n\nTo load parameters, select the desired parameter set in the combo box and click Load to recall the parameters and automatically configure the motor controller. The motor will need to be re-enabled if already running to apply parameters.\n\nTo remove parameters, select the desired parameter set to remove from the combo box and click Delete.\n\nThese parameters are saved as a .json files in '%APPDATA%\\Roaming\\onsemi\\Strata Developer Studio\\settings' directory and can be transferred between PCs if desired.\n\nThe parameters used during hardware validation are included for 4 different motors and 1 setup for universal configuration. The universal configuration is loaded during user interface initialization by default with these parameters automatically adjusted based on the voltage variant connected: 'Integral Error Limit (V)', 'Rated Voltage (V)', 'Software OCP (A)', and 'Vin OVP Limit (V)'. These certain parameters are also automatically adjusted using when loading a parameter set. The included parameters cannot be deleted.", 24, "ControlsAndParametersHelp")
 
         defaults_per_class_id()
     
