@@ -4,7 +4,7 @@
         <file>PlatformInterface.qml</file>
         <file>platformInterface.json</file>
         <file>BasicControl.qml</file>
-        <file>SGRotateImage.qml</file>
+        <file>SGTargetImage.qml</file>
         <file>target_edited.png</file>
         <file>board-image.png</file>
         <file>SGBoardImage.qml</file>

@@ -67,12 +67,9 @@ Rectangle {
     DebugMenu {
         id: debugMenu
         visible: false
-        // See description in control-views/DebugMenu.qml
         anchors {
             right: debugButton.left
             bottom: basic.bottom
         }
     }
-
-
 }

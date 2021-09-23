@@ -890,7 +890,7 @@ Rectangle {
                             x: .28 * boardImage.width
                             y: .29 * boardImage.height
 
-                            SGRotateImage {
+                            SGTargetImage {
                                 id: rotatingImage
                                 x: boardImage.graphBaseDimension * (Number(currPosition.text) + Number(zeroOffset))
                                 width: 0
@@ -904,10 +904,6 @@ Rectangle {
                                 }
                             }
                         }
-                    }
-
-                    function getRandomArbitrary(min, max) {
-                        return Math.random() * (max - min) + min;
                     }
                 }
 
@@ -938,7 +934,7 @@ Rectangle {
                         var data = platformInterface.notifications.get_data.pos
                         var  x = Math.floor(data)
                         var  y = data - x;
-                        //console.log(y)
+
                         currPositionUm.text = (y*1000).toFixed(0)
                         currPosition.text = x
 
@@ -955,6 +951,7 @@ Rectangle {
                     id: graphContainer
                     Layout.fillWidth: true
                     Layout.preferredHeight: parent.height/1.35
+                    Layout.bottomMargin: 10
 
                     SGGraph {
                         id: timedGraphPoints
@@ -967,10 +964,8 @@ Rectangle {
                         yMax: 60
                         xTitle: "Position (mm)"
                         yTitle: "Time (s)"
-                        //yRightTitle: "Velocity"
                         xGrid: true
                         yGrid: true
-                        //yRightVisible: true
                         gridColor: "black"
                         foregroundColor: "black"
                         panXEnabled: false
@@ -979,7 +974,6 @@ Rectangle {
                         zoomYEnabled: false
                         autoUpdate: false
                         backgroundColor: "white"
-
 
                         Component.onCompleted:  {
                             let positionCurve = createCurve("graphCurve")
@@ -1128,14 +1122,12 @@ Rectangle {
                                     fromText.text: "2.7 V"
                                     toText.text: "4.5 V"
                                     inputBoxWidth: vbatSetContainer.width/3
-                                    // inputBox.unit: " V"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        console.log(Number(value).toFixed(1))
                                         addCommand("set_battv",(Number(value).toFixed(1)))
                                     }
                                 }
@@ -1164,7 +1156,6 @@ Rectangle {
                                     fromText.text: "2.7 V"
                                     toText.text: "4.5 V"
                                     inputBoxWidth: batteryThresholdContainer.width/3
-                                    //inputBox.unit: " V"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
@@ -1448,28 +1439,10 @@ Rectangle {
                                         }
                                     }
                                 }
-//                                Item {
-//                                    Layout.fillHeight: true
-//                                    Layout.fillWidth: true
-
-//                                    SGSwitch {
-//                                        id: dummy_switch
-//                                        checkedLabel: "Dummy"
-//                                        uncheckedLabel: "Real"
-//                                        onToggled: {
-//                                            if(checked)
-//                                                addCommand("dummy_data","true")
-//                                            else
-//                                                addCommand("dummy_data","false")
-//                                        }
-//                                    }
-//                                }
-
 
                                 Item {
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
-
                                 }
                             }
                         }

@@ -15,6 +15,7 @@ Rectangle {
     }
     ColumnLayout {
         anchors.fill: parent
+        spacing: 10
         Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -32,6 +33,11 @@ Rectangle {
                     }
                 }
             }
+        }
+
+        Item {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
         }
     }
 }
