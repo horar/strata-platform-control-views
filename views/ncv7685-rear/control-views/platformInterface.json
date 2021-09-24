@@ -1,0 +1,355 @@
+{
+    "commands": [
+        {
+            "cmd": "request_platform_id",
+            "payload": null
+        },
+        {
+            "cmd": "get_firmware_info",
+            "payload": null
+        },
+        {
+            "cmd": "demo_welcome",
+            "payload": {
+                "one_shot": "bool"
+            }
+        },
+        {
+            "cmd": "demo_byebye",
+            "payload": {
+                "one_shot": "bool"
+            }
+        },
+        {
+            "cmd": "demo_left_turn",
+            "payload": {
+                "one_shot": "bool",
+                "period": "int",
+                "cycle": "int"
+            }
+        },
+        {
+            "cmd": "demo_right_turn",
+            "payload": {
+                "one_shot": "bool",
+                "period": "int",
+                "cycle": "int"
+            }
+        },
+        {
+            "cmd": "demo_brake",
+            "payload": {
+                "strength": "int"
+            }
+        },
+        {
+            "cmd": "demo_fading",
+            "payload": {
+                "one_shot": "bool",
+                "period": "int",
+                "cycle": "int"
+            }
+        },
+        {
+            "cmd": "demo_warning",
+            "payload": {
+                "one_shot": "bool",
+                "period": "int",
+                "cycle": "int"
+            }
+        },
+        {
+            "cmd": "led_all",
+            "payload": {
+                "setting": "string"
+            }
+        },
+        {
+            "cmd": "pwm_setting",
+            "payload": {
+                "autor": "bool",
+                "pwm_freq": "int",
+                "pwm_linear": "bool"
+            }
+        },
+        {
+            "cmd": "adc_setting",
+            "payload": {
+                "working": "bool",
+                "period": "int"
+            }
+        },
+        {
+            "cmd": "dcs_1",
+            "payload": {
+                "sth": [
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int"
+                ]
+            }
+        },
+        {
+            "cmd": "dcs_2",
+            "payload": {
+                "sth": [
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int"
+                ]
+            }
+        }
+    ],
+    "notifications": [
+        {
+            "value": "platform_id",
+            "payload": {
+                "name": "string",
+                "platform_id": "string",
+                "class_id": "string",
+                "board_count": "int",
+                "platform_id_version": "string"
+            }
+        },
+        {
+            "value": "get_firmware_info",
+            "payload": {
+                "type": "string",
+                "version": "string",
+                "date": "string"
+            }
+        },
+        {
+            "value": "demo_welcome",
+            "payload": {
+                "one_shot": "bool"
+            }
+        },
+        {
+            "value": "demo_byebye",
+            "payload": {
+                "one_shot": "bool"
+            }
+        },
+        {
+            "value": "demo_left_turn",
+            "payload": {
+                "one_shot": "bool",
+                "period": "int",
+                "cycle": "int"
+            }
+        },
+        {
+            "value": "demo_right_turn",
+            "payload": {
+                "one_shot": "bool",
+                "period": "int",
+                "cycle": "int"
+            }
+        },
+        {
+            "value": "demo_brake",
+            "payload": {
+                "strength": "int"
+            }
+        },
+        {
+            "value": "demo_fading",
+            "payload": {
+                "one_shot": "bool",
+                "period": "int",
+                "cycle": "int"
+            }
+        },
+        {
+            "value": "demo_warning",
+            "payload": {
+                "one_shot": "bool",
+                "period": "int",
+                "cycle": "int"
+            }
+        },
+        {
+            "value": "led_all",
+            "payload": {
+                "status": "string"
+            }
+        },
+        {
+            "value": "pwm_setting",
+            "payload": {
+                "autor": "bool",
+                "pwm_freq": "int",
+                "pwm_linear": "int"
+            }
+        },
+        {
+            "value": "adc_setting",
+            "payload": {
+                "working": "bool",
+                "period": "int"
+            }
+        },
+        {
+            "value": "input_voltage_current",
+            "payload": {
+                "v_in": "int",
+                "i_in": "int"
+            }
+        },
+        {
+            "value": "dcs_1",
+            "payload": {
+                "led_0_35": "int",
+                "sth": [
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int"
+                ]
+            }
+        },
+        {
+            "value": "dcs_2",
+            "payload": {
+                "led_36_71": "int",
+                "sth": [
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int",
+                    "int"
+                ]
+            }
+        }
+    ]
+}

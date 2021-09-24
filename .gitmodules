@@ -1,0 +1,3 @@
+[submodule "strata-cmake-modules"]
+	path = strata-cmake-modules
+	url = ../strata-cmake-modules.git
