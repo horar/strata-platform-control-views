@@ -28,12 +28,12 @@ Rectangle {
     Component.onCompleted:{
         sendCommand()
         startTimer()
-        Help.registerTarget(positionContainer, "abc", 0 ,"ncs322100Help")
-        Help.registerTarget(telemetryContainer, "abc", 1 ,"ncs322100Help")
-        Help.registerTarget(imageContainer, "abc", 2 ,"ncs322100Help")
-        Help.registerTarget(graphContainer, "abc", 3 ,"ncs322100Help")
-        Help.registerTarget(confiContainer, "abc", 4 ,"ncs322100Help")
-        Help.registerTarget(diagnosticsContainer, "abc", 5 ,"ncs322100Help")
+        Help.registerTarget(positionContainer, "This section contains the positional data from the sensor. You can also zero the position, which will set the offset and change the board image appropriately.", 0 ,"ncs322100Help")
+        Help.registerTarget(telemetryContainer, "This section contains the voltage and current readings from the onboard telemetry.", 1 ,"ncs322100Help")
+        Help.registerTarget(imageContainer, "This area contains the evaluation board and target board images. The target board image will will match the position of the physical target board. The evaluation board will also move depending on the offset value, which can be set using the Zero Position button.", 2 ,"ncs322100Help")
+        Help.registerTarget(graphContainer, "The graph plots the position as a function of time. The position axis is on the x-axis to mimic the movement of the target board as it moves across the evaluation board.", 3 ,"ncs322100Help")
+        Help.registerTarget(confiContainer, "This section allows the user to configure the NCS322XX. The user can change the battery voltage, as well as change several internal registers that monitor for errors, such as the temperature threshold.", 4 ,"ncs322100Help")
+        Help.registerTarget(diagnosticsContainer, "This section monitors the errors from the NCS32200. The errors will only turn off once the error condition has been corrected and the Reset Errors button has been clicked.", 5 ,"ncs322100Help")
     }
 
     Connections {
@@ -257,7 +257,7 @@ Rectangle {
 
     Timer {
         id: getTempCommand
-        interval: 1000
+        interval: 750
         running: false
         repeat: false
         onTriggered: {
@@ -270,7 +270,7 @@ Rectangle {
 
     Timer {
         id: getErrorCommand
-        interval: 2000
+        interval: 700
         running: false
         repeat: false
         onTriggered: {
@@ -283,7 +283,7 @@ Rectangle {
 
     Timer {
         id: getLowBattvCommand
-        interval: 3000
+        interval: 650
         running: false
         repeat: false
         onTriggered: {
@@ -296,7 +296,7 @@ Rectangle {
 
     Timer {
         id: getMaxTempValueCommand
-        interval: 4000
+        interval: 600
         running: false
         repeat: false
         onTriggered: {
@@ -309,7 +309,7 @@ Rectangle {
 
     Timer {
         id: getBattvValueCommand
-        interval: 5000
+        interval: 550
         running: false
         repeat: false
         onTriggered: {
@@ -322,7 +322,7 @@ Rectangle {
 
     Timer {
         id: getTelemetryCommand
-        interval: 6000
+        interval: 500
         running: false
         repeat: false
         onTriggered: {
@@ -333,7 +333,7 @@ Rectangle {
 
     Timer {
         id: getFirmwareVersionCommand
-        interval: 7000
+        interval: 2000
         running: false
         repeat: false
         onTriggered: {
@@ -1161,7 +1161,7 @@ Rectangle {
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        addIntCommand("set_low_batt",value.toFixed(1))
+                                        addIntCommand("set_low_batt",Number(value.toFixed(1)))
                                     }
                                 }
                             }
