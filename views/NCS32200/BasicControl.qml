@@ -1,11 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-
-import "qrc:/js/help_layout_manager.js" as Help
-
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
+import "qrc:/js/help_layout_manager.js" as Help
 
 Rectangle {
     id: root
@@ -17,8 +15,6 @@ Rectangle {
     height: parent.height
     width: parent.width / parent.height > initialAspectRatio ? parent.height * initialAspectRatio : parent.width
     property real zeroOffset: 0
-
-
 
     SGText {
         id: boardTitle
@@ -32,6 +28,73 @@ Rectangle {
     Component.onCompleted:{
         sendCommand()
         startTimer()
+        Help.registerTarget(positionContainer, "abc", 0 ,"ncs322100Help")
+        Help.registerTarget(telemetryContainer, "abc", 1 ,"ncs322100Help")
+        Help.registerTarget(imageContainer, "abc", 2 ,"ncs322100Help")
+        Help.registerTarget(graphContainer, "abc", 3 ,"ncs322100Help")
+        Help.registerTarget(confiContainer, "abc", 4 ,"ncs322100Help")
+        Help.registerTarget(diagnosticsContainer, "abc", 5 ,"ncs322100Help")
+    }
+
+    Connections {
+        target: Help.utility
+        onInternal_tour_indexChanged: {
+            if(Help.current_tour_targets[index]["target"] === positionContainer) {
+                Help.help_object.toolTipPopup.width = 800
+            }
+            if(Help.current_tour_targets[index]["target"] === telemetryContainer) {
+                Help.help_object.toolTipPopup.width = 750
+            }
+
+            /**
+                if(Help.current_tour_targets[index]["target"] === graphContainer) {
+                    Help.help_object.toolTipPopup.width = 800
+                }
+                if(Help.current_tour_targets[index]["target"] === confiContainer) {
+                    Help.help_object.toolTipPopup.width = 750
+
+                if(Help.current_tour_targets[index]["target"] === diagnosticsContainer) {
+                    Help.help_object.toolTipPopup.width = 800
+                }
+          **/
+        }
+    }
+
+
+    Item {
+        id: positionContainer
+        width: parent.width/4.5
+        height: parent.height/2.2
+        anchors.top: parent.top
+        anchors.topMargin: 10
+    }
+
+    Item {
+        id: telemetryContainer
+        width: parent.width/4.5
+        height: parent.height/2.2
+        anchors.bottom:parent.bottom
+        anchors.bottomMargin:10
+    }
+
+    Item {
+        id: confiContainer
+        width: parent.width/4.5
+        height: parent.height/1.5
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+    }
+
+    Item {
+        id: diagnosticsContainer
+        width: parent.width/4.5
+        height: parent.height/3
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        anchors.right: parent.right
+        anchors.rightMargin: 10
     }
 
     ListModel {
@@ -61,21 +124,13 @@ Rectangle {
             let value = commandQueue.get(0).value
             if(commandQueue.get(0).value !== "") {
                 platformInterface.commands[command].update(value)
-                //console.log(platformInterface.commands[command].update(value))
-                //                console.log(command)
-                //                console.log(value)
-                //                console.log("correct value")
             }
             else  {
                 platformInterface.commands[command].update()
-                //                console.log(command)
-                //                console.log(value)
-                //                console.log("incorrect value")
             }
             commandQueue.remove(0)
 
         } else {
-            console.log(vccToggle)
             if(vccToggle) {
                 platformInterface.commands.get_data.update()
             }
@@ -101,7 +156,6 @@ Rectangle {
             timer.running = false
             addCommand("get_data")
             sendCommand()
-
         }
     }
 
@@ -292,8 +346,6 @@ Rectangle {
     }
 
 
-
-
     RowLayout {
         anchors {
             top: boardTitle.bottom
@@ -309,6 +361,7 @@ Rectangle {
         height: root.height - boardTitle.contentHeight
 
         Item {
+            id: powerContainer
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -345,7 +398,7 @@ Rectangle {
                         }
                     }
                 }
-                RowLayout{
+                RowLayout {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
@@ -399,7 +452,7 @@ Rectangle {
                     }
                 }
 
-                RowLayout{
+                RowLayout {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
@@ -457,6 +510,7 @@ Rectangle {
                 }
 
                 RowLayout{
+                    id: zeroOffsetContainer
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
@@ -465,7 +519,7 @@ Rectangle {
                         Layout.preferredWidth: parent.width/5
 
                         SGText{
-                            id: offsetLabel
+                            id: zeroLabel
                             text: "Zero\nOffset"
                             font.bold: true
                             anchors {
@@ -513,28 +567,6 @@ Rectangle {
                     }
                 }
 
-//                Item{
-//                    Layout.fillHeight: true
-//                    Layout.fillWidth: true
-
-//                    SGAlignedLabel {
-//                        id: zeroOffsetLabel
-//                        target: zeroOffset
-//                        alignment: SGAlignedLabel.SideTopLeft
-//                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-//                        text: "Zero Offset"
-//                        font.bold : true
-
-//                        SGSubmitInfoBox {
-//                            id: zeroOffset
-//                            height:  35 * ratioCalc
-//                            width: 135 * ratioCalc
-//                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-//                            infoBoxObject.unitOverrideWidth: 50 * ratioCalc
-//                            Layout.alignment: Qt.AlignLeft
-//                        }
-//                    }
-//                }
                 RowLayout{
                     Layout.fillHeight: true
                     Layout.fillWidth: true
@@ -555,17 +587,6 @@ Rectangle {
                             }
                         }
                     }
-//                    Item{
-//                        Layout.fillHeight: true
-//                        Layout.fillWidth: true
-
-//                        SGSwitch {
-//                            checkedLabel: "Relative"
-//                            uncheckedLabel: "Absolute"
-//                            anchors.left: parent.left
-//                            anchors.verticalCenter: parent.verticalCenter
-//                        }
-//                    }
                 }
 
                 Rectangle {
@@ -611,11 +632,9 @@ Rectangle {
                             id: supplyVoltageLabel
                             target: supplyVoltage
                             alignment: SGAlignedLabel.SideTopLeft
-                            //anchors.centerIn: parent
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             text: "Supply \nVoltage (VCC)"
                             font.bold : true
-                            // horizontalAlignment: Text.AlignHCenter
                             SGInfoBox{
                                 id: supplyVoltage
                                 height:  35 * ratioCalc
@@ -635,11 +654,9 @@ Rectangle {
                             id: batteryVoltageLabel
                             target: batteryVoltage
                             alignment: SGAlignedLabel.SideTopLeft
-                            //anchors.centerIn: parent
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             text: "Battery \nVoltage (VBAT)"
                             font.bold : true
-                            //horizontalAlignment: Text.AlignHCenter
                             SGInfoBox{
                                 id: batteryVoltage
                                 height:  35 * ratioCalc
@@ -663,11 +680,9 @@ Rectangle {
                             id: batteryCurrentLabel
                             target: batteryCurrent
                             alignment: SGAlignedLabel.SideTopLeft
-                            //anchors.centerIn: parent
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             text: "Battery \nCurrent (IBAT)"
                             font.bold : true
-                            //horizontalAlignment: Text.AlignHCenter
                             SGInfoBox{
                                 id: batteryCurrent
                                 height:  35 * ratioCalc
@@ -680,30 +695,28 @@ Rectangle {
                             }
                         }
                     }
-//                    Item{
-//                        Layout.fillHeight: true
-//                        Layout.fillWidth: true
-//                        SGAlignedLabel {
-//                            id: offsetLabel
-//                            target: offset
-//                            alignment: SGAlignedLabel.SideTopLeft
-//                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-//                            text: "Offset \n"
-//                            font.bold : true
-//                            SGSubmitInfoBox{
-//                                id: offset
-//                                height:  35 * ratioCalc
-//                                width: 135 * ratioCalc
-//                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-//                                unit: "mm"
-//                                infoBoxObject.unitOverrideWidth:50 * ratioCalc
-//                                anchors.left: parent.left
-//                                //                                onEditingFinished {
 
-//                                //                                }
-//                            }
-//                        }
-//                    }
+                    Item{
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        SGAlignedLabel {
+                            id: offsetLabel
+                            target: offset
+                            alignment: SGAlignedLabel.SideTopLeft
+                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                            text: "Offset \n"
+                            font.bold : true
+                            SGSubmitInfoBox{
+                                id: offset
+                                height:  35 * ratioCalc
+                                width: 135 * ratioCalc
+                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
+                                unit: "mm"
+                                infoBoxObject.unitOverrideWidth:50 * ratioCalc
+                                anchors.left: parent.left
+                            }
+                        }
+                    }
                 }
                 Item {
                     Layout.preferredHeight: parent.height/3
@@ -816,7 +829,7 @@ Rectangle {
                 }
 
                 Item {
-                    id: container
+                    id: imageContainer
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignCenter
@@ -824,7 +837,7 @@ Rectangle {
 
                     SGBoardImage {
                         id: boardImage
-                        source: "board-image.png"
+                        source: "images/board-image.png"
                         anchors {
                             bottom: parent.bottom
                         }
@@ -846,7 +859,7 @@ Rectangle {
                         Connections {
                             target: timedGraphPoints
                             onWidthChanged: {
-                               boardImage.update()
+                                boardImage.update()
                             }
                         }
 
@@ -877,12 +890,12 @@ Rectangle {
                             x: .28 * boardImage.width
                             y: .29 * boardImage.height
 
-                            SGRotateImage {
+                            SGTargetImage {
                                 id: rotatingImage
                                 x: boardImage.graphBaseDimension * (Number(currPosition.text) + Number(zeroOffset))
                                 width: 0
                                 height: parent.height
-                                source: "target_edited.png"
+                                source: "images/target_edited.png"
 
                                 Rectangle {
                                     color: "black"
@@ -892,10 +905,6 @@ Rectangle {
                             }
                         }
                     }
-
-                    function getRandomArbitrary(min, max) {
-                        return Math.random() * (max - min) + min;
-                    }
                 }
 
                 Connections  {
@@ -904,7 +913,6 @@ Rectangle {
                         var offset = platformInterface.notifications.get_data.auto_zero_offset
                         console.log(boardImage.x,offset)
                         zeroOffset = offset
-
 
                         currOffsetMm.text = Math.floor(zeroOffset)
                         currOffsetUm.text = ((offset - Math.floor(zeroOffset))*1000).toFixed(0)
@@ -925,7 +933,7 @@ Rectangle {
                         var data = platformInterface.notifications.get_data.pos
                         var  x = Math.floor(data)
                         var  y = data - x;
-                        //console.log(y)
+
                         currPositionUm.text = (y*1000).toFixed(0)
                         currPosition.text = x
 
@@ -942,6 +950,7 @@ Rectangle {
                     id: graphContainer
                     Layout.fillWidth: true
                     Layout.preferredHeight: parent.height/1.35
+                    Layout.bottomMargin: 10
 
                     SGGraph {
                         id: timedGraphPoints
@@ -954,10 +963,8 @@ Rectangle {
                         yMax: 60
                         xTitle: "Position (mm)"
                         yTitle: "Time (s)"
-                        //yRightTitle: "Velocity"
                         xGrid: true
                         yGrid: true
-                        //yRightVisible: true
                         gridColor: "black"
                         foregroundColor: "black"
                         panXEnabled: false
@@ -966,7 +973,6 @@ Rectangle {
                         zoomYEnabled: false
                         autoUpdate: false
                         backgroundColor: "white"
-
 
                         Component.onCompleted:  {
                             let positionCurve = createCurve("graphCurve")
@@ -1115,14 +1121,12 @@ Rectangle {
                                     fromText.text: "2.7 V"
                                     toText.text: "4.5 V"
                                     inputBoxWidth: vbatSetContainer.width/3
-                                    // inputBox.unit: " V"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        console.log(Number(value).toFixed(1))
                                         addCommand("set_battv",(Number(value).toFixed(1)))
                                     }
                                 }
@@ -1151,7 +1155,6 @@ Rectangle {
                                     fromText.text: "2.7 V"
                                     toText.text: "4.5 V"
                                     inputBoxWidth: batteryThresholdContainer.width/3
-                                    //inputBox.unit: " V"
                                     inputBox.unitFont.bold: true
                                     fontSizeMultiplier: ratioCalc
                                     inputBox.unitOverrideWidth: 30 * ratioCalc
@@ -1160,7 +1163,6 @@ Rectangle {
                                     onUserSet: {
                                         addIntCommand("set_low_batt",Number(value.toFixed(1)))
                                     }
-
                                 }
                             }
                         }
@@ -1435,66 +1437,10 @@ Rectangle {
                                         }
                                     }
                                 }
-                                Item {
-                                    Layout.fillHeight: true
-                                    Layout.fillWidth: true
-
-                                    SGSwitch {
-                                        id: dummy_switch
-                                        checkedLabel: "Dummy"
-                                        uncheckedLabel: "Real"
-                                        onToggled: {
-                                            if(checked)
-                                                addCommand("dummy_data","true")
-                                            else
-                                                addCommand("dummy_data","false")
-                                        }
-                                    }
-                                }
-//                                Item{
-//                                    Layout.fillHeight: true
-//                                    Layout.fillWidth: true
-//                                    SGAlignedLabel {
-//                                        id: posmultlabel
-//                                        alignment: SGAlignedLabel.SideTopLeft
-//                                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-//                                        text: "position mult"
-//                                        font.bold : true
-//                                        SGSubmitInfoBox {
-//                                            id: posmult
-//                                            height:  35 * ratioCalc
-//                                            width: 50 * ratioCalc
-//                                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-//                                            infoBoxObject.unitOverrideWidth: 50 * ratioCalc
-//                                            Layout.alignment: Qt.AlignLeft
-//                                        }
-//                                    }
-//                                }
-//                                Item{
-//                                    Layout.fillHeight: true
-//                                    Layout.fillWidth: true
-//                                    SGAlignedLabel {
-//                                        id: offsetlabel
-//                                        alignment: SGAlignedLabel.SideTopLeft
-//                                        fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-//                                        text: "Offset"
-//                                        font.bold : true
-//                                        SGSubmitInfoBox {
-//                                            id: offsetbox
-//                                            height:  35 * ratioCalc
-//                                            width: 50 * ratioCalc
-//                                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-//                                            infoBoxObject.unitOverrideWidth: 50 * ratioCalc
-//                                            Layout.alignment: Qt.AlignLeft
-//                                        }
-//                                    }
-//                                }
-
 
                                 Item {
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
-
                                 }
                             }
                         }

@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2018-2021 onsemi.
+ *
+ * All rights reserved. This software and/or documentation is licensed by onsemi under
+ * limited terms and conditions. The terms and conditions pertaining to the software and/or
+ * documentation are available at http://www.onsemi.com/site/pdf/ONSEMI_T&C.pdf (“onsemi Standard
+ * Terms and Conditions of Sale, Section 8 Software”).
+ */
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -18,6 +26,9 @@ Item {
     property real channel1Current: 0.0
     property real channel2Current: 0.0
     property real powerVoltage: 0.0
+
+    /*These are updated by notification of Light Control Service,
+      which does not work on windows. CS-2216 */
     property int channel1Pwm: 0
     property int channel2Pwm: 0
 
@@ -112,7 +123,7 @@ Item {
                     value: 0
 
                     onPressedChanged: {
-                        if (pressed === false && value != channel1Pwm) {
+                        if (pressed === false) {
                             Qt.callLater(writeLedData)
                         }
                     }
@@ -139,7 +150,7 @@ Item {
                     value: 0
 
                     onPressedChanged: {
-                        if (pressed === false && value != channel2Pwm) {
+                        if (pressed === false) {
                             Qt.callLater(writeLedData)
                         }
                     }
