@@ -1158,7 +1158,7 @@ Rectangle {
                                     inputBox.validator: DoubleValidator { top: 4.5; bottom: 2.7 }
 
                                     onUserSet: {
-                                        addIntCommand("set_low_batt",value.toFixed(1))
+                                        addIntCommand("set_low_batt",Number(value.toFixed(1)))
                                     }
 
                                 }
