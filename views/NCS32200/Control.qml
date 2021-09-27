@@ -51,16 +51,27 @@ Rectangle {
         }
     }
 
-    SGButton {
-        id: debugButton
-        text: "Debug"
-        onClicked: {
-            debugMenu.visible = !debugMenu.visible
-        }
+    Rectangle {
+        id: rect
+        width: 60
+        height: 40
+        color: "dark grey"
         anchors {
-            right: basic.right
-            bottom: basic.bottom
-            bottomMargin: 10
+            right: parent.right
+            bottom: parent.bottom
+        }
+        Text {
+            font.pixelSize: 15
+            anchors.centerIn: parent
+            text: "Debug"
+            color: "white"
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                debugMenu.visible = !debugMenu.visible
+            }
         }
     }
 
@@ -68,8 +79,8 @@ Rectangle {
         id: debugMenu
         visible: false
         anchors {
-            right: debugButton.left
-            bottom: basic.bottom
+            right: parent.right
+            bottom: parent.bottom
         }
     }
 }
