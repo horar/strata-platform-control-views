@@ -99,45 +99,39 @@ Rectangle {
         anchors.rightMargin: 10
     }
 
-    ListModel {
-        id: commandQueue
-    }
+
+    property var commandQueue: []
 
     function addCommand (command,value) {
-        commandQueue.append({
+        commandQueue.push({
                                 "command": command,
                                 "value" : value
-
                             })
     }
 
     function addIntCommand (command,value = -1) {
-        commandQueue.append({
+        commandQueue.push({
                                 "command": command,
                                 "value" : value
-
                             })
     }
 
     function sendCommand () {
         timer.running = false
-        if (commandQueue.count > 0) {
-            let command = commandQueue.get(0).command
-            let value = commandQueue.get(0).value
-            if(commandQueue.get(0).value !== "") {
+        if (commandQueue.length > 0) {
+            let command = commandQueue[0].command
+            let value = commandQueue[0].value
+            if (value !== "") {
                 platformInterface.commands[command].update(value)
-            }
-            else if (Number(value) >= 0) {
+            } else if (Number(value) >= 0) {
                 platformInterface.commands[command].update(Number(value))
-            }
-
-            else  {
+            } else {
                 platformInterface.commands[command].update()
             }
-            commandQueue.remove(0)
+            commandQueue.shift()
 
         } else {
-            if(vccToggle) {
+            if (vccToggle) {
                 platformInterface.commands.get_data.update()
             }
         }
@@ -1101,9 +1095,6 @@ Rectangle {
 
                                     onUserSet: {
                                         addIntCommand("set_low_batt",Number(value.toFixed(1)))
-                                        addIntCommand("set_low_batt",Number(Number(value).toFixed(1)))
-                                        addIntCommand("set_low_batt",Number(value).toFixed(1))
-                                        addIntCommand("set_low_batt",value.toFixed(1))
                                     }
                                 }
                             }
@@ -1140,11 +1131,7 @@ Rectangle {
 
                                     onUserSet: {
                                         addCommand("set_over_temp",Number(value.toFixed(2)))
-                                        addCommand("set_over_temp",Number(Number(value).toFixed(2)))
-                                        addCommand("set_over_temp",Number(value).toFixed(2))
-                                        addCommand("set_over_temp",value.toFixed(2))
                                     }
-
                                 }
                             }
                         }
