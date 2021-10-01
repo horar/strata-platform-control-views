@@ -101,7 +101,7 @@ PlatformInterfaceBase {
         // @property vbat: double
         // @property vcc: double
         property QtObject status_telemetry: QtObject {
-            property double ibat: 2.67
+            property double ibat: 0.00
             property double vbat: 0.0
             property double vcc: 0.0
 

@@ -51,36 +51,38 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        id: rect
-        width: 60
-        height: 40
-        color: "dark grey"
-        anchors {
-            right: parent.right
-            bottom: parent.bottom
-        }
-        Text {
-            font.pixelSize: 15
-            anchors.centerIn: parent
-            text: "Debug"
-            color: "white"
-        }
+//Debug menu allows access to real/dummy data switch.
+//Leaving this in, but commented, as BU expressed interest in using this feature for debugging in the future.
+//    Rectangle {
+//        id: rect
+//        width: 60
+//        height: 40
+//        color: "dark grey"
+//        anchors {
+//            right: parent.right
+//            bottom: parent.bottom
+//        }
+//        Text {
+//            font.pixelSize: 15
+//            anchors.centerIn: parent
+//            text: "Debug"
+//            color: "white"
+//        }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                debugMenu.visible = !debugMenu.visible
-            }
-        }
-    }
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: {
+//                debugMenu.visible = !debugMenu.visible
+//            }
+//        }
+//    }
 
-    DebugMenu {
-        id: debugMenu
-        visible: false
-        anchors {
-            right: parent.right
-            bottom: parent.bottom
-        }
-    }
+//    DebugMenu {
+//        id: debugMenu
+//        visible: false
+//        anchors {
+//            right: parent.right
+//            bottom: parent.bottom
+//        }
+//    }
 }

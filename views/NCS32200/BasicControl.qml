@@ -10,7 +10,7 @@ Rectangle {
     property real ratioCalc: root.width / 1200
     property real initialAspectRatio: 1164/816
     color: "light gray"
-    property bool vccToggle: false
+    property bool vccToggle: true
     anchors.centerIn: parent
     height: parent.height
     width: parent.width / parent.height > initialAspectRatio ? parent.height * initialAspectRatio : parent.width
@@ -26,6 +26,8 @@ Rectangle {
     }
 
     Component.onCompleted:{
+        addCommand("vcc_en","off")
+        addCommand("vcc_en","on")
         sendCommand()
         startTimer()
         Help.registerTarget(positionContainer, "This section contains the positional data from the sensor. You can also zero the position, which will set the offset and change the board image appropriately.", 0 ,"ncs322100Help")
@@ -125,6 +127,10 @@ Rectangle {
             if(commandQueue.get(0).value !== "") {
                 platformInterface.commands[command].update(value)
             }
+            else if (Number(value) >= 0) {
+                platformInterface.commands[command].update(Number(value))
+            }
+
             else  {
                 platformInterface.commands[command].update()
             }
@@ -149,6 +155,16 @@ Rectangle {
             sendCommand()
         }
     }
+
+//    Timer {
+//        id: send_cmd_timer
+//        running: true
+//        repeat: true
+//        interval: 250
+//        onTriggered: {
+//            sendCommand()
+//        }
+//    }
 
     Connections {
         target: platformInterface.notifications.get_data
@@ -270,7 +286,7 @@ Rectangle {
 
     Timer {
         id: getErrorCommand
-        interval: 700
+        interval: 1000
         running: false
         repeat: false
         onTriggered: {
@@ -283,7 +299,7 @@ Rectangle {
 
     Timer {
         id: getLowBattvCommand
-        interval: 650
+        interval: 3000
         running: false
         repeat: false
         onTriggered: {
@@ -296,7 +312,7 @@ Rectangle {
 
     Timer {
         id: getMaxTempValueCommand
-        interval: 600
+        interval: 2900
         running: false
         repeat: false
         onTriggered: {
@@ -309,7 +325,7 @@ Rectangle {
 
     Timer {
         id: getBattvValueCommand
-        interval: 550
+        interval: 2800
         running: false
         repeat: false
         onTriggered: {
@@ -333,7 +349,7 @@ Rectangle {
 
     Timer {
         id: getFirmwareVersionCommand
-        interval: 2000
+        interval: 4000
         running: false
         repeat: false
         onTriggered: {
@@ -423,30 +439,13 @@ Rectangle {
                         SGInfoBox{
                             id: currPosition
                             height:  35 * ratioCalc
-                            width: 115 * ratioCalc
+                            width: 135 * ratioCalc
                             anchors {
                                 left: parent.left
                                 verticalCenter: parent.verticalCenter
                             }
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "mm "
-                            unitOverrideWidth:  50 * ratioCalc
-                        }
-                    }
-
-                    Item{
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-                        SGInfoBox{
-                            id: currPositionUm
-                            height:  35 * ratioCalc
-                            width: 115 * ratioCalc
-                            anchors {
-                                left: parent.left
-                                verticalCenter: parent.verticalCenter
-                            }
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "um"
+                            unit: "mm"
                             unitOverrideWidth:  50 * ratioCalc
                         }
                     }
@@ -479,31 +478,13 @@ Rectangle {
                         SGInfoBox {
                             id:  currVelocity
                             height:  35 * ratioCalc
-                            width: 115 * ratioCalc
+                            width: 135 * ratioCalc
                             anchors {
                                 left: parent.left
                                 verticalCenter: parent.verticalCenter
                             }
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "mm/s"
-                            unitOverrideWidth:  50 * ratioCalc
-                        }
-                    }
-
-                    Item{
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-
-                        SGInfoBox {
-                            id: currVelocityUm
-                            height:  35 * ratioCalc
-                            width: 115 * ratioCalc
-                            anchors {
-                                left: parent.left
-                                verticalCenter: parent.verticalCenter
-                            }
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "um/s"
                             unitOverrideWidth:  50 * ratioCalc
                         }
                     }
@@ -537,31 +518,13 @@ Rectangle {
                         SGInfoBox {
                             id:  currOffsetMm
                             height:  35 * ratioCalc
-                            width: 115 * ratioCalc
+                            width: 135 * ratioCalc
                             anchors {
                                 left: parent.left
                                 verticalCenter: parent.verticalCenter
                             }
                             fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
                             unit: "mm"
-                            unitOverrideWidth:  50 * ratioCalc
-                        }
-                    }
-
-                    Item{
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-
-                        SGInfoBox {
-                            id: currOffsetUm
-                            height:  35 * ratioCalc
-                            width: 115 * ratioCalc
-                            anchors {
-                                left: parent.left
-                                verticalCenter: parent.verticalCenter
-                            }
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            unit: "um"
                             unitOverrideWidth:  50 * ratioCalc
                         }
                     }
@@ -695,28 +658,6 @@ Rectangle {
                             }
                         }
                     }
-
-                    Item{
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-                        SGAlignedLabel {
-                            id: offsetLabel
-                            target: offset
-                            alignment: SGAlignedLabel.SideTopLeft
-                            fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                            text: "Offset \n"
-                            font.bold : true
-                            SGSubmitInfoBox{
-                                id: offset
-                                height:  35 * ratioCalc
-                                width: 135 * ratioCalc
-                                fontSizeMultiplier: ratioCalc === 0 ? 1.1 : ratioCalc
-                                unit: "mm"
-                                infoBoxObject.unitOverrideWidth:50 * ratioCalc
-                                anchors.left: parent.left
-                            }
-                        }
-                    }
                 }
                 Item {
                     Layout.preferredHeight: parent.height/3
@@ -780,10 +721,10 @@ Rectangle {
                                 SGCircularGauge {
                                     id: batteryPower
                                     height: batteryPowerContainer.height - batteryPowerLabel.contentHeight - 50
-                                    tickmarkStepSize: 0.5
+                                    tickmarkStepSize: 5
                                     width:  tempGaugeContainer.width
                                     minimumValue: 0
-                                    maximumValue: 5
+                                    maximumValue: 30
                                     gaugeFillColor1: "blue"
                                     gaugeFillColor2: "red"
                                     //unitTextFontSizeMultiplier: ratioCalc * 1.5
@@ -869,12 +810,6 @@ Rectangle {
                                 boardImage.update()
                             }
                         }
-                        Connections {
-                            target: currOffsetUm
-                            onTextChanged: {
-                                boardImage.update()
-                            }
-                        }
 
                         function update() {
                             let left = timedGraphPoints.mapToPosition(Qt.point(-110, 0))
@@ -914,8 +849,12 @@ Rectangle {
                         console.log(boardImage.x,offset)
                         zeroOffset = offset
 
-                        currOffsetMm.text = Math.floor(zeroOffset)
-                        currOffsetUm.text = ((offset - Math.floor(zeroOffset))*1000).toFixed(0)
+                        if (zeroOffset > 110) {
+                            zeroOffset = 110
+                        }
+
+                        currOffsetMm.text = offset.toFixed(2)
+                        //currOffsetUm.text = ((offset - Math.floor(zeroOffset))*1000).toFixed(0)
 
                         var positionIs = platformInterface.notifications.get_data.pos
 
@@ -934,15 +873,15 @@ Rectangle {
                         var  x = Math.floor(data)
                         var  y = data - x;
 
-                        currPositionUm.text = (y*1000).toFixed(0)
-                        currPosition.text = x
+                        //currPositionUm.text = (y*1000).toFixed(0)
+                        currPosition.text = data.toFixed(2)
 
                         var data2 =  platformInterface.notifications.get_data.vel
                         var  x2 = Math.floor(data2)
                         var  y2 = data2 - x2;
 
-                        currVelocityUm.text = (y2*1000).toFixed(0)
-                        currVelocity.text = x2
+                        //currVelocityUm.text = (y2*1000).toFixed(0)
+                        currVelocity.text = data2.toFixed(2)
                     }
                 }
 
@@ -1162,6 +1101,9 @@ Rectangle {
 
                                     onUserSet: {
                                         addIntCommand("set_low_batt",Number(value.toFixed(1)))
+                                        addIntCommand("set_low_batt",Number(Number(value).toFixed(1)))
+                                        addIntCommand("set_low_batt",Number(value).toFixed(1))
+                                        addIntCommand("set_low_batt",value.toFixed(1))
                                     }
                                 }
                             }
@@ -1197,7 +1139,10 @@ Rectangle {
                                     inputBox.validator: DoubleValidator { top: 125 ; bottom: 0 }
 
                                     onUserSet: {
-                                        addIntCommand("set_over_temp",value.toFixed(2))
+                                        addCommand("set_over_temp",Number(value.toFixed(2)))
+                                        addCommand("set_over_temp",Number(Number(value).toFixed(2)))
+                                        addCommand("set_over_temp",Number(value).toFixed(2))
+                                        addCommand("set_over_temp",value.toFixed(2))
                                     }
 
                                 }
@@ -1220,6 +1165,7 @@ Rectangle {
                                 horizontalAlignment: Text.AlignHCenter
                                 SGSwitch {
                                     id: vccDisconnect
+                                    checked: true
                                     checkedLabel: "On"
                                     uncheckedLabel: "Off"
                                     onToggled: {
@@ -1230,10 +1176,8 @@ Rectangle {
                                         else {
                                             vccToggle = false
                                             addCommand("vcc_en","off")
-
                                         }
                                     }
-
                                 }
                             }
                         }
