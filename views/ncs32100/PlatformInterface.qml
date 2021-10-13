@@ -126,6 +126,16 @@ PlatformInterfaceBase {
             signal notificationFinished()
         }
 
+        property QtObject calibrate_via_master: QtObject {
+            property int status: 1
+
+            signal notificationFinished()
+        }
+        property QtObject calibrate_via_ncs32100: QtObject {
+            property int status: 1
+
+            signal notificationFinished()
+        }
 
         // @notification: reset_errors
         // @property low_bat: int
@@ -328,20 +338,36 @@ PlatformInterfaceBase {
                                                    send: function () { platformInterface.send(this) }
                                                })
 
-//        property var set_acceleration_resolution: ({
-//                                                       "cmd": "set_acceleration_resolution",
-//                                                       "payload": {
-//                                                           "acceleration_resolution":18
-//                                                       },
-//                                                       update: function (acceleration_resolution) {
-//                                                           this.set(acceleration_resolution)
-//                                                           this.send(this)
-//                                                       },
-//                                                       set: function (acceleration_resolution) {
-//                                                           this.payload.acceleration_resolution = acceleration_resolution
-//                                                       },
-//                                                       send: function () { platformInterface.send(this) }
-//                                                   })
+        property var calibrate_via_master: ({
+                                                "cmd": "calibrate_via_master",
+                                                update: function () {
+                                                    this.send(this)
+                                                },
+                                                send: function () { platformInterface.send(this) }
+                                            })
+
+        property var calibrate_via_ncs32100: ({
+                                                  "cmd": "calibrate_via_ncs32100",
+                                                  update: function () {
+                                                      this.send(this)
+                                                  },
+                                                  send: function () { platformInterface.send(this) }
+                                              })
+
+        //        property var set_acceleration_resolution: ({
+        //                                                       "cmd": "set_acceleration_resolution",
+        //                                                       "payload": {
+        //                                                           "acceleration_resolution":18
+        //                                                       },
+        //                                                       update: function (acceleration_resolution) {
+        //                                                           this.set(acceleration_resolution)
+        //                                                           this.send(this)
+        //                                                       },
+        //                                                       set: function (acceleration_resolution) {
+        //                                                           this.payload.acceleration_resolution = acceleration_resolution
+        //                                                       },
+        //                                                       send: function () { platformInterface.send(this) }
+        //                                                   })
 
 
 

@@ -219,6 +219,20 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: platformInterface.notifications.calibrate_via_master
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.calibrate_via_ncs32100
+        onNotificationFinished: {
+            sendCommand()
+        }
+    }
+
     function startTimer() {
         getTempCommand.start()
         getErrorCommand.start()
@@ -1144,6 +1158,45 @@ Rectangle {
                                     text: platformInterface.notifications.get_maxtemp.maxtemp_threshold.toString()
                                     boxColor: "#dcdcdc"
                                     boxBorderColor: "#a9a9a9"
+                                }
+                            }
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            RowLayout {
+                                anchors.fill: parent
+
+                                Item {
+                                    Layout.fillWidth: true
+                                    Layout.fillHeight: true
+                                    SGButton {
+                                        text: "Calibration"
+                                        fontSizeMultiplier: ratioCalc * 1.1
+                                        width: 100 * ratioCalc
+                                        height: 70 * ratioCalc
+                                        anchors.centerIn: parent
+                                        onClicked: {
+                                            if(calibrationType.currentIndex === 0) {
+                                                addCommand("calibrate_via_master")
+                                            }
+                                            if(calibrationType.currentIndex === 1) {
+                                                addCommand("calibrate_via_ncs32100")
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Item {
+                                    Layout.preferredWidth: parent.width/2
+                                    Layout.fillHeight: true
+                                    SGComboBox {
+                                        id: calibrationType
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        model: ["Master", "NCS32100"]
+                                        width: 105
+                                    }
                                 }
                             }
                         }
