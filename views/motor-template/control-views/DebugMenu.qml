@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2018-2021 onsemi.
+ *
+ * All rights reserved. This software and/or documentation is licensed by onsemi under
+ * limited terms and conditions. The terms and conditions pertaining to the software and/or
+ * documentation are available at http://www.onsemi.com/site/pdf/ONSEMI_T&C.pdf (“onsemi Standard
+ * Terms and Conditions of Sale, Section 8 Software”).
+ */
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -25,12 +33,34 @@ Rectangle {
 
         property var baseModel: ({
             "commands": [
-                {"cmd":"my_cmd_simple","payload":{"dac":"double","io":"bool"}},
-                {"cmd":"my_cmd_simple_periodic_update","payload":{"interval":"int","run_count":"int","run_state":"bool"}},
-                {"cmd":"my_cmd_i2c","payload":null},
+                {"cmd":"pwm_params","payload":{"dt":"int","freq":"int","min_ls":"int","o_mode":"int","tr_delay":"int"}},
+                {"cmd":"pid_params","payload":{"kd":"double","ki":"double","kp":"double","lim":"double","mode":"int","tau_sys":"double","wd":"double"}},
+                {"cmd":"motor_params","payload":{"hall_pol":"int","jm":"double","jm_load":"double","ke":"double","kv":"double","kv_load":"double","ls":"double","max_rpm":"double","min_rpm":"double","pp":"int","rated_rpm":"double","rated_v":"double","rs":"double"}},
+                {"cmd":"spd_loop_params","payload":{"accel":"int","fs":"int","fspd_filter":"int","mode":"int"}},
+                {"cmd":"protection","payload":{"fet_otp":"int","ocp":"int","ocp_en":"int","ovp":"int","ovp_en":"int"}},
+                {"cmd":"run","payload":{"value":"bool"}},
+                {"cmd":"brake","payload":{"value":"bool"}},
+                {"cmd":"direction","payload":{"value":"bool"}},
+                {"cmd":"target_speed","payload":{"value":"double"}},
+                {"cmd":"acceleration","payload":{"value":"double"}},
+                {"cmd":"control_props","payload":null},
             ],
             "notifications": [
-                {"payload":{"adc_read":"double","gauge_ramp":"double","io_read":"bool","random_float":"double","random_float_array":"array-dynamic","random_increment":["int","int"],"toggle_bool":"bool"},"value":"my_cmd_simple_periodic"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"actual_speed"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"target_speed"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"acceleration"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"board_temp"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"double","values":"array-dynamic"},"value":"input_voltage"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"string","values":"array-dynamic"},"value":"title"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"string","values":"array-dynamic"},"value":"subtitle"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_1"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_2"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"bool","values":"array-dynamic"},"value":"warning_3"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"string","values":"array-dynamic"},"value":"status_log"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"run"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"brake"},
+                {"payload":{"caption":"string","scales":["int","int","int"],"states":"array-dynamic","unit":"string","value":"int","values":"array-dynamic"},"value":"direction"},
+                {"payload":{"value":"bool"},"value":"request_params"},
             ]
         })
 

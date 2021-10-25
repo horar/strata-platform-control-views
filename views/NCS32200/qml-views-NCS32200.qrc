@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Control.qml</file>
+        <file>PlatformInterface.qml</file>
+        <file>platformInterface.json</file>
+        <file>BasicControl.qml</file>
+        <file>SGTargetImage.qml</file>
+        <file>SGBoardImage.qml</file>
+        <file>DebugMenu.qml</file>
+        <file>images/board-image.png</file>
+        <file>images/target_edited.png</file>
+    </qresource>
+</RCC>

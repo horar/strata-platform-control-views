@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2018-2021 onsemi.
+ *
+ * All rights reserved. This software and/or documentation is licensed by onsemi under
+ * limited terms and conditions. The terms and conditions pertaining to the software and/or
+ * documentation are available at http://www.onsemi.com/site/pdf/ONSEMI_T&C.pdf (“onsemi Standard
+ * Terms and Conditions of Sale, Section 8 Software”).
+ */
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import tech.strata.sgwidgets 1.0
@@ -18,7 +26,7 @@ Item {
     }
 
     Component.onCompleted: {
-        Help.registerTarget(idVers1, "ON Semiconductor device identifier for the LED driver. The value is 0x43 for both NCV7684 and NCV7685.", 0, "miscHelp")
+        Help.registerTarget(idVers1, "onsemi device identifier for the LED driver. The value is 0x43 for both NCV7684 and NCV7685.", 0, "miscHelp")
         Help.registerTarget(idVers2, "Version identifier for the LED driver. The values are 0x02 for the NCV7684 and 0x04 for the NCV7685.", 1, "miscHelp")
         Help.registerTarget(filterHelpContainer1, "Indicates an error with either odd or even LED channels. The NCV47822 load switches are being shorted to ground or experiencing an over current event.", 2, "miscHelp")
     }
