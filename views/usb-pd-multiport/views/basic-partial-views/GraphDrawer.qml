@@ -112,7 +112,7 @@ Drawer {
             }
         }
 
-        SGGraph{
+        GraphConverter {
             id:voltageGraph
             anchors.left: menuContainer.left
             anchors.right:menuContainer.right
@@ -153,7 +153,7 @@ Drawer {
             showYGrids: true                // Default: false
         }
 
-        SGGraph{
+        GraphConverter {
             id:powerGraph
             anchors.left: menuContainer.left
             anchors.right:menuContainer.right
@@ -195,7 +195,7 @@ Drawer {
             showYGrids: true                // Default: false
         }
 
-        SGGraph{
+        GraphConverter {
             id:temperatureGraph
             anchors.left: menuContainer.left
             anchors.right:menuContainer.right

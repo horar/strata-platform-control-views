@@ -53,5 +53,6 @@
         <file>sgwidgets/SGSubmitInfoBox.qml</file>
         <file>sgwidgets/SGSwitch.qml</file>
         <file>sgwidgets/SGToolTipPopup.qml</file>
+        <file>sgwidgets/GraphConverter.qml</file>
     </qresource>
 </RCC>
