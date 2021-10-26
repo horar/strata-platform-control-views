@@ -57,5 +57,6 @@
         <file>views/advanced-partial-views/PortInfoMini.qml</file>
         <file>views/advanced-partial-views/PortStatBox.qml</file>
         <file>views/advanced-partial-views/PortStatBoxMini.qml</file>
+        <file>sgwidgets/GraphConverter.qml</file>
     </qresource>
 </RCC>

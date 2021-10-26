@@ -525,7 +525,7 @@ Rectangle {
 
         }
 
-        SGGraph {
+        GraphConverter {
             id: pressureGraph
             title: "Pressure"
             visible: true
@@ -584,7 +584,7 @@ Rectangle {
             rssiGraph.reset();
         }
 
-        SGGraph {
+        GraphConverter {
             id: rssiGraph
             title: "RSSI"
             visible: true
@@ -647,7 +647,7 @@ Rectangle {
             //console.log("temperature sensor number changed to",sensorNumber);
         }
 
-        SGGraph {
+        GraphConverter {
             id: temperatureGraph
             title: "Temperature"
             visible: true
@@ -705,7 +705,7 @@ Rectangle {
             humidityGraph.reset();
         }
 
-        SGGraph {
+        GraphConverter {
             id: humidityGraph
             title: "Humidity"
             visible: true

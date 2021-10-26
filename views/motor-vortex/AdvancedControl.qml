@@ -79,7 +79,7 @@ Rectangle {
             }
         }
 
-        SGGraph{
+        GraphConverter {
             id: vInGraph
             width: 300
             height: 300
@@ -91,9 +91,11 @@ Rectangle {
             yAxisTitle: "Voltage"
             inputData: platformInterface.input_voltage_notification.vin
             maxYValue: 15
+            minXValue: 0
+            maxXValue: 5
         }
 
-        SGGraph{
+        GraphConverter {
             id: speedGraph
             width: 300
             height: 300
@@ -106,6 +108,8 @@ Rectangle {
             yAxisTitle: "RPM"
             inputData: platformInterface.pi_stats.current_speed
             maxYValue: 6500
+            minXValue: 0
+            maxXValue: 5
         }
 
         SGStatusListBox {
