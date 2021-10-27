@@ -449,6 +449,7 @@ Item {
                         }
                     }
 
+
                     GraphConverter{
                         id: foc_iout_IqGraph
                         width: parent.width/6
