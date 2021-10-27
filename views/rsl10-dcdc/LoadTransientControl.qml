@@ -325,6 +325,7 @@ Rectangle {
                     Rectangle{
                         Layout.preferredWidth: parent.width/2.2
                         Layout.fillHeight: true
+
                         GraphConverter{
                             id: voutGraph
                             width: parent.width/2
