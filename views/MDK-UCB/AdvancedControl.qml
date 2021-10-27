@@ -274,7 +274,7 @@ Item {
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
-                FVGraphTimed {
+                FVGraphTimed{
                     id: actualSpeedGraph
                     width: parent.width/2.5
                     height: parent.height*1.3
@@ -338,7 +338,7 @@ Item {
                         leftMargin : 50
                     }
 
-                    GraphConverter {
+                    GraphConverter{
                         id: dc_link_vinVoltageGraph
                         width: parent.width/6
                         height: parent.height/1.05
@@ -393,7 +393,7 @@ Item {
                         }
                     }
 
-                    GraphConverter {
+                    GraphConverter{
                         id: foc_iout_IdGraph
                         width: parent.width/6
                         height: parent.height/1.05
