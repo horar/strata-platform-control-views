@@ -12,7 +12,6 @@ This is UI for STR-DMS-CONTROL-GEV
 *********************************************************************************************************/
 Item {
 
-
     id: root
     property real ratioCalc: root.width / 1200
 
@@ -41,7 +40,7 @@ Item {
 
         repeat: false
         interval: 10
-        onTriggered: platformInterface.commands.set_pwm3.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
+        onTriggered: platformInterface.commands.set_flash_pwm.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
 
     }
 
@@ -78,6 +77,11 @@ Item {
                 height: parent.height
                 fillMode: Image.PreserveAspectFit
             }
+        }
+
+        Component.onCompleted: {
+//            platformInterface.commands.request_initial_values.update()
+            platformInterface.commands.request_initial_values.send()
         }
 
     }
@@ -345,7 +349,7 @@ Item {
                                     checked: false
 
                                     onToggled:  {
-                                        platformInterface.commands.set_pwm3.update(pwm3Slider.value,pwm3Switch.checked)
+                                        platformInterface.commands.set_flash_pwm.update(pwm3Slider.value,pwm3Switch.checked)
                                         pwm2Switch.enabled = (pwm3Switch.checked)
                                         pwm2Slider.enabled = (pwm3Switch.checked)
                                     }
@@ -389,7 +393,7 @@ Item {
                                                 platformInterface.commands.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
                                                 pwm3delayTimer.start()
                                             }else{
-                                                platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
+                                                platformInterface.commands.set_flash_pwm.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
                                             }
                                         }
                                     }

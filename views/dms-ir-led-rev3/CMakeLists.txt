@@ -1,4 +1,4 @@
-project(dms-ir-led
+project(dms-ir-led-rev3
     LANGUAGES NONE
 )
 

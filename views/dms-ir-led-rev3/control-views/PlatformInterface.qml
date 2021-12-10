@@ -18,6 +18,19 @@ PlatformInterfaceBase {
       * NOTIFICATIONS
     ******************************************************************/
 
+    // -------------------------------------------------------------------
+    // Incoming Notification Messages
+    //
+
+    //DC link voltage
+    property var voltage: {
+        "v_out": 10
+    }
+
+    //Phase current
+    property var current: {
+        "i_led": 1
+    }
 
     /******************************************************************
       * COMMANDS
@@ -25,6 +38,19 @@ PlatformInterfaceBase {
 
     QtObject {
         id: commands
+
+        property var request_initial_values : ({
+                "cmd" : "request_initial_values",
+                "payload": {},
+
+                update: function () {
+                    this.send(this)
+                },
+                set: function () {
+                },
+                send: function () { platformInterface.send(this) },
+                show: function () { platformInterface.show(this) }
+            })
 
         // @command set_i_led
         // @property duty_cycle: double
@@ -84,20 +110,22 @@ PlatformInterfaceBase {
             send: function () { platformInterface.send(this) }
         })
 
-        // @command save_v_out
-        // @property duty_cycle: double
-        // @property status: bool
-        property var save_v_out: ({
+        // @command save_values
+        // @property voltage: double
+        // @property current: double
+        property var save_values: ({
             "cmd": "save_v_out",
             "payload": {
-                "voltage": 0.0
+                "voltage": 0.0,
+                "current": 0.0
             },
-            update: function (voltage) {
-                this.set(voltage)
+            update: function (voltage, current) {
+                this.set(voltage, current)
                 this.send(this)
             },
-            set: function (voltage) {
+            set: function (voltage, current) {
                 this.payload.voltage = voltage
+                this.payload.current = current
             },
             send: function () { platformInterface.send(this) }
         })
@@ -105,8 +133,8 @@ PlatformInterfaceBase {
         // @command set_pwm3
         // @property duty_cycle: double
         // @property status: bool
-        property var set_pwm3: ({
-            "cmd": "set_pwm3",
+        property var set_flash_pwm: ({
+            "cmd": "set_flash_pwm",
             "payload": {
                 "on_time": 0.0,
                 "status": false
