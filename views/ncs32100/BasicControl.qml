@@ -19,7 +19,7 @@ import tech.strata.fonts 1.0
 Rectangle {
     id: root
     property real ratioCalc: root.width / 1200
-    property real initialAspectRatio: 1164/816
+    property real initialAspectRatio: 1164/820
     property var test: 0
     color: "light gray"
     property var initialStart: 0
@@ -216,6 +216,24 @@ Rectangle {
         target: platformInterface.notifications.set_velocity_resolution
         onNotificationFinished: {
             sendCommand()
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.calibrate_via_master
+        onNotificationFinished: {
+            sendCommand()
+            calibrationButton.enabled = true
+            calibrationType.enabled = true
+        }
+    }
+
+    Connections {
+        target: platformInterface.notifications.calibrate_via_ncs32100
+        onNotificationFinished: {
+            sendCommand()
+            calibrationButton.enabled = true
+            calibrationType.enabled = true
         }
     }
 
@@ -1148,6 +1166,44 @@ Rectangle {
                             }
                         }
 
+
+
+                        Item {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+
+                            SGButton {
+                                id: calibrationButton
+                                text: "Calibration"
+                                fontSizeMultiplier: ratioCalc * 1.1
+                                width: 100 * ratioCalc
+                                height: 60 * ratioCalc
+                                anchors.centerIn: parent
+                                onClicked: {
+                                    if(calibrationType.currentIndex === 0) {
+                                        addCommand("calibrate_via_master")
+                                    }
+                                    if(calibrationType.currentIndex === 1) {
+                                        addCommand("calibrate_via_ncs32100")
+                                    }
+                                    calibrationButton.enabled = false
+                                    calibrationType.enabled = false
+                                }
+                            }
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+
+                            SGComboBox {
+                                id: calibrationType
+                                anchors.centerIn: parent
+                                model: ["Master", "NCS32100"]
+                                width: 105
+                            }
+                        }
+
                         Item   {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
@@ -1157,7 +1213,7 @@ Rectangle {
                                 text: "RESET \n TURNS"
                                 fontSizeMultiplier: ratioCalc * 1.1
                                 width: 100 * ratioCalc
-                                height: 70 * ratioCalc
+                                height: 60 * ratioCalc
                                 anchors.centerIn: parent
                                 onClicked: {
                                     for (var i = 0; i < 10 ; ++i) {
@@ -1176,7 +1232,7 @@ Rectangle {
                                 text: "RESET \n POSITION"
                                 fontSizeMultiplier: ratioCalc * 1.1
                                 width: 100 * ratioCalc
-                                height: 70 * ratioCalc
+                                height: 60 * ratioCalc
                                 anchors.centerIn: parent
 
                                 property var reset_positionValue: platformInterface.notifications.reset_position.position
