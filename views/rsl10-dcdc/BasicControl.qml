@@ -15,7 +15,6 @@ import QtQuick.Extras 1.4
 import tech.strata.sgwidgets 0.9
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.3
-import "qrc:/js/navigation_control.js" as NavigationControl
 import "qrc:/sgwidgets"
 import "qrc:/images"
 import "qrc:/js/help_layout_manager.js" as Help
