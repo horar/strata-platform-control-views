@@ -14,7 +14,6 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
 import tech.strata.sgwidgets 1.0
 import tech.strata.fonts 1.0
-import "qrc:/js/navigation_control.js" as NavigationControl
 import "qrc:/js/help_layout_manager.js" as Help
 
 

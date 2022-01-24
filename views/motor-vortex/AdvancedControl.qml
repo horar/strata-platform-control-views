@@ -10,7 +10,6 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import "qrc:/js/navigation_control.js" as NavigationControl
 import "sgwidgets"
 import "qrc:/js/help_layout_manager.js" as Help
 
