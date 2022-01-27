@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 onsemi.
+ * Copyright (c) 2018-2022 onsemi.
  *
  * All rights reserved. This software and/or documentation is licensed by onsemi under
  * limited terms and conditions. The terms and conditions pertaining to the software and/or
@@ -14,7 +14,6 @@ import QtQuick.Extras 1.4
 import QtQuick.Controls 2.3
 import tech.strata.sgwidgets 0.9 as Widget09
 import tech.strata.sgwidgets 1.0
-import "qrc:/js/navigation_control.js" as NavigationControl
 import "qrc:/js/help_layout_manager.js" as Help
 
 
