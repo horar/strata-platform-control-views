@@ -31,7 +31,7 @@ Item {
 
         repeat: false
         interval: 10
-        onTriggered: platformInterface.commands.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+        onTriggered: platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
 
     }
 
@@ -40,7 +40,7 @@ Item {
 
         repeat: false
         interval: 10
-        onTriggered: platformInterface.commands.set_flash_pwm.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
+        onTriggered: platformInterface.set_flash_pwm.update(parseFloat(pwm3Slider.value.toFixed(2)),pwm3Switch.checked)
 
     }
 
@@ -81,7 +81,7 @@ Item {
 
         Component.onCompleted: {
 //            platformInterface.commands.request_initial_values.update()
-            platformInterface.commands.request_initial_values.send()
+            platformInterface.request_initial_values_command.send()
         }
 
     }
@@ -161,7 +161,7 @@ Item {
                                     width: 50
                                     checked: false
                                     onToggled:  {
-                                        platformInterface.commands.set_i_led.update(pwm1Slider.value,pwm1Switch.checked)
+                                        platformInterface.set_i_led.update(pwm1Slider.value,pwm1Switch.checked)
                                     }
                                 }
                             }
@@ -185,7 +185,8 @@ Item {
                                     from: 0.7
                                     to: 5.0
                                     stepSize: 0.1
-                                    value: 0.7
+//                                    value: 0.7
+                                    value: platformInterface.current
                                     inputBox.validator: DoubleValidator { top: 5.0; bottom: 0.7 }
                                     inputBox.text:  parseFloat(pwm1Slider.value.toFixed(2))
                                     contextMenuEnabled: true
@@ -194,7 +195,7 @@ Item {
                                         inputBox.text = parseFloat(value.toFixed(2))
 
                                         if(pressed == false){
-                                            platformInterface.commands.set_i_led.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
+                                            platformInterface.set_i_led.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
 
                                             var maxONTime = 40/(10*pwm1Slider.value)
                                             if (pwm3Slider.value > maxONTime) {
@@ -217,7 +218,7 @@ Item {
                                 anchors.centerIn: parent
                                 Layout.alignment: SGAlignedLabel.SideTopCenter
 
-                                text: qsTr("Save")
+                                text: qsTr("Save values")
                                 contentItem: Text {
                                     id: btn_i_led_save_text
                                     text: btn_i_led_save.text
@@ -227,7 +228,7 @@ Item {
                                 }
 
                                 //onClicked: zoom()
-                                onClicked: platformInterface.commands.save_i_led.update(pwm1Slider.value)
+                                onClicked: platformInterface.save_values.update(pwm2Slider.value, pwm1Slider.value)
                             }
                         }
                     }
@@ -258,7 +259,7 @@ Item {
                                     checked: false
                                     enabled: false
                                     onToggled:  {
-                                        platformInterface.commands.set_v_out.update(pwm2Slider.value,pwm2Switch.checked)
+                                        platformInterface.set_v_out.update(pwm2Slider.value,pwm2Switch.checked)
                                     }
                                 }
                             }
@@ -282,7 +283,8 @@ Item {
                                     from: 4.8
                                     to: 10
                                     stepSize: 0.1
-                                    value: 10
+//                                    value: 10
+                                    value: platformInterface.voltage
                                     inputBox.validator: DoubleValidator { top: 10; bottom: 4.80 }
                                     inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
@@ -291,36 +293,36 @@ Item {
                                     onPressedChanged: {
                                         inputBox.text = parseFloat(value.toFixed(2))
                                         if(pressed == false){
-                                            platformInterface.commands.set_v_out.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
+                                            platformInterface.set_v_out.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
                                         }
                                     }
                                 }
                             }
                         }
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            Layout.column: 1
+//                        Item {
+//                            Layout.fillHeight: true
+//                            Layout.fillWidth: true
+//                            Layout.column: 1
 
-                            Button {
-                                id: btn_v_out_save
-                                anchors.centerIn: parent
-                                Layout.alignment: SGAlignedLabel.SideTopCenter
+//                            Button {
+//                                id: btn_v_out_save
+//                                anchors.centerIn: parent
+//                                Layout.alignment: SGAlignedLabel.SideTopCenter
 
-                                text: qsTr("Save")
-                                contentItem: Text {
-                                    id: btn_v_out_save_text
-                                    text: btn_v_out_save.text
-                                    color: "black"
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                }
+//                                text: qsTr("Save")
+//                                contentItem: Text {
+//                                    id: btn_v_out_save_text
+//                                    text: btn_v_out_save.text
+//                                    color: "black"
+//                                    horizontalAlignment: Text.AlignHCenter
+//                                    verticalAlignment: Text.AlignVCenter
+//                                }
 
-                                //onClicked: zoom()
-                                onClicked: platformInterface.commands.save_v_out.update(pwm2Slider.value)
+//                                //onClicked: zoom()
+//                                onClicked: platformInterface.save_values.update(pwm2Slider.value, pwm2Slider.value)
 
-                            }
-                        }
+//                            }
+//                        }
                     }
                 }
 
@@ -349,7 +351,7 @@ Item {
                                     checked: false
 
                                     onToggled:  {
-                                        platformInterface.commands.set_flash_pwm.update(pwm3Slider.value,pwm3Switch.checked)
+                                        platformInterface.set_flash_pwm.update(pwm3Slider.value,pwm3Switch.checked)
                                         pwm2Switch.enabled = (pwm3Switch.checked)
                                         pwm2Slider.enabled = (pwm3Switch.checked)
                                     }
@@ -375,14 +377,14 @@ Item {
                                     width: 250
                                     from: 0.0
                                     to: 5
-                                    stepSize: 0.1
+                                    stepSize: 0.125
                                     value: 0.0
                                     inputBox.validator: DoubleValidator { top: 5.00; bottom: 0.0 }
-                                    inputBox.text: parseFloat(value.toFixed(1))
+                                    inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
 
                                     onPressedChanged: {
-                                        inputBox.text = parseFloat(value.toFixed(1))
+                                        inputBox.text = parseFloat(value.toFixed(2))
 
                                         if(pressed == false){
                                             var maxCurrent = 40/(10*pwm3Slider.value)
@@ -390,10 +392,10 @@ Item {
                                             {
                                                 pwm1Slider.value = maxCurrent
                                                 pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
-                                                platformInterface.commands.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+                                                platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
                                                 pwm3delayTimer.start()
                                             }else{
-                                                platformInterface.commands.set_flash_pwm.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
+                                                platformInterface.set_flash_pwm.update(parseFloat(value.toFixed(2)), pwm3Switch.checked)
                                             }
                                         }
                                     }

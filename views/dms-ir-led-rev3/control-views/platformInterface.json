@@ -8,12 +8,6 @@
             }
         },
         {
-            "cmd": "save_i_led",
-            "payload": {
-                "current": "double"
-            }
-        },
-        {
             "cmd": "set_v_out",
             "payload": {
                 "status": "bool",
@@ -21,13 +15,14 @@
             }
         },
         {
-            "cmd": "save_v_out",
+            "cmd": "save_values",
             "payload": {
-                "voltage": "double"
+                "voltage": "double",
+                "current": "double"
             }
         },
         {
-            "cmd": "set_pwm3",
+            "cmd": "set_flash_pwm",
             "payload": {
                 "status": "bool",
                 "on_time": "double"
