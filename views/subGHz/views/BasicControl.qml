@@ -531,13 +531,13 @@ Rectangle {
             visible: true
             anchors {
                 top: pressurePopover.top
-                topMargin:20
+                topMargin: 30
                 bottom: pressurePopover.bottom
-                bottomMargin: 45
+                bottomMargin: 55
                 right: pressurePopover.right
-                rightMargin: 2
+                rightMargin: 15
                 left: pressurePopover.left
-                leftMargin:2
+                leftMargin: 15
             }
 
             yAxisTitle: "hpa"
@@ -590,13 +590,13 @@ Rectangle {
             visible: true
             anchors {
                 top: rssiPopover.top
-                topMargin:20
+                topMargin: 30
                 bottom: rssiPopover.bottom
-                bottomMargin: 45
+                bottomMargin: 55
                 right: rssiPopover.right
-                rightMargin: 2
+                rightMargin: 15
                 left: rssiPopover.left
-                leftMargin:2
+                leftMargin: 15
             }
             //width: portGraphs.width /  Math.max(1, graphSelector.howManyChecked)
             yAxisTitle: "hpa"
@@ -653,13 +653,13 @@ Rectangle {
             visible: true
             anchors {
                 top: temperaturePopover.top
-                topMargin:20
+                topMargin: 30
                 bottom: temperaturePopover.bottom
-                bottomMargin: 45
+                bottomMargin: 55
                 right: temperaturePopover.right
-                rightMargin: 2
+                rightMargin: 15
                 left: temperaturePopover.left
-                leftMargin:2
+                leftMargin: 15
             }
 
             yAxisTitle: "°C"
@@ -711,13 +711,13 @@ Rectangle {
             visible: true
             anchors {
                 top: humidityPopover.top
-                topMargin:20
+                topMargin: 30
                 bottom: humidityPopover.bottom
-                bottomMargin: 45
+                bottomMargin: 55
                 right: humidityPopover.right
-                rightMargin: 2
+                rightMargin: 15
                 left: humidityPopover.left
-                leftMargin:2
+                leftMargin: 15
             }
 
             yAxisTitle: "%"
