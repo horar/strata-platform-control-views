@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 onsemi.
+ * Copyright (c) 2018-2022 onsemi.
  *
  * All rights reserved. This software and/or documentation is licensed by onsemi under
  * limited terms and conditions. The terms and conditions pertaining to the software and/or
@@ -11,8 +11,6 @@ import QtQuick.Controls 2.12
 import QtQml 2.0
 
 import tech.strata.sgwidgets 1.0
-import tech.strata.sgwidgets 0.9 as Widget09
-
 
 SGGraph {
     id: graphConverter
