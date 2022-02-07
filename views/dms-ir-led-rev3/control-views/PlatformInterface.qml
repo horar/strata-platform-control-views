@@ -22,15 +22,17 @@ Item {
     //
 
     //Initial current and voltage values
-    property double current: 2
-    property double voltage: 5
+    property double current: 0.7
+    property double voltage: 10
+    property bool current_on: false
+    property bool voltage_on: false
 
     onCurrentChanged: {
-        set_i_led.update(current)
+        set_i_led.update(current, current_on)
     }
 
     onVoltageChanged: {
-        set_v_out.update(voltage)
+        set_v_out.update(voltage, voltage_on)
     }
 
     property var request_initial_values : {
@@ -38,8 +40,30 @@ Item {
         "voltage": 7
     }
     onRequest_initial_valuesChanged: {
-        current = request_initial_values.current
-        voltage = request_initial_values.voltage
+
+        if(request_initial_values.current !== 0)
+        {
+            current = request_initial_values.current
+            current_on = true
+        }
+        else
+        {
+            current = 0.7
+            current_on = false
+
+        }
+
+        if(request_initial_values.voltage !== 0)
+        {
+            voltage = request_initial_values.voltage
+            voltage_on = true
+        }
+        else
+        {
+            voltage = 10
+            voltage_on = false
+        }
+
     }
 
     /******************************************************************

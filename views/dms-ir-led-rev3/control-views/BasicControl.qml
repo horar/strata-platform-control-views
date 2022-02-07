@@ -159,7 +159,7 @@ Item {
                                 SGSwitch {
                                     id: pwm1Switch
                                     width: 50
-                                    checked: false
+                                    checked: platformInterface.current_on
                                     onToggled:  {
                                         platformInterface.set_i_led.update(pwm1Slider.value,pwm1Switch.checked)
                                     }
@@ -227,8 +227,23 @@ Item {
                                     verticalAlignment: Text.AlignVCenter
                                 }
 
-                                //onClicked: zoom()
-                                onClicked: platformInterface.save_values.update(pwm2Slider.value, pwm1Slider.value)
+                                onClicked:
+                                {
+                                    var pwm1SliderValue = pwm1Slider.value
+                                    var pwm2SliderValue = pwm2Slider.value
+
+                                    if(pwm1Switch.checked == false)
+                                    {
+                                        pwm1SliderValue = 0
+                                    }
+
+                                    if(pwm2Switch.checked == false)
+                                    {
+                                        pwm2SliderValue = 0
+                                    }
+
+                                    platformInterface.save_values.update(pwm2SliderValue, pwm1SliderValue)
+                                }
                             }
                         }
                     }
@@ -256,7 +271,7 @@ Item {
                                 SGSwitch {
                                     id: pwm2Switch
                                     width: 50
-                                    checked: false
+                                    checked: platformInterface.voltage_on
                                     enabled: false
                                     onToggled:  {
                                         platformInterface.set_v_out.update(pwm2Slider.value,pwm2Switch.checked)
@@ -299,30 +314,6 @@ Item {
                                 }
                             }
                         }
-//                        Item {
-//                            Layout.fillHeight: true
-//                            Layout.fillWidth: true
-//                            Layout.column: 1
-
-//                            Button {
-//                                id: btn_v_out_save
-//                                anchors.centerIn: parent
-//                                Layout.alignment: SGAlignedLabel.SideTopCenter
-
-//                                text: qsTr("Save")
-//                                contentItem: Text {
-//                                    id: btn_v_out_save_text
-//                                    text: btn_v_out_save.text
-//                                    color: "black"
-//                                    horizontalAlignment: Text.AlignHCenter
-//                                    verticalAlignment: Text.AlignVCenter
-//                                }
-
-//                                //onClicked: zoom()
-//                                onClicked: platformInterface.save_values.update(pwm2Slider.value, pwm2Slider.value)
-
-//                            }
-//                        }
                     }
                 }
 
