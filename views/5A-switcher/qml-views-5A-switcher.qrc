@@ -13,7 +13,6 @@
         <file>sgwidgets/SGAccordionItem.qml</file>
         <file>sgwidgets/SGCircularGauge.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
-        <file>sgwidgets/SGGraph.qml</file>
         <file>sgwidgets/SGLabelledInfoBox.qml</file>
         <file>sgwidgets/SGLayoutDivider.qml</file>
         <file>sgwidgets/SGRGBSlider.qml</file>
