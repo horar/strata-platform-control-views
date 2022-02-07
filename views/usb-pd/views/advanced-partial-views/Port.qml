@@ -438,7 +438,7 @@ Item {
         }
         height:250
 
-        SGGraph {
+        GraphConverter {
             id: graph1
             title: "Voltage Out"
             visible: false
@@ -471,7 +471,7 @@ Item {
             inputData: stream          // Set the graph's data source here
         }
 
-        SGGraph {
+        GraphConverter {
             id: graph2
             title: "Current Out"
             visible: false
