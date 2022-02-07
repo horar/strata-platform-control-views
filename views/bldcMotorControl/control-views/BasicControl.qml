@@ -438,18 +438,19 @@ Widget09.SGResponsiveScrollView {
                     fadeOutGraph.start()
             }
 
-            Widget09.SGGraphTimed{
+            GraphConverter {
+            //Widget09.SGGraphTimed{
                 id:rpmGraph
                 height:400
                 width:500
                 title: "Graph"                  // Default: empty
                 xAxisTitle: "Seconds"           // Default: empty
-                yAxisTitle: "rpm"          // Default: empty
+                yAxisTitle: "rpm"               // Default: empty
                 showYGrids: true                // Default: false
                 // showXGrids: false               // Default: false
                 reverseDirection: true          // Default: false - Reverses the direction of graph motion
                 autoAdjustMaxMin: true          // Default: false - If inputData is greater than maxYValue or less than minYValue, these limits are adjusted to encompass that point.
-                maxYValue: 2000                  // Default: 10
+                maxYValue: 2000                 // Default: 10
                 maxXValue: 10
                 repeatOldData: false            //testing to see if this will help "pause" the graph
 
@@ -464,6 +465,11 @@ Widget09.SGResponsiveScrollView {
                         return platformInterface.speed.rpm
                 }
 
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
             CircularGauge {

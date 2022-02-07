@@ -74,6 +74,3 @@ Widget09.SGResponsiveScrollView {
         }
     }
 }
-
-
-
