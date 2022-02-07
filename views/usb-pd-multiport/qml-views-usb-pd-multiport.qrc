@@ -40,7 +40,6 @@
         <file>sgwidgets/SGCapacityBarElement.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
         <file>sgwidgets/SGDivider.qml</file>
-        <file>sgwidgets/SGGraph.qml</file>
         <file>sgwidgets/SGLabelledInfoBox.qml</file>
         <file>sgwidgets/SGLayoutDebug.qml</file>
         <file>sgwidgets/SGLayoutDivider.qml</file>
