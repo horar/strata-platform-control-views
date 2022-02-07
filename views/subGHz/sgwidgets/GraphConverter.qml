@@ -45,7 +45,9 @@ SGGraph {
     property color gridLineColor
     gridColor: gridLineColor
 
-    property bool autoAdjustMaxMin: false
+    property bool autoAdjustMaxMin: false  // due to compatibility with SGGraphTimed - this feature was for Y axis only
+    property bool autoAdjustXMaxMin: false
+    property bool autoAdjustYMaxMin: autoAdjustMaxMin
     property real inputData
     property color dataLineColor: "black"
     property int pointCount: 50
@@ -68,8 +70,10 @@ SGGraph {
     autoUpdate: true
 
     Component.onCompleted: {
-        if (autoAdjustMaxMin) {
+        if (autoAdjustXMaxMin) {
             autoScaleXAxis()
+        }
+        if (autoAdjustYMaxMin) {
             autoScaleYAxis()
         }
 
