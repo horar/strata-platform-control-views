@@ -271,8 +271,11 @@ Item {
                     minXValue: 0
                     maxXValue:5
                     reverseDirection: true
-
-
+                    autoUpdate: false
+                    zoomXEnabled: false
+                    zoomYEnabled: false
+                    panXEnabled: false
+                    panYEnabled: false
                 }
             } // end of left control
 
@@ -334,6 +337,11 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        autoUpdate: false
+                        zoomXEnabled: false
+                        zoomYEnabled: false
+                        panXEnabled: false
+                        panYEnabled: false
                     }
 
                     SGStatusLight {
@@ -435,6 +443,11 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        autoUpdate: false
+                        zoomXEnabled: false
+                        zoomYEnabled: false
+                        panXEnabled: false
+                        panYEnabled: false
                     }
 
 
@@ -532,6 +545,11 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        autoUpdate: false
+                        zoomXEnabled: false
+                        zoomYEnabled: false
+                        panXEnabled: false
+                        panYEnabled: false
                     }
 
                     GraphConverter{
@@ -568,6 +586,11 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        autoUpdate: false
+                        zoomXEnabled: false
+                        zoomYEnabled: false
+                        panXEnabled: false
+                        panYEnabled: false
                     }
 
                     GraphConverter{
@@ -602,6 +625,11 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        autoUpdate: false
+                        zoomXEnabled: false
+                        zoomYEnabled: false
+                        panXEnabled: false
+                        panYEnabled: false
                     }
 
                     SGLabelledInfoBox {
@@ -664,7 +692,11 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
-
+                        autoUpdate: false
+                        zoomXEnabled: false
+                        zoomYEnabled: false
+                        panXEnabled: false
+                        panYEnabled: false
                     }
 
 

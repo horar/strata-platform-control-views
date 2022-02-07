@@ -356,6 +356,11 @@ Rectangle {
                             minXValue: 0
                             maxXValue: 5
                             reverseDirection: true
+                            autoUpdate: false
+                            zoomXEnabled: false
+                            zoomYEnabled: false
+                            panXEnabled: false
+                            panYEnabled: false
                         }
 
                         GraphConverter {
@@ -394,6 +399,11 @@ Rectangle {
                             minXValue: 0
                             maxXValue: 5
                             reverseDirection: true
+                            autoUpdate: false
+                            zoomXEnabled: false
+                            zoomYEnabled: false
+                            panXEnabled: false
+                            panYEnabled: false
                         }
 
                         Image {

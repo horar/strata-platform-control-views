@@ -8,6 +8,7 @@
  */
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQml 2.0
 
 import tech.strata.sgwidgets 1.0
 
@@ -60,11 +61,11 @@ SGGraph {
     property bool repeatOldData
     ////
 
-    panXEnabled: false
-    panYEnabled: false
-    zoomXEnabled: false
-    zoomYEnabled: false
-    autoUpdate: false
+    panXEnabled: true
+    panYEnabled: true
+    zoomXEnabled: true
+    zoomYEnabled: true
+    autoUpdate: true
 
     Component.onCompleted: {
         if (autoAdjustMaxMin) {
@@ -74,7 +75,11 @@ SGGraph {
 
         let movingCurve = createCurve("movingCurve")
         movingCurve.color = dataLineColor
-        movingCurve.autoUpdate = false
+        movingCurve.autoUpdate = true
+    }
+
+    function reset() {
+        graphConverter.removeCurve(0);
     }
 
     Timer {
@@ -95,6 +100,9 @@ SGGraph {
         onTriggered: {
             let currentTime = Date.now()
             let curve = graphConverter.curve(0)
+            if (curve === null) {
+                return
+            }
             curve.shiftPoints((currentTime - lastTime)/1000, 0)
             curve.append(0, inputData)
             removeOutOfViewPoints()

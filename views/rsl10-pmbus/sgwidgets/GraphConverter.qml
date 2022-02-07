@@ -78,6 +78,10 @@ SGGraph {
         movingCurve.autoUpdate = true
     }
 
+    function reset() {
+        graphConverter.removeCurve(0);
+    }
+
     Timer {
         id: graphTimerPoints
         interval: ((xMax-xMin)/pointCount)*1000 // like SGGraphTimed, plots a point every (1/pointCount) of the min/max X time interval

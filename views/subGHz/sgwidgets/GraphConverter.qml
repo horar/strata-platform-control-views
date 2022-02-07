@@ -79,7 +79,7 @@ SGGraph {
     }
 
     function reset() {
-         graphConverter.removeCurve(0);
+        graphConverter.removeCurve(0);
     }
 
     Timer {

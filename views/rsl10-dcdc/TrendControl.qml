@@ -94,6 +94,11 @@ Item{
                     reverseDirection: true
                     showYGrids: true
                     showXGrids: true
+                    autoUpdate: false
+                    zoomXEnabled: false
+                    zoomYEnabled: false
+                    panXEnabled: false
+                    panYEnabled: false
                 }
             }
         }
@@ -251,6 +256,11 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
             GraphConverter {
@@ -286,6 +296,11 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
             GraphConverter {
@@ -324,6 +339,11 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
             GraphConverter {
@@ -362,6 +382,11 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
             GraphConverter {
@@ -399,6 +424,11 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
             GraphConverter {
@@ -436,6 +466,11 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
         }
     }
