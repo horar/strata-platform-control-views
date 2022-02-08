@@ -439,7 +439,6 @@ Widget09.SGResponsiveScrollView {
             }
 
             GraphConverter {
-            //Widget09.SGGraphTimed{
                 id:rpmGraph
                 height:400
                 width:500
