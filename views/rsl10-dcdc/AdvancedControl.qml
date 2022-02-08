@@ -276,6 +276,7 @@ Item {
                     zoomYEnabled: false
                     panXEnabled: false
                     panYEnabled: false
+                    autoUpdateCurve: false
                 }
             } // end of left control
 
@@ -342,6 +343,7 @@ Item {
                         zoomYEnabled: false
                         panXEnabled: false
                         panYEnabled: false
+                        autoUpdateCurve: false
                     }
 
                     SGStatusLight {
@@ -448,6 +450,7 @@ Item {
                         zoomYEnabled: false
                         panXEnabled: false
                         panYEnabled: false
+                        autoUpdateCurve: false
                     }
 
 
@@ -550,6 +553,7 @@ Item {
                         zoomYEnabled: false
                         panXEnabled: false
                         panYEnabled: false
+                        autoUpdateCurve: false
                     }
 
                     GraphConverter{
@@ -591,6 +595,7 @@ Item {
                         zoomYEnabled: false
                         panXEnabled: false
                         panYEnabled: false
+                        autoUpdateCurve: false
                     }
 
                     GraphConverter{
@@ -630,6 +635,7 @@ Item {
                         zoomYEnabled: false
                         panXEnabled: false
                         panYEnabled: false
+                        autoUpdateCurve: false
                     }
 
                     SGLabelledInfoBox {
@@ -697,6 +703,7 @@ Item {
                         zoomYEnabled: false
                         panXEnabled: false
                         panYEnabled: false
+                        autoUpdateCurve: false
                     }
 
 

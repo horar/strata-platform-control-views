@@ -361,6 +361,7 @@ Rectangle {
                             zoomYEnabled: false
                             panXEnabled: false
                             panYEnabled: false
+                            autoUpdateCurve: false
                         }
 
                         GraphConverter {
@@ -404,6 +405,7 @@ Rectangle {
                             zoomYEnabled: false
                             panXEnabled: false
                             panYEnabled: false
+                            autoUpdateCurve: false
                         }
 
                         Image {

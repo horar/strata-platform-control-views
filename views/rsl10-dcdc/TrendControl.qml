@@ -99,6 +99,7 @@ Item{
                     zoomYEnabled: false
                     panXEnabled: false
                     panYEnabled: false
+                    autoUpdateCurve: false
                 }
             }
         }
@@ -261,6 +262,7 @@ Item{
                 zoomYEnabled: false
                 panXEnabled: false
                 panYEnabled: false
+                autoUpdateCurve: false
             }
 
             GraphConverter {
@@ -301,6 +303,7 @@ Item{
                 zoomYEnabled: false
                 panXEnabled: false
                 panYEnabled: false
+                autoUpdateCurve: false
             }
 
             GraphConverter {
@@ -344,6 +347,7 @@ Item{
                 zoomYEnabled: false
                 panXEnabled: false
                 panYEnabled: false
+                autoUpdateCurve: false
             }
 
             GraphConverter {
@@ -387,6 +391,7 @@ Item{
                 zoomYEnabled: false
                 panXEnabled: false
                 panYEnabled: false
+                autoUpdateCurve: false
             }
 
             GraphConverter {
@@ -429,6 +434,7 @@ Item{
                 zoomYEnabled: false
                 panXEnabled: false
                 panYEnabled: false
+                autoUpdateCurve: false
             }
 
             GraphConverter {
@@ -471,6 +477,7 @@ Item{
                 zoomYEnabled: false
                 panXEnabled: false
                 panYEnabled: false
+                autoUpdateCurve: false
             }
         }
     }
