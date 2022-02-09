@@ -80,7 +80,6 @@ Item {
         }
 
         Component.onCompleted: {
-//            platformInterface.commands.request_initial_values.update()
             platformInterface.request_initial_values_command.send()
         }
 
@@ -186,7 +185,7 @@ Item {
                                     to: 5.0
                                     stepSize: 0.1
 //                                    value: 0.7
-                                    value: platformInterface.current
+                                    value: platformInterface.current.toFixed(1)
                                     inputBox.validator: DoubleValidator { top: 5.0; bottom: 0.7 }
                                     inputBox.text:  parseFloat(pwm1Slider.value.toFixed(2))
                                     contextMenuEnabled: true
@@ -299,7 +298,7 @@ Item {
                                     to: 10
                                     stepSize: 0.1
 //                                    value: 10
-                                    value: platformInterface.voltage
+                                    value: platformInterface.voltage.toFixed(1)
                                     inputBox.validator: DoubleValidator { top: 10; bottom: 4.80 }
                                     inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
