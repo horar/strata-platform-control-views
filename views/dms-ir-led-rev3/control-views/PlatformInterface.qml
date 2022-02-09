@@ -27,14 +27,6 @@ Item {
     property bool current_on: false
     property bool voltage_on: false
 
-    onCurrentChanged: {
-        set_i_led.update(current, current_on)
-    }
-
-    onVoltageChanged: {
-        set_v_out.update(voltage, voltage_on)
-    }
-
     property var request_initial_values : {
         "current": 3,
         "voltage": 7
