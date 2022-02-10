@@ -31,7 +31,7 @@ Item {
 
         repeat: false
         interval: 10
-        onTriggered: platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+        onTriggered: platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)))
 
     }
 
@@ -142,29 +142,29 @@ Item {
                     ColumnLayout {
                         anchors.fill: parent
 
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            Layout.column: 1
+//                        Item {
+//                            Layout.fillHeight: true
+//                            Layout.fillWidth: true
+//                            Layout.column: 1
 
-                            SGAlignedLabel {
-                                id: pwm1SwitchLabel
-                                target: pwm1Switch
-                                text: "I_LED (LED driver NCV7694)"
-                                font.bold: true
-                                anchors.centerIn: parent
-                                alignment: SGAlignedLabel.SideTopCenter
+//                            SGAlignedLabel {
+//                                id: pwm1SwitchLabel
+//                                target: pwm1Switch
+//                                text: "I_LED (LED driver NCV7694)"
+//                                font.bold: true
+//                                anchors.centerIn: parent
+//                                alignment: SGAlignedLabel.SideTopCenter
 
-                                SGSwitch {
-                                    id: pwm1Switch
-                                    width: 50
-                                    checked: platformInterface.current_on
-                                    onToggled:  {
-                                        platformInterface.set_i_led.update(pwm1Slider.value,pwm1Switch.checked)
-                                    }
-                                }
-                            }
-                        }
+//                                SGSwitch {
+//                                    id: pwm1Switch
+//                                    width: 50
+//                                    checked: platformInterface.current_on
+//                                    onToggled:  {
+//                                        platformInterface.set_i_led.update(pwm1Slider.value,pwm1Switch.checked)
+//                                    }
+//                                }
+//                            }
+//                        }
 
                         Item {
                             Layout.fillHeight: true
@@ -193,7 +193,7 @@ Item {
                                         inputBox.text = parseFloat(value.toFixed(2))
 
                                         if(pressed == false){
-                                            platformInterface.set_i_led.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
+                                            platformInterface.set_i_led.update(parseFloat(value.toFixed(2)))
 
                                             var maxONTime = 40/(10*pwm1Slider.value)
                                             if (pwm3Slider.value > maxONTime) {
@@ -230,16 +230,6 @@ Item {
                                     var pwm1SliderValue = pwm1Slider.value
                                     var pwm2SliderValue = pwm2Slider.value
 
-                                    if(pwm1Switch.checked == false)
-                                    {
-                                        pwm1SliderValue = 0
-                                    }
-
-                                    if(pwm2Switch.checked == false)
-                                    {
-                                        pwm2SliderValue = 0
-                                    }
-
                                     platformInterface.save_values.update(pwm2SliderValue, pwm1SliderValue)
                                 }
                             }
@@ -254,29 +244,29 @@ Item {
                     ColumnLayout {
                         anchors.fill: parent
 
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
+//                        Item {
+//                            Layout.fillHeight: true
+//                            Layout.fillWidth: true
 
-                            SGAlignedLabel {
-                                id: pwm2SwitchLabel
-                                target: pwm2Switch
-                                text: "VOUT (DCDC converter NCV890204)"
-                                font.bold: true
-                                anchors.centerIn: parent
-                                alignment: SGAlignedLabel.SideTopCenter
+//                            SGAlignedLabel {
+//                                id: pwm2SwitchLabel
+//                                target: pwm2Switch
+//                                text: "VOUT (DCDC converter NCV890204)"
+//                                font.bold: true
+//                                anchors.centerIn: parent
+//                                alignment: SGAlignedLabel.SideTopCenter
 
-                                SGSwitch {
-                                    id: pwm2Switch
-                                    width: 50
-                                    checked: platformInterface.voltage_on
-                                    enabled: false
-                                    onToggled:  {
-                                        platformInterface.set_v_out.update(pwm2Slider.value,pwm2Switch.checked)
-                                    }
-                                }
-                            }
-                        }
+//                                SGSwitch {
+//                                    id: pwm2Switch
+//                                    width: 50
+//                                    checked: platformInterface.voltage_on
+//                                    enabled: false
+//                                    onToggled:  {
+//                                        platformInterface.set_v_out.update(pwm2Slider.value,pwm2Switch.checked)
+//                                    }
+//                                }
+//                            }
+//                        }
 
                         Item {
                             Layout.fillHeight: true
@@ -305,7 +295,7 @@ Item {
                                     onPressedChanged: {
                                         inputBox.text = parseFloat(value.toFixed(2))
                                         if(pressed == false){
-                                            platformInterface.set_v_out.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
+                                            platformInterface.set_v_out.update(parseFloat(value.toFixed(2)))
                                         }
                                     }
                                 }
@@ -340,7 +330,6 @@ Item {
 
                                     onToggled:  {
                                         platformInterface.set_flash_pwm.update(pwm3Slider.value,pwm3Switch.checked)
-                                        pwm2Switch.enabled = (pwm3Switch.checked)
                                         pwm2Slider.enabled = (pwm3Switch.checked)
                                     }
 
@@ -380,7 +369,7 @@ Item {
                                             {
                                                 pwm1Slider.value = maxCurrent
                                                 pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
-                                                platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+                                                platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)))
                                                 pwm3delayTimer.start()
                                             }else{
                                                 platformInterface.set_flash_pwm.update(parseFloat(value.toFixed(2)), pwm3Switch.checked)

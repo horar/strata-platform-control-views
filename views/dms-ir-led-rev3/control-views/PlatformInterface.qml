@@ -24,38 +24,14 @@ Item {
     //Initial current and voltage values
     property double current: 0.7
     property double voltage: 10
-    property bool current_on: false
-    property bool voltage_on: false
 
     property var request_initial_values : {
-        "current": 3,
-        "voltage": 7
+        "current": 0.7,
+        "voltage": 10
     }
     onRequest_initial_valuesChanged: {
-
-        if(request_initial_values.current !== 0)
-        {
             current = request_initial_values.current
-            current_on = true
-        }
-        else
-        {
-            current = 0.7
-            current_on = false
-
-        }
-
-        if(request_initial_values.voltage !== 0)
-        {
             voltage = request_initial_values.voltage
-            voltage_on = true
-        }
-        else
-        {
-            voltage = 10
-            voltage_on = false
-        }
-
     }
 
     /******************************************************************
@@ -80,40 +56,34 @@ Item {
 
         // @command set_i_led
         // @property duty_cycle: double
-        // @property status: bool
         property var set_i_led: ({
             "cmd": "set_i_led",
             "payload": {
-                "current": 0.0,
-                "status": false
+                "current": 0.0
             },
-            update: function (current,status) {
-                this.set(current,status)
+            update: function (current) {
+                this.set(current)
                 this.send(this)
             },
             set: function (current,status) {
                 this.payload.current = current
-                this.payload.status = status
             },
             send: function () { CorePlatformInterface.send(this) }
         })
 
         // @command set_v_out
         // @property duty_cycle: double
-        // @property status: bool
         property var set_v_out: ({
             "cmd": "set_v_out",
             "payload": {
-                "voltage": 0.0,
-                "status": false
+                "voltage": 0.0
             },
-            update: function (voltage,status) {
-                this.set(voltage,status)
+            update: function (voltage) {
+                this.set(voltage)
                 this.send(this)
             },
             set: function (voltage,status) {
                 this.payload.voltage = voltage
-                this.payload.status = status
             },
             send: function () { CorePlatformInterface.send(this) }
         })
