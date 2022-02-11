@@ -30,7 +30,6 @@
         <file>SaveDialogMenu.qml</file>
         <file>ExportControl.qml</file>
         <file>image/icon-motor.svg</file>
-        <file>sgwidgets/FVGraphTimed.qml</file>
         <file>image/Stop.svg</file>
         <file>image/Play.svg</file>
         <file>SideBar.qml</file>
