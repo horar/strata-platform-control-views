@@ -137,34 +137,10 @@ Item {
 
                 Item {
                     Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width/4
 
                     ColumnLayout {
                         anchors.fill: parent
-
-//                        Item {
-//                            Layout.fillHeight: true
-//                            Layout.fillWidth: true
-//                            Layout.column: 1
-
-//                            SGAlignedLabel {
-//                                id: pwm1SwitchLabel
-//                                target: pwm1Switch
-//                                text: "I_LED (LED driver NCV7694)"
-//                                font.bold: true
-//                                anchors.centerIn: parent
-//                                alignment: SGAlignedLabel.SideTopCenter
-
-//                                SGSwitch {
-//                                    id: pwm1Switch
-//                                    width: 50
-//                                    checked: platformInterface.current_on
-//                                    onToggled:  {
-//                                        platformInterface.set_i_led.update(pwm1Slider.value,pwm1Switch.checked)
-//                                    }
-//                                }
-//                            }
-//                        }
 
                         Item {
                             Layout.fillHeight: true
@@ -173,7 +149,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm1SliderLabel
                                 target: pwm1Slider
-                                text: "Current (A)"
+                                text: "I_LED (LED driver NCV7694) \n Current (A)"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter
@@ -206,67 +182,15 @@ Item {
                                 }
                             }
                         }
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            Layout.column: 1
-
-                            Button {
-                                id: btn_i_led_save
-                                anchors.centerIn: parent
-                                Layout.alignment: SGAlignedLabel.SideTopCenter
-
-                                text: qsTr("Save values")
-                                contentItem: Text {
-                                    id: btn_i_led_save_text
-                                    text: btn_i_led_save.text
-                                    color: "black"
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-
-                                onClicked:
-                                {
-                                    var pwm1SliderValue = pwm1Slider.value
-                                    var pwm2SliderValue = pwm2Slider.value
-
-                                    platformInterface.save_values.update(pwm2SliderValue, pwm1SliderValue)
-                                }
-                            }
-                        }
                     }
                 }
 
                 Item {
                     Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width/4
 
                     ColumnLayout {
                         anchors.fill: parent
-
-//                        Item {
-//                            Layout.fillHeight: true
-//                            Layout.fillWidth: true
-
-//                            SGAlignedLabel {
-//                                id: pwm2SwitchLabel
-//                                target: pwm2Switch
-//                                text: "VOUT (DCDC converter NCV890204)"
-//                                font.bold: true
-//                                anchors.centerIn: parent
-//                                alignment: SGAlignedLabel.SideTopCenter
-
-//                                SGSwitch {
-//                                    id: pwm2Switch
-//                                    width: 50
-//                                    checked: platformInterface.voltage_on
-//                                    enabled: false
-//                                    onToggled:  {
-//                                        platformInterface.set_v_out.update(pwm2Slider.value,pwm2Switch.checked)
-//                                    }
-//                                }
-//                            }
-//                        }
 
                         Item {
                             Layout.fillHeight: true
@@ -275,7 +199,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm2SliderLabel
                                 target: pwm2Slider
-                                text: "Voltage (V)"
+                                text: "V_OUT (DCDC converter NCV890204) \n Voltage (V)"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter                               
@@ -306,7 +230,45 @@ Item {
 
                 Item {
                     Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width/4
+
+                    ColumnLayout {
+                        anchors.fill: parent
+
+                        Item {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            Layout.column: 1
+
+                            Button {
+                                id: btn_i_led_save
+                                anchors.centerIn: parent
+                                Layout.alignment: SGAlignedLabel.Left
+
+                                text: qsTr("Save values I_LED and V_OUT to EEPROM")
+                                contentItem: Text {
+                                    id: btn_i_led_save_text
+                                    text: btn_i_led_save.text
+                                    color: "black"
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                }
+
+                                onClicked:
+                                {
+                                    var pwm1SliderValue = pwm1Slider.value
+                                    var pwm2SliderValue = pwm2Slider.value
+
+                                    platformInterface.save_values.update(pwm2SliderValue, pwm1SliderValue)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: parent.width/4
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -344,7 +306,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm3SliderLabel
                                 target: pwm3Slider
-                                text: "T_ON time (ms)"
+                                text: "T_ON time (ms) \n T_ON duty cycle: " + (((pwm3Slider.value/(1/62))/10).toFixed(0)) + "%"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter
@@ -375,24 +337,6 @@ Item {
                                                 platformInterface.set_flash_pwm.update(parseFloat(value.toFixed(2)), pwm3Switch.checked)
                                             }
                                         }
-                                    }
-                                }
-                            }
-
-                            Item {
-                                Layout.fillHeight: true
-                                Layout.fillWidth: true
-
-                                SGAlignedLabel {
-                                    id: pwm3SliderLabel3
-                                    target: labelDuty
-                                    text: "T_ON duty cycle: " + (((pwm3Slider.value/(1/62))/10).toFixed(0)) + "%"
-                                    font.bold: true
-                                    anchors.centerIn: parent
-                                    alignment: SGAlignedLabel.SideTopCenter
-
-                                    SGAlignedLabel{
-                                        id:labelDuty
                                     }
                                 }
                             }
