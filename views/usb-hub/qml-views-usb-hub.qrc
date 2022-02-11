@@ -30,7 +30,6 @@
         <file>views/BasicControl.qml</file>
         <file>views/SystemControl.qml</file>
         <file>views/basic-partial-views/AdvancedPortControls.qml</file>
-        <file>views/basic-partial-views/AudioGraph.qml</file>
         <file>views/basic-partial-views/AudioPortInfo.qml</file>
         <file>views/basic-partial-views/DeviceInfo.qml</file>
         <file>views/basic-partial-views/PlugAnimation.qml</file>
