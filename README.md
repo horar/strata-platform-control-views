@@ -8,19 +8,19 @@ This repository contains control views for each platform.
 
 * Git Bash >= 2.28.0
 * CMake >= 3.19
-* Qt5 5.12.10
+* Qt5 5.12.12
 * Visual Studio Build Tools 2017
 
 ### MacOS
 
 * Xcode and Command Line Tools
 * Git >= 2.28.0
-* Qt5 5.12.10
+* Qt5 5.12.12
 * CMake >= 3.19
 
 ## Qt5 installation
 
-Download and install Qt5 version 5.12.10
+Download and install Qt5 version 5.12.12
 
 The following Qt5 components are required:
 
