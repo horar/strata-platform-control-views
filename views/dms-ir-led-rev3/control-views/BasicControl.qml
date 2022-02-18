@@ -23,7 +23,6 @@ Item {
         }
     }
 
-
     Timer {
         id: pwm1delayTimer
 
@@ -345,9 +344,3 @@ Item {
         }
     }
 }
-
-
-
-
-
-

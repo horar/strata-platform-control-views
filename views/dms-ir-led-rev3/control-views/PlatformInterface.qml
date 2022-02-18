@@ -38,95 +38,93 @@ Item {
       * COMMANDS
     ******************************************************************/
 
-//    QtObject {
-//        id: commands
 
-        property var request_initial_values_command : ({
-                "cmd" : "request_initial_values",
-                "payload": {},
+    property var request_initial_values_command : ({
+            "cmd" : "request_initial_values",
+            "payload": {},
 
-                update: function () {
-                    this.send(this)
-                },
-                set: function () {
-                },
-                send: function () { CorePlatformInterface.send(this) },
-                show: function () { CorePlatformInterface.show(this) }
-            })
-
-        // @command set_i_led
-        // @property duty_cycle: double
-        property var set_i_led: ({
-            "cmd": "set_i_led",
-            "payload": {
-                "current": 0.0
-            },
-            update: function (current) {
-                this.set(current)
+            update: function () {
                 this.send(this)
             },
-            set: function (current,status) {
-                this.payload.current = current
+            set: function () {
             },
-            send: function () { CorePlatformInterface.send(this) }
+            send: function () { CorePlatformInterface.send(this) },
+            show: function () { CorePlatformInterface.show(this) }
         })
 
-        // @command set_v_out
-        // @property duty_cycle: double
-        property var set_v_out: ({
-            "cmd": "set_v_out",
-            "payload": {
-                "voltage": 0.0
-            },
-            update: function (voltage) {
-                this.set(voltage)
-                this.send(this)
-            },
-            set: function (voltage,status) {
-                this.payload.voltage = voltage
-            },
-            send: function () { CorePlatformInterface.send(this) }
-        })
+    // @command set_i_led
+    // @property duty_cycle: double
+    property var set_i_led: ({
+        "cmd": "set_i_led",
+        "payload": {
+            "current": 0.0
+        },
+        update: function (current) {
+            this.set(current)
+            this.send(this)
+        },
+        set: function (current,status) {
+            this.payload.current = current
+        },
+        send: function () { CorePlatformInterface.send(this) }
+    })
 
-        // @command save_values
-        // @property voltage: double
-        // @property current: double
-        property var save_values: ({
-            "cmd": "save_values",
-            "payload": {
-                "voltage": 0.0,
-                "current": 0.0
-            },
-            update: function (voltage, current) {
-                this.set(voltage, current)
-                this.send(this)
-            },
-            set: function (voltage, current) {
-                this.payload.voltage = voltage
-                this.payload.current = current
-            },
-            send: function () { CorePlatformInterface.send(this) }
-        })
+    // @command set_v_out
+    // @property duty_cycle: double
+    property var set_v_out: ({
+        "cmd": "set_v_out",
+        "payload": {
+            "voltage": 0.0
+        },
+        update: function (voltage) {
+            this.set(voltage)
+            this.send(this)
+        },
+        set: function (voltage,status) {
+            this.payload.voltage = voltage
+        },
+        send: function () { CorePlatformInterface.send(this) }
+    })
 
-        // @command set_flash_pwm
-        // @property on_time: double
-        // @property status: bool
-        property var set_flash_pwm: ({
-            "cmd": "set_flash_pwm",
-            "payload": {
-                "on_time": 0.0,
-                "status": false
-            },
-            update: function (on_time,status) {
-                this.set(on_time,status)
-                this.send(this)
-            },
-            set: function (on_time,status) {
-                this.payload.on_time = on_time
-                this.payload.status = status
-            },
-            send: function () { CorePlatformInterface.send(this) }
-        })
+    // @command save_values
+    // @property voltage: double
+    // @property current: double
+    property var save_values: ({
+        "cmd": "save_values",
+        "payload": {
+            "voltage": 0.0,
+            "current": 0.0
+        },
+        update: function (voltage, current) {
+            this.set(voltage, current)
+            this.send(this)
+        },
+        set: function (voltage, current) {
+            this.payload.voltage = voltage
+            this.payload.current = current
+        },
+        send: function () { CorePlatformInterface.send(this) }
+    })
+
+    // @command set_flash_pwm
+    // @property on_time: double
+    // @property status: bool
+    property var set_flash_pwm: ({
+        "cmd": "set_flash_pwm",
+        "payload": {
+            "on_time": 0.0,
+            "status": false
+        },
+        update: function (on_time,status) {
+            this.set(on_time,status)
+            this.send(this)
+        },
+        set: function (on_time,status) {
+            this.payload.on_time = on_time
+            this.payload.status = status
+        },
+        send: function () { CorePlatformInterface.send(this) }
+    })
 
     // -------------------------------------------------------------------
     // Listens to message notifications coming from CoreInterface.cpp
