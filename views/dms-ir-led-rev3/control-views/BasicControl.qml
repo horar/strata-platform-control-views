@@ -176,6 +176,17 @@ Item {
                                             }
                                         }
                                     }
+
+                                    inputBox.onEditingFinished : {
+                                        platformInterface.set_i_led.update(parseFloat(value.toFixed(2)))
+
+                                        var maxONTime = 40/(10*pwm1Slider.value)
+                                        if (pwm3Slider.value > maxONTime) {
+                                            pwm3Slider.value = maxONTime
+                                            pwm3Slider.inputBox.text = parseFloat(pwm3Slider.value.toFixed(1))
+                                            pwm3delayTimer.start()
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -218,6 +229,10 @@ Item {
                                         if(pressed == false){
                                             platformInterface.set_v_out.update(parseFloat(value.toFixed(2)))
                                         }
+                                    }
+
+                                    inputBox.onEditingFinished : {
+                                        platformInterface.set_v_out.update(parseFloat(value.toFixed(2)))
                                     }
                                 }
                             }
@@ -333,6 +348,19 @@ Item {
                                             }else{
                                                 platformInterface.set_flash_pwm.update(parseFloat(value.toFixed(2)), pwm3Switch.checked)
                                             }
+                                        }
+                                    }
+
+                                    inputBox.onEditingFinished : {
+                                        var maxCurrent = 40/(10*pwm3Slider.value)
+                                        if (pwm1Slider.value > maxCurrent)
+                                        {
+                                            pwm1Slider.value = maxCurrent
+                                            pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
+                                            platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)))
+                                            pwm3delayTimer.start()
+                                        }else{
+                                            platformInterface.set_flash_pwm.update(parseFloat(value.toFixed(2)), pwm3Switch.checked)
                                         }
                                     }
                                 }
