@@ -13,8 +13,6 @@ import QtQml 2.12
 
 import tech.strata.sgwidgets 1.0
 
-import "qrc:/js/help_layout_manager.js" as Help
-
 /********************************************************************************************************
 This is UI for STR-DMS-CONTROL-GEV
 *********************************************************************************************************/
@@ -41,7 +39,6 @@ Item {
         repeat: false
         interval: 10
         onTriggered: platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
-
     }
 
     Timer {
@@ -50,7 +47,6 @@ Item {
         repeat: false
         interval: 10
         onTriggered: platformInterface.commands.set_pwm3.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
-
     }
 
     function formating_random_increment(max,value){
@@ -66,9 +62,7 @@ Item {
     ColumnLayout {
         width: parent.width
         height: parent.height/2
-        //anchors.centerIn: parent
         anchors.top:parent.top
-        //anchors.bottom:headingCommandHandler.top
         anchors.bottom: controls.bottom
         anchors.bottomMargin: 300
         anchors.topMargin: 0
@@ -81,7 +75,6 @@ Item {
         Rectangle{
             width: parent.width
             height: parent.height
-            //color: "red"
             Image {
                 id: backgroung
                 source: "images/background.png"
@@ -90,13 +83,11 @@ Item {
                 fillMode: Image.PreserveAspectFit
             }
         }
-
     }
 
     ColumnLayout {
         width: parent.width
         height: parent.height/2
-        //anchors.centerIn: parent
         anchors.top:parent.top
         anchors.bottom:parent.bottom
         anchors.topMargin: 300
@@ -413,9 +404,3 @@ Item {
         }
     }
 }
-
-
-
-
-
-
