@@ -212,6 +212,17 @@ Item {
                                             }
                                         }
                                     }
+
+                                    inputBox.onEditingFinished : {
+                                        platformInterface.commands.set_pwm1.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
+
+                                        var maxONTime = 40/(10*pwm1Slider.value)
+                                        if (pwm3Slider.value > maxONTime) {
+                                            pwm3Slider.value = maxONTime
+                                            pwm3Slider.inputBox.text = parseFloat(pwm3Slider.value.toFixed(1))
+                                            pwm3delayTimer.start()
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -278,6 +289,10 @@ Item {
                                         if(pressed == false){
                                             platformInterface.commands.set_pwm2.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
                                         }
+                                    }
+
+                                    inputBox.onEditingFinished : {
+                                        platformInterface.commands.set_pwm2.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
                                     }
                                 }
                             }
@@ -356,6 +371,19 @@ Item {
                                             }else{
                                                 platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
                                             }
+                                        }
+                                    }
+
+                                    inputBox.onEditingFinished : {
+                                        var maxCurrent = 40/(10*pwm3Slider.value)
+                                        if (pwm1Slider.value > maxCurrent)
+                                        {
+                                            pwm1Slider.value = maxCurrent
+                                            pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
+                                            platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+                                            pwm3delayTimer.start()
+                                        }else{
+                                            platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
                                         }
                                     }
                                 }
