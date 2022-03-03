@@ -16,7 +16,6 @@ import QtGraphicalEffects 1.0
 import "qrc:/js/help_layout_manager.js" as Help
 import QtQuick.Dialogs 1.2
 import tech.strata.logger 1.0
-import QtCharts 2.0
 import QtQml 2.0
 
 ColumnLayout {
@@ -88,6 +87,11 @@ ColumnLayout {
                 dataArray_foc_iout_id_calc_graph.push({"x":x_Axis_Timer_1,"y":foc_iout_id_calc})
                 x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
                 basicGraph1.xMax = x_Axis_Timer_1
+                if(basicGraph1.xMax > 200)
+                {
+                    basicGraph1.xMin = x_Axis_Timer_1 - 200
+                    dataArray_foc_iout_id_calc_graph.shift()
+                }
             }
         }
     }
@@ -102,6 +106,11 @@ ColumnLayout {
                 dataArray_foc_iout_iq_calc_graph.push({"x":x_Axis_Timer_1,"y":foc_iout_id_calc})
                 x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
                 basicGraph1.xMax = x_Axis_Timer_1
+                if(basicGraph1.xMax > 200)
+                {
+                    basicGraph1.xMin = x_Axis_Timer_1 - 200
+                    dataArray_foc_iout_iq_calc_graph.shift()
+                }
             }
         }
     }
@@ -116,6 +125,11 @@ ColumnLayout {
                 dataArray_winding_iout_iu_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iu_calc})
                 x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
                 basicGraph1.xMax = x_Axis_Timer_1
+                if(basicGraph1.xMax > 200)
+                {
+                    basicGraph1.xMin = x_Axis_Timer_1 - 200
+                    dataArray_winding_iout_iu_calc_graph.shift()
+                }
             }
         }
     }
@@ -130,6 +144,11 @@ ColumnLayout {
                 dataArray_winding_iout_iv_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iv_calc})
                 x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
                 basicGraph1.xMax = x_Axis_Timer_1
+                if(basicGraph1.xMax > 200)
+                {
+                    basicGraph1.xMin = x_Axis_Timer_1 - 200
+                    dataArray_winding_iout_iv_calc_graph.shift()
+                }
             }
         }
     }
@@ -144,6 +163,11 @@ ColumnLayout {
                 dataArray_winding_iout_iw_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iw_calc})
                 x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
                 basicGraph1.xMax = x_Axis_Timer_1
+                if(basicGraph1.xMax > 200)
+                {
+                    basicGraph1.xMin = x_Axis_Timer_1 - 200
+                    dataArray_winding_iout_iw_calc_graph.shift()
+                }
             }
         }
     }
@@ -158,6 +182,11 @@ ColumnLayout {
                 dataArray_dc_link_vin_calc_graph.push({"x":x_Axis_Timer_,"y":dc_link_vin_calc})
                 x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
                 basicGraph.xMax = x_Axis_Timer_
+                if(basicGraph.xMax > 200)
+                {
+                    basicGraph.xMin = x_Axis_Timer_ - 200
+                    dataArray_dc_link_vin_calc_graph.shift()
+                }
             }
         }
     }
@@ -172,6 +201,11 @@ ColumnLayout {
                 dataArray_actual_speed_calc_graph.push({"x":x_Axis_Timer_,"y":actual_speed_calc})
                 x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
                 basicGraph.xMax = x_Axis_Timer_
+                if(basicGraph.xMax > 200)
+                {
+                    basicGraph.xMin = x_Axis_Timer_ - 200
+                    dataArray_actual_speed_calc_graph.shift()
+                }
             }
         }
     }
