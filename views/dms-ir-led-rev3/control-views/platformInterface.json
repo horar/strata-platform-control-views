@@ -1,0 +1,32 @@
+{
+    "commands": [
+        {
+            "cmd": "set_i_led",
+            "payload": {
+                "status": "bool",
+                "current": "double"
+            }
+        },
+        {
+            "cmd": "set_v_out",
+            "payload": {
+                "status": "bool",
+                "voltage": "double"
+            }
+        },
+        {
+            "cmd": "save_values",
+            "payload": {
+                "voltage": "double",
+                "current": "double"
+            }
+        },
+        {
+            "cmd": "set_flash_pwm",
+            "payload": {
+                "status": "bool",
+                "on_time": "double"
+            }
+        },
+    ]
+}
