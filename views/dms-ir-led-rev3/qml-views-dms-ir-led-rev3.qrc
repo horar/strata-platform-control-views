@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Control.qml</file>
+        <file>control-views/platformInterface.json</file>
+        <file>control-views/images/background.png</file>
+        <file>control-views/PlatformInterface.qml</file>
+        <file>control-views/BasicControl.qml</file>
+    </qresource>
+</RCC>
