@@ -31,12 +31,16 @@ ColumnLayout {
         dataArray_winding_iout_iw_calc_graph = []
         dataArray_dc_link_vin_calc_graph = []
         dataArray_actual_speed_calc_graph = []
+
         if(basicGraph.count > 0) {
             basicGraph.removeCurve(0)
         }
         if(basicGraph1.count > 0) {
             basicGraph1.removeCurve(0)
         }
+
+
+
 
         Help.registerTarget(basicGraph,"Speed/DC link graph:\n\t-Actual Speed.\n\t-DC Link Voltage.", 0, "exportControlHelp")
         Help.registerTarget(basicGraph1,"Current graph:\n\t-FOC Iout Id.\n\t-FOC Iout Iq.\n\t-Winding Iout Iu.\n\t-Winding Iout Iv.\n\t-Winding Iout Iw.", 1, "exportControlHelp")
@@ -82,18 +86,6 @@ ColumnLayout {
     property var foc_iout_id_calc_validator:0
     onFoc_iout_id_calcChanged:{
         foc_iout_id_calc_validator++
-        if(graph_selected3 === 1){
-            if(foc_iout_id_calc_validator>0){
-                dataArray_foc_iout_id_calc_graph.push({"x":x_Axis_Timer_1,"y":foc_iout_id_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-                if(basicGraph1.xMax > 200)
-                {
-                    basicGraph1.xMin = x_Axis_Timer_1 - 200
-                    dataArray_foc_iout_id_calc_graph.shift()
-                }
-            }
-        }
     }
 
     property var foc_iout_iq_calc: (platformInterface.status_vi.q/1000).toFixed(3)
@@ -101,18 +93,6 @@ ColumnLayout {
     property var foc_iout_iq_calc_validator:0
     onFoc_iout_iq_calcChanged:{
         foc_iout_iq_calc_validator++
-        if(graph_selected4 === 1){
-            if(foc_iout_iq_calc_validator>0){
-                dataArray_foc_iout_iq_calc_graph.push({"x":x_Axis_Timer_1,"y":foc_iout_id_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-                if(basicGraph1.xMax > 200)
-                {
-                    basicGraph1.xMin = x_Axis_Timer_1 - 200
-                    dataArray_foc_iout_iq_calc_graph.shift()
-                }
-            }
-        }
     }
 
     property var winding_iout_iu_calc: (platformInterface.status_vi.u/1000).toFixed(3)
@@ -120,18 +100,6 @@ ColumnLayout {
     property var winding_iout_iu_calc_validator:0
     onWinding_iout_iu_calcChanged:{
         winding_iout_iu_calc_validator++
-        if(graph_selected5 === 1){
-            if(winding_iout_iu_calc_validator>0){
-                dataArray_winding_iout_iu_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iu_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-                if(basicGraph1.xMax > 200)
-                {
-                    basicGraph1.xMin = x_Axis_Timer_1 - 200
-                    dataArray_winding_iout_iu_calc_graph.shift()
-                }
-            }
-        }
     }
 
     property var winding_iout_iv_calc: (platformInterface.status_vi.v/1000).toFixed(3)
@@ -139,18 +107,6 @@ ColumnLayout {
     property var winding_iout_iv_calc_validator:0
     onWinding_iout_iv_calcChanged:{
         winding_iout_iv_calc_validator++
-        if(graph_selected6 === 1){
-            if(winding_iout_iv_calc_validator>0){
-                dataArray_winding_iout_iv_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iv_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-                if(basicGraph1.xMax > 200)
-                {
-                    basicGraph1.xMin = x_Axis_Timer_1 - 200
-                    dataArray_winding_iout_iv_calc_graph.shift()
-                }
-            }
-        }
     }
 
     property var winding_iout_iw_calc: (platformInterface.status_vi.w/1000).toFixed(3)
@@ -158,18 +114,6 @@ ColumnLayout {
     property var winding_iout_iw_calc_validator:0
     onWinding_iout_iw_calcChanged:{
         winding_iout_iw_calc_validator++
-        if(graph_selected7 === 1){
-            if(winding_iout_iw_calc_validator>0){
-                dataArray_winding_iout_iw_calc_graph.push({"x":x_Axis_Timer_1,"y":winding_iout_iw_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-                if(basicGraph1.xMax > 200)
-                {
-                    basicGraph1.xMin = x_Axis_Timer_1 - 200
-                    dataArray_winding_iout_iw_calc_graph.shift()
-                }
-            }
-        }
     }
 
     property var dc_link_vin_calc: (platformInterface.status_vi.l/1000).toFixed(3)
@@ -177,18 +121,6 @@ ColumnLayout {
     property var dc_link_vin_calc_validator:0
     onDc_link_vin_calcChanged:{
         dc_link_vin_calc_validator++
-        if(graph_selected2 === 1){
-            if(dc_link_vin_calc_validator>0){
-                dataArray_dc_link_vin_calc_graph.push({"x":x_Axis_Timer_,"y":dc_link_vin_calc})
-                x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
-                basicGraph.xMax = x_Axis_Timer_
-                if(basicGraph.xMax > 200)
-                {
-                    basicGraph.xMin = x_Axis_Timer_ - 200
-                    dataArray_dc_link_vin_calc_graph.shift()
-                }
-            }
-        }
     }
 
     property var actual_speed_calc: platformInterface.status_vi.a
@@ -196,18 +128,6 @@ ColumnLayout {
     property var actual_speed_calc_validator:0
     onActual_speed_calcChanged:{
         actual_speed_calc_validator++
-        if(graph_selected1 === 1){
-            if(actual_speed_calc_validator>0){
-                dataArray_actual_speed_calc_graph.push({"x":x_Axis_Timer_,"y":actual_speed_calc})
-                x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
-                basicGraph.xMax = x_Axis_Timer_
-                if(basicGraph.xMax > 200)
-                {
-                    basicGraph.xMin = x_Axis_Timer_ - 200
-                    dataArray_actual_speed_calc_graph.shift()
-                }
-            }
-        }
     }
 
     function clearGraphsData() {
@@ -415,7 +335,7 @@ ColumnLayout {
 
                                     Timer{
                                         id: graphTimerPoints
-                                        interval: +virtualtextarea.realtimelog*300
+                                        interval: +virtualtextarea.realtimelog*100
                                         running: false
                                         repeat: true
                                         onTriggered: {
@@ -425,12 +345,36 @@ ColumnLayout {
                                             }
 
                                             if(graph_selected1 === 1){
+                                                if(actual_speed_calc_validator>0){
+                                                    dataArray_actual_speed_calc_graph.push({"x":actual_speed_calc_validator,"y":actual_speed_calc})
+
+                                                    basicGraph.xMax = actual_speed_calc_validator
+
+                                                    if(dataArray_actual_speed_calc_graph.length > 200)
+                                                    {
+                                                        basicGraph.xMin = actual_speed_calc_validator - 130
+                                                        dataArray_actual_speed_calc_graph.shift()
+                                                    }
+                                                }
+
                                                 var curve1 = basicGraph.createCurve("graphCurve")
                                                 curve1.color = "orange"
                                                 curve1.appendList(dataArray_actual_speed_calc_graph)
                                             }
 
                                             if(graph_selected2 === 1){
+                                                if(dc_link_vin_calc_validator>0){
+                                                    dataArray_dc_link_vin_calc_graph.push({"x":dc_link_vin_calc_validator,"y":dc_link_vin_calc})
+
+                                                    basicGraph.xMax = dc_link_vin_calc_validator
+
+                                                    if(dataArray_dc_link_vin_calc_graph.length > 200)
+                                                    {
+                                                        basicGraph.xMin = dc_link_vin_calc_validator - 130
+                                                        dataArray_dc_link_vin_calc_graph.shift()
+                                                    }
+                                                }
+
                                                 var curve2 = basicGraph.createCurve("graphCurve")
                                                 curve2.color = "blue"
                                                 curve2.appendList(dataArray_dc_link_vin_calc_graph)
@@ -757,7 +701,7 @@ ColumnLayout {
 
                                         Timer{
                                             id: graphTimerPoints1
-                                            interval: +virtualtextarea.realtimelog
+                                            interval: +virtualtextarea.realtimelog*100
                                             running: false
                                             repeat: true
                                             onTriggered: {
@@ -767,30 +711,90 @@ ColumnLayout {
                                                 }
 
                                                 if(graph_selected3 === 1){
+                                                    if(foc_iout_id_calc_validator>0){
+                                                        dataArray_foc_iout_id_calc_graph.push({"x":foc_iout_id_calc_validator,"y":foc_iout_id_calc})
+
+                                                        basicGraph1.xMax = foc_iout_id_calc_validator
+
+                                                        if(dataArray_foc_iout_id_calc_graph.length > 200)
+                                                        {
+                                                            basicGraph1.xMin = foc_iout_id_calc_validator - 130
+                                                            dataArray_foc_iout_id_calc_graph.shift()
+                                                        }
+                                                    }
+
                                                     var curve3 = basicGraph1.createCurve("graphCurve")
                                                     curve3.color = "red"
                                                     curve3.appendList(dataArray_foc_iout_id_calc_graph)
                                                 }
 
                                                 if(graph_selected4 === 1){
+                                                    if(foc_iout_iq_calc_validator>0){
+                                                        dataArray_foc_iout_iq_calc_graph.push({"x":foc_iout_iq_calc_validator,"y":foc_iout_id_calc})
+
+                                                        basicGraph1.xMax = foc_iout_iq_calc_validator
+
+                                                        if(dataArray_foc_iout_iq_calc_graph.length > 200)
+                                                        {
+                                                            basicGraph1.xMin = foc_iout_iq_calc_validator - 130
+                                                            dataArray_foc_iout_iq_calc_graph.shift()
+                                                        }
+                                                    }
+
                                                     var curve4 = basicGraph1.createCurve("graphCurve")
                                                     curve4.color = "green"
                                                     curve4.appendList(dataArray_foc_iout_iq_calc_graph)
                                                 }
 
                                                 if(graph_selected5 === 1){
+                                                    if(winding_iout_iu_calc_validator>0){
+                                                        dataArray_winding_iout_iu_calc_graph.push({"x":winding_iout_iu_calc_validator,"y":winding_iout_iu_calc})
+
+                                                        basicGraph1.xMax = winding_iout_iu_calc_validator
+
+                                                        if(dataArray_winding_iout_iu_calc_graph.length > 200)
+                                                        {
+                                                            basicGraph1.xMin = winding_iout_iu_calc_validator - 130
+                                                            dataArray_winding_iout_iu_calc_graph.shift()
+                                                        }
+                                                    }
+
                                                     var curve5 = basicGraph1.createCurve("graphCurve")
                                                     curve5.color = "brown"
                                                     curve5.appendList(dataArray_winding_iout_iu_calc_graph)
                                                 }
 
                                                 if(graph_selected6 === 1){
+                                                    if(winding_iout_iv_calc_validator>0){
+                                                        dataArray_winding_iout_iv_calc_graph.push({"x":winding_iout_iv_calc_validator,"y":winding_iout_iv_calc})
+
+                                                        basicGraph1.xMax = winding_iout_iv_calc_validator
+
+                                                        if(dataArray_winding_iout_iv_calc_graph.length > 200)
+                                                        {
+                                                            basicGraph1.xMin = winding_iout_iv_calc_validator - 130
+                                                            dataArray_winding_iout_iv_calc_graph.shift()
+                                                        }
+                                                    }
+
                                                     var curve6 = basicGraph1.createCurve("graphCurve")
                                                     curve6.color = "black"
                                                     curve6.appendList(dataArray_winding_iout_iv_calc_graph)
                                                 }
 
                                                 if(graph_selected7 === 1){
+                                                    if(winding_iout_iw_calc_validator>0){
+                                                        dataArray_winding_iout_iw_calc_graph.push({"x":winding_iout_iw_calc_validator,"y":winding_iout_iw_calc})
+
+                                                        basicGraph1.xMax = winding_iout_iw_calc_validator
+
+                                                        if(dataArray_winding_iout_iw_calc_graph.length > 200)
+                                                        {
+                                                            basicGraph1.xMin = winding_iout_iw_calc_validator - 130
+                                                            dataArray_winding_iout_iw_calc_graph.shift()
+                                                        }
+                                                    }
+
                                                     var curve7 = basicGraph1.createCurve("graphCurve")
                                                     curve7.color = "grey"
                                                     curve7.appendList(dataArray_winding_iout_iw_calc_graph)
