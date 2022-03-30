@@ -84,12 +84,6 @@ Rectangle {
         }
         else
         {
-//            if (save_file_dialogbox.collect_collect.length > 200)
-//            {
-//                save_file_dialogbox.collect_collect.shift()
-//                time_data="Time;DC_Link(V);Id(A);Iq(A);Iu(A);Iv(A);Iw(A);Temp.(C);Pole Pairs;Max vout;Max speed;C.prop gain;C.int gain;S.prop gain;S.int gain;Res(Ohms);Ind(H);Target(rpm);Actual(rpm)"+"\n"
-//                save_file_dialogbox.collect_collect[0] = time_data
-//            }
             time_data=(new Date().toLocaleString(Qt.locale(),"h:mm:ss:zzz")) +";"+ dc_link_vin_calc +";"+ foc_iout_id_calc +";"+ foc_iout_iq_calc +";"+ winding_iout_iu_calc +";"+ winding_iout_iv_calc +";"+ winding_iout_iw_calc +";"+ temp_calc +";"+ pole_pairs +";"+ max_motor_vout +";"+ max_motor_speed +";"+ current_pi_p_gain +";"+ current_pi_i_gain +";"+ speed_pi_p_gain +";"+ speed_pi_i_gain +";"+ resistance +";"+ inductance +";"+ target_speed +";"+ actual_speed +"\n"
         }
         my_last_time=(new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss:zzz"))
