@@ -312,7 +312,6 @@ Item {
                     unitLabel: "V"
                     gaugeTitle: "DC Link"
                     value: dc_link_vin_calc
-                    Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
                 SGStatusLight {
@@ -368,7 +367,6 @@ Item {
                     unitLabel: "°C"
                     gaugeTitle: "Temperature"
                     value: temp_calc
-                    Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
                 Rectangle {
@@ -768,7 +766,6 @@ Item {
                     unitLabel: "RPM"
                     gaugeTitle: "Actual Speed"
                     value: platformInterface.status_vi.a
-                    Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
                 SGLabelledInfoBox {
