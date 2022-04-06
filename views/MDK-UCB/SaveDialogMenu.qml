@@ -22,7 +22,7 @@ Rectangle {
     property alias get_measurement_start:get_measurement_start
     property alias save_file_dialogbox: save_file_dialogbox
     property var my_log_time:0
-    property var time_data:[]
+    property string time_data: ""
     height: 350
     color: "transparent"
     width: 300
@@ -76,16 +76,21 @@ Rectangle {
     property var actual_speed: +platformInterface.status_vi.a
 
     onWinding_iout_iu_calcChanged:
-            {
-            if(one_time_top_row_excel===0){
-                time_data="Time\tDC_Link(V)\t    Id(A)\t    Iq(A)\t    Iu(A)\t    Iv(A)\t    Iw(A)\tTemp.(C)\tPole Pairs\tMax vout\tMax speed\tC.prop gain\tC.int gain\tS.prop gain\tS.int gain\tRes(Ohms)\tInd(H)\tTarget(rpm)\tActual(rpm)"+"\n"
-                one_time_top_row_excel=1
-                }
-            else(time_data=""+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ dc_link_vin_calc +"\t"+ foc_iout_id_calc +"\t"+ foc_iout_iq_calc +"\t"+ winding_iout_iu_calc +"\t"+ winding_iout_iv_calc +"\t"+ winding_iout_iw_calc +"\t"+ temp_calc +"\t"+ pole_pairs +"\t"+ max_motor_vout +"\t"+ max_motor_speed +"\t"+ current_pi_p_gain +"\t"+ current_pi_i_gain +"\t"+ speed_pi_p_gain +"\t"+ speed_pi_i_gain +"\t"+ resistance +"\t"+ inductance +"\t"+ target_speed +"\t"+ actual_speed +"\n")
+    {
+        if(one_time_top_row_excel===0)
+        {
+            time_data="Time;DC_Link(V);Id(A);Iq(A);Iu(A);Iv(A);Iw(A);Temp.(C);Pole Pairs;Max vout;Max speed;C.prop gain;C.int gain;S.prop gain;S.int gain;Res(Ohms);Ind(H);Target(rpm);Actual(rpm)"+"\n"
+            one_time_top_row_excel=1
+        }
+        else
+        {
+            time_data=(new Date().toLocaleString(Qt.locale(),"h:mm:ss:zzz")) +";"+ dc_link_vin_calc +";"+ foc_iout_id_calc +";"+ foc_iout_iq_calc +";"+ winding_iout_iu_calc +";"+ winding_iout_iv_calc +";"+ winding_iout_iw_calc +";"+ temp_calc +";"+ pole_pairs +";"+ max_motor_vout +";"+ max_motor_speed +";"+ current_pi_p_gain +";"+ current_pi_i_gain +";"+ speed_pi_p_gain +";"+ speed_pi_i_gain +";"+ resistance +";"+ inductance +";"+ target_speed +";"+ actual_speed +"\n"
+        }
+        my_last_time=(new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss:zzz"))
+        save_file_dialogbox.collect_collect.push(time_data)
+    }
 
-            my_last_time=(new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss:zzz"))
-            save_file_dialogbox.collect_collect.push(time_data)
-            }
+
     property var clears_log_data: +logSwitch.clear_log_data
 
     onClears_log_dataChanged:{
@@ -139,7 +144,7 @@ Rectangle {
 
                         TextArea {
                             id:save_file_dialogbox
-                            property var collect_collect:[]
+                            property var collect_collect: []
                             anchors.bottom: parent.bottom
                             width: parent.width*0.99
                             height: parent.height*0.4
@@ -164,7 +169,7 @@ Rectangle {
                 id: saveFileDialog
                 selectExisting: false
                 nameFilters: ["Text files (*.log)", "All files (*)"]
-                onAccepted: { saveFile(saveFileDialog.fileUrl, (virtualtextarea.text + save_file_dialogbox.collect_collect.join("")+ "Stop_time= "+my_last_time))
+                onAccepted: { saveFile(saveFileDialog.fileUrl, (virtualtextarea.text + save_file_dialogbox.collect_collect + ("")+ "Stop_time= "+my_last_time))
                     opensavedaialoguemenu.visible=false
                 }
             }
