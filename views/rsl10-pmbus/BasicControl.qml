@@ -522,15 +522,15 @@ Item {
                     checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {dio12Switch.checked}
                              else{platformInterface.set_dio12.update("off")}
                     onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
-                                   platformInterface.dio12_enabled = checked
+                                   platformInterface.output_enabled = checked
                                    if(checked){
-                                       platformInterface.set_dio12.update("on")
+                                       platformInterface.set_output.update(true)
                                    }
                                    else{
-                                       platformInterface.set_dio12.update("off")
+                                       platformInterface.set_output.update(false)
                                    }
                                }
-                               else{platformInterface.set_dio12.update("off")}
+                               else{platformInterface.set_output.update(false)}
                             }
 
                 SGLabelledInfoBox {

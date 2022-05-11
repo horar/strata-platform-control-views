@@ -14,6 +14,17 @@ import "qrc:/js/core_platform_interface.js" as CorePlatformInterface
 Item {
     id: platformInterface
 
+    /*
+    * Property to sync the views and set the initial state
+    */
+    property bool enabled: false
+    property bool output_enabled: false
+    property bool power_mode: false
+    property bool advertise
+    property int voutOVFaultResponse_state
+    property int voutUVFaultResponse_state
+    property int ioutOCFaultResponse_state
+
     // -------------------
     // Notification Messages
     //
@@ -157,7 +168,7 @@ Item {
                                       show: function () { CorePlatformInterface.show(this) }
                                   })
 
-    property var read_dio12: ({ "cmd" : "read_dio12",
+    property var get_output: ({ "cmd" : "get_output",
 
                                    update: function () {
                                        CorePlatformInterface.send(this)
@@ -178,20 +189,20 @@ Item {
                                })
 
 
-    property var set_dio12: ({
-                                  "cmd" : "set_dio12",
+    property var set_output: ({
+                                  "cmd" : "set_output",
                                   "payload": {
-                                      "dio12_enable": " ",
+                                      "enable": "",
                                   },
 
                                   // Update will set and send in one shot
-                                  update: function (dio12_enabled) {
-                                      this.set(dio12_enabled)
+                                  update: function (output_enabled) {
+                                      this.set(output_enabled)
                                       CorePlatformInterface.send(this)
                                   },
                                   // Set can set single or multiple properties before sending to platform
-                                  set: function (dio12_enabled) {
-                                      this.payload.dio12_enable = dio12_enabled;
+                                  set: function (output_enabled) {
+                                      this.payload.enable = output_enabled;
                                   },
                                   send: function () { CorePlatformInterface.send(this) },
                                   show: function () { CorePlatformInterface.show(this) }
@@ -663,14 +674,4 @@ Item {
     }
     // -------------------------------------------------------------------
 
-    /*
-      property to sync the views and set the initial state
-    */
-    property bool enabled: false
-    property bool dio12_enabled: false
-    property bool power_mode: false
-    property bool advertise
-    property int voutOVFaultResponse_state
-    property int voutUVFaultResponse_state
-    property int ioutOCFaultResponse_state
 }
