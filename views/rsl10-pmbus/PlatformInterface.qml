@@ -6,9 +6,8 @@
  * documentation are available at http://www.onsemi.com/site/pdf/ONSEMI_T&C.pdf (“onsemi Standard
  * Terms and Conditions of Sale, Section 8 Software”).
  */
-import QtQuick 2.9
-import QtQuick.Controls 2.2
-import QtQuick.Window 2.3
+import QtQuick 2.12
+
 import "qrc:/js/core_platform_interface.js" as CorePlatformInterface
 
 Item {
@@ -25,7 +24,69 @@ Item {
     property int voutUVFaultResponse_state
     property int ioutOCFaultResponse_state
 
-    // -------------------
+
+    onGet_outputChanged: {
+        output_enabled = get_output.enabled
+    }
+
+    // -------------------------------------------------------------------------------------------
+    // Commands
+    // TO SEND A COMMAND DO THE FOLLOWING:
+    // EXAMPLE: To send the motor speed: platformInterface.set_enable.update("on")
+
+    // TO SYNCHRONIZE THE SPEED ON ALL THE VIEW DO THE FOLLOWING:
+    // EXAMPLE: platformInterface.enabled
+
+    // @command set_output
+    // @property enable: bool
+    property var set_output1: ({
+                              "cmd" : "set_output",
+                              "payload": {
+                                  "enable": false
+                              },
+
+                              // Update will set and send in one shot
+                              update: function (enable) {
+                                  this.set(enable)
+                                  this.send(this)
+                              },
+                              // Set can set single or multiple properties before sending to platform
+                              set: function (enable) {
+                                  this.payload.enable = enable
+                              },
+                              send: function () { CorePlatformInterface.send(this) }
+                          })
+
+    // @command get_output
+    property var get_output: ({ "cmd" : "get_output",
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+
+    // -------------------------------------------------------------------------------------------
+    // Periodic commands
+
+
+    // @command start_periodic get_telemetry
+    property var start_periodic_telemetry: ({   "cmd": "start_periodic",
+                                                "payload": {
+                                                    "function": "get_telemetry"
+                                            },
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+
+    // -------------------------------------------------------------------------------------------
     // Notification Messages
     //
     // define and document incoming notification messages
@@ -168,15 +229,7 @@ Item {
                                       show: function () { CorePlatformInterface.show(this) }
                                   })
 
-    property var get_output: ({ "cmd" : "get_output",
 
-                                   update: function () {
-                                       CorePlatformInterface.send(this)
-                                   },
-                                   send: function () { CorePlatformInterface.send(this) },
-                                   show: function () { CorePlatformInterface.show(this) }
-
-                               })
 
     property var read_enable: ({ "cmd" : "read_enable",
 
@@ -188,25 +241,6 @@ Item {
 
                                })
 
-
-    property var set_output: ({
-                                  "cmd" : "set_output",
-                                  "payload": {
-                                      "enable": "",
-                                  },
-
-                                  // Update will set and send in one shot
-                                  update: function (output_enabled) {
-                                      this.set(output_enabled)
-                                      CorePlatformInterface.send(this)
-                                  },
-                                  // Set can set single or multiple properties before sending to platform
-                                  set: function (output_enabled) {
-                                      this.payload.enable = output_enabled;
-                                  },
-                                  send: function () { CorePlatformInterface.send(this) },
-                                  show: function () { CorePlatformInterface.show(this) }
-                              })
 
     property var set_enable: ({
                                   "cmd" : "set_enable",

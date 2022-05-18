@@ -4,7 +4,6 @@
         <file>BasicControl.qml</file>
         <file>Control.qml</file>
         <file>MultiplePlatform.qml</file>
-        <file>PlatformInterface.qml</file>
         <file>sgwidgets/SGCircularGauge.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
         <file>sgwidgets/SGGraph.qml</file>
@@ -42,5 +41,6 @@
         <file>sgwidgets/CircGauge.qml</file>
         <file>SideBar.qml</file>
         <file>sgwidgets/SGAlignedLabel.qml</file>
+        <file>PlatformInterface.qml</file>
     </qresource>
 </RCC>

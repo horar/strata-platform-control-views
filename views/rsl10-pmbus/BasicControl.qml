@@ -88,6 +88,8 @@ Item {
 
     Component.onCompleted:  {
         multiplePlatform.check_class_id()
+        platformInterface.get_output.update()
+//        platformInterface.start_periodic_telemetry.update()
         Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced and Data Logger/Export views.", 0, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
         Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
@@ -519,19 +521,16 @@ Item {
                     grooveColor: "#ccc"
                     grooveFillColor: "green"
                     fontSizeLabel: (parent.width + parent.height)/37
-                    checked: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {dio12Switch.checked}
-                             else{platformInterface.set_dio12.update("off")}
-                    onToggled: if (multiplePlatform.nominalVin > ((platformInterface.status_voltage_current.vin)/1000)) {
-                                   platformInterface.output_enabled = checked
-                                   if(checked){
-                                       platformInterface.set_output.update(true)
-                                   }
-                                   else{
-                                       platformInterface.set_output.update(false)
-                                   }
+                    checked: platformInterface.output_enabled
+
+                    onToggled: if(checked){
+                                       platformInterface.set_output1.update(checked)
                                }
-                               else{platformInterface.set_output.update(false)}
-                            }
+                               else
+                               {
+                                       platformInterface.set_output1.update(checked)
+                               }
+                }
 
                 SGLabelledInfoBox {
                     id: outputVoltage
