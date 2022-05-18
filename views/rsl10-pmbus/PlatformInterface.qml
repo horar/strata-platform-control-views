@@ -14,19 +14,37 @@ Item {
     id: platformInterface
 
     /*
-    * Property to sync the views and set the initial state
+    * Output enabled state
     */
-    property bool enabled: false
     property bool output_enabled: false
-    property bool power_mode: false
-    property bool advertise
-    property int voutOVFaultResponse_state
-    property int voutUVFaultResponse_state
-    property int ioutOCFaultResponse_state
 
+    /*
+    * Telemetry values
+    */
+    property double vin:   0     /* Input Voltage in Volts */
+    property double iin:   0     /* Input Current in Amperes */
+    property double vout:  0     /* Output Voltage in Volts */
+    property double iout:  0     /* Output Current in Amperes */
+    property double btemp: 0     /* Board Temperature in °C */
+    property double ctemp: 0      /* Chip Temperature in °C */
 
+    /*
+    * Read output state
+    */
     onGet_outputChanged: {
         output_enabled = get_output.enabled
+    }
+
+    /*
+    * Read telemetry
+    */
+    onGet_telemetryChanged: {
+        vin = get_telemetry.vin
+        iin = get_telemetry.iin
+        vout = get_telemetry.vout
+        iout = get_telemetry.iout
+        btemp = get_telemetry.btemp
+        ctemp = get_telemetry.ctemp
     }
 
     // -------------------------------------------------------------------------------------------
@@ -68,6 +86,17 @@ Item {
 
                                })
 
+    // @command get_telemetry
+    property var get_telemetry: ({ "cmd" : "get_telemetry",
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+
     // -------------------------------------------------------------------------------------------
     // Periodic commands
 
@@ -96,6 +125,13 @@ Item {
     // @notification read_voltage_current
     // @description: read values
     //
+
+    property bool enabled: false
+    property bool power_mode: false
+    property bool advertise
+    property int voutOVFaultResponse_state
+    property int voutUVFaultResponse_state
+    property int ioutOCFaultResponse_state
 
     property var status_voltage_current : {
         "vin": 0,		// in mVolts

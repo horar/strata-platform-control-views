@@ -89,7 +89,7 @@ Item {
     Component.onCompleted:  {
         multiplePlatform.check_class_id()
         platformInterface.get_output.update()
-//        platformInterface.start_periodic_telemetry.update()
+        platformInterface.start_periodic_telemetry.update()
         Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced and Data Logger/Export views.", 0, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
         Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
@@ -235,7 +235,7 @@ Item {
                     lightSize: (parent.width + parent.height)/23
                     fontSize:  (parent.width + parent.height)/40
 
-                    property string vinMonitor: {platformInterface.status_voltage_current.vin}
+                    property string vinMonitor: {platformInterface.vin}
                     onVinMonitorChanged:  {
                         if(multiplePlatform.minVin > ((platformInterface.status_voltage_current.vin)/1000)) {
                             ledLight.status = "red"
@@ -258,7 +258,7 @@ Item {
                 SGLabelledInfoBox {
                     id: inputVoltage
                     label: ""
-                    info: ((platformInterface.status_voltage_current.vin)/1000).toFixed(3)
+                    info: ((platformInterface.vin)).toFixed(3)
 
                     infoBoxColor: if (multiplePlatform.nominalVin < ((platformInterface.status_voltage_current.vin)/1000)) {"red"}
                                   else{"lightgrey"}
@@ -281,7 +281,7 @@ Item {
                 SGLabelledInfoBox {
                     id: inputCurrent
                     label: ""
-                    info: ((platformInterface.status_voltage_current.iin)/1000).toFixed(3)
+                    info: ((platformInterface.iin)).toFixed(3)
 
                     infoBoxColor: "lightgrey"
                     infoBoxBorderColor: "grey"
@@ -317,7 +317,7 @@ Item {
                     outerColor: "#999"
                     unitLabel: "°C"
                     gaugeTitle: "Board\nTemperature"
-                    value: temp_calc
+                    value: platformInterface.btemp
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
@@ -535,7 +535,7 @@ Item {
                 SGLabelledInfoBox {
                     id: outputVoltage
                     label: ""
-                    info: ((platformInterface.status_voltage_current.vout)/1000).toFixed(3)
+                    info: ((platformInterface.vout)).toFixed(3)
 
                     infoBoxColor: "lightgrey"
                     infoBoxBorderColor: "grey"
@@ -558,7 +558,7 @@ Item {
                 SGLabelledInfoBox {
                     id: outputCurrent
                     label: ""
-                    info: ((platformInterface.status_voltage_current.iout)/1000).toFixed(3)
+                    info: ((platformInterface.iout)).toFixed(3)
 
                     infoBoxColor: "lightgrey"
                     infoBoxBorderColor: "grey"
@@ -595,7 +595,7 @@ Item {
                     outerColor: "#999"
                     unitLabel: "°C"
                     gaugeTitle: "Chip\nTemperature"
-                    value: temp_pmbus_calc
+                    value: platformInterface.ctemp
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
