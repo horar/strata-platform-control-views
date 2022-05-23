@@ -94,6 +94,8 @@ Item{
                     reverseDirection: true
                     showYGrids: true
                     showXGrids: true
+                    // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                    // 'GraphConverter' is also set to false - update of curve causes also graph update
                     autoUpdate: false
                     zoomXEnabled: false
                     zoomYEnabled: false
@@ -257,6 +259,8 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                // 'GraphConverter' is also set to false - update of curve causes also graph update
                 autoUpdate: false
                 zoomXEnabled: false
                 zoomYEnabled: false
@@ -298,6 +302,8 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                // 'GraphConverter' is also set to false - update of curve causes also graph update
                 autoUpdate: false
                 zoomXEnabled: false
                 zoomYEnabled: false
@@ -342,6 +348,8 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                // 'GraphConverter' is also set to false - update of curve causes also graph update
                 autoUpdate: false
                 zoomXEnabled: false
                 zoomYEnabled: false
@@ -386,6 +394,8 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                // 'GraphConverter' is also set to false - update of curve causes also graph update
                 autoUpdate: false
                 zoomXEnabled: false
                 zoomYEnabled: false
@@ -429,6 +439,8 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                // 'GraphConverter' is also set to false - update of curve causes also graph update
                 autoUpdate: false
                 zoomXEnabled: false
                 zoomYEnabled: false
@@ -472,6 +484,8 @@ Item{
                 reverseDirection: true
                 showYGrids: true
                 showXGrids: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                // 'GraphConverter' is also set to false - update of curve causes also graph update
                 autoUpdate: false
                 zoomXEnabled: false
                 zoomYEnabled: false

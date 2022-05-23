@@ -314,6 +314,8 @@ Item {
                     panXEnabled: false
                     panYEnabled: false
                     autoUpdate: false
+                    // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                    // 'GraphConverter' is set to true by default - update of curve causes also graph update
                 }
             } // end of left control
 

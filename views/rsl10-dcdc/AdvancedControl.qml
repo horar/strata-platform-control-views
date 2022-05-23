@@ -270,6 +270,8 @@ Item {
                     minXValue: 0
                     maxXValue:5
                     reverseDirection: true
+                    // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                    // 'GraphConverter' is also set to false - update of curve causes also graph update
                     autoUpdate: false
                     zoomXEnabled: false
                     zoomYEnabled: false
@@ -337,6 +339,8 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                        // 'GraphConverter' is also set to false - update of curve causes also graph update
                         autoUpdate: false
                         zoomXEnabled: false
                         zoomYEnabled: false
@@ -444,6 +448,8 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                        // 'GraphConverter' is also set to false - update of curve causes also graph update
                         autoUpdate: false
                         zoomXEnabled: false
                         zoomYEnabled: false
@@ -547,6 +553,8 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                        // 'GraphConverter' is also set to false - update of curve causes also graph update
                         autoUpdate: false
                         zoomXEnabled: false
                         zoomYEnabled: false
@@ -589,6 +597,8 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                        // 'GraphConverter' is also set to false - update of curve causes also graph update
                         autoUpdate: false
                         zoomXEnabled: false
                         zoomYEnabled: false
@@ -629,6 +639,8 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                        // 'GraphConverter' is also set to false - update of curve causes also graph update
                         autoUpdate: false
                         zoomXEnabled: false
                         zoomYEnabled: false
@@ -697,6 +709,8 @@ Item {
                         minXValue: 0
                         maxXValue: 5
                         reverseDirection: true
+                        // 'autoUpdate' property for 'SGGraph' is set to false, and 'autoUpdateCurve' property of
+                        // 'GraphConverter' is also set to false - update of curve causes also graph update
                         autoUpdate: false
                         zoomXEnabled: false
                         zoomYEnabled: false
