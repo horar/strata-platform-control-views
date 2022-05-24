@@ -19,6 +19,13 @@ Item {
     property bool output_enabled: false
 
     /*
+    * PWM state
+    */
+    property bool pwm_enabled:  false
+    property int frequency:     0     /* PWM frequency in Hz */
+    property int duty:          0     /* PWM duty cycle in % */
+
+    /*
     * Telemetry values
     */
     property double vin:   0     /* Input Voltage in Volts */
@@ -27,6 +34,24 @@ Item {
     property double iout:  0     /* Output Current in Amperes */
     property double btemp: 0     /* Board Temperature in °C */
     property double ctemp: 0      /* Chip Temperature in °C */
+
+    /*
+    * Status values
+    */
+    property bool off:      false
+    property bool pgood:    false
+    property bool temp_w:   false
+    property bool temp_f:   false
+    property bool vout_ovf: false
+    property bool vout_ovw: false
+    property bool vout_uvw: false
+    property bool vout_uvf: false
+    property bool iout_ocw: false
+    property bool iout_ocf: false
+    property bool vin_uvf:  false
+    property bool vin_uvw:  false
+    property bool vin_low:  false
+    property bool cml:      false
 
     /*
     * Read output state
@@ -45,6 +70,28 @@ Item {
         iout = get_telemetry.iout
         btemp = get_telemetry.btemp
         ctemp = get_telemetry.ctemp
+    }
+
+    /*
+    * Read status
+    */
+    onGet_statusChanged: {
+        off = get_status.off
+        pgood = get_status.pgood
+        temp_w = get_status.temp_w
+        temp_f = get_status.temp_f
+        vout_ovf = get_status.vout_ovf
+        vout_ovw = get_status.vout_ovw
+        vout_uvw = get_status.vout_uvw
+        vout_uvf = get_status.vout_uvf
+        iout_ocw = get_status.iout_ocw
+        iout_ocf = get_status.iout_ocf
+        vout_ovf = get_status.vout_ovf
+        vout_ovw = get_status.vout_ovw
+        vin_uvf = get_status.vin_uvf
+        vin_uvw = get_status.vin_uvw
+        vin_low = get_status.vin_low
+        cml = get_status.cml
     }
 
     // -------------------------------------------------------------------------------------------
@@ -97,6 +144,17 @@ Item {
 
                                })
 
+    // @command get_status
+    property var get_status: ({ "cmd" : "get_status",
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+
     // -------------------------------------------------------------------------------------------
     // Periodic commands
 
@@ -105,6 +163,20 @@ Item {
     property var start_periodic_telemetry: ({   "cmd": "start_periodic",
                                                 "payload": {
                                                     "function": "get_telemetry"
+                                            },
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+
+    // @command start_periodic get_telemetry
+    property var start_periodic_status: ({   "cmd": "start_periodic",
+                                                "payload": {
+                                                    "function": "get_status"
                                             },
 
                                    update: function () {
@@ -693,12 +765,12 @@ Item {
         }
     }
 
-    property int frequency: 0
+//    property int frequency: 0
     onFrequencyChanged: {
         setFrequency.update(frequency)
     }
 
-    property int duty: 0
+//    property int duty: 0
     onDutyChanged: {
         setPWM.update(duty)
     }

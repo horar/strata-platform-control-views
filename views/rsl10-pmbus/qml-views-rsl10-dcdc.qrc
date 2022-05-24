@@ -39,8 +39,8 @@
         <file>sgwidgets/FaultLight.qml</file>
         <file>sgwidgets/DigitalReadout.qml</file>
         <file>sgwidgets/CircGauge.qml</file>
-        <file>SideBar.qml</file>
         <file>sgwidgets/SGAlignedLabel.qml</file>
         <file>PlatformInterface.qml</file>
+        <file>SideBar.qml</file>
     </qresource>
 </RCC>

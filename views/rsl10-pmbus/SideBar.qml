@@ -58,43 +58,64 @@ Rectangle {
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignHCenter
             fontSizeMultiplier: 1
-            color: "lightgreen"
-        }
-
-        SGText {
-            text: "LOAD"
-            Layout.fillWidth: true
-            wrapMode: Text.Wrap
-            horizontalAlignment: Text.AlignHCenter
-            fontSizeMultiplier: 1
             color: "white"
         }
 
         IconButton {
+            id: enableButton
+            toolTipText: "The button will enable or disable load."
+            source: "qrc:/images/tach.svg"
+            iconOpacity: enablePop.visible ? .5 : 1
+
+            onClicked:
+            {
+                if (platformInterface.pwm_enabled == true)
+                {
+                    platformInterface.pwm_enabled  = false
+                    enableText.text = "PWM OFF"
+                    enableText.color = "red"
+                }
+                else
+                {
+                    platformInterface.pwm_enabled  = true
+                    enableText.text = "PWM ON"
+                    enableText.color = "lightgreen"
+                }
+            }
+        }
+
+                SGText {
+                    id: enableText
+                    text: "PWM OFF"
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                    horizontalAlignment: Text.AlignHCenter
+                    fontSizeMultiplier: 1
+                    color: "red"
+                }
+
+        IconButton {
             id: frequencyButton
-            toolTipText: "The slider will set the PWM Transient Frequency signal going to the Load. PWM Frequency function 0 -> 0 kHz, 1 -> 2.5 kHz, 2 -> 4 kHz, 3 -> 5 kHz, 4 -> 8 kHz, 5 -> 10 kHz"
-            value:if(frequencyPop.value == 0 ){0}
-                  else if(frequencyPop.value == 1 ){2.5}
-                  else if(frequencyPop.value == 2 ){4}
-                  else if(frequencyPop.value == 3 ){5}
-                  else if(frequencyPop.value == 4 ){8}
-                  else if(frequencyPop.value == 5 ){10}
-            unit: "Khz"
+            toolTipText: "The slider will set the PWM Transient Frequency signal going to the Load."
+            value:frequencyPop.value
+            unit: "Hz"
             source: "qrc:/images/tach.svg"
             iconOpacity: frequencyPop.visible ? .5 : 1
 
-            onClicked:  {
+            onClicked:
+            {
                 frequencyPop.visible = !frequencyPop.visible
+                dutyPop.visible = frequencyPop.visible
                 platformInterface.frequency  = frequencyPop.value
             }
 
             SliderPopup {
                 id: frequencyPop
                 x: parent.width + sideBarColumn.anchors.margins
-                title: "PWM Frequency"
-                unit: "Value"
+                title: "PWM Frequency               "
+                unit: "Hz"
                 from: 0
-                to: 5
+                to: 10000
                 value: 0
             }
         }
@@ -109,6 +130,7 @@ Rectangle {
 
             onClicked:  {
                 dutyPop.visible = !dutyPop.visible
+                frequencyPop.visible = dutyPop.visible
                 platformInterface.duty  = dutyPop.value
             }
 
@@ -118,7 +140,7 @@ Rectangle {
                 title: "PWM Positive Duty Cycle"
                 unit: "%"
                 from: 0
-                to: 80
+                to: 100
                 value: 0
             }
         }
