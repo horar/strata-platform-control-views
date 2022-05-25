@@ -21,7 +21,7 @@ Item {
     /*
     * PWM state
     */
-    property bool pwm_enabled:  false
+    property bool pwm_enabled:  false /* PWM enable/disable */
     property int frequency:     0     /* PWM frequency in Hz */
     property int duty:          0     /* PWM duty cycle in % */
 
@@ -94,6 +94,37 @@ Item {
         cml = get_status.cml
     }
 
+    /*
+    * Read output state
+    */
+    onGet_pwmChanged:
+    {
+        pwm_enabled = get_pwm.enable
+        frequency = get_pwm.frequency
+        duty = get_pwm.duty
+    }
+
+    onPwm_enabledChanged:
+    {
+        set_pwm1.update(pwm_enabled, frequency, duty)
+        if (pwm_enabled === true)
+        {
+            sideBarLeft.pwm_enabled_side = true
+        }
+        else
+        {
+            sideBarLeft.pwm_enabled_side = false
+        }
+    }
+
+    onFrequencyChanged: {
+        set_pwm1.update(pwm_enabled, frequency, duty)
+    }
+
+    onDutyChanged: {
+        set_pwm1.update(pwm_enabled, frequency, duty)
+    }
+
     // -------------------------------------------------------------------------------------------
     // Commands
     // TO SEND A COMMAND DO THE FOLLOWING:
@@ -154,6 +185,46 @@ Item {
                                    show: function () { CorePlatformInterface.show(this) }
 
                                })
+
+
+    // @command set_pwm
+    // @property enable: bool
+    // @property frequency: int
+    // @property duty: int
+    property var set_pwm1: ({
+                              "cmd" : "set_pwm",
+                              "payload": {
+                                  "enable": false,
+                                  "frequency": 0,
+                                  "duty": 0
+                              },
+
+                              // Update will set and send in one shot
+                              update: function (enable, frequency, duty) {
+                                  this.set(enable, frequency, duty)
+                                  this.send(this)
+                              },
+                              // Set can set single or multiple properties before sending to platform
+                              set: function (enable, frequency, duty) {
+                                  this.payload.enable = enable
+                                  this.payload.frequency = frequency
+                                  this.payload.duty = duty
+                              },
+                              send: function () { CorePlatformInterface.send(this) }
+                          })
+
+    // @command get_pwm
+    property var get_pwm: ({ "cmd" : "get_pwm",
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+
+
 
     // -------------------------------------------------------------------------------------------
     // Periodic commands
@@ -765,15 +836,15 @@ Item {
         }
     }
 
-//    property int frequency: 0
-    onFrequencyChanged: {
-        setFrequency.update(frequency)
-    }
+////    property int frequency: 0
+//    onFrequencyChanged: {
+//        setFrequency.update(frequency)
+//    }
 
-//    property int duty: 0
-    onDutyChanged: {
-        setPWM.update(duty)
-    }
+////    property int duty: 0
+//    onDutyChanged: {
+//        setPWM.update(duty)
+//    }
 
     property int overTemperatureFault: 0
     onOverTemperatureFaultChanged: {

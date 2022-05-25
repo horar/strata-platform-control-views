@@ -89,6 +89,7 @@ Item {
     Component.onCompleted:  {
         multiplePlatform.check_class_id()
         platformInterface.get_output.update()
+        platformInterface.get_pwm.update()
         platformInterface.start_periodic_telemetry.update()
         Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced and Data Logger/Export views.", 0, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")

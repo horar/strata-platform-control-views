@@ -40,6 +40,22 @@ Rectangle {
     property var status_cml_b5: platformInterface.status_cml.b5
     property var status_cml_b6: platformInterface.status_cml.b6
     property var status_cml_b7: platformInterface.status_cml.b7
+    property bool pwm_enabled_side: false
+
+    onPwm_enabled_sideChanged:
+    {
+        if (pwm_enabled_side === true)
+        {
+            enableText.text = "PWM ON"
+            enableText.color = "lightgreen"
+        }
+        else
+        {
+            enableText.text = "PWM OFF"
+            enableText.color = "red"
+        }
+
+    }
 
     Component.onCompleted: {
     }
@@ -69,7 +85,7 @@ Rectangle {
 
             onClicked:
             {
-                if (platformInterface.pwm_enabled == true)
+                if (platformInterface.pwm_enabled === true)
                 {
                     platformInterface.pwm_enabled  = false
                     enableText.text = "PWM OFF"
@@ -86,18 +102,29 @@ Rectangle {
 
                 SGText {
                     id: enableText
-                    text: "PWM OFF"
+                    text:
+                    {
+                        if (platformInterface.pwm_enabled === true)
+                        {
+                            enableText.text = "PWM ON"
+                            enableText.color = "lightgreen"
+                        }
+                        else
+                        {
+                            enableText.text = "PWM OFF"
+                            enableText.color = "red"
+                        }
+                    }
                     Layout.fillWidth: true
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                     fontSizeMultiplier: 1
-                    color: "red"
                 }
 
         IconButton {
             id: frequencyButton
             toolTipText: "The slider will set the PWM Transient Frequency signal going to the Load."
-            value:frequencyPop.value
+            value: platformInterface.frequency
             unit: "Hz"
             source: "qrc:/images/tach.svg"
             iconOpacity: frequencyPop.visible ? .5 : 1
@@ -116,14 +143,14 @@ Rectangle {
                 unit: "Hz"
                 from: 0
                 to: 10000
-                value: 0
+                value: platformInterface.frequency
             }
         }
 
         IconButton {
             id: dutyButton
             toolTipText: "The slider will set the PWM Positive Duty Cycle % signal going to the Load."
-            value: dutyPop.value
+            value: platformInterface.duty
             unit: "%"
             source: "qrc:/images/tach.svg"
             iconOpacity: dutyPop.visible ? .5 : 1
@@ -141,7 +168,7 @@ Rectangle {
                 unit: "%"
                 from: 0
                 to: 100
-                value: 0
+                value: platformInterface.duty
             }
         }
 
