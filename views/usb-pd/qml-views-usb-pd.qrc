@@ -8,7 +8,6 @@
         <file>sgwidgets/SGCapacityBarElement.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
         <file>sgwidgets/SGDivider.qml</file>
-        <file>sgwidgets/SGGraph.qml</file>
         <file>sgwidgets/SGLabelledInfoBox.qml</file>
         <file>sgwidgets/SGLayoutDebug.qml</file>
         <file>sgwidgets/SGLayoutDivider.qml</file>
@@ -53,5 +52,6 @@
         <file>views/images/icon-usb-disconnected.svg</file>
         <file>views/images/icon-voltage.svg</file>
         <file>views/images/powerconverter.png</file>
+        <file>sgwidgets/GraphConverter.qml</file>
     </qresource>
 </RCC>

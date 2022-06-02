@@ -16,7 +16,6 @@ import QtGraphicalEffects 1.0
 import "qrc:/js/help_layout_manager.js" as Help
 import QtQuick.Dialogs 1.2
 import tech.strata.logger 1.0
-import QtCharts 2.0
 
 ColumnLayout {
     id: root

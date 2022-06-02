@@ -273,7 +273,7 @@ Item {
                     Behavior on value { NumberAnimation { duration: 300 } }
                 }
 
-                FVGraphTimed{
+                GraphConverter {
                     id: actualSpeedGraph
                     width: parent.width/2.5
                     height: parent.height*1.3
@@ -308,6 +308,13 @@ Item {
                     minXValue: 0
                     maxXValue: time
                     reverseDirection: false
+                    zoomXEnabled: false
+                    zoomYEnabled: false
+                    panXEnabled: false
+                    panYEnabled: false
+                    autoUpdate: false
+                    // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                    // 'GraphConverter' is set to true by default - update of curve causes also graph update
                 }
             } // end of left control
 
