@@ -38,20 +38,22 @@ Item {
     /*
     * Status values
     */
-    property bool off:      false
-    property bool pgood:    false
-    property bool temp_w:   false
-    property bool temp_f:   false
-    property bool vout_ovf: false
-    property bool vout_ovw: false
-    property bool vout_uvw: false
-    property bool vout_uvf: false
-    property bool iout_ocw: false
-    property bool iout_ocf: false
-    property bool vin_uvf:  false
-    property bool vin_uvw:  false
-    property bool vin_low:  false
-    property bool cml:      false
+    property bool off:              false
+    property bool pgood:            false
+    property int temp_status:       0
+    property int vout_ov_status:    0
+    property int vout_uv_status:    0
+    property int iout_oc_status:    0
+    property int vin_uv_status:     0
+    property bool vin_low:          false
+    property bool cml:              false
+    property bool vout_sthr:        false
+    property bool vinss_sthr:       false
+    property bool dcx_s:            false
+    property bool ana_oc:           false
+    property bool buck_duty:        false
+    property bool dig_ratio:        false
+    property bool ana_ratio:        false
 
     /*
     * Read output state
@@ -76,22 +78,101 @@ Item {
     * Read status
     */
     onGet_statusChanged: {
-        off = get_status.off
-        pgood = get_status.pgood
-        temp_w = get_status.temp_w
-        temp_f = get_status.temp_f
-        vout_ovf = get_status.vout_ovf
-        vout_ovw = get_status.vout_ovw
-        vout_uvw = get_status.vout_uvw
-        vout_uvf = get_status.vout_uvf
-        iout_ocw = get_status.iout_ocw
-        iout_ocf = get_status.iout_ocf
-        vout_ovf = get_status.vout_ovf
-        vout_ovw = get_status.vout_ovw
-        vin_uvf = get_status.vin_uvf
-        vin_uvw = get_status.vin_uvw
-        vin_low = get_status.vin_low
-        cml = get_status.cml
+
+        off =               false
+        pgood =             false
+        temp_status =       0
+        vout_ov_status =    0
+        vout_uv_status =    0
+        iout_oc_status =    0
+        vin_uv_status =     0
+        vin_low =           false
+        cml =               false
+        vout_sthr =         false
+        vinss_sthr =        false
+        dcx_s =             false
+        ana_oc =            false
+        buck_duty =         false
+        dig_ratio =         false
+        ana_ratio =         false
+
+        for (var i = 0; i < get_status.flags.length; i++)
+        {
+            var status = get_status.flags[i]
+
+            switch (status)
+            {
+            case "off":
+                off = true
+                break
+            case "/pgood":
+                pgood = true
+                break
+            case "temp_w":
+                temp_status = 1
+                break
+            case "temp_f":
+                temp_status = 2
+                break
+            case "vout_ovf":
+                vout_ov_status = 2
+                break
+            case "vout_ovw":
+                vout_ov_status = 1
+                break
+            case "vout_uvw":
+                vout_uv_status = 1
+                break
+            case "vout_uvf":
+                vout_uv_status = 2
+                break
+            case "iout_ocw":
+                iout_oc_status = 1
+                break
+            case "iout_ocf":
+                iout_oc_status = 2
+                break
+            case "vout_ovf":
+                vout_ov_status = 2
+                break
+            case "vout_ovw":
+                vout_ov_status = 1
+                break
+            case "vin_uvf":
+                vin_uv_status = 2
+                break
+            case "vin_uvw":
+                vin_uv_status = 1
+                break
+            case "vin_low":
+                vin_low = true
+                break
+            case "cml":
+                cml = true
+                break
+            case "vout_sthr":
+                vout_sthr = true
+                break
+            case "vinss_sthr":
+                vinss_sthr = true
+                break
+            case "dcx_s":
+                dcx_s = true
+                break
+            case "ana_oc":
+                ana_oc = true
+                break
+            case "buck_duty":
+                buck_duty = true
+                break
+            case "dig_ratio":
+                dig_ratio = true
+                break
+            case "ana_ratio":
+                ana_ratio = true
+                break
+            }
+        }
     }
 
     /*

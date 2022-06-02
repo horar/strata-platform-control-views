@@ -23,23 +23,26 @@ Rectangle {
     implicitHeight: parent.height
     Layout.fillHeight: true
 
-    property var status_word_b3: platformInterface.status_word.b3
-    property var status_word_b5: platformInterface.status_word.b5
-    property var status_word_b6: platformInterface.status_word.b6
-    property var status_word_b7: platformInterface.status_word.b7
-    property var status_vout_b3: platformInterface.status_vout.b3
-    property var status_vout_b4: platformInterface.status_vout.b4
-    property var status_vout_b7: platformInterface.status_vout.b7
-    property var status_iout_b5: platformInterface.status_iout.b5
-    property var status_iout_b7: platformInterface.status_iout.b7
-    property var status_input_b3: platformInterface.status_input.b3
-    property var status_input_b4: platformInterface.status_input.b4
-    property var status_input_b5: platformInterface.status_input.b5
-    property var status_temperature_b6: platformInterface.status_temperature.b6
-    property var status_temperature_b7: platformInterface.status_temperature.b7
-    property var status_cml_b5: platformInterface.status_cml.b5
-    property var status_cml_b6: platformInterface.status_cml.b6
-    property var status_cml_b7: platformInterface.status_cml.b7
+    property bool output_off: platformInterface.off
+    property bool pgood: platformInterface.pgood
+    property int temp_status: platformInterface.temp_status
+    property int vout_ov_status: platformInterface.vout_ov_status
+
+    property int vout_uv_status: platformInterface.vout_uv_status
+    property int iout_oc_status: platformInterface.iout_oc_status
+    property int vin_uv_status: platformInterface.vin_uv_status
+    property bool vin_low: platformInterface.vin_low
+
+    property bool cml: platformInterface.cml
+    property bool vout_sthr: platformInterface.vout_sthr
+    property bool vinss_sthr: platformInterface.vinss_sthr
+    property bool dcx_s: platformInterface.dcx_s
+
+    property bool ana_oc: platformInterface.ana_oc
+    property bool buck_duty: platformInterface.buck_duty
+    property bool dig_ratio: platformInterface.dig_ratio
+    property bool ana_ratio: platformInterface.ana_ratio
+    
     property bool pwm_enabled_side: false
 
     onPwm_enabled_sideChanged:
@@ -134,6 +137,7 @@ Rectangle {
                 frequencyPop.visible = !frequencyPop.visible
                 dutyPop.visible = frequencyPop.visible
                 platformInterface.frequency  = frequencyPop.value
+                platformInterface.duty  = dutyPop.value
             }
 
             SliderPopup {
@@ -159,6 +163,7 @@ Rectangle {
                 dutyPop.visible = !dutyPop.visible
                 frequencyPop.visible = dutyPop.visible
                 platformInterface.duty  = dutyPop.value
+                platformInterface.frequency  = frequencyPop.value
             }
 
             SliderPopup {
@@ -173,158 +178,248 @@ Rectangle {
         }
 
         FaultLight {
+            text: "OUTPUT OFF#"
+            toolTipText: "Output OFF for any reason"
+            status: {
+                if(output_off){SGStatusLight.Red}
+                else {SGStatusLight.Off}
+            }
+        }
+
+        FaultLight {
             text: "POWER GOOD#"
             toolTipText: "STATUS_WORD: Bit <3> POWER_GOOD# [Power Good signal is de−asserted]"
             status: {
-                if(status_word_b3 === 1){SGStatusLight.Red}
+                if(pgood){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
         FaultLight {
-            text: "INPUT"
+            id: temperature_fault_light
+            text: "TEMPERATURE"
             toolTipText: "STATUS_WORD: Bit <5> INPUT [Input Voltage/Current/Power fault or warning has occurred]"
             status: {
-                if(status_word_b5 === 1){SGStatusLight.Red}
-                else {SGStatusLight.Off}
+                switch (temp_status)
+                {
+                    case 0:
+                    {
+                        temperature_fault_light.text = "TEMPERATURE"
+                        return SGStatusLight.Off
+                    }
+                    case 1:
+                    {
+                        temperature_fault_light.text = "TEMP WARN"
+                        return SGStatusLight.Orange
+                    }
+                    case 2:
+                    {
+                        temperature_fault_light.text = "TEMP FAULT"
+                        return SGStatusLight.Red
+                    }
+                    default:
+                        temperature_fault_light.text = "TEMPERATURE"
+                        return SGStatusLight.Off
+                }
             }
         }
 
         FaultLight {
-            text: "IOUT/POUT"
+            id: vout_ov_status_light
+            text: "VOUT OV"
             toolTipText: "STATUS_WORD: Bit <6> IOUT/POUT [Output current/power fault or warning has occurred]"
             status: {
-                if(status_word_b6 === 1){SGStatusLight.Red}
-                else {SGStatusLight.Off}
+                switch (vout_ov_status)
+                {
+                    case 0:
+                    {
+                        vout_ov_status_light.text = "VOUT OV"
+                        return SGStatusLight.Off
+                    }
+                    case 1:
+                    {
+                        vout_ov_status_light.text = "VOUT OV WARN"
+                        return SGStatusLight.Orange
+                    }
+                    case 2:
+                    {
+                        vout_ov_status_light.text = "VOUT OV FAULT"
+                        return SGStatusLight.Red
+                    }
+                    default:
+                        vout_ov_status_light.text = "VOUT OV"
+                        return SGStatusLight.Off
+                }
             }
         }
 
         FaultLight {
-            text: "VOUT"
+            id: vout_uv_status_light
+            text: "VOUT UV"
             toolTipText: "STATUS_WORD: Bit <7> VOUT [Output voltage fault or warning has occurred]"
             status: {
-                if(status_word_b7 === 1){SGStatusLight.Red}
-                else {SGStatusLight.Off}
+                switch (vout_uv_status)
+                {
+                    case 0:
+                    {
+                        vout_uv_status_light.text = "VOUT UV"
+                        return SGStatusLight.Off
+                    }
+                    case 1:
+                    {
+                        vout_uv_status_light.text = "VOUT UV WARN"
+                        return SGStatusLight.Orange
+                    }
+                    case 2:
+                    {
+                        vout_uv_status_light.text = "VOUT UV FAULT"
+                        return SGStatusLight.Red
+                    }
+                    default:
+                        vout_uv_status_light.text = "VOUT UV"
+                        return SGStatusLight.Off
+                }
             }
         }
 
         FaultLight {
-            text: "VOUT MAX"
+            id: iout_oc_status_light
+            text: "IOUT OC"
             toolTipText: "STATUS_VOUT: Bit <3> VOUT_MAX Warning [Unit commanded to set VOUT value greater than allowed by VOUT_MAX command]"
-            status: {
-                if(status_vout_b3 === 1){SGStatusLight.Red}
-                else {SGStatusLight.Off}
+            status: {                
+                switch (iout_oc_status)
+                {
+                    case 0:
+                    {
+                        iout_oc_status_light.text = "IOUT OC"
+                        return SGStatusLight.Off
+                    }
+                    case 1:
+                    {
+                        iout_oc_status_light.text = "IOUT OC WARN"
+                        return SGStatusLight.Orange
+                    }
+                    case 2:
+                    {
+                        iout_oc_status_light.text = "IOUT OC FAULT"
+                        return SGStatusLight.Red
+                    }
+                    default:
+                        iout_oc_status_light.text = "IOUT OC"
+                        return SGStatusLight.Off
+                }
             }
         }
 
         FaultLight {
-            text: "VOUT UV FAULT"
+            id: vin_uv_status_light
+            text: "VIN UV"
             toolTipText: "STATUS_VOUT: Bit <4> VOUT_UV_FAULT [Output UnderVoltage Fault]"
             status: {
-                if(status_vout_b4 === 1){SGStatusLight.Red}
-                else {SGStatusLight.Off}
+                switch (vin_uv_status)
+                {
+                    case 0:
+                    {
+                        vin_uv_status_light.text = "VIN UV"
+                        return SGStatusLight.Off
+                    }
+                    case 1:
+                    {
+                        vin_uv_status_light.text = "VIN UV WARN"
+                        return SGStatusLight.Orange
+                    }
+                    case 2:
+                    {
+                        vin_uv_status_light.text = "VIN UV FAULT"
+                        return SGStatusLight.Red
+                    }
+                    default:
+                        vin_uv_status_light.text = "VIN UV"
+                        return SGStatusLight.Off
+                }
             }
         }
 
         FaultLight {
-            text: "VOUT OV FAULT"
+            text: "VIN LOW"
             toolTipText: "STATUS_VOUT: Bit <7> VOUT_OV_FAULT [Output OverVoltage Fault]"
             status: {
-                if(status_vout_b7 === 1){SGStatusLight.Red}
+                if(vin_low){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
         FaultLight {
-            text: "IOUT OC WARNING"
+            text: "CML"
             toolTipText: "STATUS_IOUT: Bit <5> IOUT_OC_WARNING [Output OverCurrent Warning]"
             status: {
-                if(status_iout_b5 === 1){SGStatusLight.Red}
+                if(cml){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
         FaultLight {
-            text: "IOUT OC FAULT"
+            text: "VOUT STHR"
             toolTipText: "STATUS_IOUT: Bit <7> IOUT_OC_FAULT [Output OverCurrent Fault]"
             status: {
-                if(status_iout_b7 === 1){SGStatusLight.Red}
+                if(vout_sthr){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
         FaultLight {
-            text: "UNIT OFF LV"
+            text: "VINSS STHR"
             toolTipText: "STATUS_INPUT: Bit <3> Unit OFF for Insufficient Input Voltage"
             status: {
-                if(status_input_b3 === 1){SGStatusLight.Red}
+                if(vinss_sthr){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
 
         FaultLight {
-            text: "VIN UV FAULT"
+            text: "DCX S"
             toolTipText: "STATUS_INPUT: Bit <4> VIN_UV_FAULT [Input UnderVoltage Fault]"
             status: {
-                if(status_input_b4 === 1){SGStatusLight.Red}
+                if(dcx_s){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
         FaultLight {
-            text: "VIN UV WARNING"
+            text: "ANA OC"
             toolTipText: "STATUS_INPUT: Bit <5> VIN_UV_WARNING [58h sets VIN_UV_WARN_LIMIT]"
             status: {
-                if(status_input_b5 === 1){SGStatusLight.Red}
+                if(ana_oc){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
         FaultLight {
-            text: "OT WARNING"
+            text: "BUCK DUTY"
             toolTipText: "STATUS_TEMPERATURE: Bit <6> OT_WARNING [OverTemperature Warning]"
             status: {
-                if(status_temperature_b6 === 1){SGStatusLight.Red}
+                if(buck_duty){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
         FaultLight {
-            text: "OT FAULT"
+            text: "DIG RATIO"
             toolTipText: "STATUS_TEMPERATURE: Bit <7> OT_FAULT [OverTemperature Fault]"
             status: {
-                if(status_temperature_b7 === 1){SGStatusLight.Red}
+                if(dig_ratio){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
 
         FaultLight {
-            text: "CML MEMORY"
+            text: "ANA RATIO"
             toolTipText: "STATUS_CML: Bit <5> Packet Error Check Failed Bit<4> Memory Fault Detected"
             status: {
-                if(status_cml_b5 === 1){SGStatusLight.Red}
-                else {SGStatusLight.Off}
-            }
-        }
-
-        FaultLight {
-            text: "CML DATA"
-            toolTipText: "STATUS_CML: Bit <6> Invalid or Unsupported Data Received"
-            status: {
-                if(status_cml_b6 === 1){SGStatusLight.Red}
-                else {SGStatusLight.Off}
-            }
-        }
-
-        FaultLight {
-            text: "CML COMMAND"
-            toolTipText: "STATUS_CML: Bit <7> Invalid or Unsupported Command Received"
-            status: {
-                if(status_cml_b7 === 1){SGStatusLight.Red}
+                if(ana_ratio){SGStatusLight.Red}
                 else {SGStatusLight.Off}
             }
         }
     }
 }
-

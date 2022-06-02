@@ -86,11 +86,37 @@ Item {
         }
     }
 
+    Timer {
+        id: getPwmTimer
+
+        repeat: false
+        interval: 10
+        onTriggered: platformInterface.get_pwm.update()
+    }
+
+    Timer {
+        id: startPeriodicTelemetryTimer
+
+        repeat: false
+        interval: 200
+        onTriggered: platformInterface.start_periodic_telemetry.update()
+    }
+
+    Timer {
+        id: startPeriodicStatusTimer
+
+        repeat: false
+        interval: 500
+        onTriggered: platformInterface.start_periodic_status.update()
+
+    }
+
     Component.onCompleted:  {
         multiplePlatform.check_class_id()
         platformInterface.get_output.update()
-        platformInterface.get_pwm.update()
-        platformInterface.start_periodic_telemetry.update()
+        getPwmTimer.start()
+        startPeriodicStatusTimer.start()
+        startPeriodicTelemetryTimer.start()
         Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced and Data Logger/Export views.", 0, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
         Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
@@ -300,34 +326,34 @@ Item {
                     }
                 }
 
-                SGCircularGauge {
-                    id: tempGauge
-                    anchors {
-                        top: inputCurrent.bottom
-                        topMargin: parent.height/50
-                        horizontalCenter: parent.center
-                    }
+//                SGCircularGauge {
+//                    id: tempGauge
+//                    anchors {
+//                        top: inputCurrent.bottom
+//                        topMargin: parent.height/50
+//                        horizontalCenter: parent.center
+//                    }
 
-                    width: (parent.width + parent.height)/3
-                    height: (parent.width + parent.height)/3
-                    gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
-                    gaugeFrontColor2: Qt.rgba(1,0,0,1)
-                    minimumValue: -55
-                    maximumValue: 150
-                    tickmarkStepSize: 20
-                    outerColor: "#999"
-                    unitLabel: "°C"
-                    gaugeTitle: "Board\nTemperature"
-                    value: platformInterface.btemp
-                    Behavior on value { NumberAnimation { duration: 300 } }
-                }
+//                    width: (parent.width + parent.height)/3
+//                    height: (parent.width + parent.height)/3
+//                    gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
+//                    gaugeFrontColor2: Qt.rgba(1,0,0,1)
+//                    minimumValue: -55
+//                    maximumValue: 150
+//                    tickmarkStepSize: 20
+//                    outerColor: "#999"
+//                    unitLabel: "°C"
+//                    gaugeTitle: "Board\nTemperature"
+//                    value: platformInterface.btemp
+//                    Behavior on value { NumberAnimation { duration: 300 } }
+//                }
 
                 Rectangle {
                     id: warningBox2
                     color: "red"
                     radius: 10
                     anchors {
-                        top: tempGauge.bottom
+                        top: inputCurrent.bottom
                         topMargin: parent.height/20
                         horizontalCenter: parent.horizontalLeft
                         horizontalCenterOffset: parent.width/20
@@ -578,27 +604,27 @@ Item {
                     }
                 }
 
-                SGCircularGauge {
-                    id: temperature_pmbusGauge
-                    anchors {
-                        top: outputCurrent.bottom
-                        topMargin: parent.height/50
-                        horizontalCenter: parent.center
-                    }
+//                SGCircularGauge {
+//                    id: temperature_pmbusGauge
+//                    anchors {
+//                        top: outputCurrent.bottom
+//                        topMargin: parent.height/50
+//                        horizontalCenter: parent.center
+//                    }
 
-                    width: (parent.width + parent.height)/3
-                    height: (parent.width + parent.height)/3
-                    gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
-                    gaugeFrontColor2: Qt.rgba(1,0,0,1)
-                    minimumValue: -55
-                    maximumValue: 150
-                    tickmarkStepSize: 20
-                    outerColor: "#999"
-                    unitLabel: "°C"
-                    gaugeTitle: "Chip\nTemperature"
-                    value: platformInterface.ctemp
-                    Behavior on value { NumberAnimation { duration: 300 } }
-                }
+//                    width: (parent.width + parent.height)/3
+//                    height: (parent.width + parent.height)/3
+//                    gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
+//                    gaugeFrontColor2: Qt.rgba(1,0,0,1)
+//                    minimumValue: -55
+//                    maximumValue: 150
+//                    tickmarkStepSize: 20
+//                    outerColor: "#999"
+//                    unitLabel: "°C"
+//                    gaugeTitle: "Chip\nTemperature"
+//                    value: platformInterface.ctemp
+//                    Behavior on value { NumberAnimation { duration: 300 } }
+//                }
 
                 SGLabelledInfoBox {
                     id: effiPower
@@ -615,7 +641,7 @@ Item {
                     fontSize :   (parent.width + parent.height)/37
                     unitSize: (parent.width + parent.height)/35
                     anchors {
-                        top : temperature_pmbusGauge.bottom
+                        top : outputCurrent.bottom
                         topMargin : parent.height/50
                         horizontalCenter: parent.horizontalCenter
                     }
