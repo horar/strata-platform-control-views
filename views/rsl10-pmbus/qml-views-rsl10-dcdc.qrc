@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>AdvancedControl.qml</file>
-        <file>BasicControl.qml</file>
         <file>Control.qml</file>
         <file>MultiplePlatform.qml</file>
         <file>sgwidgets/SGCircularGauge.qml</file>
@@ -42,5 +41,6 @@
         <file>sgwidgets/SGAlignedLabel.qml</file>
         <file>PlatformInterface.qml</file>
         <file>SideBar.qml</file>
+        <file>BasicControl.qml</file>
     </qresource>
 </RCC>

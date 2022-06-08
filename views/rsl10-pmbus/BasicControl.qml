@@ -39,38 +39,28 @@ Item {
     property var pout_calc: vout_calc * iout_calc * 1000
     property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
 
-    // property that reads the initial notification
-    property string read_enable_state: platformInterface.initial_status.enable_status
-    onRead_enable_stateChanged: {
-        if(read_enable_state === "on") {
-            platformInterface.enabled = true
-            platformInterface.pause_periodic = false
-        }
-        else  {
-            platformInterface.enabled = false
-            platformInterface.pause_periodic = true
-        }
-    }
+    property int maxVin: 70
+    property int minVin: 36
 
-    property string read_vin_mon: {platformInterface.status_voltage_current.vin}
+    property string read_vin_mon: {platformInterface.vin}
     onRead_vin_monChanged: {
 
         platformInterface.enabled = true
 
-        if(multiplePlatform.minVin > ((platformInterface.status_voltage_current.vin)/1000)) {
+        if(minVin > ((platformInterface.vin))) {
             ledLight.status = "red"
             vinlable = "under"
-            ledLight.label = "Vin < "+ multiplePlatform.minVin +"V"
+            ledLight.label = "Vin < "+ minVin +"V"
 
             dio12Switch.enabled  = true
             dio12Switch.opacity = 1.0
         }
 
-        else if(multiplePlatform.nominalVin < ((platformInterface.status_voltage_current.vin)/1000)) {
+        else if(maxVin < ((platformInterface.vin))) {
             dio12Switch.checked = false
             ledLight.status = "red"
             vinlable = "under"
-            ledLight.label = "Vin > "+ multiplePlatform.nominalVin +"V"
+            ledLight.label = "Vin > "+ maxVin +"V"
             dio12Switch.enabled  = false
             dio12Switch.opacity = 0.2
             platformInterface.set_dio12.update("off")
@@ -115,8 +105,8 @@ Item {
         multiplePlatform.check_class_id()
         platformInterface.get_output.update()
         getPwmTimer.start()
-        startPeriodicStatusTimer.start()
         startPeriodicTelemetryTimer.start()
+        startPeriodicStatusTimer.start()
         Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced and Data Logger/Export views.", 0, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
         Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
@@ -251,7 +241,7 @@ Item {
                 }
                 SGStatusLight {
                     id: ledLight
-                    label: "Vin OK < "+ multiplePlatform.nominalVin +"V"
+                    label: "Vin OK"
                     anchors {
                         top : line.bottom
                         topMargin : 40
@@ -261,25 +251,6 @@ Item {
                     height: parent.height/10
                     lightSize: (parent.width + parent.height)/23
                     fontSize:  (parent.width + parent.height)/40
-
-                    property string vinMonitor: {platformInterface.vin}
-                    onVinMonitorChanged:  {
-                        if(multiplePlatform.minVin > ((platformInterface.status_voltage_current.vin)/1000)) {
-                            ledLight.status = "red"
-                            vinlable = "under"
-                            ledLight.label = "Vin LOW < "+ multiplePlatform.minVin +"V"
-                        }
-                        else if(multiplePlatform.nominalVin < ((platformInterface.status_voltage_current.vin)/1000)) {
-                            ledLight.status = "red"
-                            vinlable = "under"
-                            ledLight.label = "Vin High > "+ multiplePlatform.nominalVin +"V"
-                        }
-                        else {
-                            ledLight.status = "green"
-                            vinlable = "over"
-                            ledLight.label = "Vin OK"
-                        }
-                    }
                 }
 
                 SGLabelledInfoBox {
@@ -287,7 +258,7 @@ Item {
                     label: ""
                     info: ((platformInterface.vin)).toFixed(3)
 
-                    infoBoxColor: if (multiplePlatform.nominalVin < ((platformInterface.status_voltage_current.vin)/1000)) {"red"}
+                    infoBoxColor: if (maxVin < (platformInterface.vin)) {"red"}
                                   else{"lightgrey"}
                     infoBoxBorderColor: "grey"
                     infoBoxBorderWidth: 3
@@ -326,28 +297,6 @@ Item {
                     }
                 }
 
-//                SGCircularGauge {
-//                    id: tempGauge
-//                    anchors {
-//                        top: inputCurrent.bottom
-//                        topMargin: parent.height/50
-//                        horizontalCenter: parent.center
-//                    }
-
-//                    width: (parent.width + parent.height)/3
-//                    height: (parent.width + parent.height)/3
-//                    gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
-//                    gaugeFrontColor2: Qt.rgba(1,0,0,1)
-//                    minimumValue: -55
-//                    maximumValue: 150
-//                    tickmarkStepSize: 20
-//                    outerColor: "#999"
-//                    unitLabel: "°C"
-//                    gaugeTitle: "Board\nTemperature"
-//                    value: platformInterface.btemp
-//                    Behavior on value { NumberAnimation { duration: 300 } }
-//                }
-
                 Rectangle {
                     id: warningBox2
                     color: "red"
@@ -366,7 +315,7 @@ Item {
                         anchors {
                             centerIn: warningBox2
                         }
-                        text: "<b>Max. input voltage "+ multiplePlatform.nominalVin +"V</b>"
+                        text: "<b>Max. input voltage "+ maxVin +"V</b>"
                         font.pixelSize: ratioCalc * 12
                         color: "white"
                     }
@@ -414,8 +363,8 @@ Item {
                     Layout.preferredHeight: parent.height
                     Layout.preferredWidth: parent.width
                     source:{
-                        if(multiplePlatform.eeprom_ID === "d4937f24-219a-4648-a711-2f6e902b6f1c" && platformInterface.dimmensionalMode === true) {"images/quarter_brick_3D.gif"}
-                        else if(multiplePlatform.eeprom_ID === "d4937f24-219a-4648-a711-2f6e902b6f1c" && platformInterface.dimmensionalMode === false) {"images/quarter_brick_2D.gif"}
+                        if(platformInterface.dimmensionalMode === true) {"images/quarter_brick_3D.gif"}
+                        else {"images/quarter_brick_2D.gif"}
                     }
                     width: parent.width - parent.width/20
                     height: parent.height + (parent.height/6)
@@ -435,7 +384,7 @@ Item {
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
                     mipmap:true
-                    visible: platformInterface.pause_periodic === false && platformInterface.dimmensionalMode === true ? true : false
+                    visible: platformInterface.dimmensionalMode === true ? true : false
                 }
 
                 SGRadioButtonContainer {
@@ -550,13 +499,15 @@ Item {
                     fontSizeLabel: (parent.width + parent.height)/37
                     checked: platformInterface.output_enabled
 
-                    onToggled: if(checked){
-                                       platformInterface.set_output1.update(checked)
-                               }
-                               else
-                               {
-                                       platformInterface.set_output1.update(checked)
-                               }
+                    onToggled:
+                        if(checked)
+                        {
+                            platformInterface.set_output1.update(checked)
+                        }
+                        else
+                        {
+                            platformInterface.set_output1.update(checked)
+                        }
                 }
 
                 SGLabelledInfoBox {
@@ -603,28 +554,6 @@ Item {
                         horizontalCenterOffset:  0
                     }
                 }
-
-//                SGCircularGauge {
-//                    id: temperature_pmbusGauge
-//                    anchors {
-//                        top: outputCurrent.bottom
-//                        topMargin: parent.height/50
-//                        horizontalCenter: parent.center
-//                    }
-
-//                    width: (parent.width + parent.height)/3
-//                    height: (parent.width + parent.height)/3
-//                    gaugeFrontColor1: Qt.rgba(0,0.5,1,1)
-//                    gaugeFrontColor2: Qt.rgba(1,0,0,1)
-//                    minimumValue: -55
-//                    maximumValue: 150
-//                    tickmarkStepSize: 20
-//                    outerColor: "#999"
-//                    unitLabel: "°C"
-//                    gaugeTitle: "Chip\nTemperature"
-//                    value: platformInterface.ctemp
-//                    Behavior on value { NumberAnimation { duration: 300 } }
-//                }
 
                 SGLabelledInfoBox {
                     id: effiPower

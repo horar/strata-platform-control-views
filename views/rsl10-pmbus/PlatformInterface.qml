@@ -21,39 +21,39 @@ Item {
     /*
     * PWM state
     */
-    property bool pwm_enabled:  false /* PWM enable/disable */
-    property int frequency:     0     /* PWM frequency in Hz */
-    property int duty:          0     /* PWM duty cycle in % */
+    property bool pwm_enabled:  false           /* PWM enable/disable */
+    property int frequency:     0               /* PWM frequency in Hz */
+    property int duty:          0               /* PWM duty cycle in % */
 
     /*
     * Telemetry values
     */
-    property double vin:   0     /* Input Voltage in Volts */
-    property double iin:   0     /* Input Current in Amperes */
-    property double vout:  0     /* Output Voltage in Volts */
-    property double iout:  0     /* Output Current in Amperes */
-    property double btemp: 0     /* Board Temperature in °C */
-    property double ctemp: 0      /* Chip Temperature in °C */
+    property double vin:   0                    /* Input Voltage in Volts */
+    property double iin:   0                    /* Input Current in Amperes */
+    property double vout:  0                    /* Output Voltage in Volts */
+    property double iout:  0                    /* Output Current in Amperes */
+    property double btemp: 0                    /* Board Temperature in °C */
+    property double ctemp: 0                    /* Chip Temperature in °C */
 
     /*
     * Status values
     */
-    property bool off:              false
-    property bool pgood:            false
-    property int temp_status:       0
-    property int vout_ov_status:    0
-    property int vout_uv_status:    0
-    property int iout_oc_status:    0
-    property int vin_uv_status:     0
-    property bool vin_low:          false
-    property bool cml:              false
-    property bool vout_sthr:        false
-    property bool vinss_sthr:       false
-    property bool dcx_s:            false
-    property bool ana_oc:           false
-    property bool buck_duty:        false
-    property bool dig_ratio:        false
-    property bool ana_ratio:        false
+    property bool off:              false       /* Output OFF for any reason*/
+    property bool pgood:            false       /* Power Good (negated) */
+    property int temp_status:       0           /* Over-temperature Warning/Fault */
+    property int vout_ov_status:    0           /* VOUT Over-voltage Warning/Fault */
+    property int vout_uv_status:    0           /* VOUT Under-voltage Warning/Fault */
+    property int iout_oc_status:    0           /* IOUT Over-current Warning/Fault */
+    property int vin_uv_status:     0           /* VIN Under-voltage Warning/Fault */
+    property bool vin_low:          false       /* OFF due low VIN voltage */
+    property bool cml:              false       /* Communication, Memory, Logic Fault */
+    property bool vout_sthr:        false       /* VOUT higher than threshold on startup */
+    property bool vinss_sthr:       false       /* VINSS higher than threshold on startup */
+    property bool dcx_s:            false       /* DCX VOUT UVLO on startup */
+    property bool ana_oc:           false       /* Analog OC Protection */
+    property bool buck_duty:        false       /* Buck Duty Fault */
+    property bool dig_ratio:        false       /* Digital Ratio Protection */
+    property bool ana_ratio:        false       /* Analog Ratio Protection */
 
     /*
     * Read output state

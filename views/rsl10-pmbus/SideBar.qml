@@ -84,7 +84,7 @@ Rectangle {
             id: enableButton
             toolTipText: "The button will enable or disable load."
             source: "qrc:/images/tach.svg"
-            iconOpacity: enablePop.visible ? .5 : 1
+            iconOpacity: platformInterface.pwm_enabled ? 1 : .5
 
             onClicked:
             {
@@ -130,7 +130,7 @@ Rectangle {
             value: platformInterface.frequency
             unit: "Hz"
             source: "qrc:/images/tach.svg"
-            iconOpacity: frequencyPop.visible ? .5 : 1
+            iconOpacity: platformInterface.pwm_enabled ? 1 : .5
 
             onClicked:
             {
@@ -157,7 +157,7 @@ Rectangle {
             value: platformInterface.duty
             unit: "%"
             source: "qrc:/images/tach.svg"
-            iconOpacity: dutyPop.visible ? .5 : 1
+            iconOpacity: platformInterface.pwm_enabled ? 1 : .5
 
             onClicked:  {
                 dutyPop.visible = !dutyPop.visible
@@ -188,7 +188,7 @@ Rectangle {
 
         FaultLight {
             text: "POWER GOOD#"
-            toolTipText: "STATUS_WORD: Bit <3> POWER_GOOD# [Power Good signal is de−asserted]"
+            toolTipText: "Output Power Good. STATUS_WORD: Bit <3> POWER_GOOD# [Power Good signal is de−asserted]"
             status: {
                 if(pgood){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -198,7 +198,7 @@ Rectangle {
         FaultLight {
             id: temperature_fault_light
             text: "TEMPERATURE"
-            toolTipText: "STATUS_WORD: Bit <5> INPUT [Input Voltage/Current/Power fault or warning has occurred]"
+            toolTipText: "Temperature. Defined in: PMBus Specification Rev 1.3 part II, 15.17. OT_WARN_LIMIT/OT_FAULT_LIMIT"
             status: {
                 switch (temp_status)
                 {
@@ -227,7 +227,7 @@ Rectangle {
         FaultLight {
             id: vout_ov_status_light
             text: "VOUT OV"
-            toolTipText: "STATUS_WORD: Bit <6> IOUT/POUT [Output current/power fault or warning has occurred]"
+            toolTipText: "Output Voltage Over Voltage. Defined in: PMBus Specification Rev 1.3 part II, 15.4 VOUT_OV_WARN_LIMIT/VOUT_OV_FAULT_LIMIT"
             status: {
                 switch (vout_ov_status)
                 {
@@ -256,7 +256,7 @@ Rectangle {
         FaultLight {
             id: vout_uv_status_light
             text: "VOUT UV"
-            toolTipText: "STATUS_WORD: Bit <7> VOUT [Output voltage fault or warning has occurred]"
+            toolTipText: "Output Voltage Under Voltage. Defined in: PMBus Specification Rev 1.3 part II, 15.5 VOUT_UV_WARN_LIMIT/VOUT_UV_FAULT_LIMIT"
             status: {
                 switch (vout_uv_status)
                 {
@@ -285,7 +285,7 @@ Rectangle {
         FaultLight {
             id: iout_oc_status_light
             text: "IOUT OC"
-            toolTipText: "STATUS_VOUT: Bit <3> VOUT_MAX Warning [Unit commanded to set VOUT value greater than allowed by VOUT_MAX command]"
+            toolTipText: "Input Current Over Current. Defined in: PMBus Specification Rev 1.3 part II, 15.12 IOUT_OC_WARN_LIMIT/IOUT_OC_FAULT_LIMIT"
             status: {                
                 switch (iout_oc_status)
                 {
@@ -314,7 +314,7 @@ Rectangle {
         FaultLight {
             id: vin_uv_status_light
             text: "VIN UV"
-            toolTipText: "STATUS_VOUT: Bit <4> VOUT_UV_FAULT [Output UnderVoltage Fault]"
+            toolTipText: "Input Voltage Under Voltage. Defined in: PMBus Specification Rev 1.3 part II, 17.5. STATUS_INPUT"
             status: {
                 switch (vin_uv_status)
                 {
@@ -342,7 +342,7 @@ Rectangle {
 
         FaultLight {
             text: "VIN LOW"
-            toolTipText: "STATUS_VOUT: Bit <7> VOUT_OV_FAULT [Output OverVoltage Fault]"
+            toolTipText: "Input Voltage Low. Defined in: PMBus Specification Rev 1.3 part II, 17.5. STATUS_INPUT"
             status: {
                 if(vin_low){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -351,7 +351,7 @@ Rectangle {
 
         FaultLight {
             text: "CML"
-            toolTipText: "STATUS_IOUT: Bit <5> IOUT_OC_WARNING [Output OverCurrent Warning]"
+            toolTipText: "Communications, Memory or Logic Fault. Defined in: PMBus Specification Rev 1.3 part II, 17.1. STATUS_BYTE"
             status: {
                 if(cml){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -360,7 +360,7 @@ Rectangle {
 
         FaultLight {
             text: "VOUT STHR"
-            toolTipText: "STATUS_IOUT: Bit <7> IOUT_OC_FAULT [Output OverCurrent Fault]"
+            toolTipText: " VOUT higher than threshold on startup. Defined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(vout_sthr){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -369,7 +369,7 @@ Rectangle {
 
         FaultLight {
             text: "VINSS STHR"
-            toolTipText: "STATUS_INPUT: Bit <3> Unit OFF for Insufficient Input Voltage"
+            toolTipText: "VINSS higher than threshold on startup. Defined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(vinss_sthr){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -379,7 +379,7 @@ Rectangle {
 
         FaultLight {
             text: "DCX S"
-            toolTipText: "STATUS_INPUT: Bit <4> VIN_UV_FAULT [Input UnderVoltage Fault]"
+            toolTipText: "DCX VOUT UVLO on startup. Defined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(dcx_s){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -388,7 +388,7 @@ Rectangle {
 
         FaultLight {
             text: "ANA OC"
-            toolTipText: "STATUS_INPUT: Bit <5> VIN_UV_WARNING [58h sets VIN_UV_WARN_LIMIT]"
+            toolTipText: "Analog OC Protection. Defined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(ana_oc){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -397,7 +397,7 @@ Rectangle {
 
         FaultLight {
             text: "BUCK DUTY"
-            toolTipText: "STATUS_TEMPERATURE: Bit <6> OT_WARNING [OverTemperature Warning]"
+            toolTipText: "Buck Duty Fault. Defined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(buck_duty){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -406,7 +406,7 @@ Rectangle {
 
         FaultLight {
             text: "DIG RATIO"
-            toolTipText: "STATUS_TEMPERATURE: Bit <7> OT_FAULT [OverTemperature Fault]"
+            toolTipText: "Digital Ratio Protection. Defined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(dig_ratio){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -415,7 +415,7 @@ Rectangle {
 
         FaultLight {
             text: "ANA RATIO"
-            toolTipText: "STATUS_CML: Bit <5> Packet Error Check Failed Bit<4> Memory Fault Detected"
+            toolTipText: "Analog Ratio Protection. Defined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(ana_ratio){SGStatusLight.Red}
                 else {SGStatusLight.Off}
