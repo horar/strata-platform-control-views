@@ -263,7 +263,7 @@ Item {
         }
         height:250
 
-        SGGraph {
+        GraphConverter {
             id: graph1
             title: "Voltage Out"
             visible: false
@@ -297,7 +297,7 @@ Item {
             inputData: stream          // Set the graph's data source here
         }
 
-        SGGraph {
+        GraphConverter {
             id: graph2
             title: "Current Out"
             visible: false
@@ -335,7 +335,7 @@ Item {
             inputData: stream          // Set the graph's data source here
         }
 
-        SGGraph {
+        GraphConverter {
             id: graph3
             title: "Current In"
             visible: false
@@ -372,7 +372,7 @@ Item {
             inputData: stream          // Set the graph's data source here
         }
 
-        SGGraph {
+        GraphConverter {
             id: graph4
             title: "Power Out"
             visible: false
@@ -408,7 +408,7 @@ Item {
             inputData: stream          // Set the graph's data source here
         }
 
-        SGGraph {
+        GraphConverter {
             id: graph5
             title: "Power In"
             visible: false
@@ -444,7 +444,7 @@ Item {
             inputData: stream          // Set the graph's data source here
         }
 
-        SGGraph {
+        GraphConverter {
             id: graph6
             title: "Efficiency"
             visible: false

@@ -45,10 +45,14 @@ SGGraph {
     property color gridLineColor
     gridColor: gridLineColor
 
-    property bool autoAdjustMaxMin: false
+    property bool autoAdjustMaxMin: false  // due to compatibility with SGGraphTimed 0.9 - this feature was for Y axis only
+    property bool autoAdjustXMaxMin: false
+    property bool autoAdjustYMaxMin: autoAdjustMaxMin
     property real inputData
     property color dataLineColor: "black"
     property int pointCount: 50
+
+    property bool autoUpdateCurve: true
 
     // PROPERTIES THAT DO NOTHING - no equivalent in SGGraph 1.0
     property real xAxisTickCount: 0
@@ -68,14 +72,20 @@ SGGraph {
     autoUpdate: true
 
     Component.onCompleted: {
-        if (autoAdjustMaxMin) {
+        if (autoAdjustXMaxMin) {
             autoScaleXAxis()
+        }
+        if (autoAdjustYMaxMin) {
             autoScaleYAxis()
         }
 
         let movingCurve = createCurve("movingCurve")
         movingCurve.color = dataLineColor
-        movingCurve.autoUpdate = true
+        movingCurve.autoUpdate = autoUpdateCurve
+    }
+
+    function reset() {
+        graphConverter.removeCurve(0);
     }
 
     Timer {

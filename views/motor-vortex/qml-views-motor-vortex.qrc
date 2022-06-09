@@ -20,7 +20,6 @@
         <file>images/icons/voltageIcon.svg</file>
         <file>sgwidgets/SGCircularGauge.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
-        <file>sgwidgets/SGGraph.qml</file>
         <file>sgwidgets/SGHueSlider.qml</file>
         <file>sgwidgets/SGLabelledInfoBox.qml</file>
         <file>sgwidgets/SGRGBSlider.qml</file>
@@ -36,5 +35,6 @@
         <file>sgwidgets/images/sliderHandleActive.svg</file>
         <file>sgwidgets/images/sliderValue.svg</file>
         <file>images/icons/question-circle-solid.svg</file>
+        <file>sgwidgets/GraphConverter.qml</file>
     </qresource>
 </RCC>

@@ -8,6 +8,7 @@
  */
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQml 2.0
 
 import tech.strata.sgwidgets 1.0
 
@@ -44,10 +45,14 @@ SGGraph {
     property color gridLineColor
     gridColor: gridLineColor
 
-    property bool autoAdjustMaxMin: false
+    property bool autoAdjustMaxMin: false  // due to compatibility with SGGraphTimed 0.9 - this feature was for Y axis only
+    property bool autoAdjustXMaxMin: false
+    property bool autoAdjustYMaxMin: autoAdjustMaxMin
     property real inputData
     property color dataLineColor: "black"
     property int pointCount: 50
+
+    property bool autoUpdateCurve: true
 
     // PROPERTIES THAT DO NOTHING - no equivalent in SGGraph 1.0
     property real xAxisTickCount: 0
@@ -60,21 +65,27 @@ SGGraph {
     property bool repeatOldData
     ////
 
-    panXEnabled: false
-    panYEnabled: false
-    zoomXEnabled: false
-    zoomYEnabled: false
-    autoUpdate: false
+    panXEnabled: true
+    panYEnabled: true
+    zoomXEnabled: true
+    zoomYEnabled: true
+    autoUpdate: true
 
     Component.onCompleted: {
-        if (autoAdjustMaxMin) {
+        if (autoAdjustXMaxMin) {
             autoScaleXAxis()
+        }
+        if (autoAdjustYMaxMin) {
             autoScaleYAxis()
         }
 
         let movingCurve = createCurve("movingCurve")
         movingCurve.color = dataLineColor
-        movingCurve.autoUpdate = false
+        movingCurve.autoUpdate = autoUpdateCurve
+    }
+
+    function reset() {
+        graphConverter.removeCurve(0);
     }
 
     Timer {
@@ -95,6 +106,9 @@ SGGraph {
         onTriggered: {
             let currentTime = Date.now()
             let curve = graphConverter.curve(0)
+            if (curve === null) {
+                return
+            }
             curve.shiftPoints((currentTime - lastTime)/1000, 0)
             curve.append(0, inputData)
             removeOutOfViewPoints()
