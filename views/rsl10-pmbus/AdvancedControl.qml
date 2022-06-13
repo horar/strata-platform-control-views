@@ -39,43 +39,9 @@ Item {
     property var vout_calc: platformInterface.status_voltage_current.vout/1000
     property var iout_calc: platformInterface.status_voltage_current.iout
 
-    property var pin_calc: vin_calc * iin_calc * 1000
-    property var pout_calc: vout_calc * iout_calc * 1000
+    property var pin_calc: platformInterface.vin * platformInterface.iin
+    property var pout_calc: platformInterface.vout * platformInterface.iout
     property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
-
-    property var overTemperatureFault: platformInterface.overTemperatureFault
-    property var overTemperatureWarning: platformInterface.overTemperatureWarning
-    property var voutOVlimitFault: platformInterface.voutOVlimitFault
-    property var voutOVlimitWarning: platformInterface.voutOVlimitWarning
-    property var voutUVlimitFault: platformInterface.voutUVlimitFault
-    property var voutUVlimitWarning: platformInterface.voutUVlimitWarning
-    property var ioutOClimitFault: platformInterface.ioutOClimitFault
-    property var ioutOClimitWarning: platformInterface.ioutOClimitWarning
-
-    property var status_mfr_specific1_b0: platformInterface.status_mfr_specific1.b0
-    property var status_mfr_specific1_b1: platformInterface.status_mfr_specific1.b1
-    property var status_mfr_specific1_b2: platformInterface.status_mfr_specific1.b2
-    property var status_mfr_specific1_b3: platformInterface.status_mfr_specific1.b3
-    property var status_mfr_specific1_b4: platformInterface.status_mfr_specific1.b4
-    property var status_mfr_specific1_b5: platformInterface.status_mfr_specific1.b5
-    property var status_mfr_specific1_b6: platformInterface.status_mfr_specific1.b6
-    property var status_mfr_specific1_b7: platformInterface.status_mfr_specific1.b7
-    property var status_mfr_specific2_b4: platformInterface.status_mfr_specific2.b4
-    property var status_mfr_specific2_b5: platformInterface.status_mfr_specific2.b5
-    property var status_mfr_specific2_b6: platformInterface.status_mfr_specific2.b6
-    property var status_mfr_specific2_b7: platformInterface.status_mfr_specific2.b7
-
-    property string read_enable_state: platformInterface.initial_status.enable_status
-    onRead_enable_stateChanged: {
-        if(read_enable_state === "on") {
-            platformInterface.enabled = true
-            platformInterface.pause_periodic = false
-        }
-        else  {
-            platformInterface.enabled = false
-            platformInterface.pause_periodic = true
-        }
-    }
 
     FontLoader {
         id: icons
@@ -208,8 +174,8 @@ Item {
                         to: 135
                         value: platformInterface.status_predefined_values.OT_fault
                         stepSize: 1
-                        onValueChanged: overTemperatureFault = value
-                        onUserSet: platformInterface.overTemperatureFault = overTemperatureFaultSlider.value
+//                        onValueChanged: overTemperatureFault = value
+                        onUserSet: platformInterface.set_fault_config_temp.update(overTemperatureFaultSlider.value, 10)
                         live: false
                     }
                     Text{
@@ -242,7 +208,12 @@ Item {
                         value: platformInterface.status_predefined_values.OV_fault
                         stepSize: 1
                         onValueChanged: voutOVlimitFault = value
-                        onUserSet: platformInterface.voutOVlimitFault = voutOVlimitFaultSlider.value
+                        onUserSet:
+                        {
+                            var response = "retry"
+                            if (voutOVFaultResponseCombo.currentIndex == 1) {response = "ignore"}
+                            platformInterface.set_fault_config_ov.update(voutOVlimitFaultSlider.value, voutOVlimitWarningSlider.value, response)
+                        }
                         live: false
                     }
                     Text{
@@ -275,7 +246,12 @@ Item {
                         value: platformInterface.status_predefined_values.UV_fault
                         stepSize: 1
                         onValueChanged: voutUVlimitFault = value
-                        onUserSet: platformInterface.voutUVlimitFault = voutUVlimitFaultSlider.value
+                        onUserSet:
+                        {
+                            var response = "retry"
+                            if (voutUVFaultResponseCombo.currentIndex == 1) {response = "ignore"}
+                            platformInterface.set_fault_config_uv.update(voutUVlimitFaultSlider.value, voutUVlimitWarningSlider.value, response)
+                        }
                         live: false
                     }
                     Text{
@@ -308,7 +284,12 @@ Item {
                         value: platformInterface.status_predefined_values.OC_fault
                         stepSize: 1
                         onValueChanged: ioutOClimitFault = value
-                        onUserSet: platformInterface.ioutOClimitFault = ioutOClimitFaultSlider.value
+                        onUserSet:
+                        {
+                            var response = "retry"
+                            if (ioutOCFaultResponseCombo.currentIndex == 1) {response = "ignore"}
+                            platformInterface.set_fault_config_oc.update(ioutOClimitFaultSlider.value, ioutOClimitWarningSlider.value, response)
+                        }
                         live: false
                     }
                     Text{
@@ -650,89 +631,12 @@ Item {
                 }
 
                 Text{
-                    id: specific2Text
-                    text: "<b>STATUS MFR SPECIFIC 2<b>"
-                    font.pixelSize: (parent.width + parent.height)/140
-                    color: "black"
-                    anchors {
-                        top : parent.top
-                        topMargin : parent.height/15
-                        left: efficiencyGraph.right
-                        leftMargin: parent.width/5
-                        }
-                    }
-
-                Text{
-                    id: specific2Bit4Text
-                    text: "DCX SKIP"
-                    font.pixelSize: (parent.width + parent.height)/140
-                    color: {
-                        if(status_mfr_specific2_b4 === 1){"red"}
-                        else {"grey"}
-                        }
-                    anchors {
-                        top : specific2Text.top
-                        topMargin : parent.height/10
-                        left: efficiencyGraph.right
-                        leftMargin: parent.width/5
-                        }
-                    }
-
-                Text{
-                    id: specific2Bit5Text
-                    text: "PRC MIN FREQ %"
-                    font.pixelSize: (parent.width + parent.height)/140
-                    color: {
-                        if(status_mfr_specific2_b5 === 1){"red"}
-                        else {"grey"}
-                        }
-                    anchors {
-                        top : specific2Bit4Text.top
-                        topMargin : parent.height/10
-                        left: efficiencyGraph.right
-                        leftMargin: parent.width/5
-                        }
-                    }
-
-                Text{
-                    id: specific2Bit6Text
-                    text: "PRC MAX FREQ %"
-                    font.pixelSize: (parent.width + parent.height)/140
-                    color: {
-                        if(status_mfr_specific2_b6 === 1){"red"}
-                        else {"grey"}
-                        }
-                    anchors {
-                        top : specific2Bit5Text.top
-                        topMargin : parent.height/10
-                        left: efficiencyGraph.right
-                        leftMargin: parent.width/5
-                        }
-                    }
-
-                Text{
-                    id: specific2Bit7Text
-                    text: "PRC LL"
-                    font.pixelSize: (parent.width + parent.height)/140
-                    color: {
-                        if(status_mfr_specific2_b7 === 1){"red"}
-                        else {"grey"}
-                        }
-                    anchors {
-                        top : specific2Bit6Text.top
-                        topMargin : parent.height/10
-                        left: efficiencyGraph.right
-                        leftMargin: parent.width/5
-                        }
-                    }
-
-                Text{
                     id: voutOVFaultResponseText
                     text: "<b>Vout OV Fault Response:<b>"
                     font.pixelSize: (parent.width + parent.height)/140
                     color: "black"
                     anchors {
-                        top : specific2Bit7Text.top
+                        top : parent.top
                         topMargin : parent.height/8
                         left: efficiencyGraph.right
                         leftMargin: parent.width/5
@@ -742,7 +646,7 @@ Item {
                 SGComboBox {
                     id: voutOVFaultResponseCombo
                     currentIndex: platformInterface.voutOVFaultResponse.voutOVFaultResponse
-                    model: [ "Latch","Retry","Ignore"]
+                    model: [ "Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"
                     indicatorColor: "green"
@@ -776,7 +680,7 @@ Item {
                 SGComboBox {
                     id: voutUVFaultResponseCombo
                     currentIndex: platformInterface.voutUVFaultResponse.voutUVFaultResponse
-                    model: [ "Latch","Retry","Ignore"]
+                    model: [ "Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"
                     indicatorColor: "green"
@@ -810,7 +714,7 @@ Item {
                 SGComboBox {
                     id: ioutOCFaultResponseCombo
                     currentIndex: platformInterface.ioutOCFaultResponse.ioutOCFaultResponse
-                    model: [ "Latch","Retry","Ignore"]
+                    model: [ "Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"
                     indicatorColor: "green"
@@ -881,7 +785,7 @@ Item {
                         pointCount: 30
                         xAxisTitle: "<b>100 µs / div<b>"
                         yAxisTitle: "Input Voltage (V)"
-                        inputData: vin_calc
+                        inputData: platformInterface.vin
                         maxYValue: multiplePlatform.vinScale
                         showYGrids: true
                         showXGrids: true
@@ -895,11 +799,11 @@ Item {
                         id: inputVoltage
                         label: ""
                         info: {
-                            if(multiplePlatform.showDecimal === true) {vin_calc.toFixed(3)}
+                            if(multiplePlatform.showDecimal === true) {platformInterface.vin.toFixed(3)}
                             else {vin_calc.toFixed(0)}
                         }
 
-                        infoBoxColor: if (multiplePlatform.nominalVin < vin_calc) {"red"}
+                        infoBoxColor: if (multiplePlatform.nominalVin < platformInterface.vin) {"red"}
                                       else{"lightgrey"}
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3
@@ -944,7 +848,7 @@ Item {
                         yAxisTitle: if(multiplePlatform.current === "mA") {"Input Current (mA)"}
                                     else{"Input Current (A)"}
                         inputData: {
-                            if(multiplePlatform.current === "A") {(iin_calc/1000).toFixed(3)}
+                            if(multiplePlatform.current === "A") {platformInterface.iin.toFixed(3)}
                             else {iin_calc.toFixed(0)}
                         }
                         maxYValue: if(multiplePlatform.current === "mA") {multiplePlatform.iinScale * 1000}
@@ -961,7 +865,7 @@ Item {
                         id: inputCurrent
                         label: ""
                         info: {
-                            if(multiplePlatform.current === "A") {(iin_calc/1000).toFixed(3)}
+                            if(multiplePlatform.current === "A") {platformInterface.iin.toFixed(3)}
                             else {iin_calc.toFixed(0)}
                         }
 
@@ -1010,8 +914,8 @@ Item {
                         yAxisTitle: if(multiplePlatform.pdiss === "mW") {"Power Dissipated (mW)"}
                                     else{"Power Dissipated (W)"}
                         inputData: if(pin_calc > pout_calc)
-                                   {if(multiplePlatform.pdiss === "W") {((pin_calc - pout_calc)/1000000).toFixed(0)}
-                                       else{((pin_calc - pout_calc)/1000).toFixed(0)}}
+                                   {if(multiplePlatform.pdiss === "W") {((pin_calc - pout_calc)).toFixed(0)}
+                                       else{((pin_calc - pout_calc)).toFixed(0)}}
                                    else{0}
                         maxYValue: multiplePlatform.pdissScale
                         showYGrids: true
@@ -1025,8 +929,8 @@ Item {
                         id: pdissPower
                         label: ""
                         info: if(pin_calc > pout_calc)
-                              {if(multiplePlatform.pdiss === "W") {((pin_calc - pout_calc)/1000000).toFixed(2)}
-                                  else{((pin_calc - pout_calc)/1000).toFixed(1)}}
+                              {if(multiplePlatform.pdiss === "W") {((pin_calc - pout_calc)).toFixed(2)}
+                                  else{((pin_calc - pout_calc)).toFixed(1)}}
                               else{0}
 
                         infoBoxColor: "lightgrey"
@@ -1074,8 +978,8 @@ Item {
                         xAxisTitle: "<b>100 µs / div<b>"
                         yAxisTitle: if(multiplePlatform.pdiss === "mW") {"Output Power (mW)"}
                                     else{"Output Power (W)"}
-                        inputData: if(multiplePlatform.pdiss === "W") {(pout_calc/1000000).toFixed(0)}
-                                   else{(pout_calc/1000).toFixed(0)}
+                        inputData: if(multiplePlatform.pdiss === "W") {(pout_calc).toFixed(0)}
+                                   else{(pout_calc).toFixed(0)}
                         maxYValue: multiplePlatform.poutScale
                         showYGrids: true
                         showXGrids: true
@@ -1087,8 +991,8 @@ Item {
                     SGLabelledInfoBox {
                         id: poutPower
                         label: ""
-                        info: if(multiplePlatform.pdiss === "W") {(pout_calc/1000000).toFixed(2)}
-                              else{(pout_calc/1000).toFixed(1)}
+                        info: if(multiplePlatform.pdiss === "W") {(pout_calc).toFixed(2)}
+                              else{(pout_calc).toFixed(1)}
 
                         infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
@@ -1134,7 +1038,7 @@ Item {
                         pointCount: 30
                         xAxisTitle: "<b>100 µs / div<b>"
                         yAxisTitle: "Output Voltage (V)"
-                        inputData: {vout_calc}
+                        inputData: {platformInterface.vout}
                         maxYValue: multiplePlatform.voutScale
                         showYGrids: true
                         showXGrids: true
@@ -1147,7 +1051,7 @@ Item {
                         id: outputVoltage
                         label: ""
                         info: {
-                            if(multiplePlatform.showDecimal === true) {vout_calc.toFixed(3)}
+                            if(multiplePlatform.showDecimal === true) {platformInterface.vout.toFixed(3)}
                             else {vout_calc.toFixed(0)}
                         }
 
@@ -1194,8 +1098,7 @@ Item {
                         xAxisTitle: "<b>100 µs / div<b>"
                         yAxisTitle: if(multiplePlatform.current === "mA") {"Output Current (mA)"}
                                     else{"Output Current (A)"}
-                        inputData: if(multiplePlatform.current === "mA") {iout_calc}
-                                   else{(iout_calc/1000).toFixed(3)}
+                        inputData: platformInterface.iout
                         maxYValue: if(multiplePlatform.current === "mA") {multiplePlatform.ioutScale * 1000}
                                    else{multiplePlatform.ioutScale}
                         showYGrids: true
@@ -1211,7 +1114,7 @@ Item {
                         id: outputCurrent
                         label: ""
                         info: {
-                            if(multiplePlatform.current === "A") {(iout_calc/1000).toFixed(3)}
+                            if(multiplePlatform.current === "A") {platformInterface.iout.toFixed(3)}
                             else {iout_calc.toFixed(0)}
                         }
 

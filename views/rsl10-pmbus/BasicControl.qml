@@ -35,8 +35,8 @@ Item {
     property var vout_calc: platformInterface.status_voltage_current.vout/1000
     property var iout_calc: platformInterface.status_voltage_current.iout
 
-    property var pin_calc: vin_calc * iin_calc * 1000
-    property var pout_calc: vout_calc * iout_calc * 1000
+    property var pin_calc: platformInterface.vin * platformInterface.iin
+    property var pout_calc: platformInterface.vout * platformInterface.iout
     property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
 
     property int maxVin: 70
@@ -132,11 +132,11 @@ Item {
         width : parent.width
         height: parent.height
 
-
         Rectangle {
             id: pageLable
             width: parent.width/2
-            height: parent.height/ 12
+            height: parent.height/ 30
+
             anchors {
                 top: parent.top
                 topMargin: 10
@@ -366,7 +366,7 @@ Item {
                         if(platformInterface.dimmensionalMode === true) {"images/quarter_brick_3D.gif"}
                         else {"images/quarter_brick_2D.gif"}
                     }
-                    width: parent.width - parent.width/20
+                    width: parent.width*0.8
                     height: parent.height + (parent.height/6)
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
@@ -379,7 +379,7 @@ Item {
                     Layout.preferredHeight: parent.height
                     Layout.preferredWidth: parent.width
                     source: "images/led_3d.gif"
-                    width: parent.width - parent.width/20
+                    width: parent.width * 0.8
                     height: parent.height - 20
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
@@ -390,8 +390,7 @@ Item {
                 SGRadioButtonContainer {
                     id: dimmensionalModeSpace
                     anchors {
-                        top: basicImage.top
-                        topMargin: -parent.height/10
+                        top: basicImage.bottom
                         horizontalCenter: basicImage.horizontalCenter
                     }
                     labelLeft: false
@@ -498,6 +497,7 @@ Item {
                     grooveFillColor: "green"
                     fontSizeLabel: (parent.width + parent.height)/37
                     checked: platformInterface.output_enabled
+
 
                     onToggled:
                         if(checked)

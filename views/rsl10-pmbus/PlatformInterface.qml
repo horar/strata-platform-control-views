@@ -305,6 +305,118 @@ Item {
 
                                })
 
+    // @command set_fault_config_temp
+    property var set_fault_config_temp: ({
+                              "cmd" : "set_fault_config",
+                              "payload": {
+                                    "temperature": {
+                                        "over_temperature": {
+                                            "warning": 0,
+                                            "fault": 0
+                                        }
+                                    },
+                              },
+
+                              // Update will set and send in one shot
+                              update: function (warning,fault) {
+                                  this.set(warning, fault)
+                                  this.send(this)
+                              },
+                              // Set can set single or multiple properties before sending to platform
+                              set: function (warning, fault) {
+                                  this.payload.temperature.over_temperature.warning = warning
+                                  this.payload.temperature.over_temperature.fault = fault
+                              },
+                              send: function () { CorePlatformInterface.send(this) }
+                          })
+
+
+    // @command set_fault_config_ov
+    // @property warning: int
+    // @property fault: int
+    // @property reponse: string
+    property var set_fault_config_ov: ({
+                              "cmd" : "set_fault_config",
+                              "payload": {
+                                    "vout": {
+                                        "over_voltage": {
+                                            "warning": 0,
+                                            "fault": 0
+                                        }
+                                    },
+                              },
+
+                              // Update will set and send in one shot
+                              update: function (warning,fault,response) {
+                                  this.set(warning, fault, response)
+                                  this.send(this)
+                              },
+                              // Set can set single or multiple properties before sending to platform
+                              set: function (warning, fault, response) {
+                                  this.payload.vout.over_voltage.warning = warning
+                                  this.payload.vout.over_voltage.fault = fault
+                                  this.payload.vout.over_voltage.response = response
+                              },
+                              send: function () { CorePlatformInterface.send(this) }
+                          })
+
+    // @command set_fault_config_uv
+    // @property warning: int
+    // @property fault: int
+    // @property reponse: string
+    property var set_fault_config_uv: ({
+                              "cmd" : "set_fault_config",
+                              "payload": {
+                                    "vout": {
+                                        "under_voltage": {
+                                            "warning": 0,
+                                            "fault": 0
+                                        }
+                                    },
+                              },
+
+                              // Update will set and send in one shot
+                              update: function (warning,fault,response) {
+                                  this.set(warning, fault, response)
+                                  this.send(this)
+                              },
+                              // Set can set single or multiple properties before sending to platform
+                              set: function (warning, fault, response) {
+                                  this.payload.vout.under_voltage.warning = warning
+                                  this.payload.vout.under_voltage.fault = fault
+                                  this.payload.vout.under_voltage.response = response
+                              },
+                              send: function () { CorePlatformInterface.send(this) }
+                          })
+
+    // @command set_fault_config_oc
+    // @property warning: int
+    // @property fault: int
+    // @property reponse: string
+    property var set_fault_config_oc: ({
+                              "cmd" : "set_fault_config",
+                              "payload": {
+                                    "iout": {
+                                        "over_current": {
+                                            "warning": 0,
+                                            "fault": 0
+                                        }
+                                    },
+                              },
+
+                              // Update will set and send in one shot
+                              update: function (warning,fault,response) {
+                                  this.set(warning, fault, response)
+                                  this.send(this)
+                              },
+                              // Set can set single or multiple properties before sending to platform
+                              set: function (warning, fault, response) {
+                                  this.payload.iout.over_current.warning = warning
+                                  this.payload.iout.over_current.fault = fault
+                                  this.payload.iout.over_current.response = response
+                              },
+                              send: function () { CorePlatformInterface.send(this) }
+                          })
 
 
     // -------------------------------------------------------------------------------------------
