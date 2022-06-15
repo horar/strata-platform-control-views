@@ -172,10 +172,9 @@ Item {
                         width: parent.width
                         from: 115
                         to: 135
-                        value: platformInterface.status_predefined_values.OT_fault
+                        value: platformInterface.temp_fault
                         stepSize: 1
-//                        onValueChanged: overTemperatureFault = value
-                        onUserSet: platformInterface.set_fault_config_temp.update(overTemperatureFaultSlider.value, 10)
+                        onUserSet: platformInterface.temp_fault = value
                         live: false
                     }
                     Text{
@@ -205,15 +204,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: platformInterface.status_predefined_values.OV_fault
+                        value: platformInterface.vout_ov_fault
                         stepSize: 1
-                        onValueChanged: voutOVlimitFault = value
-                        onUserSet:
-                        {
-                            var response = "retry"
-                            if (voutOVFaultResponseCombo.currentIndex == 1) {response = "ignore"}
-                            platformInterface.set_fault_config_ov.update(voutOVlimitFaultSlider.value, voutOVlimitWarningSlider.value, response)
-                        }
+                        onUserSet: platformInterface.vout_ov_fault = value
                         live: false
                     }
                     Text{
@@ -243,15 +236,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: platformInterface.status_predefined_values.UV_fault
+                        value: platformInterface.vout_uv_fault
                         stepSize: 1
-                        onValueChanged: voutUVlimitFault = value
-                        onUserSet:
-                        {
-                            var response = "retry"
-                            if (voutUVFaultResponseCombo.currentIndex == 1) {response = "ignore"}
-                            platformInterface.set_fault_config_uv.update(voutUVlimitFaultSlider.value, voutUVlimitWarningSlider.value, response)
-                        }
+                        onUserSet: platformInterface.vout_uv_fault = value
                         live: false
                     }
                     Text{
@@ -281,15 +268,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.ioutScale
-                        value: platformInterface.status_predefined_values.OC_fault
+                        value: platformInterface.iout_oc_fault
                         stepSize: 1
-                        onValueChanged: ioutOClimitFault = value
-                        onUserSet:
-                        {
-                            var response = "retry"
-                            if (ioutOCFaultResponseCombo.currentIndex == 1) {response = "ignore"}
-                            platformInterface.set_fault_config_oc.update(ioutOClimitFaultSlider.value, ioutOClimitWarningSlider.value, response)
-                        }
+                        onUserSet: platformInterface.iout_oc_fault = value
                         live: false
                     }
                     Text{
@@ -319,10 +300,9 @@ Item {
                         width: parent.width
                         from: 85
                         to: 105
-                        value: platformInterface.status_predefined_values.OT_warning
+                        value: platformInterface.temp_warn
                         stepSize: 1
-                        onValueChanged: overTemperatureWarning = value
-                        onUserSet: platformInterface.overTemperatureWarning = overTemperatureWarningSlider.value
+                        onUserSet: platformInterface.temp_warn = value
                         live: false
                     }
                     Text{
@@ -352,10 +332,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: platformInterface.status_predefined_values.OV_warning
+                        value: platformInterface.vout_ov_warn
                         stepSize: 1
-                        onValueChanged: voutOVlimitWarning = value
-                        onUserSet: platformInterface.voutOVlimitWarning = voutOVlimitWarningSlider.value
+                        onUserSet: platformInterface.vout_ov_warn = value
                         live: false
                     }
                     Text{
@@ -385,10 +364,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: platformInterface.status_predefined_values.UV_warning
+                        value: platformInterface.vout_uv_warn
                         stepSize: 1
-                        onValueChanged: voutUVlimitWarning = value
-                        onUserSet: platformInterface.voutUVlimitWarning = voutUVlimitWarningSlider.value
+                        onUserSet: platformInterface.vout_uv_warn = value
                         live: false
                     }
                     Text{
@@ -418,10 +396,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.ioutScale
-                        value: platformInterface.status_predefined_values.OC_warning
+                        value: platformInterface.iout_oc_warn
                         stepSize: 1
-                        onValueChanged: ioutOClimitWarning = value
-                        onUserSet: platformInterface.ioutOClimitWarning = ioutOClimitWarningSlider.value
+                        onUserSet: platformInterface.iout_oc_warn = value
                         live: false
                     }
                     Text{
@@ -590,7 +567,7 @@ Item {
                     width: parent.width/8
                     height: parent.height/12
                     onClicked: {
-                        platformInterface.set_reset_error.update(1)
+                        platformInterface.clear_faults.update()
                     }
                 }
 
@@ -608,7 +585,10 @@ Item {
                     width: parent.width/8
                     height: parent.height/12
                     onClicked: {
-                        platformInterface.set_parameters.update(1)
+                        platformInterface.set_fault_config_all.update(platformInterface.temp_warn, platformInterface.temp_fault,
+                                                                      platformInterface.vout_ov_warn, platformInterface.vout_ov_fault, platformInterface.vout_ov_response,
+                                                                      platformInterface.vout_uv_warn, platformInterface.vout_uv_fault, platformInterface.vout_uv_response,
+                                                                      platformInterface.iout_oc_warn, platformInterface.iout_oc_fault, platformInterface.iout_oc_response)
                     }
                 }
 
@@ -626,7 +606,7 @@ Item {
                     width: parent.width/8
                     height: parent.height/12
                     onClicked: {
-                        platformInterface.set_write.update(1)
+                        platformInterface.write_config_to_otp.update()
                     }
                 }
 
@@ -645,7 +625,19 @@ Item {
 
                 SGComboBox {
                     id: voutOVFaultResponseCombo
-                    currentIndex: platformInterface.voutOVFaultResponse.voutOVFaultResponse
+                    currentIndex:
+                    {
+                        if (platformInterface.vout_ov_response === "ignore")
+                        {
+                            platformInterface.vout_ov_response ="ignore"
+                            return 1
+                        }
+                        else
+                        {
+                            platformInterface.vout_ov_response ="retry"
+                            return 0
+                        }
+                    }
                     model: [ "Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"
@@ -658,11 +650,18 @@ Item {
                         left: efficiencyGraph.right
                         leftMargin: parent.width/5
                         }
-                    onActivated: {
-                        platformInterface.set_voutOVFaultResponse.update(currentIndex)
-                        platformInterface.voutOVFaultResponse_state = currentIndex
+                    onActivated:
+                    {
+                        if(currentIndex == 1)
+                        {
+                            platformInterface.vout_ov_response ="ignore"
+                        }
+                        else
+                        {
+                            platformInterface.vout_ov_response ="retry"
                         }
                     }
+                }
 
                 Text{
                     id: voutUVFaultResponseText
@@ -679,7 +678,19 @@ Item {
 
                 SGComboBox {
                     id: voutUVFaultResponseCombo
-                    currentIndex: platformInterface.voutUVFaultResponse.voutUVFaultResponse
+                    currentIndex:
+                    {
+                        if (platformInterface.vout_uv_response === "ignore")
+                        {
+                            platformInterface.vout_uv_response ="ignore"
+                            return 1
+                        }
+                        else
+                        {
+                            platformInterface.vout_uv_response ="retry"
+                            return 0
+                        }
+                    }
                     model: [ "Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"
@@ -692,11 +703,18 @@ Item {
                         left: efficiencyGraph.right
                         leftMargin: parent.width/5
                         }
-                    onActivated: {
-                        platformInterface.set_voutUVFaultResponse.update(currentIndex)
-                        platformInterface.voutUVFaultResponse_state = currentIndex
+                    onActivated:
+                    {
+                        if(currentIndex == 1)
+                        {
+                            platformInterface.vout_uv_response ="ignore"
+                        }
+                        else
+                        {
+                            platformInterface.vout_uv_response ="retry"
                         }
                     }
+                }
 
                 Text{
                     id: ioutOCFaultResponseText
@@ -711,9 +729,22 @@ Item {
                         }
                     }
 
-                SGComboBox {
+                SGComboBox
+                {
                     id: ioutOCFaultResponseCombo
-                    currentIndex: platformInterface.ioutOCFaultResponse.ioutOCFaultResponse
+                    currentIndex:
+                    {
+                        if (platformInterface.iout_oc_response === "ignore")
+                        {
+                            platformInterface.iout_oc_response ="ignore"
+                            return 1
+                        }
+                        else
+                        {
+                            platformInterface.iout_oc_response ="retry"
+                            return 0
+                        }
+                    }
                     model: [ "Retry","Ignore"]
                     borderColor: "green"
                     textColor: "black"
@@ -726,13 +757,20 @@ Item {
                         left: efficiencyGraph.right
                         leftMargin: parent.width/5
                         }
-                    onActivated: {
-                        platformInterface.set_ioutOCFaultResponse.update(currentIndex)
-                        platformInterface.ioutOCFaultResponse_state = currentIndex
+                    onActivated:
+                    {
+                        if(currentIndex == 1)
+                        {
+                            platformInterface.iout_oc_response ="ignore"
+                        }
+                        else
+                        {
+                            platformInterface.iout_oc_response ="retry"
                         }
                     }
-
                 }
+
+            }
 
             Rectangle {
                 width: parent.width

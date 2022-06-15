@@ -56,6 +56,23 @@ Item {
     property bool ana_ratio:        false       /* Analog Ratio Protection */
 
     /*
+    * Fault config
+    */
+    property int temp_fault:        0
+    property int temp_warn:         0
+    property int vout_ov_fault:     0
+    property int vout_ov_warn:      0
+    property int vout_uv_fault:     0
+    property int vout_uv_warn:      0
+    property int iout_oc_fault:     0
+    property int iout_oc_warn:      0
+
+    property string vout_ov_response: ""
+    property string vout_uv_response: ""
+    property string iout_oc_response: ""
+
+
+    /*
     * Read output state
     */
     onGet_outputChanged: {
@@ -185,6 +202,27 @@ Item {
         duty = get_pwm.duty
     }
 
+    /*
+    * Read output state
+    */
+    onGet_fault_configChanged:
+    {
+        temp_warn = get_fault_config.temperature.over_temperature.warning
+        temp_fault = get_fault_config.temperature.over_temperature.fault
+
+        vout_ov_warn = get_fault_config.vout.over_voltage.warning
+        vout_ov_fault = get_fault_config.vout.over_voltage.fault
+        vout_ov_response = get_fault_config.vout.over_voltage.response
+
+        vout_uv_warn = get_fault_config.vout.under_voltage.warning
+        vout_uv_fault = get_fault_config.vout.under_voltage.fault
+        vout_uv_response = get_fault_config.vout.under_voltage.response
+
+        iout_oc_warn = get_fault_config.iout.over_current.warning
+        iout_oc_fault = get_fault_config.iout.over_current.fault
+        iout_oc_response = get_fault_config.iout.over_current.response
+    }
+
     onPwm_enabledChanged:
     {
         set_pwm1.update(pwm_enabled, frequency, duty)
@@ -296,6 +334,17 @@ Item {
 
     // @command get_pwm
     property var get_pwm: ({ "cmd" : "get_pwm",
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+
+    // @command get_fault_config
+    property var get_fault_config: ({ "cmd" : "get_fault_config",
 
                                    update: function () {
                                        this.send(this)
@@ -418,8 +467,96 @@ Item {
                               send: function () { CorePlatformInterface.send(this) }
                           })
 
+    // @command set_fault_config
+    // @property warning: int
+    // @property fault: int
+    // @property reponse: string
+    property var set_fault_config_all: ({
+                              "cmd" : "set_fault_config",
+                              "payload": {
+                                    "temperature": {
+                                        "over_temperature": {
+                                            "warning": 0,
+                                            "fault": 0
+                                        }
+                                    },
+                                    "vout": {
+                                        "under_voltage": {
+                                            "warning": 0,
+                                            "fault": 0
+                                        },
+                                        "over_voltage": {
+                                            "warning": 0,
+                                            "fault": 0
+                                        }
+                                    },
+                                    "iout": {
+                                        "over_current": {
+                                            "warning": 0,
+                                            "fault": 0
+                                        }
+                                    },
+                              },
 
-    // -------------------------------------------------------------------------------------------
+                              // Update will set and send in one shot
+                              update: function (temp_warning, temp_fault,
+                                                vout_ov_warn, vout_ov_fault, vout_ov_response,
+                                                vout_uv_warn, vout_uv_fault, vout_uv_response,
+                                                iout_oc_warn, iout_oc_fault, iout_oc_response)
+                              {
+                                  this.set(temp_warning, temp_fault,
+                                           vout_ov_warn, vout_ov_fault, vout_ov_response,
+                                           vout_uv_warn, vout_uv_fault, vout_uv_response,
+                                           iout_oc_warn, iout_oc_fault, iout_oc_response)
+                                  this.send(this)
+                              },
+                              // Set can set single or multiple properties before sending to platform
+                              set: function (temp_warning, temp_fault,
+                                             vout_ov_warn, vout_ov_fault, vout_ov_response,
+                                             vout_uv_warn, vout_uv_fault, vout_uv_response,
+                                             iout_oc_warn, iout_oc_fault, iout_oc_response)
+                              {
+
+                                  this.payload.temperature.over_temperature.warning = temp_warning
+                                  this.payload.temperature.over_temperature.fault = temp_fault
+
+                                  this.payload.vout.over_voltage.warning = vout_ov_warn
+                                  this.payload.vout.over_voltage.fault = vout_ov_fault
+                                  this.payload.vout.over_voltage.response = vout_ov_response
+
+                                  this.payload.vout.under_voltage.warning = vout_uv_warn
+                                  this.payload.vout.under_voltage.fault = vout_uv_fault
+                                  this.payload.vout.under_voltage.response = vout_uv_response
+
+                                  this.payload.iout.over_current.warning = iout_oc_warn
+                                  this.payload.iout.over_current.fault = iout_oc_fault
+                                  this.payload.iout.over_current.response = iout_oc_response
+                              },
+                              send: function () { CorePlatformInterface.send(this) }
+                          })
+
+    // @command write_config_to_otp
+    property var write_config_to_otp: ({ "cmd" : "write_config_to_otp",
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+
+    // @command clear_faults
+    property var clear_faults: ({ "cmd" : "clear_faults",
+
+                                   update: function () {
+                                       this.send(this)
+                                   },
+                                   send: function () { CorePlatformInterface.send(this) },
+                                   show: function () { CorePlatformInterface.show(this) }
+
+                               })
+       // -------------------------------------------------------------------------------------------
     // Periodic commands
 
 

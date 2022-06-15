@@ -101,12 +101,22 @@ Item {
 
     }
 
+    Timer {
+        id: startGetFaultTimer
+        repeat: false
+        interval: 1000
+        onTriggered: platformInterface.get_fault_config.update()
+    }
+
+
+
     Component.onCompleted:  {
         multiplePlatform.check_class_id()
         platformInterface.get_output.update()
         getPwmTimer.start()
         startPeriodicTelemetryTimer.start()
         startPeriodicStatusTimer.start()
+        startGetFaultTimer.start()
         Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced and Data Logger/Export views.", 0, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
         Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
