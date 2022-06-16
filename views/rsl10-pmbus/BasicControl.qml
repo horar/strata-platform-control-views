@@ -121,7 +121,6 @@ Item {
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
         Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
         Help.registerTarget(inputCurrent,"Input current is shown here.", 3 , "basicHelp")
-        Help.registerTarget(tempGauge, "This gauge shows the board temperature in degrees Celsius.", 4, "basicHelp")
         Help.registerTarget(basicImage, "The center image shows the board configuration.", 5, "basicHelp")
         Help.registerTarget(dimmensionalModeSpace, "Dimmensional space mode for the center image.", 6, "basicHelp")
         Help.registerTarget(dio12Switch, "This switch enables or disables the DUT.", 7, "basicHelp")

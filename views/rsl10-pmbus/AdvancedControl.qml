@@ -54,10 +54,9 @@ Item {
         Help.registerTarget(resetErrorButton, "PMBus: CLEAR_FAULTS. Clears all fault status registers to 0x00 and releases SMBALERT#.", 2, "advanceHelp")
         Help.registerTarget(setParametersButton, "Save all user parameters to volatile memory.", 3, "advanceHelp")
         Help.registerTarget(writeParametersButton, "PMBus: WRITE_PROTECT. Allow writes to all registers. Is used to control writing to the PMBus device. Provide protection against accidental changes. Bits <7:0> 0010 0000 − Disable all writes except to the WRITE_PROTECT, OPERATION, ON_OFF_CONFIG and VOUT_COMMAND commands", 4, "advanceHelp")
-        Help.registerTarget(specific2Text, "PMBus: STATUS_MFR_SPECIFIC2.", 5, "advanceHelp")
-        Help.registerTarget(voutOVFaultResponseCombo, "PMBus: VOUT_OV_FAULT_RESPONSE. Latch, retry, ignore.", 6, "advanceHelp")
-        Help.registerTarget(voutUVFaultResponseCombo, "PMBus: VOUT_UV_FAULT_RESPONSE. Latch, retry, ignore.", 7, "advanceHelp")
-        Help.registerTarget(ioutOCFaultResponseCombo, "PMBus: IOUT_OT_FAULT_RESPONSE. Latch, retry, ignore.", 8, "advanceHelp")
+        Help.registerTarget(voutOVFaultResponseCombo, "PMBus: VOUT_OV_FAULT_RESPONSE. Retry, ignore.", 6, "advanceHelp")
+        Help.registerTarget(voutUVFaultResponseCombo, "PMBus: VOUT_UV_FAULT_RESPONSE. Retry, ignore.", 7, "advanceHelp")
+        Help.registerTarget(ioutOCFaultResponseCombo, "PMBus: IOUT_OT_FAULT_RESPONSE. Retry, ignore.", 8, "advanceHelp")
         Help.registerTarget(overTemperatureFaultSlider, "PMBus: OT_FAULT_LIMIT. Sets the temperature of the unit, in degrees Celsius, at which it should indicate an Over temperature Fault.", 9, "advanceHelp")
         Help.registerTarget(voutOVlimitFaultSlider, "PMBus: VOUT_OV_FAULT_LIMIT.", 10, "advanceHelp")
         Help.registerTarget(voutUVlimitFaultSlider, "PMBus: VOUT_UV_FAULT_LIMIT.", 11, "advanceHelp")
@@ -427,10 +426,10 @@ Item {
 
                 Text{
                     id: specific1BitOText
-                    text: "DCX FRZ"
+                    text: "VOUT higher than threshold on startup"
                     font.pixelSize: (parent.width + parent.height)/140
                     color: {
-                        if(status_mfr_specific1_b0 === 1){"red"}
+                        if(platformInterface.vout_sthr){"red"}
                         else {"grey"}
                         }
                     anchors {
@@ -443,10 +442,10 @@ Item {
 
                 Text{
                     id: specific1Bit1Text
-                    text: "PRC Control out of Limits"
+                    text: "VINSS higher than threshold on startup"
                     font.pixelSize: (parent.width + parent.height)/140
                     color: {
-                        if(status_mfr_specific1_b1 === 1){"red"}
+                        if(platformInterface.vinss_sthr){"red"}
                         else {"grey"}
                         }
                     anchors {
@@ -459,10 +458,10 @@ Item {
 
                 Text{
                     id: specific1Bit2Text
-                    text: "Digital ADC Ratio Vin/Vout"
+                    text: "DCX VOUT UVLO on startup"
                     font.pixelSize: (parent.width + parent.height)/140
                     color: {
-                        if(status_mfr_specific1_b2 === 1){"red"}
+                        if(platformInterface.dcx_s){"red"}
                         else {"grey"}
                         }
                     anchors {
@@ -475,10 +474,10 @@ Item {
 
                 Text{
                     id: specific1Bit3Text
-                    text: "Analog Ratio Vin/Vout"
+                    text: "Analog OC Protection"
                     font.pixelSize: (parent.width + parent.height)/140
                     color: {
-                        if(status_mfr_specific1_b3 === 1){"red"}
+                        if(platformInterface.ana_oc){"red"}
                         else {"grey"}
                         }
                     anchors {
@@ -491,10 +490,10 @@ Item {
 
                 Text{
                     id: specific1Bit4Text
-                    text: "CSR2 OCP Negative"
+                    text: "Buck Duty Fault"
                     font.pixelSize: (parent.width + parent.height)/140
                     color: {
-                        if(status_mfr_specific1_b4 === 1){"red"}
+                        if(platformInterface.buck_duty){"red"}
                         else {"grey"}
                         }
                     anchors {
@@ -507,10 +506,10 @@ Item {
 
                 Text{
                     id: specific1Bit5Text
-                    text: "CSR2 OCP Positive"
+                    text: "Digital Ratio Protection"
                     font.pixelSize: (parent.width + parent.height)/140
                     color: {
-                        if(status_mfr_specific1_b5 === 1){"red"}
+                        if(platformInterface.dig_ratio){"red"}
                         else {"grey"}
                         }
                     anchors {
@@ -523,10 +522,10 @@ Item {
 
                 Text{
                     id: specific1Bit6Text
-                    text: "CSR1 OCP Negative"
+                    text: "Analog Ratio Protection"
                     font.pixelSize: (parent.width + parent.height)/140
                     color: {
-                        if(status_mfr_specific1_b6 === 1){"red"}
+                        if(platformInterface.ana_ratio){"red"}
                         else {"grey"}
                         }
                     anchors {
@@ -537,26 +536,10 @@ Item {
                         }
                     }
 
-                Text{
-                    id: specific1Bit7Text
-                    text: "CSR1 OCP Positive"
-                    font.pixelSize: (parent.width + parent.height)/140
-                    color: {
-                        if(status_mfr_specific1_b7 === 1){"red"}
-                        else {"grey"}
-                        }
-                    anchors {
-                        top : specific1Bit6Text.top
-                        topMargin : parent.height/10
-                        left: efficiencyGraph.right
-                        leftMargin: parent.width/20
-                        }
-                    }
-
                 Button {
                     id:resetErrorButton
                     anchors {
-                        top : specific1Bit7Text.top
+                        top : specific1Bit6Text.top
                         topMargin : parent.height/10
                         left: efficiencyGraph.right
                         leftMargin: parent.width/20

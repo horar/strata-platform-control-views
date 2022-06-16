@@ -16,7 +16,7 @@ Item {
     /*
     * Output enabled state
     */
-    property bool output_enabled: false
+    property var output_enabled: false
 
     /*
     * PWM state
