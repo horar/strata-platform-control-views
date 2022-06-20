@@ -188,7 +188,7 @@ Rectangle {
 
         FaultLight {
             text: "POWER GOOD#"
-            toolTipText: "Output Power Good. STATUS_WORD: Bit <3> POWER_GOOD# [Power Good signal is de−asserted]"
+            toolTipText: "Output Power Good.\nSTATUS_WORD: Bit <3> POWER_GOOD# [Power Good signal is de−asserted]"
             status: {
                 if(pgood){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -198,7 +198,7 @@ Rectangle {
         FaultLight {
             id: temperature_fault_light
             text: "TEMPERATURE"
-            toolTipText: "Temperature. Defined in: PMBus Specification Rev 1.3 part II, 15.17. OT_WARN_LIMIT/OT_FAULT_LIMIT"
+            toolTipText: "Temperature.\nDefined in: PMBus Specification Rev 1.3 part II, 15.17. OT_WARN_LIMIT/OT_FAULT_LIMIT"
             status: {
                 switch (temp_status)
                 {
@@ -227,7 +227,7 @@ Rectangle {
         FaultLight {
             id: vout_ov_status_light
             text: "VOUT OV"
-            toolTipText: "Output Voltage Over Voltage. Defined in: PMBus Specification Rev 1.3 part II, 15.4 VOUT_OV_WARN_LIMIT/VOUT_OV_FAULT_LIMIT"
+            toolTipText: "Output Voltage Over Voltage.\nDefined in: PMBus Specification Rev 1.3 part II, 15.4 VOUT_OV_WARN_LIMIT/VOUT_OV_FAULT_LIMIT"
             status: {
                 switch (vout_ov_status)
                 {
@@ -256,7 +256,7 @@ Rectangle {
         FaultLight {
             id: vout_uv_status_light
             text: "VOUT UV"
-            toolTipText: "Output Voltage Under Voltage. Defined in: PMBus Specification Rev 1.3 part II, 15.5 VOUT_UV_WARN_LIMIT/VOUT_UV_FAULT_LIMIT"
+            toolTipText: "Output Voltage Under Voltage.\nDefined in: PMBus Specification Rev 1.3 part II, 15.5 VOUT_UV_WARN_LIMIT/VOUT_UV_FAULT_LIMIT"
             status: {
                 switch (vout_uv_status)
                 {
@@ -285,7 +285,7 @@ Rectangle {
         FaultLight {
             id: iout_oc_status_light
             text: "IOUT OC"
-            toolTipText: "Input Current Over Current. Defined in: PMBus Specification Rev 1.3 part II, 15.12 IOUT_OC_WARN_LIMIT/IOUT_OC_FAULT_LIMIT"
+            toolTipText: "Input Current Over Current.\nDefined in: PMBus Specification Rev 1.3 part II, 15.12 IOUT_OC_WARN_LIMIT/IOUT_OC_FAULT_LIMIT"
             status: {                
                 switch (iout_oc_status)
                 {
@@ -314,7 +314,7 @@ Rectangle {
         FaultLight {
             id: vin_uv_status_light
             text: "VIN UV"
-            toolTipText: "Input Voltage Under Voltage. Defined in: PMBus Specification Rev 1.3 part II, 17.5. STATUS_INPUT"
+            toolTipText: "Input Voltage Under Voltage.\nDefined in: PMBus Specification Rev 1.3 part II, 17.5. STATUS_INPUT"
             status: {
                 switch (vin_uv_status)
                 {
@@ -342,7 +342,7 @@ Rectangle {
 
         FaultLight {
             text: "VIN LOW"
-            toolTipText: "Input Voltage Low. Defined in: PMBus Specification Rev 1.3 part II, 17.5. STATUS_INPUT"
+            toolTipText: "Input Voltage Low.\nDefined in: PMBus Specification Rev 1.3 part II, 17.5. STATUS_INPUT"
             status: {
                 if(vin_low){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -351,7 +351,7 @@ Rectangle {
 
         FaultLight {
             text: "CML"
-            toolTipText: "Communications, Memory or Logic Fault. Defined in: PMBus Specification Rev 1.3 part II, 17.1. STATUS_BYTE"
+            toolTipText: "Communications, Memory or Logic Fault.\nDefined in: PMBus Specification Rev 1.3 part II, 17.1. STATUS_BYTE"
             status: {
                 if(cml){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -360,7 +360,7 @@ Rectangle {
 
         FaultLight {
             text: "VOUT STHR"
-            toolTipText: " VOUT higher than threshold on startup. Defined in: Manufacturer Specific Status 1 command of FD6000"
+            toolTipText: " VOUT higher than threshold on startup.\nDefined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(vout_sthr){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -369,7 +369,7 @@ Rectangle {
 
         FaultLight {
             text: "VINSS STHR"
-            toolTipText: "VINSS higher than threshold on startup. Defined in: Manufacturer Specific Status 1 command of FD6000"
+            toolTipText: "VINSS higher than threshold on startup.\nDefined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(vinss_sthr){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -379,7 +379,7 @@ Rectangle {
 
         FaultLight {
             text: "DCX S"
-            toolTipText: "DCX VOUT UVLO on startup. Defined in: Manufacturer Specific Status 1 command of FD6000"
+            toolTipText: "DCX VOUT UVLO on startup.\nDefined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(dcx_s){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -388,7 +388,7 @@ Rectangle {
 
         FaultLight {
             text: "ANA OC"
-            toolTipText: "Analog OC Protection. Defined in: Manufacturer Specific Status 1 command of FD6000"
+            toolTipText: "Analog OC Protection.\nDefined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(ana_oc){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -397,7 +397,7 @@ Rectangle {
 
         FaultLight {
             text: "BUCK DUTY"
-            toolTipText: "Buck Duty Fault. Defined in: Manufacturer Specific Status 1 command of FD6000"
+            toolTipText: "Buck Duty Fault.\nDefined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(buck_duty){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -406,7 +406,7 @@ Rectangle {
 
         FaultLight {
             text: "DIG RATIO"
-            toolTipText: "Digital Ratio Protection. Defined in: Manufacturer Specific Status 1 command of FD6000"
+            toolTipText: "Digital Ratio Protection.\nDefined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(dig_ratio){SGStatusLight.Red}
                 else {SGStatusLight.Off}
@@ -415,10 +415,22 @@ Rectangle {
 
         FaultLight {
             text: "ANA RATIO"
-            toolTipText: "Analog Ratio Protection. Defined in: Manufacturer Specific Status 1 command of FD6000"
+            toolTipText: "Analog Ratio Protection.\nDefined in: Manufacturer Specific Status 1 command of FD6000"
             status: {
                 if(ana_ratio){SGStatusLight.Red}
                 else {SGStatusLight.Off}
+            }
+        }
+
+        Button {
+            id: clearFaultsButton
+            text: "Clear \n faults"
+
+            Layout.fillWidth: true
+
+            onClicked:
+            {
+                platformInterface.clear_faults.update()
             }
         }
     }
