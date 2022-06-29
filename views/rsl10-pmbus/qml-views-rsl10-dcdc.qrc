@@ -38,9 +38,9 @@
         <file>sgwidgets/DigitalReadout.qml</file>
         <file>sgwidgets/CircGauge.qml</file>
         <file>sgwidgets/SGAlignedLabel.qml</file>
+        <file>SideBar.qml</file>
         <file>PlatformInterface.qml</file>
         <file>AdvancedControl.qml</file>
         <file>BasicControl.qml</file>
-        <file>SideBar.qml</file>
     </qresource>
 </RCC>

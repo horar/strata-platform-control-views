@@ -32,17 +32,6 @@ Item {
     property bool hideEcoSwitch: false
     property string warningVin: multiplePlatform.warningHVVinLable
 
-    // property that reads the initial notification
-    property var temp_calc: platformInterface.status_temperature_sensor.temperature
-    property var vin_calc: platformInterface.status_voltage_current.vin/1000
-    property var iin_calc: platformInterface.status_voltage_current.iin
-    property var vout_calc: platformInterface.status_voltage_current.vout/1000
-    property var iout_calc: platformInterface.status_voltage_current.iout
-
-    property var pin_calc: platformInterface.vin * platformInterface.iin
-    property var pout_calc: platformInterface.vout * platformInterface.iout
-    property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
-
     FontLoader {
         id: icons
         source: "sgwidgets/fonts/sgicons.ttf"
@@ -95,64 +84,64 @@ Item {
                 width: parent.width
                 height: controlSection1.height/3
 
-                GraphConverter{
-                    id: efficiencyGraph
-                    width: parent.width/3
-                    height: parent.height*1.3
-                    anchors {
-                        left: parent.left
-                        leftMargin: 0
-                        top: parent.top
-                        topMargin: 0
-                    }
-                    showOptions: false
-                    autoAdjustMaxMin: false
-                    //repeatOldData: visible
-                    dataLineColor: "purple"
-                    textColor: "black"
-                    axesColor: "black"
-                    gridLineColor: "lightgrey"
-                    underDataColor: "transparent"
-                    backgroundColor: "white"
-                    xAxisTickCount: 11
-                    yAxisTickCount: 11
-                    throttlePlotting: true
-                    pointCount: if (platformInterface.systemMode === false) {1} else {50}
-                    title: "<b>Efficiency</b>"
-                    yAxisTitle: "<b>η [%]</b>"
-                    xAxisTitle: "<b>10 µs / div<b>"
-                    inputData: effi_calc
-                    maxYValue: 100
-                    minYValue: 0
-                    showYGrids: true
-                    showXGrids: true
-                    minXValue: 0
-                    maxXValue:5
-                    reverseDirection: true
-                }
+//                GraphConverter{
+//                    id: efficiencyGraph
+//                    width: parent.width/3
+//                    height: parent.height*1.3
+//                    anchors {
+//                        left: parent.left
+//                        leftMargin: 0
+//                        top: parent.top
+//                        topMargin: 0
+//                    }
+//                    showOptions: false
+//                    autoAdjustMaxMin: false
+//                    //repeatOldData: visible
+//                    dataLineColor: "purple"
+//                    textColor: "black"
+//                    axesColor: "black"
+//                    gridLineColor: "lightgrey"
+//                    underDataColor: "transparent"
+//                    backgroundColor: "white"
+//                    xAxisTickCount: 11
+//                    yAxisTickCount: 11
+//                    throttlePlotting: true
+//                    pointCount: if (platformInterface.systemMode === false) {1} else {50}
+//                    title: "<b>Efficiency</b>"
+//                    yAxisTitle: "<b>η [%]</b>"
+//                    xAxisTitle: "<b>10 µs / div<b>"
+//                    inputData: effi_calc
+//                    maxYValue: 100
+//                    minYValue: 0
+//                    showYGrids: true
+//                    showXGrids: true
+//                    minXValue: 0
+//                    maxXValue:5
+//                    reverseDirection: true
+//                }
 
-                SGLabelledInfoBox {
-                    id: effiPower
-                    label: "%"
-                    info: effi_calc
+//                SGLabelledInfoBox {
+//                    id: effiPower
+//                    label: "%"
+//                    info: effi_calc
 
-                    infoBoxColor: "lightgrey"
-                    infoBoxBorderColor: "grey"
-                    infoBoxBorderWidth: 3
+//                    infoBoxColor: "lightgrey"
+//                    infoBoxBorderColor: "grey"
+//                    infoBoxBorderWidth: 3
 
-                    unit: ""
+//                    unit: ""
 
-                    infoBoxWidth: pdissGraph.width/1.5
-                    infoBoxHeight : pdissGraph.height/10
-                    fontSize :  (pdissGraph.width + pdissGraph.height)/37
-                    unitSize: (pdissGraph.width + pdissGraph.height)/35
-                    anchors {
-                        top : efficiencyGraph.bottom
-                        topMargin : -parent.height/18
-                        left: efficiencyGraph.left
-                        leftMargin: parent.width/50
-                    }
-                }
+//                    infoBoxWidth: pdissGraph.width/1.5
+//                    infoBoxHeight : pdissGraph.height/10
+//                    fontSize :  (pdissGraph.width + pdissGraph.height)/37
+//                    unitSize: (pdissGraph.width + pdissGraph.height)/35
+//                    anchors {
+//                        top : efficiencyGraph.bottom
+//                        topMargin : -parent.height/18
+//                        left: efficiencyGraph.left
+//                        leftMargin: parent.width/50
+//                    }
+//                }
 
                 SGAlignedLabel{
                     id: overTemperatureFaultLabel
@@ -163,7 +152,7 @@ Item {
                     anchors {
                         top: parent.top
                         topMargin: parent.height/15
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/2.75
                         }
                     SGSlider {
@@ -171,9 +160,9 @@ Item {
                         width: parent.width
                         from: 115
                         to: 135
-                        value: platformInterface.temp_fault
-                        stepSize: 1
-                        onUserSet: platformInterface.temp_fault = value
+                        value: platformInterface.temp_fault.toFixed(3)
+                        stepSize: 0.001
+                        onUserSet: platformInterface.temp_fault = value.toFixed(3)
                         live: false
                     }
                     Text{
@@ -195,7 +184,7 @@ Item {
                     anchors {
                         top: overTemperatureFaultLabel.bottom
                         topMargin: parent.height/15
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/2.75
                         }
                     SGSlider {
@@ -203,9 +192,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: platformInterface.vout_ov_fault
-                        stepSize: 1
-                        onUserSet: platformInterface.vout_ov_fault = value
+                        value: platformInterface.vout_ov_fault.toFixed(3)
+                        stepSize: 0.001
+                        onUserSet: platformInterface.vout_ov_fault = value.toFixed(3)
                         live: false
                     }
                     Text{
@@ -227,7 +216,7 @@ Item {
                     anchors {
                         top: voutOVlimitFaultLabel.bottom
                         topMargin: parent.height/15
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/2.75
                         }
                     SGSlider {
@@ -235,9 +224,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: platformInterface.vout_uv_fault
-                        stepSize: 1
-                        onUserSet: platformInterface.vout_uv_fault = value
+                        value: platformInterface.vout_uv_fault.toFixed(3)
+                        stepSize: 0.001
+                        onUserSet: platformInterface.vout_uv_fault = value.toFixed(3)
                         live: false
                     }
                     Text{
@@ -259,7 +248,7 @@ Item {
                     anchors {
                         top: voutUVlimitFaultLabel.bottom
                         topMargin: parent.height/15
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/2.75
                         }
                     SGSlider {
@@ -267,9 +256,9 @@ Item {
                         width: parent.width
                         from: 0
                         to: multiplePlatform.ioutScale
-                        value: platformInterface.iout_oc_fault
-                        stepSize: 1
-                        onUserSet: platformInterface.iout_oc_fault = value
+                        value: platformInterface.iout_oc_fault.toFixed(3)
+                        stepSize: 0.001
+                        onUserSet: platformInterface.iout_oc_fault = value.toFixed(3)
                         live: false
                     }
                     Text{
@@ -291,17 +280,17 @@ Item {
                     anchors {
                         top: parent.top
                         topMargin: parent.height/15
-                        right: parent.right
-                        rightMargin: parent.width/20
+                        left: overTemperatureFaultLabel.right
+                        leftMargin: parent.width/20
                         }
                     SGSlider {
                         id: overTemperatureWarningSlider
                         width: parent.width
                         from: 85
                         to: 105
-                        value: platformInterface.temp_warn
-                        stepSize: 1
-                        onUserSet: platformInterface.temp_warn = value
+                        value: platformInterface.temp_warn.toFixed(3)
+                        stepSize: 0.001
+                        onUserSet: platformInterface.temp_warn = value.toFixed(3)
                         live: false
                     }
                     Text{
@@ -323,17 +312,17 @@ Item {
                     anchors {
                         top: overTemperatureWarningLabel.bottom
                         topMargin: parent.height/15
-                        right: parent.right
-                        rightMargin: parent.width/20
+                        left: voutOVlimitFaultLabel.right
+                        leftMargin: parent.width/20
                         }
                     SGSlider {
                         id: voutOVlimitWarningSlider
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: platformInterface.vout_ov_warn
-                        stepSize: 1
-                        onUserSet: platformInterface.vout_ov_warn = value
+                        value: platformInterface.vout_ov_warn.toFixed(3)
+                        stepSize: 0.001
+                        onUserSet: platformInterface.vout_ov_warn = value.toFixed(3)
                         live: false
                     }
                     Text{
@@ -355,17 +344,17 @@ Item {
                     anchors {
                         top: voutOVlimitWarningLabel.bottom
                         topMargin: parent.height/15
-                        right: parent.right
-                        rightMargin: parent.width/20
+                        left: voutUVlimitFaultLabel.right
+                        leftMargin: parent.width/20
                         }
                     SGSlider {
                         id: voutUVlimitWarningSlider
                         width: parent.width
                         from: 0
                         to: multiplePlatform.voutScale
-                        value: platformInterface.vout_uv_warn
-                        stepSize: 1
-                        onUserSet: platformInterface.vout_uv_warn = value
+                        value: platformInterface.vout_uv_warn.toFixed(3)
+                        stepSize: 0.001
+                        onUserSet: platformInterface.vout_uv_warn = value.toFixed(3)
                         live: false
                     }
                     Text{
@@ -387,17 +376,17 @@ Item {
                     anchors {
                         top: voutUVlimitWarningLabel.bottom
                         topMargin: parent.height/15
-                        right: parent.right
-                        rightMargin: parent.width/20
+                        left: ioutOClimitFaultLabel.right
+                        leftMargin: parent.width/20
                         }
                     SGSlider {
                         id: ioutOClimitWarningSlider
                         width: parent.width
                         from: 0
                         to: multiplePlatform.ioutScale
-                        value: platformInterface.iout_oc_warn
-                        stepSize: 1
-                        onUserSet: platformInterface.iout_oc_warn = value
+                        value: platformInterface.iout_oc_warn.toFixed(3)
+                        stepSize: 0.001
+                        onUserSet: platformInterface.iout_oc_warn = value.toFixed(3)
                         live: false
                     }
                     Text{
@@ -419,7 +408,7 @@ Item {
                     anchors {
                         top : parent.top
                         topMargin : parent.height/15
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     }
@@ -435,7 +424,7 @@ Item {
                     anchors {
                         top : specific1Text.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     }
@@ -451,7 +440,7 @@ Item {
                     anchors {
                         top : specific1BitOText.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     }
@@ -467,7 +456,7 @@ Item {
                     anchors {
                         top : specific1Bit1Text.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     }
@@ -483,7 +472,7 @@ Item {
                     anchors {
                         top : specific1Bit2Text.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     }
@@ -499,7 +488,7 @@ Item {
                     anchors {
                         top : specific1Bit3Text.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     }
@@ -515,7 +504,7 @@ Item {
                     anchors {
                         top : specific1Bit4Text.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     }
@@ -531,7 +520,7 @@ Item {
                     anchors {
                         top : specific1Bit5Text.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     }
@@ -541,7 +530,7 @@ Item {
                     anchors {
                         top : specific1Bit6Text.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     font.pixelSize: (parent.width + parent.height)/150
@@ -550,7 +539,7 @@ Item {
                     width: parent.width/8
                     height: parent.height/12
                     onClicked: {
-                        platformInterface.clear_faults.update()
+                        platformInterface.clear_faults1.update()
                     }
                 }
 
@@ -559,7 +548,7 @@ Item {
                     anchors {
                         top : resetErrorButton.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     font.pixelSize: (parent.width + parent.height)/150
@@ -580,7 +569,7 @@ Item {
                     anchors {
                         top : setParametersButton.top
                         topMargin : parent.height/10
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/20
                         }
                     font.pixelSize: (parent.width + parent.height)/150
@@ -589,7 +578,7 @@ Item {
                     width: parent.width/8
                     height: parent.height/12
                     onClicked: {
-                        platformInterface.write_config_to_otp.update()
+                        platformInterface.write_config_to_otp1.update()
                     }
                 }
 
@@ -601,7 +590,7 @@ Item {
                     anchors {
                         top : parent.top
                         topMargin : parent.height/8
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/5
                         }
                     }
@@ -630,7 +619,7 @@ Item {
                     anchors {
                         top : voutOVFaultResponseText.top
                         topMargin : parent.height/15
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/5
                         }
                     onActivated:
@@ -654,7 +643,7 @@ Item {
                     anchors {
                         top : voutOVFaultResponseText.top
                         topMargin : parent.height/5
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/5
                         }
                     }
@@ -683,7 +672,7 @@ Item {
                     anchors {
                         top : voutUVFaultResponseText.top
                         topMargin : parent.height/15
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/5
                         }
                     onActivated:
@@ -707,7 +696,7 @@ Item {
                     anchors {
                         top : voutUVFaultResponseText.top
                         topMargin : parent.height/5
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/5
                         }
                     }
@@ -737,7 +726,7 @@ Item {
                     anchors {
                         top : ioutOCFaultResponseText.top
                         topMargin : parent.height/15
-                        left: efficiencyGraph.right
+                        left: parent.left
                         leftMargin: parent.width/5
                         }
                     onActivated:

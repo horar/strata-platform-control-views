@@ -42,11 +42,11 @@ Rectangle {
 
     Component.onCompleted: {
         helpIcon.visible = true
-        platformInterface.pause_periodic.update(false)
+//        platformInterface.pause_periodic.update(false)
     }
 
     Component.onDestruction:  {
-        platformInterface.pause_periodic.update(true)
+//        platformInterface.pause_periodic.update(true)
     }
 
     ApplicationWindow {

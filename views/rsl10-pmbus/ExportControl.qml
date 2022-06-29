@@ -57,7 +57,7 @@ ColumnLayout {
     property var x_Axis_Timer_1:0
     property  int clear:0
 
-    property var vin_calc: platformInterface.status_voltage_current.vin/1000
+    property var vin_calc: platformInterface.vin
     property var dataArray_vin_calc_graph: []
     property var vin_calc_validator:0
     onVin_calcChanged:{
@@ -71,7 +71,7 @@ ColumnLayout {
         }
     }
 
-    property var iin_calc: platformInterface.status_voltage_current.iin/1000
+    property var iin_calc: platformInterface.iin
     property var dataArray_iin_calc_graph: []
     property var iin_calc_validator:0
     onIin_calcChanged:{
@@ -85,7 +85,7 @@ ColumnLayout {
         }
     }
 
-    property var vout_calc: platformInterface.status_voltage_current.vout/1000
+    property var vout_calc: platformInterface.vout
     property var dataArray_vout_calc_graph: []
     property var vout_calc_validator:0
     onVout_calcChanged:{
@@ -99,7 +99,7 @@ ColumnLayout {
         }
     }
 
-    property var iout_calc: platformInterface.status_voltage_current.iout/1000
+    property var iout_calc: platformInterface.iout
     property var dataArray_iout_calc_graph: []
     property var iout_calc_validator:0
     onIout_calcChanged:{
@@ -130,7 +130,7 @@ ColumnLayout {
         }
     }
 
-    property var temp_calc: (platformInterface.status_temperature_pmbus.temperature_pmbus).toFixed(0)
+    property var temp_calc: (platformInterface.btemp).toFixed(0)
     property var dataArray_temp_calc_graph: []
     property var temp_calc_validator:0
     onTemp_calcChanged:{
@@ -297,7 +297,7 @@ ColumnLayout {
                                                 right: resetChartButton.right
                                                 rightMargin: (parent.width + parent.height)/ 150
                                             }
-                                            text: ""+ (platformInterface.status_voltage_current.iin/1000).toFixed(3) +" A"
+                                            text: ""+ (platformInterface.iin).toFixed(3) +" A"
                                             font.pixelSize: (parent.width + parent.height)/ 150
                                             color: "green"
                                         }
@@ -309,7 +309,7 @@ ColumnLayout {
                                                 right: resetChartButton.right
                                                 rightMargin: (parent.width + parent.height)/ 150
                                             }
-                                            text: ""+ (platformInterface.status_voltage_current.vout/1000).toFixed(3) +" V"
+                                            text: ""+ (platformInterface.vout).toFixed(3) +" V"
                                             font.pixelSize: (parent.width + parent.height)/ 150
                                             color: "blue"
                                         }
@@ -440,7 +440,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_voltage_current.vin/1000).toFixed(3) +" V"
+                                                text: ""+ (platformInterface.vin).toFixed(3) +" V"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "blue"
                                             }
@@ -452,7 +452,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_voltage_current.vout/1000).toFixed(3) +" A"
+                                                text: ""+ (platformInterface.vout).toFixed(3) +" A"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "green"
                                             }
@@ -477,7 +477,7 @@ ColumnLayout {
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.status_temperature_pmbus.temperature_pmbus).toFixed(0) +" °C"
+                                                text: ""+ (platformInterface.btemp).toFixed(0) +" °C"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "red"
                                             }

@@ -27,18 +27,6 @@ Item {
     property string labelTest: ""
     property real ratioCalc: root.width / 1200
 
-    // property that reads the initial notification
-    property var temp_calc: platformInterface.status_temperature_sensor.temperature
-    property var temp_pmbus_calc: platformInterface.status_temperature_pmbus.temperature_pmbus
-    property var vin_calc: platformInterface.status_voltage_current.vin/1000
-    property var iin_calc: platformInterface.status_voltage_current.iin
-    property var vout_calc: platformInterface.status_voltage_current.vout/1000
-    property var iout_calc: platformInterface.status_voltage_current.iout
-
-    property var pin_calc: platformInterface.vin * platformInterface.iin
-    property var pout_calc: platformInterface.vout * platformInterface.iout
-    property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
-
     property int maxVin: 70
     property int minVin: 36
 
@@ -104,7 +92,7 @@ Item {
     Timer {
         id: startGetFaultTimer
         repeat: false
-        interval: 1000
+        interval: 2000
         onTriggered: platformInterface.get_fault_config.update()
     }
 
@@ -120,7 +108,6 @@ Item {
         Help.registerTarget(navTabs, "These tabs switch between Basic, Advanced and Data Logger/Export views.", 0, "basicHelp")
         Help.registerTarget(ledLight, "The LED will light up green when input voltage is ready and lower than" + " "+ multiplePlatform.nominalVin +"V.It will light up red when greater than "+ " "+ multiplePlatform.nominalVin + "V to warn the user that input voltage is too high.", 1, "basicHelp")
         Help.registerTarget(inputVoltage,"Input voltage is shown here.", 2 , "basicHelp")
-        Help.registerTarget(inputCurrent,"Input current is shown here.", 3 , "basicHelp")
         Help.registerTarget(basicImage, "The center image shows the board configuration.", 5, "basicHelp")
         Help.registerTarget(dimmensionalModeSpace, "Dimmensional space mode for the center image.", 6, "basicHelp")
         Help.registerTarget(dio12Switch, "This switch enables or disables the DUT.", 7, "basicHelp")
@@ -285,33 +272,12 @@ Item {
                     }
                 }
 
-                SGLabelledInfoBox {
-                    id: inputCurrent
-                    label: ""
-                    info: ((platformInterface.iin)).toFixed(3)
-
-                    infoBoxColor: "lightgrey"
-                    infoBoxBorderColor: "grey"
-                    infoBoxBorderWidth: 3
-
-                    unit: "A"
-                    infoBoxWidth: parent.width/1.5
-                    infoBoxHeight :  parent.height/12
-                    fontSize :   (parent.width + parent.height)/37
-                    unitSize: (parent.width + parent.height)/35
-                    anchors {
-                        top : inputVoltage.bottom
-                        topMargin : parent.height/15
-                        horizontalCenter: parent.horizontalCenter
-                    }
-                }
-
                 Rectangle {
                     id: warningBox2
                     color: "red"
                     radius: 10
                     anchors {
-                        top: inputCurrent.bottom
+                        top: inputVoltage.bottom
                         topMargin: parent.height/20
                         horizontalCenter: parent.horizontalLeft
                         horizontalCenterOffset: parent.width/20
@@ -539,6 +505,8 @@ Item {
                         topMargin : parent.height/15
                         horizontalCenter: parent.horizontalCenter
                         horizontalCenterOffset:  10
+                        right: parent.right
+                        rightMargin: parent.width/20
                     }
                 }
 
@@ -559,36 +527,88 @@ Item {
                     anchors {
                         top : outputVoltage.bottom
                         topMargin : parent.height/15
-                        horizontalCenter: outputVoltage.horizontalCenter
-                        horizontalCenterOffset:  0
+                        horizontalCenter: parent.horizontalCenter
+                        horizontalCenterOffset:  10
+                        right: parent.right
+                        rightMargin: parent.width/20
                     }
                 }
 
                 SGLabelledInfoBox {
-                    id: effiPower
-                    label: "η"
-                    info: effi_calc
+                    id: outputPower
+                    label: ""
+                    info: ((platformInterface.pout)).toFixed(3)
 
                     infoBoxColor: "lightgrey"
                     infoBoxBorderColor: "grey"
                     infoBoxBorderWidth: 3
 
-                    unit: "%"
+                    unit: "W"
                     infoBoxWidth: parent.width/1.5
                     infoBoxHeight :  parent.height/12
                     fontSize :   (parent.width + parent.height)/37
                     unitSize: (parent.width + parent.height)/35
                     anchors {
                         top : outputCurrent.bottom
-                        topMargin : parent.height/50
+                        topMargin : parent.height/15
                         horizontalCenter: parent.horizontalCenter
+                        horizontalCenterOffset:  10
+                        right: parent.right
+                        rightMargin: parent.width/20
+                    }
+                }
+
+                Rectangle {
+                    id: textTempContainer
+                    width: parent.width/3
+                    height: parent.height/10
+                    anchors {
+                        top: outputPower.bottom
+                        topMargin : parent.height/15
+                        horizontalCenter: parent.horizontalCenter
+                        horizontalCenterOffset:  10
+                        right: parent.right
+                        rightMargin: parent.width/20
+                    }
+                    Text {
+                        id: containerTempLabel
+                        text: "Chip temperature"
+                        anchors{
+                            fill: parent
+                            centerIn: parent
+                        }
+                        font.pixelSize: height/2
+                        font.bold: false
+                    }
+                }
+
+                SGLabelledInfoBox {
+                    id: chipTemp
+                    info: ((platformInterface.ctemp)).toFixed(3)
+
+                    infoBoxColor: "lightgrey"
+                    infoBoxBorderColor: "grey"
+                    infoBoxBorderWidth: 3
+
+                    unit: "°C"
+                    infoBoxWidth: parent.width/1.5
+                    infoBoxHeight :  parent.height/12
+                    fontSize :   (parent.width + parent.height)/37
+                    unitSize: (parent.width + parent.height)/35
+                    anchors {
+                        top : textTempContainer.bottom
+                        topMargin : parent.height/15
+                        horizontalCenter: parent.horizontalCenter
+                        horizontalCenterOffset:  10
+                        right: parent.right
+                        rightMargin: parent.width/20
                     }
                 }
 
                 SGRadioButtonContainer {
                     id: operationModeControl
                     anchors {
-                        top: effiPower.bottom
+                        top: chipTemp.bottom
                         topMargin: parent.height/50
                         left: parent.left
                         leftMargin: parent.height/100

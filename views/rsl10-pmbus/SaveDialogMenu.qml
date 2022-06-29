@@ -56,14 +56,14 @@ Rectangle {
     property var my_last_time: 0
     property var one_time_top_row_excel: 0
 
-    property var vin_calc: (platformInterface.status_voltage_current.vin/1000).toFixed(3)
-    property var iin_calc: (platformInterface.status_voltage_current.iin/1000).toFixed(3)
-    property var vout_calc: (platformInterface.status_voltage_current.vout/1000).toFixed(3)
-    property var iout_calc: (platformInterface.status_voltage_current.iout/1000).toFixed(3)
+    property var vin_calc: (platformInterface.vin).toFixed(3)
+    property var iin_calc: (platformInterface.iin).toFixed(3)
+    property var vout_calc: (platformInterface.vout).toFixed(3)
+    property var iout_calc: (platformInterface.iout).toFixed(3)
     property var pin_calc: vin_calc * iin_calc
     property var pout_calc: vout_calc * iout_calc
     property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
-    property var temp_calc: (platformInterface.status_temperature_pmbus.temperature_pmbus).toFixed(0)
+    property var temp_calc: (platformInterface.ctemp).toFixed(0)
 
 
     onEffi_calcChanged:

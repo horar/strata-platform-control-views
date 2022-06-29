@@ -422,15 +422,16 @@ Rectangle {
             }
         }
 
-        Button {
+        RoundButton {
             id: clearFaultsButton
-            text: "Clear \n faults"
+            text: "Clear\nfaults"
 
             Layout.fillWidth: true
+            radius: 4
 
             onClicked:
             {
-                platformInterface.clear_faults.update()
+                platformInterface.clear_faults1.update()
             }
         }
     }
