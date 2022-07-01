@@ -92,7 +92,7 @@ Item {
     Timer {
         id: startGetFaultTimer
         repeat: false
-        interval: 2000
+        interval: 4000
         onTriggered: platformInterface.get_fault_config.update()
     }
 

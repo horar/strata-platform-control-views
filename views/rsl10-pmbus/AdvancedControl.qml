@@ -84,71 +84,12 @@ Item {
                 width: parent.width
                 height: controlSection1.height/3
 
-//                GraphConverter{
-//                    id: efficiencyGraph
-//                    width: parent.width/3
-//                    height: parent.height*1.3
-//                    anchors {
-//                        left: parent.left
-//                        leftMargin: 0
-//                        top: parent.top
-//                        topMargin: 0
-//                    }
-//                    showOptions: false
-//                    autoAdjustMaxMin: false
-//                    //repeatOldData: visible
-//                    dataLineColor: "purple"
-//                    textColor: "black"
-//                    axesColor: "black"
-//                    gridLineColor: "lightgrey"
-//                    underDataColor: "transparent"
-//                    backgroundColor: "white"
-//                    xAxisTickCount: 11
-//                    yAxisTickCount: 11
-//                    throttlePlotting: true
-//                    pointCount: if (platformInterface.systemMode === false) {1} else {50}
-//                    title: "<b>Efficiency</b>"
-//                    yAxisTitle: "<b>η [%]</b>"
-//                    xAxisTitle: "<b>10 µs / div<b>"
-//                    inputData: effi_calc
-//                    maxYValue: 100
-//                    minYValue: 0
-//                    showYGrids: true
-//                    showXGrids: true
-//                    minXValue: 0
-//                    maxXValue:5
-//                    reverseDirection: true
-//                }
-
-//                SGLabelledInfoBox {
-//                    id: effiPower
-//                    label: "%"
-//                    info: effi_calc
-
-//                    infoBoxColor: "lightgrey"
-//                    infoBoxBorderColor: "grey"
-//                    infoBoxBorderWidth: 3
-
-//                    unit: ""
-
-//                    infoBoxWidth: pdissGraph.width/1.5
-//                    infoBoxHeight : pdissGraph.height/10
-//                    fontSize :  (pdissGraph.width + pdissGraph.height)/37
-//                    unitSize: (pdissGraph.width + pdissGraph.height)/35
-//                    anchors {
-//                        top : efficiencyGraph.bottom
-//                        topMargin : -parent.height/18
-//                        left: efficiencyGraph.left
-//                        leftMargin: parent.width/50
-//                    }
-//                }
-
                 SGAlignedLabel{
                     id: overTemperatureFaultLabel
                     target: overTemperatureFaultSlider
                     text:"<b>Over temperature Fault:<b>"
                     font.pixelSize: (parent.width + parent.height)/ 150
-                    width: parent.width/10
+                    width: parent.width/4
                     anchors {
                         top: parent.top
                         topMargin: parent.height/15
@@ -180,7 +121,7 @@ Item {
                     target: voutOVlimitFaultSlider
                     text:"<b>Vout OV Fault Limit:<b>"
                     font.pixelSize: (parent.width + parent.height)/ 150
-                    width: parent.width/10
+                    width: parent.width/4
                     anchors {
                         top: overTemperatureFaultLabel.bottom
                         topMargin: parent.height/15
@@ -212,7 +153,7 @@ Item {
                     target: voutUVlimitFaultSlider
                     text:"<b>Vout UV Fault Limit:<b>"
                     font.pixelSize: (parent.width + parent.height)/ 150
-                    width: parent.width/10
+                    width: parent.width/4
                     anchors {
                         top: voutOVlimitFaultLabel.bottom
                         topMargin: parent.height/15
@@ -244,7 +185,7 @@ Item {
                     target: ioutOClimitFaultSlider
                     text:"<b>Iout OC Fault Limit:<b>"
                     font.pixelSize: (parent.width + parent.height)/ 150
-                    width: parent.width/10
+                    width: parent.width/4
                     anchors {
                         top: voutUVlimitFaultLabel.bottom
                         topMargin: parent.height/15
@@ -276,7 +217,7 @@ Item {
                     target: overTemperatureWarningSlider
                     text:"<b>Over temperature Warning:<b>"
                     font.pixelSize: (parent.width + parent.height)/ 150
-                    width: parent.width/10
+                    width: parent.width/4
                     anchors {
                         top: parent.top
                         topMargin: parent.height/15
@@ -308,7 +249,7 @@ Item {
                     target: voutOVlimitWarningSlider
                     text:"<b>Vout OV Warning Limit:<b>"
                     font.pixelSize: (parent.width + parent.height)/ 150
-                    width: parent.width/10
+                    width: parent.width/4
                     anchors {
                         top: overTemperatureWarningLabel.bottom
                         topMargin: parent.height/15
@@ -340,7 +281,7 @@ Item {
                     target: voutUVlimitWarningSlider
                     text:"<b>Vout UV Warning Limit:<b>"
                     font.pixelSize: (parent.width + parent.height)/ 150
-                    width: parent.width/10
+                    width: parent.width/4
                     anchors {
                         top: voutOVlimitWarningLabel.bottom
                         topMargin: parent.height/15
@@ -372,7 +313,7 @@ Item {
                     target: ioutOClimitWarningSlider
                     text:"<b>Iout OC Warning Limit:<b>"
                     font.pixelSize: (parent.width + parent.height)/ 150
-                    width: parent.width/10
+                    width: parent.width/4
                     anchors {
                         top: voutUVlimitWarningLabel.bottom
                         topMargin: parent.height/15
@@ -614,8 +555,8 @@ Item {
                     borderColor: "green"
                     textColor: "black"
                     indicatorColor: "green"
-                    width: parent.width/20
-                    height:parent.height/10
+                    width: parent.width/10
+                    height:parent.height/8
                     anchors {
                         top : voutOVFaultResponseText.top
                         topMargin : parent.height/15
@@ -667,8 +608,8 @@ Item {
                     borderColor: "green"
                     textColor: "black"
                     indicatorColor: "green"
-                    width: parent.width/20
-                    height:parent.height/10
+                    width: parent.width/10
+                    height:parent.height/8
                     anchors {
                         top : voutUVFaultResponseText.top
                         topMargin : parent.height/15
@@ -721,8 +662,8 @@ Item {
                     borderColor: "green"
                     textColor: "black"
                     indicatorColor: "green"
-                    width: parent.width/20
-                    height:parent.height/10
+                    width: parent.width/10
+                    height:parent.height/8
                     anchors {
                         top : ioutOCFaultResponseText.top
                         topMargin : parent.height/15
@@ -772,7 +713,7 @@ Item {
 
                     GraphConverter{
                         id: vinGraph
-                        width: parent.width/6
+                        width: parent.width/5
                         height: parent.height/1.05
                         anchors {
                             left: parent.left
@@ -808,10 +749,7 @@ Item {
                     SGLabelledInfoBox {
                         id: inputVoltage
                         label: ""
-                        info: {
-                            if(multiplePlatform.showDecimal === true) {platformInterface.vin.toFixed(3)}
-                            else {vin_calc.toFixed(0)}
-                        }
+                        info: platformInterface.vin.toFixed(3)
 
                         infoBoxColor: if (multiplePlatform.nominalVin < platformInterface.vin) {"red"}
                                       else{"lightgrey"}
@@ -832,203 +770,11 @@ Item {
                     }
 
                     GraphConverter{
-                        id: iinGraph
-                        width: parent.width/6
+                        id: voutGraph
+                        width: parent.width/5
                         height: parent.height/1.05
                         anchors {
                             left: vinGraph.right
-                            leftMargin: 0
-                            top: parent.top
-                            topMargin: -parent.height/20
-                        }
-                        showOptions: false
-                        autoAdjustMaxMin: false
-                        //repeatOldData: visible
-                        dataLineColor: "green"
-                        textColor: "black"
-                        axesColor: "black"
-                        gridLineColor: "lightgrey"
-                        underDataColor: "transparent"
-                        backgroundColor: "white"
-                        xAxisTickCount: 6
-                        yAxisTickCount: 11
-                        throttlePlotting: true
-                        pointCount: 30
-                        xAxisTitle: "<b>100 µs / div<b>"
-                        yAxisTitle: if(multiplePlatform.current === "mA") {"Input Current (mA)"}
-                                    else{"Input Current (A)"}
-                        inputData: {
-                            if(multiplePlatform.current === "A") {platformInterface.iin.toFixed(3)}
-                            else {iin_calc.toFixed(0)}
-                        }
-                        maxYValue: if(multiplePlatform.current === "mA") {multiplePlatform.iinScale * 1000}
-                                   else{multiplePlatform.iinScale}
-                        showYGrids: true
-                        showXGrids: true
-                        minXValue: 0
-                        maxXValue: 5
-                        reverseDirection: true
-                    }
-
-
-                    SGLabelledInfoBox {
-                        id: inputCurrent
-                        label: ""
-                        info: {
-                            if(multiplePlatform.current === "A") {platformInterface.iin.toFixed(3)}
-                            else {iin_calc.toFixed(0)}
-                        }
-
-                        infoBoxColor: "lightgrey"
-                        infoBoxBorderColor: "grey"
-                        infoBoxBorderWidth: 3
-
-                        unit: if(multiplePlatform.current === "mA") {"mA"}
-                              else{"A"}
-                        infoBoxWidth: iinGraph.width/1.5
-                        infoBoxHeight : iinGraph.height/10
-                        fontSize :  (iinGraph.width + iinGraph.height)/37
-                        unitSize: (iinGraph.width + iinGraph.height)/35
-                        anchors {
-                            top : iinGraph.bottom
-                            topMargin : parent.height/100
-                            horizontalCenter: iinGraph.horizontalCenter
-                            horizontalCenterOffset:  parent.height/15
-                        }
-                    }
-
-                    GraphConverter{
-                        id: pdissGraph
-                        width: parent.width/6
-                        height: parent.height/1.05
-                        anchors {
-                            left: iinGraph.right
-                            leftMargin: 0
-                            top: parent.top
-                            topMargin: -parent.height/20
-                        }
-                        showOptions: false
-                        autoAdjustMaxMin: false
-                        //repeatOldData: visible
-                        dataLineColor: "orange"
-                        textColor: "black"
-                        axesColor: "black"
-                        gridLineColor: "lightgrey"
-                        underDataColor: "transparent"
-                        backgroundColor: "white"
-                        xAxisTickCount: 6
-                        yAxisTickCount: 11
-                        throttlePlotting: true
-                        pointCount: 30
-                        xAxisTitle: "<b>100 µs / div<b>"
-                        yAxisTitle: if(multiplePlatform.pdiss === "mW") {"Power Dissipated (mW)"}
-                                    else{"Power Dissipated (W)"}
-                        inputData: if(pin_calc > pout_calc)
-                                   {if(multiplePlatform.pdiss === "W") {((pin_calc - pout_calc)).toFixed(0)}
-                                       else{((pin_calc - pout_calc)).toFixed(0)}}
-                                   else{0}
-                        maxYValue: multiplePlatform.pdissScale
-                        showYGrids: true
-                        showXGrids: true
-                        minXValue: 0
-                        maxXValue: 5
-                        reverseDirection: true
-                    }
-
-                    SGLabelledInfoBox {
-                        id: pdissPower
-                        label: ""
-                        info: if(pin_calc > pout_calc)
-                              {if(multiplePlatform.pdiss === "W") {((pin_calc - pout_calc)).toFixed(2)}
-                                  else{((pin_calc - pout_calc)).toFixed(1)}}
-                              else{0}
-
-                        infoBoxColor: "lightgrey"
-                        infoBoxBorderColor: "grey"
-                        infoBoxBorderWidth: 3
-
-                        unit: if(multiplePlatform.pdiss === "mW") {"mW"}
-                              else{"W"}
-
-                        infoBoxWidth: pdissGraph.width/1.5
-                        infoBoxHeight : pdissGraph.height/10
-                        fontSize :  (pdissGraph.width + pdissGraph.height)/37
-                        unitSize: (pdissGraph.width + pdissGraph.height)/35
-                        anchors {
-                            top : pdissGraph.bottom
-                            topMargin : parent.height/100
-                            horizontalCenter: pdissGraph.horizontalCenter
-                            horizontalCenterOffset:  parent.height/15
-                        }
-                    }
-
-                    GraphConverter{
-                        id: poutGraph
-                        width: parent.width/6
-                        height: parent.height/1.05
-                        anchors {
-                            left: pdissGraph.right
-                            leftMargin: 0
-                            top: parent.top
-                            topMargin: -parent.height/20
-                        }
-                        showOptions: false
-                        autoAdjustMaxMin: false
-                        //repeatOldData: visible
-                        dataLineColor: "#7bdeff"
-                        textColor: "black"
-                        axesColor: "black"
-                        gridLineColor: "lightgrey"
-                        underDataColor: "transparent"
-                        backgroundColor: "white"
-                        xAxisTickCount: 6
-                        yAxisTickCount: 11
-                        throttlePlotting: true
-                        pointCount: 30
-                        xAxisTitle: "<b>100 µs / div<b>"
-                        yAxisTitle: if(multiplePlatform.pdiss === "mW") {"Output Power (mW)"}
-                                    else{"Output Power (W)"}
-                        inputData: if(multiplePlatform.pdiss === "W") {(pout_calc).toFixed(0)}
-                                   else{(pout_calc).toFixed(0)}
-                        maxYValue: multiplePlatform.poutScale
-                        showYGrids: true
-                        showXGrids: true
-                        minXValue: 0
-                        maxXValue: 5
-                        reverseDirection: true
-                    }
-
-                    SGLabelledInfoBox {
-                        id: poutPower
-                        label: ""
-                        info: if(multiplePlatform.pdiss === "W") {(pout_calc).toFixed(2)}
-                              else{(pout_calc).toFixed(1)}
-
-                        infoBoxColor: "lightgrey"
-                        infoBoxBorderColor: "grey"
-                        infoBoxBorderWidth: 3
-
-                        unit: if(multiplePlatform.pdiss === "mW") {"mW"}
-                              else{"W"}
-
-                        infoBoxWidth: poutGraph.width/1.5
-                        infoBoxHeight : poutGraph.height/10
-                        fontSize :  (poutGraph.width + poutGraph.height)/37
-                        unitSize: (poutGraph.width + poutGraph.height)/35
-                        anchors {
-                            top : poutGraph.bottom
-                            topMargin : parent.height/100
-                            horizontalCenter: poutGraph.horizontalCenter
-                            horizontalCenterOffset:  parent.height/15
-                        }
-                    }
-
-                    GraphConverter{
-                        id: voutGraph
-                        width: parent.width/6
-                        height: parent.height/1.05
-                        anchors {
-                            left: poutGraph.right
                             leftMargin: 0
                             top: parent.top
                             topMargin: -parent.height/20
@@ -1048,7 +794,7 @@ Item {
                         pointCount: 30
                         xAxisTitle: "<b>100 µs / div<b>"
                         yAxisTitle: "Output Voltage (V)"
-                        inputData: {platformInterface.vout}
+                        inputData: platformInterface.vout
                         maxYValue: multiplePlatform.voutScale
                         showYGrids: true
                         showXGrids: true
@@ -1060,11 +806,7 @@ Item {
                     SGLabelledInfoBox {
                         id: outputVoltage
                         label: ""
-                        info: {
-                            if(multiplePlatform.showDecimal === true) {platformInterface.vout.toFixed(3)}
-                            else {vout_calc.toFixed(0)}
-                        }
-
+                        info: platformInterface.vout.toFixed(3)
                         infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3
@@ -1084,7 +826,7 @@ Item {
 
                     GraphConverter{
                         id: ioutGraph
-                        width: parent.width/6
+                        width: parent.width/5
                         height: parent.height/1.05
                         anchors {
                             left: voutGraph.right
@@ -1106,11 +848,9 @@ Item {
                         throttlePlotting: true
                         pointCount: 30
                         xAxisTitle: "<b>100 µs / div<b>"
-                        yAxisTitle: if(multiplePlatform.current === "mA") {"Output Current (mA)"}
-                                    else{"Output Current (A)"}
+                        yAxisTitle: "Output Current (A)"
                         inputData: platformInterface.iout
-                        maxYValue: if(multiplePlatform.current === "mA") {multiplePlatform.ioutScale * 1000}
-                                   else{multiplePlatform.ioutScale}
+                        maxYValue: multiplePlatform.ioutScale
                         showYGrids: true
                         showXGrids: true
                         minXValue: 0
@@ -1123,17 +863,12 @@ Item {
                     SGLabelledInfoBox {
                         id: outputCurrent
                         label: ""
-                        info: {
-                            if(multiplePlatform.current === "A") {platformInterface.iout.toFixed(3)}
-                            else {iout_calc.toFixed(0)}
-                        }
-
+                        info: platformInterface.iout.toFixed(3)
                         infoBoxColor: "lightgrey"
                         infoBoxBorderColor: "grey"
                         infoBoxBorderWidth: 3
 
-                        unit: if(multiplePlatform.current === "mA") {"mA"}
-                              else{"A"}
+                        unit: "A"
                         infoBoxWidth: ioutGraph.width/1.5
                         infoBoxHeight : ioutGraph.height/10
                         fontSize :  (ioutGraph.width + ioutGraph.height)/37
@@ -1145,6 +880,123 @@ Item {
                             horizontalCenterOffset:  parent.height/15
                         }
                     }
+
+                    GraphConverter{
+                        id: poutGraph
+                        width: parent.width/5
+                        height: parent.height/1.05
+                        anchors {
+                            left: ioutGraph.right
+                            leftMargin: 0
+                            top: parent.top
+                            topMargin: -parent.height/20
+                        }
+                        showOptions: false
+                        autoAdjustMaxMin: false
+                        //repeatOldData: visible
+                        dataLineColor: "#7bdeff"
+                        textColor: "black"
+                        axesColor: "black"
+                        gridLineColor: "lightgrey"
+                        underDataColor: "transparent"
+                        backgroundColor: "white"
+                        xAxisTickCount: 6
+                        yAxisTickCount: 11
+                        throttlePlotting: true
+                        pointCount: 30
+                        xAxisTitle: "<b>100 µs / div<b>"
+                        yAxisTitle: "Output Power (W)"
+                        inputData: platformInterface.pout.toFixed(3)
+                        maxYValue: multiplePlatform.poutScale
+                        showYGrids: true
+                        showXGrids: true
+                        minXValue: 0
+                        maxXValue: 5
+                        reverseDirection: true
+                    }
+
+                    SGLabelledInfoBox {
+                        id: poutPower
+                        label: ""
+                        info: platformInterface.pout.toFixed(3)
+
+                        infoBoxColor: "lightgrey"
+                        infoBoxBorderColor: "grey"
+                        infoBoxBorderWidth: 3
+
+                        unit: "W"
+
+                        infoBoxWidth: poutGraph.width/1.5
+                        infoBoxHeight : poutGraph.height/10
+                        fontSize :  (poutGraph.width + poutGraph.height)/37
+                        unitSize: (poutGraph.width + poutGraph.height)/35
+                        anchors {
+                            top : poutGraph.bottom
+                            topMargin : parent.height/100
+                            horizontalCenter: poutGraph.horizontalCenter
+                            horizontalCenterOffset:  parent.height/15
+                        }
+                    }
+
+                    GraphConverter{
+                        id: ctempGraph
+                        width: parent.width/5
+                        height: parent.height/1.05
+                        anchors {
+                            left: poutGraph.right
+                            leftMargin: 0
+                            top: parent.top
+                            topMargin: -parent.height/20
+                        }
+                        showOptions: false
+                        autoAdjustMaxMin: false
+                        //repeatOldData: visible
+                        dataLineColor: "orange"
+                        textColor: "black"
+                        axesColor: "black"
+                        gridLineColor: "lightgrey"
+                        underDataColor: "transparent"
+                        backgroundColor: "white"
+                        xAxisTickCount: 6
+                        yAxisTickCount: 11
+                        throttlePlotting: true
+                        pointCount: 30
+                        xAxisTitle: "<b>100 µs / div<b>"
+                        yAxisTitle: "Chip Temperature (°C)"
+                        inputData: platformInterface.ctemp
+                        maxYValue: multiplePlatform.ctempScale
+                        showYGrids: true
+                        showXGrids: true
+                        minXValue: 0
+                        maxXValue: 5
+                        reverseDirection: true
+                    }
+
+                    SGLabelledInfoBox {
+                        id: ctempLabel
+                        label: ""
+                        info: platformInterface.ctemp
+                        infoBoxColor: "lightgrey"
+                        infoBoxBorderColor: "grey"
+                        infoBoxBorderWidth: 3
+
+                        unit: "°C"
+
+                        infoBoxWidth: ctempGraph.width/1.5
+                        infoBoxHeight : ctempGraph.height/10
+                        fontSize :  (ctempGraph.width + ctempGraph.height)/37
+                        unitSize: (ctempGraph.width + ctempGraph.height)/35
+                        anchors {
+                            top : ctempGraph.bottom
+                            topMargin : parent.height/100
+                            horizontalCenter: ctempGraph.horizontalCenter
+                            horizontalCenterOffset:  parent.height/15
+                        }
+                    }
+
+
+
+
                 }
             }
         }
