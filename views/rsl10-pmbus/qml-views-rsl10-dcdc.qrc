@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>Control.qml</file>
         <file>MultiplePlatform.qml</file>
         <file>sgwidgets/SGCircularGauge.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
@@ -40,7 +39,8 @@
         <file>ExportControl.qml</file>
         <file>AdvancedControl.qml</file>
         <file>SaveDialogMenu.qml</file>
-        <file>BasicControl.qml</file>
         <file>PlatformInterface.qml</file>
+        <file>BasicControl.qml</file>
+        <file>Control.qml</file>
     </qresource>
 </RCC>

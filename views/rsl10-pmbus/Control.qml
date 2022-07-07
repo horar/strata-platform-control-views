@@ -42,11 +42,6 @@ Rectangle {
 
     Component.onCompleted: {
         helpIcon.visible = true
-//        platformInterface.pause_periodic.update(false)
-    }
-
-    Component.onDestruction:  {
-//        platformInterface.pause_periodic.update(true)
     }
 
     ApplicationWindow {
@@ -205,5 +200,4 @@ Rectangle {
             top: parent.top
         }
     }
-
 }

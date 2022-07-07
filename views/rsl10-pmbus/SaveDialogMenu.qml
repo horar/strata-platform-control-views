@@ -73,11 +73,6 @@ Rectangle {
             my_last_time=(new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss:zzz"))
             save_file_dialogbox.collect_collect.push(time_data)
             }
-//    property var clears_log_data: +logSwitch.clear_log_data
-
-//    onClears_log_dataChanged:{
-//        if (+logSwitch.clear_log_data==1){save_file_dialogbox.collect_collect = []}
-//    }
 
     Item {
         id: element1

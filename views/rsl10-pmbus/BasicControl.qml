@@ -25,7 +25,8 @@ Item {
     property string warningVin: multiplePlatform.warningHVVinLable
     property string vinlable: ""
     property string labelTest: ""
-    property real ratioCalc: root.width / 1200
+    property real ratioCalc: root.width / 1200  
+    property bool dimmensionalMode: true
 
     property int maxVin: 70
     property int minVin: 36
@@ -113,9 +114,6 @@ Item {
         Help.registerTarget(dio12Switch, "This switch enables or disables the DUT.", 7, "basicHelp")
         Help.registerTarget(outputVoltage,"Output voltage is shown here.", 8, "basicHelp")
         Help.registerTarget(outputCurrent,"Output current is shown here.", 9, "basicHelp")
-//        Help.registerTarget(temperature_pmbusGauge, "This gauge shows the chip sensed temperature in degrees Celsius.", 10, "basicHelp")
-//        Help.registerTarget(effiPower,"Efficiency (η) is shown here in real time.", 11, "basicHelp")
-        Help.registerTarget(operationModeControl, "These are two modes to control the system. In Load Transient mode, PWM signal will be set by the sliders in the Quick View. In Normal mode, the system will go through a particular PWM signal profile.", 12, "basicHelp")
     }
 
     FontLoader {
@@ -338,7 +336,7 @@ Item {
                     Layout.preferredHeight: parent.height
                     Layout.preferredWidth: parent.width
                     source:{
-                        if(platformInterface.dimmensionalMode === true) {"images/quarter_brick_3D.gif"}
+                        if(dimmensionalMode === true) {"images/quarter_brick_3D.gif"}
                         else {"images/quarter_brick_2D.gif"}
                     }
                     width: parent.width*0.8
@@ -359,7 +357,7 @@ Item {
                     anchors.centerIn: parent
                     fillMode: Image.PreserveAspectFit
                     mipmap:true
-                    visible: platformInterface.dimmensionalMode === true ? true : false
+                    visible: dimmensionalMode === true ? true : false
                 }
 
                 SGRadioButtonContainer {
@@ -381,15 +379,15 @@ Item {
                         SGRadioButton {
                             id: threeDimmensional
                             text: "3D"
-                            checked: platformInterface.dimmensionalMode
+                            checked: dimmensionalMode
                             onCheckedChanged: {
                                 if (checked) {
                                     console.log("3D")
-                                    platformInterface.dimmensionalMode = true
+                                    dimmensionalMode = true
                                 }
                                 else {
                                     console.log("Top")
-                                    platformInterface.dimmensionalMode = false
+                                    dimmensionalMode = false
                                 }
                             }
                         }
@@ -604,53 +602,7 @@ Item {
                         rightMargin: parent.width/20
                     }
                 }
-
-                SGRadioButtonContainer {
-                    id: operationModeControl
-                    anchors {
-                        top: chipTemp.bottom
-                        topMargin: parent.height/50
-                        left: parent.left
-                        leftMargin: parent.height/100
-                    }
-
-                    label: "<b>Operation Mode:</b>"
-                    labelLeft: false
-                    exclusive: true
-
-                    radioGroup: GridLayout {
-                        columnSpacing: 5
-                        rowSpacing: 5
-                        // Optional properties to access specific buttons cleanly from outside
-
-                        SGRadioButton {
-                            id: manual
-                            text: "Normal"
-                            checked: platformInterface.systemMode
-                            onCheckedChanged: {
-                                if (checked) {
-                                    console.log("manual")
-                                    platformInterface.systemMode = true
-                                }
-                                else {
-                                    console.log("automatic")
-                                    platformInterface.systemMode = false
-                                    platformInterface.frequency = 0
-                                    platformInterface.duty = 0
-                                }
-                            }
-                        }
-
-                        SGRadioButton {
-                            id: automatic
-                            text: "Transient"
-                            checked : !manual.checked
-                        }
-                    }
-                }
             }
         }
     }
 }
-
-

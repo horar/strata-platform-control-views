@@ -37,15 +37,7 @@ Item {
         source: "sgwidgets/fonts/sgicons.ttf"
     }
 
-    Timer {
-        id: startGetFaultTimer2
-        repeat: false
-        interval: 500
-        onTriggered: platformInterface.get_fault_config.update()
-    }
-
     Component.onCompleted:  {
-//        Help.registerTarget(efficiencyGraph, "Efficiency (η) is plotted in real time.", 0, "advanceHelp")
         Help.registerTarget(specific1Text, "PMBus: STATUS_MFR_SPECIFIC1.", 1, "advanceHelp")
         Help.registerTarget(resetErrorButton, "PMBus: CLEAR_FAULTS. Clears all fault status registers to 0x00 and releases SMBALERT#.", 2, "advanceHelp")
         Help.registerTarget(setParametersButton, "Save all user parameters to volatile memory.", 3, "advanceHelp")
@@ -62,8 +54,6 @@ Item {
         Help.registerTarget(voutUVlimitWarningSlider, "PMBus: VOUT_UV_WARN_LIMIT.", 15, "advanceHelp")
         Help.registerTarget(ioutOClimitWarningSlider, "PMBus: IOUT_OC_WARN_LIMIT.", 16, "advanceHelp")
         Help.registerTarget(vinGraph, "Input Voltage is plotted in real time", 17, "advanceHelp")
-//        Help.registerTarget(iinGraph, "Input Current is plotted in real time", 18, "advanceHelp")
-//        Help.registerTarget(pdissGraph, "Power Dissipated is plotted in real time", 19, "advanceHelp")
         Help.registerTarget(poutGraph, "Output Power is plotted in real time", 20, "advanceHelp")
         Help.registerTarget(voutGraph, "Output Voltage is plotted in real time", 21, "advanceHelp")
         Help.registerTarget(ioutGraph, "Output Current is plotted in real time", 22, "advanceHelp")
@@ -509,7 +499,6 @@ Item {
                                                                       platformInterface.vout_ov_warn, platformInterface.vout_ov_fault, platformInterface.vout_ov_response,
                                                                       platformInterface.vout_uv_warn, platformInterface.vout_uv_fault, platformInterface.vout_uv_response,
                                                                       platformInterface.iout_oc_warn, platformInterface.iout_oc_fault, platformInterface.iout_oc_response)
-                        startGetFaultTimer2.start()
                     }
                 }
 
@@ -731,7 +720,6 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        //repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -789,7 +777,6 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        //repeatOldData: visible
                         dataLineColor: "blue"
                         textColor: "black"
                         axesColor: "black"
@@ -844,7 +831,6 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        //repeatOldData: visible
                         dataLineColor: "green"
                         textColor: "black"
                         axesColor: "black"
@@ -901,7 +887,6 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        //repeatOldData: visible
                         dataLineColor: "#7bdeff"
                         textColor: "black"
                         axesColor: "black"
@@ -958,7 +943,6 @@ Item {
                         }
                         showOptions: false
                         autoAdjustMaxMin: false
-                        //repeatOldData: visible
                         dataLineColor: "orange"
                         textColor: "black"
                         axesColor: "black"

@@ -57,7 +57,6 @@ Rectangle {
             enableText.text = "PWM OFF"
             enableText.color = "red"
         }
-
     }
 
     Component.onCompleted: {
