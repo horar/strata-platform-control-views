@@ -29,8 +29,6 @@
         <file>images/stop-solid.svg</file>
         <file>images/play-solid.svg</file>
         <file>images/tach.svg</file>
-        <file>ExportControl.qml</file>
-        <file>SaveDialogMenu.qml</file>
         <file>MultiButton.qml</file>
         <file>sgwidgets/SliderPopup.qml</file>
         <file>sgwidgets/IconButton.qml</file>
@@ -39,8 +37,10 @@
         <file>sgwidgets/CircGauge.qml</file>
         <file>sgwidgets/SGAlignedLabel.qml</file>
         <file>SideBar.qml</file>
-        <file>PlatformInterface.qml</file>
+        <file>ExportControl.qml</file>
         <file>AdvancedControl.qml</file>
+        <file>SaveDialogMenu.qml</file>
         <file>BasicControl.qml</file>
+        <file>PlatformInterface.qml</file>
     </qresource>
 </RCC>

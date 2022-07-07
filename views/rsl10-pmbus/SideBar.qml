@@ -137,7 +137,11 @@ Rectangle {
                 frequencyPop.visible = !frequencyPop.visible
                 dutyPop.visible = frequencyPop.visible
                 platformInterface.frequency  = frequencyPop.value
-                platformInterface.duty  = dutyPop.value
+
+                if (platformInterface.duty  !== dutyPop.value)
+                {
+                    platformInterface.duty  = dutyPop.value
+                }
             }
 
             SliderPopup {
@@ -163,7 +167,11 @@ Rectangle {
                 dutyPop.visible = !dutyPop.visible
                 frequencyPop.visible = dutyPop.visible
                 platformInterface.duty  = dutyPop.value
-                platformInterface.frequency  = frequencyPop.value
+
+                if (platformInterface.frequency  !== frequencyPop.value)
+                {
+                    platformInterface.frequency  = frequencyPop.value
+                }
             }
 
             SliderPopup {

@@ -113,8 +113,8 @@ Item {
         Help.registerTarget(dio12Switch, "This switch enables or disables the DUT.", 7, "basicHelp")
         Help.registerTarget(outputVoltage,"Output voltage is shown here.", 8, "basicHelp")
         Help.registerTarget(outputCurrent,"Output current is shown here.", 9, "basicHelp")
-        Help.registerTarget(temperature_pmbusGauge, "This gauge shows the chip sensed temperature in degrees Celsius.", 10, "basicHelp")
-        Help.registerTarget(effiPower,"Efficiency (η) is shown here in real time.", 11, "basicHelp")
+//        Help.registerTarget(temperature_pmbusGauge, "This gauge shows the chip sensed temperature in degrees Celsius.", 10, "basicHelp")
+//        Help.registerTarget(effiPower,"Efficiency (η) is shown here in real time.", 11, "basicHelp")
         Help.registerTarget(operationModeControl, "These are two modes to control the system. In Load Transient mode, PWM signal will be set by the sliders in the Quick View. In Normal mode, the system will go through a particular PWM signal profile.", 12, "basicHelp")
     }
 
@@ -268,7 +268,7 @@ Item {
                         top : ledLight.bottom
                         topMargin : parent.height/15
                         horizontalCenter: parent.horizontalCenter
-                        horizontalCenterOffset:  (width - inputCurrent.width)/2
+                        horizontalCenterOffset:  (width - parent.width)/2
                     }
                 }
 

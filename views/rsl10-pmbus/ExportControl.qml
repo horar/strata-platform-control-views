@@ -26,11 +26,11 @@ ColumnLayout {
         graphTimerPoints.start()
         graphTimerPoints1.start()
 
-        dataArray_effi_calc_graph = []
+//        dataArray_effi_calc_graph = []
         dataArray_temp_calc_graph = []
         dataArray_vin_calc_graph = []
         dataArray_vout_calc_graph = []
-        dataArray_iin_calc_graph = []
+        dataArray_pout_calc_graph = []
         dataArray_iout_calc_graph = []
 
         if(basicGraph.count > 0) {
@@ -39,7 +39,7 @@ ColumnLayout {
         if(basicGraph1.count > 0) {
             basicGraph1.removeCurve(0)
         }
-        Help.registerTarget(rect432,"Reset charts and starts new measurement.", 0, "exportControlHelp")
+//        Help.registerTarget(rect432,"Reset charts and starts new measurement.", 0, "exportControlHelp")
         Help.registerTarget(rect433,"Exports all data to Excel as a log file.", 1, "exportControlHelp")
         Help.registerTarget(graphSelector,"Graph selector.", 2, "exportControlHelp")
     }
@@ -52,7 +52,7 @@ ColumnLayout {
     property real ratioCalc: root.width / 1200
     property real initialAspectRatio: 1200/820
     property alias virtualtextarea: virtualtextarea
-    property alias logSwitch: logSwitch
+//    property alias logSwitch: logSwitch
     property var x_Axis_Timer_:0
     property var x_Axis_Timer_1:0
     property  int clear:0
@@ -71,14 +71,14 @@ ColumnLayout {
         }
     }
 
-    property var iin_calc: platformInterface.iin
-    property var dataArray_iin_calc_graph: []
-    property var iin_calc_validator:0
-    onIin_calcChanged:{
-        iin_calc_validator++
+    property var pout_calc: platformInterface.pout
+    property var dataArray_pout_calc_graph: []
+    property var pout_calc_validator:0
+    onPout_calcChanged:{
+        pout_calc_validator++
         if(graph_selected2 === 1){
-            if(iin_calc_validator>0){
-                dataArray_iin_calc_graph.push({"x":x_Axis_Timer_,"y":iin_calc})
+            if(pout_calc_validator>0){
+                dataArray_pout_calc_graph.push({"x":x_Axis_Timer_,"y":pout_calc})
                 x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
                 basicGraph.xMax = x_Axis_Timer_
             }
@@ -113,24 +113,24 @@ ColumnLayout {
         }
     }
 
-    property var pin_calc: vin_calc * iin_calc
-    property var pout_calc: vout_calc * iout_calc
+//    property var pin_calc: vin_calc * pout_calc
+//    property var pout_calc: vout_calc * iout_calc
 
-    property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
-    property var dataArray_effi_calc_graph: []
-    property var effi_calc_validator:0
-    onEffi_calcChanged:{
-        effi_calc_validator++
-        if(graph_selected5 === 1){
-            if(effi_calc_validator>0){
-                dataArray_effi_calc_graph.push({"x":x_Axis_Timer_1,"y":effi_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
-                basicGraph1.xMax = x_Axis_Timer_1
-            }
-        }
-    }
+//    property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
+//    property var dataArray_effi_calc_graph: []
+//    property var effi_calc_validator:0
+//    onEffi_calcChanged:{
+//        effi_calc_validator++
+//        if(graph_selected5 === 1){
+//            if(effi_calc_validator>0){
+//                dataArray_effi_calc_graph.push({"x":x_Axis_Timer_1,"y":effi_calc})
+//                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+//                basicGraph1.xMax = x_Axis_Timer_1
+//            }
+//        }
+//    }
 
-    property var temp_calc: (platformInterface.btemp).toFixed(0)
+    property var temp_calc: platformInterface.ctemp.toFixed(3)
     property var dataArray_temp_calc_graph: []
     property var temp_calc_validator:0
     onTemp_calcChanged:{
@@ -147,7 +147,7 @@ ColumnLayout {
     function clearGraphsData() {
         if (clear==1){
             dataArray_vin_calc_graph = []
-            dataArray_iin_calc_graph = []
+            dataArray_pout_calc_graph = []
             dataArray_vout_calc_graph = []
             dataArray_iout_calc_graph = []
             dataArray_effi_calc_graph = []
@@ -160,7 +160,7 @@ ColumnLayout {
                 basicGraph1.removeCurve(0)
             }
             vin_calc_validator=0
-            iin_calc_validator=0
+            pout_calc_validator=0
             vout_calc_validator=0
             iout_calc_validator=0
             effi_calc_validator=0
@@ -232,18 +232,18 @@ ColumnLayout {
                             }
 
                             //time capture start
-                            property var start_stop_time: logSwitch.clear_log_data
+//                            property var start_stop_time: logSwitch.clear_log_data
                             property var start_time: 0
                             property var start_check:0
                             property var one_time_top_row_excel: 0
 
 
-                            onStart_stop_timeChanged:{
-                                if(start_check===0){
-                                    start_time= (new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss.zzz"))
-                                    start_check=1
-                                    }
-                                }
+//                            onStart_stop_timeChanged:{
+//                                if(start_check===0){
+//                                    start_time= (new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss.zzz"))
+//                                    start_check=1
+//                                    }
+//                                }
                             }
 
                         Rectangle {
@@ -271,7 +271,7 @@ ColumnLayout {
                                         backgroundColor: "white"
                                         foregroundColor: "black"
                                         xTitle: ""
-                                        yTitle: "Iin (A) / Vout (V)"
+                                        yTitle: "Pout (W) / Vout (V)"
 
                                         Button {
                                             id:resetChartButton
@@ -290,14 +290,14 @@ ColumnLayout {
                                         }
 
                                         Text {
-                                            id: iinSideText
+                                            id: poutSideText
                                             anchors {
                                                 top: resetChartButton.bottom
                                                 topMargin: (parent.width + parent.height)/ 150
                                                 right: resetChartButton.right
                                                 rightMargin: (parent.width + parent.height)/ 150
                                             }
-                                            text: ""+ (platformInterface.iin).toFixed(3) +" A"
+                                            text: ""+ (platformInterface.pout).toFixed(3) +" W"
                                             font.pixelSize: (parent.width + parent.height)/ 150
                                             color: "green"
                                         }
@@ -305,7 +305,7 @@ ColumnLayout {
                                         Text {
                                             id: voutSideText
                                             anchors {
-                                                top: iinSideText.bottom
+                                                top: poutSideText.bottom
                                                 right: resetChartButton.right
                                                 rightMargin: (parent.width + parent.height)/ 150
                                             }
@@ -322,8 +322,8 @@ ColumnLayout {
                                         }
 
                                         Text {
-                                            id: iinText
-                                            text: "<b>Input Current<b>"
+                                            id: poutText
+                                            text: "<b>Output Power<b>"
                                             anchors.top: basicGraph.bottom
                                             anchors.topMargin: parent.height*0.01
                                             anchors.right: parent.right
@@ -337,7 +337,7 @@ ColumnLayout {
                                             text: "<b>Output Voltage<b>"
                                             anchors.top: basicGraph.bottom
                                             anchors.topMargin: parent.height*0.01
-                                            anchors.right: iinText.left
+                                            anchors.right: poutText.left
                                             anchors.rightMargin: parent.width*0.01
                                             font.pixelSize: parent.height*0.04
                                             color: "blue"
@@ -347,7 +347,7 @@ ColumnLayout {
 
                                     Timer{
                                         id: graphTimerPoints
-                                        interval: +virtualtextarea.realtimelog*300
+                                        interval: +virtualtextarea.realtimelog*1000
                                         running: false
                                         repeat: true
                                         onTriggered: {
@@ -359,7 +359,7 @@ ColumnLayout {
                                             if(graph_selected2 === 1){
                                                 var curve1 = basicGraph.createCurve("graphCurve")
                                                 curve1.color = "green"
-                                                curve1.appendList(dataArray_iin_calc_graph)
+                                                curve1.appendList(dataArray_pout_calc_graph)
                                             }
 
                                             if(graph_selected3 === 1){
@@ -414,7 +414,7 @@ ColumnLayout {
                                             backgroundColor: "white"
                                             foregroundColor: "black"
                                             xTitle: "Realtime Log Samples"
-                                            yTitle: "Vin (V) / Iout (A) / Effi. (%) / Chip Temp. (°C)"
+                                            yTitle: "Vin (V) / Iout (A) / Chip Temp. (°C)"
 
                                             Button {
                                                 id:resetChartButton1
@@ -457,27 +457,27 @@ ColumnLayout {
                                                 color: "green"
                                             }
 
-                                            Text {
-                                                id: effiSideText
-                                                anchors {
-                                                    top: ioutSideText.bottom
-                                                    topMargin:(parent.width + parent.height)/ 150
-                                                    right: resetChartButton1.right
-                                                    rightMargin: (parent.width + parent.height)/ 150
-                                                }
-                                                text: ""+ ((pout_calc * 100) / pin_calc).toFixed(3) +" %"
-                                                font.pixelSize: (parent.width + parent.height)/ 150
-                                                color: "purple"
-                                            }
+//                                            Text {
+//                                                id: effiSideText
+//                                                anchors {
+//                                                    top: ioutSideText.bottom
+//                                                    topMargin:(parent.width + parent.height)/ 150
+//                                                    right: resetChartButton1.right
+//                                                    rightMargin: (parent.width + parent.height)/ 150
+//                                                }
+//                                                text: ""+ ((pout_calc * 100) / pin_calc).toFixed(3) +" %"
+//                                                font.pixelSize: (parent.width + parent.height)/ 150
+//                                                color: "purple"
+//                                            }
 
                                             Text {
                                                 id: tempSideText
                                                 anchors {
-                                                    top: effiSideText.bottom
+                                                    top: ioutSideText.bottom
                                                     right: resetChartButton1.right
                                                     rightMargin: (parent.width + parent.height)/ 150
                                                 }
-                                                text: ""+ (platformInterface.btemp).toFixed(0) +" °C"
+                                                text: ""+ (platformInterface.ctemp).toFixed(3) +" °C"
                                                 font.pixelSize: (parent.width + parent.height)/ 150
                                                 color: "red"
                                             }
@@ -511,23 +511,23 @@ ColumnLayout {
                                                 color: "green"
                                             }
 
-                                            Text {
-                                                id: effiText
-                                                text: "<b>Efficieny<b>"
-                                                anchors.top: basicGraph1.bottom
-                                                anchors.topMargin: -parent.height*0.03
-                                                anchors.right: ioutText.left
-                                                anchors.rightMargin: parent.width*0.01
-                                                font.pixelSize: parent.height*0.03
-                                                color: "purple"
-                                            }
+//                                            Text {
+//                                                id: effiText
+//                                                text: "<b>Efficieny<b>"
+//                                                anchors.top: basicGraph1.bottom
+//                                                anchors.topMargin: -parent.height*0.03
+//                                                anchors.right: ioutText.left
+//                                                anchors.rightMargin: parent.width*0.01
+//                                                font.pixelSize: parent.height*0.03
+//                                                color: "purple"
+//                                            }
 
                                             Text {
                                                 id: tempText
                                                 text: "<b>Chip Temperature<b>"
                                                 anchors.top: basicGraph1.bottom
                                                 anchors.topMargin: -parent.height*0.03
-                                                anchors.right: effiText.left
+                                                anchors.right: ioutText.left
                                                 anchors.rightMargin: parent.width*0.01
                                                 font.pixelSize: parent.height*0.03
                                                 color: "red"
@@ -537,7 +537,7 @@ ColumnLayout {
 
                                         Timer{
                                             id: graphTimerPoints1
-                                            interval: +virtualtextarea.realtimelog
+                                            interval: +virtualtextarea.realtimelog*1000
                                             running: false
                                             repeat: true
                                             onTriggered: {
@@ -558,11 +558,11 @@ ColumnLayout {
                                                     curve4.appendList(dataArray_iout_calc_graph)
                                                 }
 
-                                                if(graph_selected5 === 1){
-                                                    var curve5 = basicGraph1.createCurve("graphCurve")
-                                                    curve5.color = "purple"
-                                                    curve5.appendList(dataArray_effi_calc_graph)
-                                                }
+//                                                if(graph_selected5 === 1){
+//                                                    var curve5 = basicGraph1.createCurve("graphCurve")
+//                                                    curve5.color = "purple"
+//                                                    curve5.appendList(dataArray_effi_calc_graph)
+//                                                }
 
                                                 if(graph_selected6 === 1){
                                                     var curve6 = basicGraph1.createCurve("graphCurve")
@@ -585,59 +585,59 @@ ColumnLayout {
                                 Grid {
                                     id: grid42
                                     anchors.fill: parent
-                                    columns: 3
+                                    columns: 2
                                     spacing: 1
 
-                                    Rectangle {
-                                        id: rect432
-                                        color: "#00000000"
-                                        width: parent.width*0.15
-                                        height: parent.height
+//                                    Rectangle {
+//                                        id: rect432
+//                                        color: "#00000000"
+//                                        width: parent.width*0.15
+//                                        height: parent.height
 
-                                        Text {
-                                            id: name320
-                                            text: "Measure (Start/Reset)"
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            anchors.top: parent.top
-                                            anchors.topMargin: -parent.height*0.01
-                                            font.pixelSize: parent.height*0.1
-                                            color: "black"
-                                        }
+//                                        Text {
+//                                            id: name320
+//                                            text: "Measure (Start/Reset)"
+//                                            anchors.horizontalCenter: parent.horizontalCenter
+//                                            anchors.top: parent.top
+//                                            anchors.topMargin: -parent.height*0.01
+//                                            font.pixelSize: parent.height*0.1
+//                                            color: "black"
+//                                        }
 
-                                        Widget09.SGSwitch{
-                                            id: logSwitch
-                                            switchWidth: 105
-                                            switchHeight: 46
-                                            checkedLabel: "<b>Reset</b>"
-                                            uncheckedLabel: "<b>Start</b>"
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            anchors.top: parent.top
-                                            anchors.topMargin: parent.height*0.18
-                                            label: ""
-                                            labelLeft: false
-                                            labelsInside: true
-                                            textColor: "black"
-                                            handleColor: "#fff9f4"
-                                            grooveColor: "#00b82c"
-                                            grooveFillColor: "#ff471a"
-                                            property var condition1: "start"
-                                            property var condition0: "stop"
-                                            property var start_stop_measure: 0
-                                            property var clear_log_data:2
+//                                        Widget09.SGSwitch{
+//                                            id: logSwitch
+//                                            switchWidth: 105
+//                                            switchHeight: 46
+//                                            checkedLabel: "<b>Reset</b>"
+//                                            uncheckedLabel: "<b>Start</b>"
+//                                            anchors.horizontalCenter: parent.horizontalCenter
+//                                            anchors.top: parent.top
+//                                            anchors.topMargin: parent.height*0.18
+//                                            label: ""
+//                                            labelLeft: false
+//                                            labelsInside: true
+//                                            textColor: "black"
+//                                            handleColor: "#fff9f4"
+//                                            grooveColor: "#00b82c"
+//                                            grooveFillColor: "#ff471a"
+//                                            property var condition1: "start"
+//                                            property var condition0: "stop"
+//                                            property var start_stop_measure: 0
+//                                            property var clear_log_data:2
 
-                                            onClicked: {
-                                                if(logSwitch.checked == true) {
-                                                    clear=1
-                                                    clearGraphsData()
-                                                    clear_log_data=1
-                                                }
-                                                if(logSwitch.checked == false){
-                                                    clear_log_data=0
-                                                    virtualtextarea.start_check=0
-                                                }
-                                            }
-                                        }
-                                    }
+//                                            onClicked: {
+//                                                if(logSwitch.checked == true) {
+//                                                    clear=1
+//                                                    clearGraphsData()
+//                                                    clear_log_data=1
+//                                                }
+//                                                if(logSwitch.checked == false){
+//                                                    clear_log_data=0
+//                                                    virtualtextarea.start_check=0
+//                                                }
+//                                            }
+//                                        }
+//                                    }
 
                                     Rectangle {
                                         id: rect433
@@ -701,7 +701,7 @@ ColumnLayout {
                                                 }
 
                                                 Widget09.SGSegmentedButton{
-                                                    text: qsTr("Iin")
+                                                    text: qsTr("Pout")
                                                     onCheckedChanged: {
                                                         if (checked) {
                                                             graph_selected2 = 1
@@ -734,19 +734,6 @@ ColumnLayout {
                                                             graphSelector.howManyChecked++
                                                         } else {
                                                             graph_selected4 = 0
-                                                            graphSelector.howManyChecked--
-                                                        }
-                                                    }
-                                                }
-
-                                                Widget09.SGSegmentedButton{
-                                                    text: qsTr("Efficiency")
-                                                    onCheckedChanged: {
-                                                        if (checked) {
-                                                            graph_selected5 = 1
-                                                            graphSelector.howManyChecked++
-                                                        } else {
-                                                            graph_selected5 = 0
                                                             graphSelector.howManyChecked--
                                                         }
                                                     }
