@@ -38,8 +38,8 @@ ColumnLayout {
         if(basicGraph1.count > 0) {
             basicGraph1.removeCurve(0)
         }
-        Help.registerTarget(rect433,"Exports all data to Excel as a log file.", 1, "exportControlHelp")
-        Help.registerTarget(graphSelector,"Graph selector.", 2, "exportControlHelp")
+        Help.registerTarget(rect433,"Exports all data to Excel as a log file.", 0, "exportControlHelp")
+        Help.registerTarget(graphSelector,"Graph selector.", 1, "exportControlHelp")
     }
     property var graph_selected1
     property var graph_selected2
