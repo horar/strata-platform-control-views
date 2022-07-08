@@ -88,9 +88,6 @@ Item {
                     interval: +virtualtextarea.realtimelog*1000
                     running: false
                     repeat: true
-                    onTriggered: {
-                        console.log(Object.keys(platformInterface.clear_faults1))
-                    }
                 }
 
                 SGAlignedLabel{

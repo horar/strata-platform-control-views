@@ -125,20 +125,6 @@ Rectangle {
 
             }
         }
-
-        Rectangle {
-            width: parent.width
-            height: parent.height
-            color: "light gray"
-
-            ExportControl {
-                id: exportControl
-                visible: false
-                width: parent.width
-                height: parent.height
-            }
-        }
-
     }
 
     Widget10.SGIcon {

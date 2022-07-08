@@ -37,10 +37,9 @@
         <file>sgwidgets/SGAlignedLabel.qml</file>
         <file>SideBar.qml</file>
         <file>SaveDialogMenu.qml</file>
-        <file>PlatformInterface.qml</file>
         <file>Control.qml</file>
-        <file>ExportControl.qml</file>
         <file>BasicControl.qml</file>
         <file>AdvancedControl.qml</file>
+        <file>PlatformInterface.qml</file>
     </qresource>
 </RCC>

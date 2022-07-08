@@ -287,6 +287,11 @@ Item {
 
     // @command get_telemetry
     property var get_telemetry: ({ "cmd" : "get_telemetry",
+                                     "payload": {
+                                         "function": "get_telemetry",
+                                         "interval": 1000,
+                                         "run_count": 0
+                                     },
 
                                    update: function () {
                                        this.send(this)
@@ -567,7 +572,11 @@ Item {
     // @command start_periodic get_telemetry
     property var start_periodic_telemetry: ({   "cmd": "start_periodic",
                                                 "payload": {
-                                                    "function": "get_telemetry"
+                                                    "function": "get_telemetry",
+                                                    "payload": {
+                                                        "interval": 250,
+                                                        "run_count": 0
+                                                    }
                                             },
 
                                    update: function () {
