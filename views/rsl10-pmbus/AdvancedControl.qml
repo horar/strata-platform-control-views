@@ -31,6 +31,7 @@ Item {
     property string vinlable: ""
     property bool hideEcoSwitch: false
     property string warningVin: multiplePlatform.warningHVVinLable
+    property alias virtualtextarea: virtualtextarea
 
     FontLoader {
         id: icons
@@ -38,6 +39,7 @@ Item {
     }
 
     Component.onCompleted:  {
+        graphTimerPointsAdvanced.start()
         Help.registerTarget(specific1Text, "PMBus: STATUS_MFR_SPECIFIC1.", 0, "advanceHelp")
         Help.registerTarget(resetErrorButton, "PMBus: CLEAR_FAULTS. Clears all fault status registers to 0x00 and releases SMBALERT#.", 1, "advanceHelp")
         Help.registerTarget(setParametersButton, "Save all user parameters to volatile memory.", 2, "advanceHelp")
@@ -80,6 +82,16 @@ Item {
                 }
                 width: parent.width
                 height: controlSection1.height/3
+
+                Timer{
+                    id: graphTimerPointsAdvanced
+                    interval: +virtualtextarea.realtimelog*1000
+                    running: false
+                    repeat: true
+                    onTriggered: {
+                        console.log(Object.keys(platformInterface.clear_faults1))
+                    }
+                }
 
                 SGAlignedLabel{
                     id: overTemperatureFaultLabel
@@ -680,6 +692,35 @@ Item {
                     }
                 }
 
+                SaveDialogMenu {
+                    id:save_dialog_menu
+
+                    anchors {
+                        top : ioutOCFaultResponseCombo.bottom
+                        topMargin : parent.height/15
+                        left: parent.left
+                        leftMargin: parent.width/6
+                        }
+                }
+
+                TextArea{
+                    id:virtualtextarea
+                    visible: false
+                    font.pixelSize: 5
+                    persistentSelection: true
+                    text: virtualtextarea.text
+
+                    property int realtimelog:foo1()
+                    function foo1(){
+                        return 1 //pointsCount
+                    }
+
+                    //time capture start
+                    property var start_time: 0
+                    property var start_check:0
+                    property var one_time_top_row_excel: 0
+
+                    }
             }
 
             Rectangle {

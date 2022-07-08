@@ -36,11 +36,11 @@
         <file>sgwidgets/CircGauge.qml</file>
         <file>sgwidgets/SGAlignedLabel.qml</file>
         <file>SideBar.qml</file>
-        <file>AdvancedControl.qml</file>
         <file>SaveDialogMenu.qml</file>
         <file>PlatformInterface.qml</file>
-        <file>BasicControl.qml</file>
         <file>Control.qml</file>
         <file>ExportControl.qml</file>
+        <file>BasicControl.qml</file>
+        <file>AdvancedControl.qml</file>
     </qresource>
 </RCC>

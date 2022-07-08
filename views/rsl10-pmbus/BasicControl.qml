@@ -28,6 +28,7 @@ Item {
     property real ratioCalc: root.width / 1200  
     property bool dimmensionalMode: true
 
+
     property int maxVin: 70
     property int minVin: 36
 
@@ -95,9 +96,7 @@ Item {
         repeat: false
         interval: 4000
         onTriggered: platformInterface.get_fault_config.update()
-    }
-
-
+    }  
 
     Component.onCompleted:  {
         multiplePlatform.check_class_id()

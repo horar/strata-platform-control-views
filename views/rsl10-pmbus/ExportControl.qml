@@ -49,7 +49,7 @@ ColumnLayout {
     property var graph_selected6
     property real ratioCalc: root.width / 1200
     property real initialAspectRatio: 1200/820
-    property alias virtualtextarea: virtualtextarea
+    property alias virtualtextarea11: virtualtextarea1
     property var x_Axis_Timer_:0
     property var x_Axis_Timer_1:0
     property  int clear:0
@@ -62,7 +62,7 @@ ColumnLayout {
         if(graph_selected1 === 1){
             if(vin_calc_validator>0){
                 dataArray_vin_calc_graph.push({"x":x_Axis_Timer_1,"y":vin_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea1.realtimelog)
                 basicGraph1.xMax = x_Axis_Timer_1
             }
         }
@@ -76,7 +76,7 @@ ColumnLayout {
         if(graph_selected2 === 1){
             if(pout_calc_validator>0){
                 dataArray_pout_calc_graph.push({"x":x_Axis_Timer_,"y":pout_calc})
-                x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
+                x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea1.realtimelog)
                 basicGraph.xMax = x_Axis_Timer_
             }
         }
@@ -90,7 +90,7 @@ ColumnLayout {
         if(graph_selected3 === 1){
             if(vout_calc_validator>0){
                 dataArray_vout_calc_graph.push({"x":x_Axis_Timer_,"y":vout_calc})
-                x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea.realtimelog)
+                x_Axis_Timer_=x_Axis_Timer_+(+virtualtextarea1.realtimelog)
                 basicGraph.xMax = x_Axis_Timer_
             }
         }
@@ -104,7 +104,7 @@ ColumnLayout {
         if(graph_selected4 === 1){
             if(iout_calc_validator>0){
                 dataArray_iout_calc_graph.push({"x":x_Axis_Timer_1,"y":iout_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea1.realtimelog)
                 basicGraph1.xMax = x_Axis_Timer_1
             }
         }
@@ -118,7 +118,7 @@ ColumnLayout {
         if(graph_selected6 === 1){
             if(temp_calc_validator>0){
                 dataArray_temp_calc_graph.push({"x":x_Axis_Timer_1,"y":temp_calc})
-                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea.realtimelog)
+                x_Axis_Timer_1=x_Axis_Timer_1+(+virtualtextarea1.realtimelog)
                 basicGraph1.xMax = x_Axis_Timer_1
             }
         }
@@ -148,8 +148,8 @@ ColumnLayout {
 
             x_Axis_Timer_=0
             x_Axis_Timer_1=0
-            basicGraph1.xMax=+virtualtextarea.realtimelog
-            basicGraph.xMax=+virtualtextarea.realtimelog
+            basicGraph1.xMax=+virtualtextarea1.realtimelog
+            basicGraph.xMax=+virtualtextarea1.realtimelog
             clear=0;
         }
         return 0
@@ -200,11 +200,11 @@ ColumnLayout {
                         border.color: "lightgrey"
 
                         TextArea{
-                            id:virtualtextarea
+                            id:virtualtextarea1
                             visible: false
                             font.pixelSize: 5
                             persistentSelection: true
-                            text: virtualtextarea.text
+                            text: virtualtextarea1.text
 
                             property int realtimelog:foo1()
                             function foo1(){
@@ -237,7 +237,7 @@ ColumnLayout {
                                         anchors.leftMargin: 8
                                         title: ""
                                         xMin: 0
-                                        xMax: +virtualtextarea.realtimelog
+                                        xMax: +virtualtextarea1.realtimelog
                                         yMin: 0
                                         yMax: 20
                                         backgroundColor: "white"
@@ -319,7 +319,7 @@ ColumnLayout {
 
                                     Timer{
                                         id: graphTimerPoints
-                                        interval: +virtualtextarea.realtimelog*1000
+                                        interval: +virtualtextarea1.realtimelog*1000
                                         running: false
                                         repeat: true
                                         onTriggered: {
@@ -380,7 +380,7 @@ ColumnLayout {
                                             anchors.leftMargin: 8
                                             title: ""
                                             xMin: 0
-                                            xMax: +virtualtextarea.realtimelog
+                                            xMax: +virtualtextarea1.realtimelog
                                             yMin: 0
                                             yMax: 100
                                             backgroundColor: "white"
@@ -485,7 +485,7 @@ ColumnLayout {
 
                                         Timer{
                                             id: graphTimerPoints1
-                                            interval: +virtualtextarea.realtimelog*1000
+                                            interval: +virtualtextarea1.realtimelog*1000
                                             running: false
                                             repeat: true
                                             onTriggered: {

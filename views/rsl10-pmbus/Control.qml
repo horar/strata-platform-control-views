@@ -87,16 +87,6 @@ Rectangle {
                 exportControl.visible = false
             }
         }
-
-        TabButton {
-            id: exportButton
-            text: qsTr("Data Logger / Export")
-            onClicked: {
-                basicControl.visible = false
-                advancedControl.visible = false
-                exportControl.visible = true
-            }
-        }
     }
 
     StackLayout {
