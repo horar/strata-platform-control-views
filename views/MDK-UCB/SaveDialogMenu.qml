@@ -12,7 +12,6 @@ import QtGraphicalEffects 1.0
 import "qrc:/js/core_platform_interface.js" as CorePlatformInterface
 import "qrc:/sgwidgets"
 import tech.strata.logger 1.0
-import QtCharts 2.0
 import QtQuick.Dialogs 1.2
 import QtQml 2.0
 

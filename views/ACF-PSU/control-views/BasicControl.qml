@@ -318,7 +318,7 @@ Item{
                 anchors.fill:parent
                 anchors.centerIn: parent
 
-                SGGraphTimed {
+                GraphConverter {
                     id: graph0
                     anchors {
                         fill: parent
@@ -331,6 +331,13 @@ Item{
                     minXValue: 0
                     maxXValue: 4
                     reverseDirection: true
+                    // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                    // 'GraphConverter' is set to true by default - update of curve causes also graph update
+                    autoUpdate: false
+                    zoomXEnabled: false
+                    zoomYEnabled: false
+                    panXEnabled: false
+                    panYEnabled: false
                 }
             }
         }
@@ -454,7 +461,7 @@ Item{
             }
             height:250
 
-            SGGraphTimed {
+            GraphConverter {
                 id: graph1
                 title: "<b>Input Voltage</b>"
                 visible: false
@@ -473,9 +480,16 @@ Item{
                 maxXValue: 4
                 inputData: 0.0
                 reverseDirection: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                // 'GraphConverter' is set to true by default - update of curve causes also graph update
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
-            SGGraphTimed {
+            GraphConverter {
                 id: graph2
                 title: "<b>Output Voltage</b>"
                 visible: false
@@ -492,9 +506,16 @@ Item{
                 minXValue: 0
                 maxXValue: 4
                 reverseDirection: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                // 'GraphConverter' is set to true by default - update of curve causes also graph update
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
-            SGGraphTimed {
+            GraphConverter {
                 id: graph3
                 title: "<b>Input Current</b>"
                 visible: false
@@ -512,9 +533,16 @@ Item{
                 minXValue: 0
                 maxXValue: 4
                 reverseDirection: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                // 'GraphConverter' is set to true by default - update of curve causes also graph update
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
-            SGGraphTimed {
+            GraphConverter {
                 id: graph4
                 title: "<b>Output Current</b>"
                 visible: false
@@ -532,9 +560,16 @@ Item{
                 minXValue: 0
                 maxXValue: 4
                 reverseDirection: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                // 'GraphConverter' is set to true by default - update of curve causes also graph update
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
-            SGGraphTimed {
+            GraphConverter {
                 id: graph5
                 title: "<b>Input Power</b>"
                 visible: false
@@ -551,9 +586,16 @@ Item{
                 minXValue: 0
                 maxXValue: 4
                 reverseDirection: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                // 'GraphConverter' is set to true by default - update of curve causes also graph update
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
 
-            SGGraphTimed {
+            GraphConverter {
                 id: graph6
                 title: "<b>Output Power</b>"
                 visible: false
@@ -570,6 +612,13 @@ Item{
                 minXValue: 0
                 maxXValue: 4
                 reverseDirection: true
+                // 'autoUpdate' property for 'SGGraph' is set to false, but 'autoUpdateCurve' property of
+                // 'GraphConverter' is set to true by default - update of curve causes also graph update
+                autoUpdate: false
+                zoomXEnabled: false
+                zoomYEnabled: false
+                panXEnabled: false
+                panYEnabled: false
             }
         }
     }

@@ -12,7 +12,6 @@
         <file>sgwidgets/SGCapacityBarElement.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
         <file>sgwidgets/SGDivider.qml</file>
-        <file>sgwidgets/SGGraph.qml</file>
         <file>sgwidgets/SGHueSlider.qml</file>
         <file>sgwidgets/SGLabelledInfoBox.qml</file>
         <file>sgwidgets/SGLayoutDebug.qml</file>
@@ -57,5 +56,6 @@
         <file>views/advanced-partial-views/PortInfoMini.qml</file>
         <file>views/advanced-partial-views/PortStatBox.qml</file>
         <file>views/advanced-partial-views/PortStatBoxMini.qml</file>
+        <file>sgwidgets/GraphConverter.qml</file>
     </qresource>
 </RCC>

@@ -11,8 +11,8 @@ import QtQuick.Controls 2.3
 import QtGraphicalEffects 1.0
 import "qrc:/js/core_platform_interface.js" as CorePlatformInterface
 import tech.strata.logger 1.0
-import QtCharts 2.0
 import QtQuick.Dialogs 1.2
+
 Rectangle {
     id: root2
     property  alias opensavedaialoguemenu:opensavedaialoguemenu

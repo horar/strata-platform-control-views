@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2018-2022 onsemi.
- *
- * All rights reserved. This software and/or documentation is licensed by onsemi under
- * limited terms and conditions. The terms and conditions pertaining to the software and/or
- * documentation are available at http://www.onsemi.com/site/pdf/ONSEMI_T&C.pdf (“onsemi Standard
- * Terms and Conditions of Sale, Section 8 Software”).
- */
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
@@ -17,7 +9,6 @@ import tech.strata.sgwidgets 1.0
 This is UI for STR-DMS-CONTROL-GEV
 *********************************************************************************************************/
 Item {
-
 
     id: root
     property real ratioCalc: root.width / 1200
@@ -32,13 +23,13 @@ Item {
         }
     }
 
-
     Timer {
         id: pwm1delayTimer
 
         repeat: false
         interval: 10
-        onTriggered: platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+        onTriggered: platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)))
+
     }
 
     Timer {
@@ -46,7 +37,8 @@ Item {
 
         repeat: false
         interval: 10
-        onTriggered: platformInterface.commands.set_pwm3.update(parseFloat(pwm3Slider.value.toFixed(1)),pwm3Switch.checked)
+        onTriggered: platformInterface.set_flash_pwm.update(parseFloat(pwm3Slider.value.toFixed(2)),pwm3Switch.checked)
+
     }
 
     function formating_random_increment(max,value){
@@ -83,6 +75,11 @@ Item {
                 fillMode: Image.PreserveAspectFit
             }
         }
+
+        Component.onCompleted: {
+            platformInterface.request_initial_values_command.send()
+        }
+
     }
 
     ColumnLayout {
@@ -104,7 +101,7 @@ Item {
         }
 
         Item {
-            Layout.preferredHeight: parent.height/3
+            Layout.preferredHeight: parent.height/2
             Layout.fillWidth: true
 
             Rectangle{
@@ -116,7 +113,7 @@ Item {
 
                 Text {
                     id: simpleControlHeading
-                    text: "Simple Command Handler"
+                    text: "Control panel"
                     font.bold: true
                     font.pixelSize: ratioCalc * 20
                     color: "#696969"
@@ -137,34 +134,10 @@ Item {
 
                 Item {
                     Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width/4
 
                     ColumnLayout {
                         anchors.fill: parent
-
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            Layout.column: 1
-
-                            SGAlignedLabel {
-                                id: pwm1SwitchLabel
-                                target: pwm1Switch
-                                text: "I_LED (LED driver NCV7694)"
-                                font.bold: true
-                                anchors.centerIn: parent
-                                alignment: SGAlignedLabel.SideTopCenter
-
-                                SGSwitch {
-                                    id: pwm1Switch
-                                    width: 50
-                                    checked: false
-                                    onToggled:  {
-                                        platformInterface.commands.set_pwm1.update(pwm1Slider.value,pwm1Switch.checked)
-                                    }
-                                }
-                            }
-                        }
 
                         Item {
                             Layout.fillHeight: true
@@ -173,7 +146,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm1SliderLabel
                                 target: pwm1Slider
-                                text: "Current (A)"
+                                text: "I_LED (LED driver NCV7694) \n Current (A)"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter
@@ -184,7 +157,7 @@ Item {
                                     from: 0.7
                                     to: 5.0
                                     stepSize: 0.1
-                                    value: 0.7
+                                    value: platformInterface.current.toFixed(1)
                                     inputBox.validator: DoubleValidator { top: 5.0; bottom: 0.7 }
                                     inputBox.text:  parseFloat(pwm1Slider.value.toFixed(2))
                                     contextMenuEnabled: true
@@ -193,7 +166,7 @@ Item {
                                         inputBox.text = parseFloat(value.toFixed(2))
 
                                         if(pressed == false){
-                                            platformInterface.commands.set_pwm1.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
+                                            platformInterface.set_i_led.update(parseFloat(value.toFixed(2)))
 
                                             var maxONTime = 40/(10*pwm1Slider.value)
                                             if (pwm3Slider.value > maxONTime) {
@@ -205,7 +178,7 @@ Item {
                                     }
 
                                     inputBox.onEditingFinished : {
-                                        platformInterface.commands.set_pwm1.update(parseFloat(value.toFixed(2)),pwm1Switch.checked)
+                                        platformInterface.set_i_led.update(parseFloat(value.toFixed(2)))
 
                                         var maxONTime = 40/(10*pwm1Slider.value)
                                         if (pwm3Slider.value > maxONTime) {
@@ -222,7 +195,7 @@ Item {
 
                 Item {
                     Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width/4
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -232,33 +205,9 @@ Item {
                             Layout.fillWidth: true
 
                             SGAlignedLabel {
-                                id: pwm2SwitchLabel
-                                target: pwm2Switch
-                                text: "VOUT (DCDC converter NCV890204)"
-                                font.bold: true
-                                anchors.centerIn: parent
-                                alignment: SGAlignedLabel.SideTopCenter
-
-                                SGSwitch {
-                                    id: pwm2Switch
-                                    width: 50
-                                    checked: false
-                                    enabled: false
-                                    onToggled:  {
-                                        platformInterface.commands.set_pwm2.update(pwm2Slider.value,pwm2Switch.checked)
-                                    }
-                                }
-                            }
-                        }
-
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-
-                            SGAlignedLabel {
                                 id: pwm2SliderLabel
                                 target: pwm2Slider
-                                text: "Voltage (V)"
+                                text: "V_OUT (DCDC converter NCV890204) \n Voltage (V)"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter                               
@@ -269,7 +218,7 @@ Item {
                                     from: 4.8
                                     to: 10
                                     stepSize: 0.1
-                                    value: 10
+                                    value: platformInterface.voltage.toFixed(1)
                                     inputBox.validator: DoubleValidator { top: 10; bottom: 4.80 }
                                     inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
@@ -278,12 +227,12 @@ Item {
                                     onPressedChanged: {
                                         inputBox.text = parseFloat(value.toFixed(2))
                                         if(pressed == false){
-                                            platformInterface.commands.set_pwm2.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
+                                            platformInterface.set_v_out.update(parseFloat(value.toFixed(2)))
                                         }
                                     }
 
                                     inputBox.onEditingFinished : {
-                                        platformInterface.commands.set_pwm2.update(parseFloat(value.toFixed(2)) ,pwm2Switch.checked)
+                                        platformInterface.set_v_out.update(parseFloat(value.toFixed(2)))
                                     }
                                 }
                             }
@@ -293,7 +242,45 @@ Item {
 
                 Item {
                     Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width/4
+
+                    ColumnLayout {
+                        anchors.fill: parent
+
+                        Item {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            Layout.column: 1
+
+                            Button {
+                                id: btn_i_led_save
+                                anchors.centerIn: parent
+                                Layout.alignment: SGAlignedLabel.Left
+
+                                text: qsTr("Save values I_LED and V_OUT to EEPROM")
+                                contentItem: Text {
+                                    id: btn_i_led_save_text
+                                    text: btn_i_led_save.text
+                                    color: "black"
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                }
+
+                                onClicked:
+                                {
+                                    var pwm1SliderValue = pwm1Slider.value
+                                    var pwm2SliderValue = pwm2Slider.value
+
+                                    platformInterface.save_values.update(pwm2SliderValue, pwm1SliderValue)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: parent.width/4
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -316,8 +303,7 @@ Item {
                                     checked: false
 
                                     onToggled:  {
-                                        platformInterface.commands.set_pwm3.update(pwm3Slider.value,pwm3Switch.checked)
-                                        pwm2Switch.enabled = (pwm3Switch.checked)
+                                        platformInterface.set_flash_pwm.update(pwm3Slider.value,pwm3Switch.checked)
                                         pwm2Slider.enabled = (pwm3Switch.checked)
                                     }
 
@@ -332,7 +318,7 @@ Item {
                             SGAlignedLabel {
                                 id: pwm3SliderLabel
                                 target: pwm3Slider
-                                text: "T_ON time (ms)"
+                                text: "T_ON time (ms) \n T_ON duty cycle: " + (((pwm3Slider.value/(1/62))/10).toFixed(0)) + "%"
                                 font.bold: true
                                 anchors.centerIn: parent
                                 alignment: SGAlignedLabel.SideTopCenter
@@ -342,14 +328,14 @@ Item {
                                     width: 250
                                     from: 0.0
                                     to: 5
-                                    stepSize: 0.1
+                                    stepSize: 0.125
                                     value: 0.0
                                     inputBox.validator: DoubleValidator { top: 5.00; bottom: 0.0 }
-                                    inputBox.text: parseFloat(value.toFixed(1))
+                                    inputBox.text: parseFloat(value.toFixed(2))
                                     contextMenuEnabled: true
 
                                     onPressedChanged: {
-                                        inputBox.text = parseFloat(value.toFixed(1))
+                                        inputBox.text = parseFloat(value.toFixed(2))
 
                                         if(pressed == false){
                                             var maxCurrent = 40/(10*pwm3Slider.value)
@@ -357,10 +343,10 @@ Item {
                                             {
                                                 pwm1Slider.value = maxCurrent
                                                 pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
-                                                platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+                                                platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)))
                                                 pwm3delayTimer.start()
                                             }else{
-                                                platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
+                                                platformInterface.set_flash_pwm.update(parseFloat(value.toFixed(2)), pwm3Switch.checked)
                                             }
                                         }
                                     }
@@ -371,29 +357,11 @@ Item {
                                         {
                                             pwm1Slider.value = maxCurrent
                                             pwm1Slider.inputBox.text = parseFloat(pwm1Slider.value.toFixed(2))
-                                            platformInterface.commands.set_pwm1.update(parseFloat(pwm1Slider.value.toFixed(2)),pwm1Switch.checked)
+                                            platformInterface.set_i_led.update(parseFloat(pwm1Slider.value.toFixed(2)))
                                             pwm3delayTimer.start()
                                         }else{
-                                            platformInterface.commands.set_pwm3.update(parseFloat(value.toFixed(1)), pwm3Switch.checked)
+                                            platformInterface.set_flash_pwm.update(parseFloat(value.toFixed(2)), pwm3Switch.checked)
                                         }
-                                    }
-                                }
-                            }
-
-                            Item {
-                                Layout.fillHeight: true
-                                Layout.fillWidth: true
-
-                                SGAlignedLabel {
-                                    id: pwm3SliderLabel3
-                                    target: labelDuty
-                                    text: "T_ON duty cycle: " + (((pwm3Slider.value/(1/62))/10).toFixed(0)) + "%"
-                                    font.bold: true
-                                    anchors.centerIn: parent
-                                    alignment: SGAlignedLabel.SideTopCenter
-
-                                    SGAlignedLabel{
-                                        id:labelDuty
                                     }
                                 }
                             }

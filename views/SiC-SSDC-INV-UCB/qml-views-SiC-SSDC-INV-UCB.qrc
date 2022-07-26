@@ -7,7 +7,6 @@
         <file>PlatformInterface.qml</file>
         <file>sgwidgets/SGCircularGauge.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
-        <file>sgwidgets/SGGraph.qml</file>
         <file>sgwidgets/SGLabelledInfoBox.qml</file>
         <file>sgwidgets/SGRadioButton.qml</file>
         <file>sgwidgets/SGRadioButtonContainer.qml</file>
@@ -31,7 +30,6 @@
         <file>SaveDialogMenu.qml</file>
         <file>ExportControl.qml</file>
         <file>image/icon-motor.svg</file>
-        <file>sgwidgets/FVGraphTimed.qml</file>
         <file>image/Stop.svg</file>
         <file>image/Play.svg</file>
         <file>SideBar.qml</file>
