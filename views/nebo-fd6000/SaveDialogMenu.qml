@@ -48,39 +48,31 @@ Rectangle {
         repeat: true
         running: true
         triggeredOnStart: true
-        onTriggered: {
-            if(logSwitch.checked === true){}
-        }
+//        onTriggered: {
+//            if(logSwitch.checked === true){}
+//        }
     }
     property var my_last_time: 0
     property var one_time_top_row_excel: 0
 
-    property var vin_calc: (platformInterface.status_voltage_current.vin/1000).toFixed(3)
-    property var iin_calc: (platformInterface.status_voltage_current.iin/1000).toFixed(3)
-    property var vout_calc: (platformInterface.status_voltage_current.vout/1000).toFixed(3)
-    property var iout_calc: (platformInterface.status_voltage_current.iout/1000).toFixed(3)
-    property var pin_calc: vin_calc * iin_calc
-    property var pout_calc: vout_calc * iout_calc
-    property var effi_calc: ((pout_calc * 100) / pin_calc).toFixed(3)
-    property var temp_calc: (platformInterface.status_temperature_pmbus.temperature_pmbus).toFixed(0)
+    property var vin_calc: (platformInterface.vin).toFixed(3)
+    property var pout_calc: (platformInterface.pout).toFixed(3)
+    property var vout_calc: (platformInterface.vout).toFixed(3)
+    property var iout_calc: (platformInterface.iout).toFixed(3)
+    property var temp_calc: (platformInterface.ctemp).toFixed(0)
 
 
-    onEffi_calcChanged:
+    onVin_calcChanged:
             {
             if(one_time_top_row_excel===0){
-                time_data="Time\tVin(V)\t    Iin(A)\t    Vout(V)\t    Iout(A)\t    Effi(%)\t    Temp.(°C)"+"\n"
+                time_data="Time;Vin(V);Pout(W);Vout(V);Iout(A);Temp.(°C)"+"\n"
                 one_time_top_row_excel=1
                 }
-            else(time_data=""+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +"\t"+ vin_calc +"\t"+ iin_calc +"\t"+ vout_calc +"\t"+ iout_calc +"\t"+ effi_calc +"\t"+ temp_calc +"\n")
+            else(time_data=""+ (new Date().toLocaleString(Qt.locale(),"    h:mm:ss:zzz")) +";"+ vin_calc +";"+ pout_calc +";"+ vout_calc +";"+ iout_calc +";"+ temp_calc +"\n")
 
             my_last_time=(new Date().toLocaleString(Qt.locale(),"yyyy/MM/dd h:mm:ss:zzz"))
             save_file_dialogbox.collect_collect.push(time_data)
             }
-    property var clears_log_data: +logSwitch.clear_log_data
-
-    onClears_log_dataChanged:{
-        if (+logSwitch.clear_log_data==1){save_file_dialogbox.collect_collect = []}
-    }
 
     Item {
         id: element1

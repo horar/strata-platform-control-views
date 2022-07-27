@@ -42,11 +42,6 @@ Rectangle {
 
     Component.onCompleted: {
         helpIcon.visible = true
-        platformInterface.pause_periodic.update(false)
-    }
-
-    Component.onDestruction:  {
-        platformInterface.pause_periodic.update(true)
     }
 
     ApplicationWindow {
@@ -92,16 +87,6 @@ Rectangle {
                 exportControl.visible = false
             }
         }
-
-        TabButton {
-            id: exportButton
-            text: qsTr("Data Logger / Export")
-            onClicked: {
-                basicControl.visible = false
-                advancedControl.visible = false
-                exportControl.visible = true
-            }
-        }
     }
 
     StackLayout {
@@ -140,20 +125,6 @@ Rectangle {
 
             }
         }
-
-        Rectangle {
-            width: parent.width
-            height: parent.height
-            color: "light gray"
-
-            ExportControl {
-                id: exportControl
-                visible: false
-                width: parent.width
-                height: parent.height
-            }
-        }
-
     }
 
     Widget10.SGIcon {
@@ -205,5 +176,4 @@ Rectangle {
             top: parent.top
         }
     }
-
 }

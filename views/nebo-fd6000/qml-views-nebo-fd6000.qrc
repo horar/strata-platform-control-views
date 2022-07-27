@@ -1,10 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>AdvancedControl.qml</file>
-        <file>BasicControl.qml</file>
-        <file>Control.qml</file>
         <file>MultiplePlatform.qml</file>
-        <file>PlatformInterface.qml</file>
         <file>sgwidgets/SGCircularGauge.qml</file>
         <file>sgwidgets/SGComboBox.qml</file>
         <file>sgwidgets/SGLabelledInfoBox.qml</file>
@@ -31,15 +27,18 @@
         <file>images/stop-solid.svg</file>
         <file>images/play-solid.svg</file>
         <file>images/tach.svg</file>
-        <file>ExportControl.qml</file>
-        <file>SaveDialogMenu.qml</file>
         <file>MultiButton.qml</file>
         <file>sgwidgets/SliderPopup.qml</file>
         <file>sgwidgets/IconButton.qml</file>
         <file>sgwidgets/FaultLight.qml</file>
         <file>sgwidgets/DigitalReadout.qml</file>
         <file>sgwidgets/CircGauge.qml</file>
-        <file>SideBar.qml</file>
         <file>sgwidgets/SGAlignedLabel.qml</file>
+        <file>SideBar.qml</file>
+        <file>SaveDialogMenu.qml</file>
+        <file>Control.qml</file>
+        <file>BasicControl.qml</file>
+        <file>AdvancedControl.qml</file>
+        <file>PlatformInterface.qml</file>
     </qresource>
 </RCC>
