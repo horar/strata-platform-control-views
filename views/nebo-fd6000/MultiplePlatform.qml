@@ -25,6 +25,8 @@ Item{
     property var ioutScale: 100
     property var poutScale: 1000
     property var pdissScale: 500
+    property var ctempScale: 150
+
     property bool showDecimal: true
     property var poutStep: 100
     property var pdissStep: 50
@@ -51,6 +53,7 @@ Item{
             ioutScale = 100
             poutScale = 1500
             pdissScale = 500
+            ctempScale = 150
             showDecimal = true
             poutStep = 100
             pdissStep = 50
